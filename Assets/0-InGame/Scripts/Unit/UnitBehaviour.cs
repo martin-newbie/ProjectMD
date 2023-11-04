@@ -1,3 +1,4 @@
+using Spine;
 using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
@@ -79,6 +80,7 @@ public abstract class UnitBehaviour
         }
     }
 
+    #region Move
     protected virtual IEnumerator MoveToTargetRange()
     {
         yield return StartCoroutine(MoveLogic());
@@ -100,6 +102,22 @@ public abstract class UnitBehaviour
             yield return null;
         }
     }
+    #endregion
+
+    #region Attack
+    protected virtual IEnumerator AttackToTarget()
+    {
+        yield return StartCoroutine(AttackAim());
+        yield return StartCoroutine(AttackLogic());
+    }
+
+    protected virtual IEnumerator AttackAim()
+    {
+        yield break;
+    }
+
+    protected abstract IEnumerator AttackLogic();
+    #endregion
 
     protected virtual bool IsInsideRange(UnitBehaviour target)
     {
@@ -110,7 +128,6 @@ public abstract class UnitBehaviour
     {
         return InGameManager.Instance.FindNearestTarget(GetOpponentGroup(), transform.position.x);
     }
-
 
     public virtual void SetBehaviourState(BehaviourState _state)
     {
@@ -135,11 +152,21 @@ public abstract class UnitBehaviour
             model.transform.rotation = Quaternion.Euler(0, 180, 0);
     }
 
+    /// <summary>
+    /// play animation and return track
+    /// </summary>
+    /// <param name="key">animation key</param>
+    /// <param name="loop">whether loop</param>
+    /// <returns></returns>
+    protected TrackEntry PlayAnim(string key, bool loop = false)
+    {
+        var track = model.state.SetAnimation(0, key, loop);
+        return track;
+    }
+
     protected UnitGroupType GetOpponentGroup()
     {
         return (UnitGroupType)((int)group * -1);
     }
 
-
-    protected abstract IEnumerator AttackToTarget();
 }

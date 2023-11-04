@@ -9,7 +9,7 @@ public class TestBehaviour : UnitBehaviour
 
     }
 
-    protected override IEnumerator AttackToTarget()
+    protected override IEnumerator AttackLogic()
     {
         yield break;
     }
