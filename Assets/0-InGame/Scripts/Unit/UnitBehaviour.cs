@@ -108,8 +108,9 @@ public abstract class UnitBehaviour
 
     protected virtual UnitBehaviour GetOpponent()
     {
-        return null;
+        return InGameManager.Instance.FindNearestTarget(GetOpponentGroup(), transform.position.x);
     }
+
 
     public virtual void SetBehaviourState(BehaviourState _state)
     {
@@ -133,6 +134,12 @@ public abstract class UnitBehaviour
         if (dir == -1)
             model.transform.rotation = Quaternion.Euler(0, 180, 0);
     }
+
+    protected UnitGroupType GetOpponentGroup()
+    {
+        return (UnitGroupType)((int)group * -1);
+    }
+
 
     protected abstract IEnumerator AttackToTarget();
 }
