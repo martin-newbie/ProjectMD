@@ -17,6 +17,7 @@ public abstract class UnitBehaviour
 
     public float range = 0f;
     public float moveSpeed = 0f;
+    public float atkEndDelay = 1f;
     public BehaviourState state;
     public UnitGroupType group;
 
@@ -111,7 +112,7 @@ public abstract class UnitBehaviour
     {
         yield return StartCoroutine(AttackAim());
         yield return StartCoroutine(AttackLogic());
-        PlayAnimAndWait("battle_wait", true);
+        yield return StartCoroutine(AttackFinish());
     }
 
     protected virtual IEnumerator AttackAim()
@@ -119,6 +120,12 @@ public abstract class UnitBehaviour
         var target = GetOpponent();
         SetModelRotByTarget(target);
         yield return PlayAnimAndWait("battle_aiming");
+    }
+
+    protected virtual IEnumerator AttackFinish()
+    {
+        PlayAnim("battle_wait", true);
+        yield return new WaitForSeconds(atkEndDelay);
     }
 
     protected abstract IEnumerator AttackLogic();
@@ -132,6 +139,11 @@ public abstract class UnitBehaviour
     protected virtual UnitBehaviour GetOpponent()
     {
         return InGameManager.Instance.FindNearestTarget(GetOpponentGroup(), transform.position.x);
+    }
+
+    protected virtual void ShootBullet(UnitBehaviour target)
+    {
+
     }
 
     public virtual void SetBehaviourState(BehaviourState _state)

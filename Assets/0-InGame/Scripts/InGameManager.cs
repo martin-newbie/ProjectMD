@@ -34,7 +34,7 @@ public class InGameManager : MonoBehaviour
         {
             var unitObj = Instantiate(unitObjPrefab, new Vector3(-8f + i * 1.5f, 0), Quaternion.identity);
 
-            var behaviour = new TestBehaviour(unitObj);
+            var behaviour = new Seongah(unitObj);
             behaviour.group = UnitGroupType.ALLY;
             behaviour.range = (4 - i) * 2 + 2;
             behaviour.moveSpeed = 3;
@@ -47,7 +47,7 @@ public class InGameManager : MonoBehaviour
         {
             var unitObj = Instantiate(unitObjPrefab, new Vector3(2f + i * 1.5f, 0), Quaternion.identity);
 
-            var behaviour = new TestBehaviour(unitObj);
+            var behaviour = new Seongah(unitObj);
             behaviour.group = UnitGroupType.HOSTILE;
             behaviour.range = i * 2 + 2;
             behaviour.moveSpeed = 3;
