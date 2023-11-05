@@ -16,7 +16,7 @@ public class Asis : UnitBehaviour
 
     protected override IEnumerator AttackLogic()
     {
-        // shoot grenade
+        // shoot grenade not bullet
         yield return PlayAnimAndWait("battle_attack");
     }
 }

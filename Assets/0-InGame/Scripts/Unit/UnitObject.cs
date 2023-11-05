@@ -8,6 +8,9 @@ public class UnitObject : MonoBehaviour
     public UnitBehaviour behaviour;
     public SkeletonAnimation model;
 
+    [Header("Prob")]
+    public Bullet probBullet;
+
     public void InjectBehaviour(UnitBehaviour _behaviour, SkeletonDataAsset skeleton, UnitGroupType group)
     {
         behaviour = _behaviour;

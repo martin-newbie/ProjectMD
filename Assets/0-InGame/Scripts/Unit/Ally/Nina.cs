@@ -18,7 +18,8 @@ public class Nina : UnitBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            // shoot bullet
+            var target = GetOpponent();
+            ShootBullet(target);
             PlayAnim("battle_attack");
             yield return new WaitForSeconds(0.15f);
         }

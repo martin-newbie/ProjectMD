@@ -11,16 +11,16 @@ public abstract class UnitBehaviour
     public Transform transform;
     public GameObject gameObject;
     public SkeletonAnimation model;
+
+    public Bullet probBullet;
     #endregion
 
     #region state
-
     public float range = 0f;
     public float moveSpeed = 3f;
     public float atkEndDelay = 1f;
     public BehaviourState state;
     public UnitGroupType group;
-
     #endregion
 
     public UnitBehaviour(UnitObject _subject)
@@ -30,6 +30,8 @@ public abstract class UnitBehaviour
         transform = subject.transform;
         gameObject = subject.gameObject;
         model = subject.model;
+
+        probBullet = subject.probBullet;
     }
 
     public Coroutine StartCoroutine(IEnumerator routine)
@@ -40,6 +42,11 @@ public abstract class UnitBehaviour
     {
         subject.StopCoroutine(routine);
     }
+    public static T Instantiate<T>(T original, Vector3 position, Quaternion rotation) where T : Object
+    {
+        return Object.Instantiate(original, position, rotation);
+    }
+
 
     public virtual void Update()
     {
@@ -141,9 +148,23 @@ public abstract class UnitBehaviour
         return InGameManager.Instance.FindNearestTarget(GetOpponentGroup(), transform.position.x);
     }
 
-    protected virtual void ShootBullet(UnitBehaviour target)
+    protected virtual void ShootBullet(UnitBehaviour target, string key = "bullet_pos")
     {
+        var randPos = new Vector3(0, Random.Range(-0.25f, 0.25f));
+        var startPos = GetBoneWorldPos(key) + randPos;
+        var targetPos = target.GetBoneWorldPos("body") + randPos;
 
+        var bullet = Instantiate(probBullet, startPos, Quaternion.identity);
+        bullet.StartBulletEffect(startPos, targetPos, () => OnDamage(target));
+    }
+
+    protected virtual void OnDamage(UnitBehaviour target)
+    {
+        // check death
+
+        // calculate damage
+        // give damage
+        // print damage text
     }
 
     public virtual void SetBehaviourState(BehaviourState _state)
@@ -199,4 +220,11 @@ public abstract class UnitBehaviour
         return (UnitGroupType)((int)group * -1);
     }
 
+    protected Vector3 GetBoneWorldPos(string key)
+    {
+        var bone = model.skeleton.FindSlot(key).Bone;
+        Vector3 result = model.transform.TransformPoint(new Vector3(bone.WorldX, bone.WorldY, 0f));
+
+        return result;
+    }
 }
