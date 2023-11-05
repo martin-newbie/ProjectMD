@@ -83,7 +83,9 @@ public abstract class UnitBehaviour
     #region Move
     protected virtual IEnumerator MoveToTargetRange()
     {
+        PlayAnim("battle_move", true);
         yield return StartCoroutine(MoveLogic());
+        PlayAnim("battle_wait", true);
     }
 
     protected virtual IEnumerator MoveLogic()
@@ -109,11 +111,12 @@ public abstract class UnitBehaviour
     {
         yield return StartCoroutine(AttackAim());
         yield return StartCoroutine(AttackLogic());
+        PlayAnimAndWait("battle_wait", true);
     }
 
     protected virtual IEnumerator AttackAim()
     {
-        yield break;
+        yield return PlayAnimAndWait("battle_aiming");
     }
 
     protected abstract IEnumerator AttackLogic();
@@ -152,12 +155,13 @@ public abstract class UnitBehaviour
             model.transform.rotation = Quaternion.Euler(0, 180, 0);
     }
 
-    /// <summary>
-    /// play animation and return track
-    /// </summary>
-    /// <param name="key">animation key</param>
-    /// <param name="loop">whether loop</param>
-    /// <returns></returns>
+    protected WaitForSeconds PlayAnimAndWait(string key, bool loop = false)
+    {
+        model.state.SetAnimation(0, key, loop);
+        var anim = model.Skeleton.Data.FindAnimation(key);
+        return new WaitForSeconds(anim.Duration);
+    }
+
     protected TrackEntry PlayAnim(string key, bool loop = false)
     {
         var track = model.state.SetAnimation(0, key, loop);
