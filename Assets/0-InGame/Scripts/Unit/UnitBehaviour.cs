@@ -16,7 +16,7 @@ public abstract class UnitBehaviour
     #region state
 
     public float range = 0f;
-    public float moveSpeed = 0f;
+    public float moveSpeed = 3f;
     public float atkEndDelay = 1f;
     public BehaviourState state;
     public UnitGroupType group;

@@ -1,3 +1,4 @@
+using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class InGameManager : MonoBehaviour
     }
 
     public UnitObject unitObjPrefab;
+    public SkeletonDataAsset[] humanoidDataAsset;
 
     List<UnitObject> allUnits = new List<UnitObject>();
 
@@ -34,11 +36,8 @@ public class InGameManager : MonoBehaviour
         {
             var unitObj = Instantiate(unitObjPrefab, new Vector3(-8f + i * 1.5f, 0), Quaternion.identity);
 
-            var behaviour = new Seongah(unitObj);
-            behaviour.group = UnitGroupType.ALLY;
+            var behaviour = SetBehaviourInObject(unitObj, 0, UnitGroupType.ALLY);
             behaviour.range = (4 - i) * 2 + 2;
-            behaviour.moveSpeed = 3;
-            unitObj.InjectBehaviour(behaviour);
 
             allUnits.Add(unitObj);
         }
@@ -47,11 +46,8 @@ public class InGameManager : MonoBehaviour
         {
             var unitObj = Instantiate(unitObjPrefab, new Vector3(2f + i * 1.5f, 0), Quaternion.identity);
 
-            var behaviour = new Seongah(unitObj);
-            behaviour.group = UnitGroupType.HOSTILE;
+            var behaviour = SetBehaviourInObject(unitObj, 0, UnitGroupType.HOSTILE);
             behaviour.range = i * 2 + 2;
-            behaviour.moveSpeed = 3;
-            unitObj.InjectBehaviour(behaviour);
 
             allUnits.Add(unitObj);
         }
@@ -65,6 +61,21 @@ public class InGameManager : MonoBehaviour
         {
             item.behaviour.state = BehaviourState.INCOMBAT;
         }
+    }
+
+    UnitBehaviour SetBehaviourInObject(UnitObject unitObj, int idx, UnitGroupType group)
+    {
+        UnitBehaviour behaviour = null;
+
+        switch (idx)
+        {
+            case 0:
+                behaviour = new Seongah(unitObj);
+                break;
+        }
+
+        unitObj.InjectBehaviour(behaviour, humanoidDataAsset[idx], group);
+        return behaviour;
     }
 
     public UnitBehaviour FindNearestTarget(UnitGroupType group, float startPosX)
