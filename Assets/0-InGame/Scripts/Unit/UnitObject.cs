@@ -12,8 +12,9 @@ public class UnitObject : MonoBehaviour
     {
         behaviour = _behaviour;
     
-        model.skeletonDataAsset = skeleton;
         model.Update(0f);
+        model.skeletonDataAsset = skeleton;
+        model.Initialize(true);
         
         behaviour.group = group;
     }

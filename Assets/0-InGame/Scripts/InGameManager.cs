@@ -36,7 +36,7 @@ public class InGameManager : MonoBehaviour
         {
             var unitObj = Instantiate(unitObjPrefab, new Vector3(-8f + i * 1.5f, 0), Quaternion.identity);
 
-            var behaviour = SetBehaviourInObject(unitObj, 0, UnitGroupType.ALLY);
+            var behaviour = SetBehaviourInObject(unitObj, i, UnitGroupType.ALLY);
             behaviour.range = (4 - i) * 2 + 2;
 
             allUnits.Add(unitObj);
@@ -71,6 +71,15 @@ public class InGameManager : MonoBehaviour
         {
             case 0:
                 behaviour = new Seongah(unitObj);
+                break;
+            case 1:
+                behaviour = new Minel(unitObj);
+                break;
+            case 2:
+                behaviour = new Nina(unitObj);
+                break;
+            case 3:
+                behaviour = new Asis(unitObj);
                 break;
         }
 

@@ -456,6 +456,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitObjPrefab: {fileID: 1667937900}
+  humanoidDataAsset:
+  - {fileID: 11400000, guid: 3e690bc1fc51e034c9982057aec393b9, type: 2}
+  - {fileID: 11400000, guid: 0f971ec190c19974e8c2328fb1a5ad49, type: 2}
+  - {fileID: 11400000, guid: e95be7e81a8eb1648ae6f3ad06a83698, type: 2}
+  - {fileID: 11400000, guid: a2ea2e00141521a40bbbfafba2dbdbc0, type: 2}
 --- !u!1 &819297207
 GameObject:
   m_ObjectHideFlags: 0

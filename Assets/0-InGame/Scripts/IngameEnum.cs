@@ -17,9 +17,11 @@ public enum UnitGroupType
 
 public enum AttributeType
 {
-    대류,
-    전도,
-    복사,
-    정렬,
-    혼란
+    ALEPH,
+    BEYT,
+    GIMAL,
+    DALET,
+    HEY,
+    VAV,
+    ZAYIN
 }
