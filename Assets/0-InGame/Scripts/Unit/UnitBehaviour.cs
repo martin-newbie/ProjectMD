@@ -157,7 +157,7 @@ public abstract class UnitBehaviour
 
     protected WaitForSeconds PlayAnimAndWait(string key, bool loop = false)
     {
-        model.state.SetAnimation(0, key, loop);
+        PlayAnim(key, loop);
         var anim = model.Skeleton.Data.FindAnimation(key);
         return new WaitForSeconds(anim.Duration);
     }
