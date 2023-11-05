@@ -51,8 +51,6 @@ public class InGameManager : MonoBehaviour
 
             allUnits.Add(unitObj);
         }
-
-        unitObjPrefab.gameObject.SetActive(false);
     }
 
     void TestMethod_CombatStart()
