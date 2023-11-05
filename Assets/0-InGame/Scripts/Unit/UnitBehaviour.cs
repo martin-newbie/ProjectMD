@@ -98,7 +98,7 @@ public abstract class UnitBehaviour
                 break;
             }
 
-            int moveDir = target.transform.position.x < transform.position.x ? -1 : 1;
+            int moveDir = GetTargetDir(target);
             transform.Translate(moveDir * Vector3.right * Time.deltaTime * moveSpeed);
             SetModelRotByDir(moveDir);
             yield return null;
@@ -116,6 +116,8 @@ public abstract class UnitBehaviour
 
     protected virtual IEnumerator AttackAim()
     {
+        var target = GetOpponent();
+        SetModelRotByTarget(target);
         yield return PlayAnimAndWait("battle_aiming");
     }
 
@@ -140,11 +142,23 @@ public abstract class UnitBehaviour
         {
             case BehaviourState.STANDBY:
                 // just play idle animation
+                PlayAnim("battle_wait", true);
                 break;
             case BehaviourState.RETREAT:
                 // return to start pos
                 break;
         }
+    }
+
+    protected void SetModelRotByTarget(UnitBehaviour target)
+    {
+        int dir = GetTargetDir(target);
+        SetModelRotByDir(dir);
+    }
+
+    protected int GetTargetDir(UnitBehaviour target)
+    {
+        return target.transform.position.x < transform.position.x ? -1 : 1;
     }
 
     protected void SetModelRotByDir(int dir)
