@@ -25,3 +25,10 @@ public enum AttributeType
     VAV,
     ZAYIN
 }
+
+public enum ResistType
+{
+    NORMAL,
+    WEAK,
+    RESIST,
+}
