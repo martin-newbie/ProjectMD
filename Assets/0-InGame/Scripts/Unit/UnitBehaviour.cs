@@ -19,9 +19,9 @@ public abstract class UnitBehaviour
     public float range = 0f;
     public float moveSpeed = 3f;
     public float atkEndDelay = 1f;
-    public float damage = 0f;
-    public float hp = 0f;
-    public float maxHp = 0f;
+    public float damage = 10f;
+    public float hp = 100f;
+    public float maxHp = 100f;
     public BehaviourState state;
     public UnitGroupType group;
     #endregion
@@ -153,12 +153,17 @@ public abstract class UnitBehaviour
 
     protected virtual void ShootBullet(UnitBehaviour target, string key = "bullet_pos")
     {
+        if(target == null)
+        {
+            return;
+        }
+
         var randPos = new Vector3(0, Random.Range(-0.25f, 0.25f));
         var startPos = GetBoneWorldPos(key) + randPos;
         var targetPos = target.GetBoneWorldPos("body") + randPos;
 
         var bullet = Instantiate(probBullet, startPos, Quaternion.identity);
-        bullet.StartBulletEffect(startPos, targetPos, () => target.OnDamage(10, this));
+        bullet.StartBulletEffect(startPos, targetPos, () => target.OnDamage(damage, this));
     }
 
     protected virtual void OnDamage(float damage, UnitBehaviour from)
@@ -171,6 +176,20 @@ public abstract class UnitBehaviour
 
         int dir = transform.position.x < from.transform.position.x ? -1 : 1;
         DamageTextCanvas.Instance.PrintDamageText(damage, GetBoneWorldPos("body"), dir, ResistType.NORMAL);
+
+        hp -= damage;
+        if(hp <= 0 && state != BehaviourState.RETIRE)
+        {
+            OnRetire();
+        }
+    }
+
+    protected virtual void OnRetire()
+    {
+        subject.StopAllCoroutines();
+        state = BehaviourState.RETIRE;
+        InGameManager.Instance.allUnits.Remove(this.subject);
+        PlayAnim("battle_retire");
     }
 
     public virtual void SetBehaviourState(BehaviourState _state)

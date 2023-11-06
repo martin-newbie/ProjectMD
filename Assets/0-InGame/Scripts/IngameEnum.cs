@@ -6,6 +6,7 @@ public enum BehaviourState
     INCOMBAT,
     STANDBY,
     RETREAT,
+    RETIRE,
 }
 
 public enum UnitGroupType

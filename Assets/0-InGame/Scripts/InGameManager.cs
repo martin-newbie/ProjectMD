@@ -15,7 +15,7 @@ public class InGameManager : MonoBehaviour
     public UnitObject unitObjPrefab;
     public SkeletonDataAsset[] humanoidDataAsset;
 
-    List<UnitObject> allUnits = new List<UnitObject>();
+    [HideInInspector] public List<UnitObject> allUnits = new List<UnitObject>();
 
     void Start()
     {
