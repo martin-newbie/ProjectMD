@@ -19,6 +19,9 @@ public abstract class UnitBehaviour
     public float range = 0f;
     public float moveSpeed = 3f;
     public float atkEndDelay = 1f;
+    public float damage = 0f;
+    public float hp = 0f;
+    public float maxHp = 0f;
     public BehaviourState state;
     public UnitGroupType group;
     #endregion
@@ -155,16 +158,19 @@ public abstract class UnitBehaviour
         var targetPos = target.GetBoneWorldPos("body") + randPos;
 
         var bullet = Instantiate(probBullet, startPos, Quaternion.identity);
-        bullet.StartBulletEffect(startPos, targetPos, () => OnDamage(target));
+        bullet.StartBulletEffect(startPos, targetPos, () => target.OnDamage(10, this));
     }
 
-    protected virtual void OnDamage(UnitBehaviour target)
+    protected virtual void OnDamage(float damage, UnitBehaviour from)
     {
         // check death
 
         // calculate damage
         // give damage
         // print damage text
+
+        int dir = transform.position.x < from.transform.position.x ? -1 : 1;
+        DamageTextCanvas.Instance.PrintDamageText(damage, GetBoneWorldPos("body"), dir, ResistType.NORMAL);
     }
 
     public virtual void SetBehaviourState(BehaviourState _state)

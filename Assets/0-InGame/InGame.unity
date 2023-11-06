@@ -998,6 +998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb5d781b129f13d429a1ddb0f7366892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasRect: {fileID: 412512160}
   damagePrefab: {fileID: 180564492814767274, guid: 06b4e921191104b4686bf897e592bce3, type: 3}
 --- !u!1 &1579810165
 GameObject:

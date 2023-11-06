@@ -10,6 +10,7 @@ public class DamageTextCanvas : MonoBehaviour
         Instance = this;
     }
 
+    public RectTransform canvasRect;
     public DamageText damagePrefab;
     Stack<DamageText> textPool = new Stack<DamageText>();
 
@@ -24,11 +25,11 @@ public class DamageTextCanvas : MonoBehaviour
         }
     }
 
-    public void PrintDamageText(float value, Transform target, ResistType resist, bool isCrit = false)
+    public void PrintDamageText(float value, Vector3 target, int dir, ResistType resist, bool isCrit = false)
     {
         var temp = textPool.Pop();
         temp.gameObject.SetActive(true);
-        temp.PrintDamage(value, target, resist, isCrit);
+        temp.PrintDamage(value, target, dir, resist, isCrit);
     }
 
     public void PushText(DamageText text)
