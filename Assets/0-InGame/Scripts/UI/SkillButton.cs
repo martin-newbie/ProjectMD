@@ -64,30 +64,32 @@ public class SkillButton : MonoBehaviour
         // make character user skill
         // disconnect data from character
 
-        List<SkillButton> collabsSkills = new List<SkillButton>();
-        var searchLeft = this;
-        var searchRight = this;
-        int searchCount = 0;
-        while (searchLeft.leftBtn != null && searchCount < 5)
+        int collabsCount = 0;
+        var left = leftBtn;
+        var right = rightBtn;
+        while (left != null || right != null)
         {
-            if (searchLeft.attribute != searchLeft.leftBtn.attribute) break;
+            if (left != null && collabsCount < 3 && left.attribute == attribute)
+            {
+                left.UseSkillAsCollabs();
+                left = left.leftBtn;
+                collabsCount++;
+            }
+            else
+            {
+                left = null;
+            }
 
-            collabsSkills.Add(searchLeft.leftBtn);
-            searchLeft = searchLeft.leftBtn;
-            searchCount++;
-        }
-        while (searchRight.rightBtn != null && searchCount < 5)
-        {
-            if (searchRight.attribute != searchRight.rightBtn.attribute) break;
-
-            collabsSkills.Add(searchRight.rightBtn);
-            searchRight = searchRight.rightBtn;
-            searchCount++;
-        }
-
-        foreach (var item in collabsSkills)
-        {
-            item.UseSkillAsCollabs();
+            if (right != null && collabsCount < 3 && right.attribute == attribute)
+            {
+                right.UseSkillAsCollabs();
+                right = right.rightBtn;
+                collabsCount++;
+            }
+            else
+            {
+                right = null;
+            }
         }
 
         manager.PushSkillButton(this);
