@@ -30,6 +30,7 @@ public class SkillCanvas : MonoBehaviour
     public void AddSkillButton()
     {
         if (skillBtnPool.Count == 0) return;
+        if (curSkillCount >= 10) return;
 
         var btnTemp = skillBtnPool.Pop();
         btnTemp.gameObject.SetActive(true);

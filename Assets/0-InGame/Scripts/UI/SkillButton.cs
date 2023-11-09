@@ -18,8 +18,8 @@ public class SkillButton : MonoBehaviour
         new Color(0.8f,0.8f,0),
         new Color(0.2f,0.8f,0),
         new Color(0,0.8f,0.8f),
-        new Color(0,0.8f,0.8f),
         new Color(0,0.2f,0.8f),
+        new Color(0.4f,0f,0.8f),
     };
 
     SkillCanvas manager;
@@ -67,11 +67,13 @@ public class SkillButton : MonoBehaviour
         int collabsCount = 0;
         var left = leftBtn;
         var right = rightBtn;
+        List<SkillButton> usesBtn = new List<SkillButton>();
+
         while (left != null || right != null)
         {
-            if (left != null && collabsCount < 3 && left.attribute == attribute)
+            if (left != null && collabsCount < 4 && left.attribute == attribute)
             {
-                left.UseSkillAsCollabs();
+                usesBtn.Add(left);
                 left = left.leftBtn;
                 collabsCount++;
             }
@@ -80,9 +82,9 @@ public class SkillButton : MonoBehaviour
                 left = null;
             }
 
-            if (right != null && collabsCount < 3 && right.attribute == attribute)
+            if (right != null && collabsCount < 4 && right.attribute == attribute)
             {
-                right.UseSkillAsCollabs();
+                usesBtn.Add(right);
                 right = right.rightBtn;
                 collabsCount++;
             }
@@ -92,6 +94,10 @@ public class SkillButton : MonoBehaviour
             }
         }
 
+        foreach (var item in usesBtn)
+        {
+            item.UseSkillAsCollabs();
+        }
         manager.PushSkillButton(this);
     }
 
