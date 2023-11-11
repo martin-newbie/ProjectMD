@@ -26,7 +26,7 @@ public abstract class UnitBehaviour
     public UnitGroupType group;
     #endregion
 
-    public int curLocatedPosIndex = 0;
+    public Vector3 targetPos = new Vector3();
 
     public UnitBehaviour(UnitObject _subject)
     {
@@ -107,14 +107,16 @@ public abstract class UnitBehaviour
         while (true)
         {
             var target = GetNearestOpponent();
-            if (IsInsideRange(target))
+            targetPos = InGameManager.Instance.GetPreferPos(this, target, range);
+
+            if (IsInsideRange(target) && transform.position == targetPos)
             {
                 break;
             }
 
             SetModelRotByTarget(target);
-            var preferPos = InGameManager.Instance.GetNextPos(transform.position, target.transform.position, range);
-            yield return StartCoroutine(MoveToTargetLerp(preferPos));
+            var nextPos = InGameManager.Instance.GetNextPos(this, target, range);
+            yield return StartCoroutine(MoveToTargetLerp(nextPos));
         }
     }
 
@@ -130,6 +132,8 @@ public abstract class UnitBehaviour
             timer += Time.deltaTime;
             yield return null;
         }
+
+        transform.position = target;
         yield break;
     }
     #endregion
@@ -170,7 +174,7 @@ public abstract class UnitBehaviour
 
     protected virtual void ShootBullet(UnitBehaviour target, string key = "bullet_pos")
     {
-        if(target == null)
+        if (target == null)
         {
             return;
         }
@@ -195,7 +199,7 @@ public abstract class UnitBehaviour
         DamageTextCanvas.Instance.PrintDamageText(damage, GetBoneWorldPos("body"), dir, ResistType.NORMAL);
 
         hp -= damage;
-        if(hp <= 0 && state != BehaviourState.RETIRE)
+        if (hp <= 0 && state != BehaviourState.RETIRE)
         {
             OnRetire();
         }

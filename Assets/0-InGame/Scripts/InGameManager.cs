@@ -1,6 +1,7 @@
 using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InGameManager : MonoBehaviour
@@ -36,7 +37,7 @@ public class InGameManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             TestMethod_CombatStart();
         }
@@ -59,7 +60,7 @@ public class InGameManager : MonoBehaviour
             var unitObj = Instantiate(unitObjPrefab, posList[posList.Count - i - 1], Quaternion.identity);
 
             var behaviour = SetBehaviourInObject(unitObj, 0, UnitGroupType.HOSTILE);
-            behaviour.range = i * 2 + 2;
+            behaviour.range = 4;
 
             allUnits.Add(unitObj);
         }
@@ -107,47 +108,53 @@ public class InGameManager : MonoBehaviour
         foreach (var item in groupUnits)
         {
             float calc = Vector3.Distance(item.transform.position, startPos);
-            if(calc < dist)
+            if (calc < dist)
             {
                 dist = calc;
                 result = item.behaviour;
             }
         }
-        
+
         return result;
     }
 
-    public Vector3 GetPreferPos(Vector3 start, Vector3 target, float range)
+    public Vector3 GetPreferPos(UnitBehaviour subject, UnitBehaviour target, float range)
     {
-        Vector3 result = new Vector3();
-        float dist = float.MaxValue;
+        List<(Vector3, int)> resultList = new List<(Vector3, int)>(); 
+
         foreach (var item in posList)
         {
-            float calc = Vector3.Distance(item, start);
-            if(calc < dist && Vector3.Distance(item, target) <= range)
+            if (Vector3.Distance(item, target.transform.position) <= range)
             {
-                dist = calc;
-                result = item;
+                resultList.Add((item, GetPosCount(item, subject)));
             }
         }
-        return result;
+
+        return resultList.OrderBy((item) => Vector3.Distance(subject.transform.position, item.Item1) + item.Item2 * 100).ElementAt(0).Item1;
     }
 
-    public Vector3 GetNextPos(Vector3 start, Vector3 target, float range)
+    public Vector3 GetNextPos(UnitBehaviour subject, UnitBehaviour target, float range)
     {
-        Vector3 final = GetPreferPos(start, target, range);
-        
-        if(final.x > start.x)
+        Vector3 final = GetPreferPos(subject, target, range);
+        Vector3 startPos = subject.transform.position;
+
+        if (final.x > startPos.x)
         {
-            start.x += 0.5f;
-            return start;
+            startPos.x += 0.5f;
+            return startPos;
         }
-        if(final.x < start.x)
+        if (final.x < startPos.x)
         {
-            start.x -= 0.5f;
-            return start;
+            startPos.x -= 0.5f;
+            return startPos;
         }
 
-        return start;
+        return startPos;
+    }
+
+    int GetPosCount(Vector3 locate, UnitBehaviour subject)
+    {
+        var length = allUnits.FindAll((item) => item.behaviour.targetPos == locate && item.behaviour != subject).Count;
+        return length;
     }
 }
