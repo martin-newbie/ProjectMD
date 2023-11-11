@@ -1089,6 +1089,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillButtonPrefab: {fileID: 5023933788459826239, guid: 4dc9942fb64c50e498d816640de3552a, type: 3}
   buttonParent: {fileID: 1780952594}
+  activatingBtn: []
 --- !u!1 &2132110584
 GameObject:
   m_ObjectHideFlags: 0

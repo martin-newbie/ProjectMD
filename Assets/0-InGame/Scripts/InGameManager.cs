@@ -16,10 +16,22 @@ public class InGameManager : MonoBehaviour
     public SkeletonDataAsset[] humanoidDataAsset;
 
     [HideInInspector] public List<UnitObject> allUnits = new List<UnitObject>();
+    List<Vector3> posList = new List<Vector3>();
 
     void Start()
     {
+        InitTileList();
         TestMethod_InitUnits();
+    }
+
+    void InitTileList()
+    {
+        float mapHalfSize = 10f; // 10 is test, it should loaded from map data
+
+        for (float i = -mapHalfSize; i <= mapHalfSize; i += 0.5f)
+        {
+            posList.Add(new Vector3(i, 0));
+        }
     }
 
     private void Update()
@@ -34,7 +46,7 @@ public class InGameManager : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            var unitObj = Instantiate(unitObjPrefab, new Vector3(-8f + i * 1.5f, 0), Quaternion.identity);
+            var unitObj = Instantiate(unitObjPrefab, posList[i], Quaternion.identity);
 
             var behaviour = SetBehaviourInObject(unitObj, i, UnitGroupType.ALLY);
             behaviour.range = (4 - i) * 2 + 2;
@@ -44,7 +56,7 @@ public class InGameManager : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
-            var unitObj = Instantiate(unitObjPrefab, new Vector3(2f + i * 1.5f, 0), Quaternion.identity);
+            var unitObj = Instantiate(unitObjPrefab, posList[posList.Count - i - 1], Quaternion.identity);
 
             var behaviour = SetBehaviourInObject(unitObj, 0, UnitGroupType.HOSTILE);
             behaviour.range = i * 2 + 2;
@@ -85,7 +97,7 @@ public class InGameManager : MonoBehaviour
         return behaviour;
     }
 
-    public UnitBehaviour FindNearestTarget(UnitGroupType group, float startPosX)
+    public UnitBehaviour FindNearestTarget(UnitGroupType group, Vector3 startPos)
     {
         var groupUnits = allUnits.FindAll((item) => item.behaviour.group == group);
 
@@ -94,7 +106,7 @@ public class InGameManager : MonoBehaviour
 
         foreach (var item in groupUnits)
         {
-            float calc = Mathf.Abs(item.transform.position.x - startPosX);
+            float calc = Vector3.Distance(item.transform.position, startPos);
             if(calc < dist)
             {
                 dist = calc;
@@ -105,4 +117,37 @@ public class InGameManager : MonoBehaviour
         return result;
     }
 
+    public Vector3 GetPreferPos(Vector3 start, Vector3 target, float range)
+    {
+        Vector3 result = new Vector3();
+        float dist = float.MaxValue;
+        foreach (var item in posList)
+        {
+            float calc = Vector3.Distance(item, start);
+            if(calc < dist && Vector3.Distance(item, target) <= range)
+            {
+                dist = calc;
+                result = item;
+            }
+        }
+        return result;
+    }
+
+    public Vector3 GetNextPos(Vector3 start, Vector3 target, float range)
+    {
+        Vector3 final = GetPreferPos(start, target, range);
+        
+        if(final.x > start.x)
+        {
+            start.x += 0.5f;
+            return start;
+        }
+        if(final.x < start.x)
+        {
+            start.x -= 0.5f;
+            return start;
+        }
+
+        return start;
+    }
 }

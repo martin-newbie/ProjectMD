@@ -11,7 +11,7 @@ public class Seongah : UnitBehaviour
 
     protected override IEnumerator AttackLogic()
     {
-        var target = GetOpponent();
+        var target = GetNearestOpponent();
         ShootBullet(target);
         
         yield return PlayAnimAndWait("battle_attack");

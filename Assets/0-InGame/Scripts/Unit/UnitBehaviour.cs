@@ -26,6 +26,8 @@ public abstract class UnitBehaviour
     public UnitGroupType group;
     #endregion
 
+    public int curLocatedPosIndex = 0;
+
     public UnitBehaviour(UnitObject _subject)
     {
         subject = _subject;
@@ -35,6 +37,7 @@ public abstract class UnitBehaviour
         model = subject.model;
 
         probBullet = subject.probBullet;
+
     }
 
     public Coroutine StartCoroutine(IEnumerator routine)
@@ -63,7 +66,7 @@ public abstract class UnitBehaviour
 
     protected virtual void InCombatFunc()
     {
-        var target = GetOpponent();
+        var target = GetNearestOpponent();
 
         if (target == null) return;
 
@@ -95,25 +98,39 @@ public abstract class UnitBehaviour
     protected virtual IEnumerator MoveToTargetRange()
     {
         PlayAnim("battle_move", true);
-        yield return StartCoroutine(MoveLogic());
+        yield return StartCoroutine(CombatMoveLogic());
         PlayAnim("battle_wait", true);
     }
 
-    protected virtual IEnumerator MoveLogic()
+    protected virtual IEnumerator CombatMoveLogic()
     {
         while (true)
         {
-            var target = GetOpponent();
+            var target = GetNearestOpponent();
             if (IsInsideRange(target))
             {
                 break;
             }
 
-            int moveDir = GetTargetDir(target);
-            transform.Translate(moveDir * Vector3.right * Time.deltaTime * moveSpeed);
-            SetModelRotByDir(moveDir);
+            SetModelRotByTarget(target);
+            var preferPos = InGameManager.Instance.GetNextPos(transform.position, target.transform.position, range);
+            yield return StartCoroutine(MoveToTargetLerp(preferPos));
+        }
+    }
+
+    protected virtual IEnumerator MoveToTargetLerp(Vector3 target)
+    {
+        float dur = Vector3.Distance(transform.position, target) / moveSpeed;
+        float timer = 0f;
+        Vector3 startPos = transform.position;
+
+        while (timer <= dur)
+        {
+            transform.position = Vector3.Lerp(startPos, target, timer / dur);
+            timer += Time.deltaTime;
             yield return null;
         }
+        yield break;
     }
     #endregion
 
@@ -127,7 +144,7 @@ public abstract class UnitBehaviour
 
     protected virtual IEnumerator AttackAim()
     {
-        var target = GetOpponent();
+        var target = GetNearestOpponent();
         SetModelRotByTarget(target);
         yield return PlayAnimAndWait("battle_aiming");
     }
@@ -143,12 +160,12 @@ public abstract class UnitBehaviour
 
     protected virtual bool IsInsideRange(UnitBehaviour target)
     {
-        return transform.position.x > target.transform.position.x - range && transform.position.x < target.transform.position.x + range;
+        return Vector3.Distance(transform.position, target.transform.position) <= range;
     }
 
-    protected virtual UnitBehaviour GetOpponent()
+    protected virtual UnitBehaviour GetNearestOpponent()
     {
-        return InGameManager.Instance.FindNearestTarget(GetOpponentGroup(), transform.position.x);
+        return InGameManager.Instance.FindNearestTarget(GetOpponentGroup(), transform.position);
     }
 
     protected virtual void ShootBullet(UnitBehaviour target, string key = "bullet_pos")
@@ -252,4 +269,6 @@ public abstract class UnitBehaviour
 
         return result;
     }
+
+
 }
