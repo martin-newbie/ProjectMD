@@ -8,7 +8,7 @@ public class SkillCanvas : MonoBehaviour
     public SkillButton skillButtonPrefab;
     public Transform buttonParent;
     Stack<SkillButton> skillBtnPool = new Stack<SkillButton>();
-    List<SkillButton> curSkills = new List<SkillButton>();
+    [HideInInspector] public List<SkillButton> activatingBtn = new List<SkillButton>();
 
     Vector3 btnStartPos = new Vector3(2812.5f, -150f);
     int curSkillCount;
@@ -36,32 +36,17 @@ public class SkillCanvas : MonoBehaviour
         btnTemp.gameObject.SetActive(true);
         btnTemp.MovePos(btnStartPos, GetButtonPos(curSkillCount));
         btnTemp.SetData(Random.Range(0, 6));
+        activatingBtn.Add(btnTemp);
 
-        if(curSkillCount > 0)
-        {
-            var last = curSkills.Last();
-            btnTemp.leftBtn = last;
-            last.rightBtn = btnTemp;
-        }
-
-        curSkills.Add(btnTemp);
         curSkillCount++;
 
     }
 
     public void PushSkillButton(SkillButton btn)
     {
-        var left = btn.leftBtn;
-        var right = btn.rightBtn;
-
-        if(left != null)
-            left.rightBtn = right;
-        if (right != null)
-            right.leftBtn = left;
-
-        curSkills.Remove(btn);
         btn.rect.anchoredPosition = btnStartPos;
         btn.gameObject.SetActive(false);
+        activatingBtn.Remove(btn);
         skillBtnPool.Push(btn);
 
         curSkillCount--;
@@ -71,10 +56,9 @@ public class SkillCanvas : MonoBehaviour
 
     void AlignSkillButton()
     {
-        for (int i = 0; i < curSkillCount; i++)
+        for (int i = 0; i < activatingBtn.Count; i++)
         {
-            var item = curSkills[i];
-            item.MovePos(item.rect.anchoredPosition3D, GetButtonPos(i));
+            activatingBtn[i].MovePos(activatingBtn[i].rect.anchoredPosition, GetButtonPos(i));
         }
     }
 

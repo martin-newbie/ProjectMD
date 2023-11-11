@@ -8,8 +8,6 @@ public class SkillButton : MonoBehaviour
     [SerializeField] Image inImage;
 
     [HideInInspector] public RectTransform rect;
-    [HideInInspector] public SkillButton leftBtn;
-    [HideInInspector] public SkillButton rightBtn;
 
     // for test or replace as sprite
     Color[] attributeColors = new Color[]
@@ -65,32 +63,34 @@ public class SkillButton : MonoBehaviour
         // disconnect data from character
 
         int collabsCount = 0;
-        var left = leftBtn;
-        var right = rightBtn;
+        int thisIdx = manager.activatingBtn.IndexOf(this);
+        var left = thisIdx - 1;
+        var right = thisIdx + 1;
         List<SkillButton> usesBtn = new List<SkillButton>();
+        bool leftFinish = false, rightFinish = false;
 
-        while (left != null || right != null)
+        while (!leftFinish || !rightFinish)
         {
-            if (left != null && collabsCount < 4 && left.attribute == attribute)
+            if (left >= 0 && collabsCount < 4 && manager.activatingBtn[left].attribute == attribute)
             {
-                usesBtn.Add(left);
-                left = left.leftBtn;
+                usesBtn.Add(manager.activatingBtn[left]);
+                left = left - 1;
                 collabsCount++;
             }
             else
             {
-                left = null;
+                leftFinish = true;
             }
 
-            if (right != null && collabsCount < 4 && right.attribute == attribute)
+            if (right < manager.activatingBtn.Count && collabsCount < 4 && manager.activatingBtn[right].attribute == attribute)
             {
-                usesBtn.Add(right);
-                right = right.rightBtn;
+                usesBtn.Add(manager.activatingBtn[right]);
+                right = right + 1;
                 collabsCount++;
             }
             else
             {
-                right = null;
+                rightFinish = true;
             }
         }
 
