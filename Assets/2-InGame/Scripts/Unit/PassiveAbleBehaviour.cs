@@ -9,6 +9,7 @@ public abstract class PassiveAbleBehaviour : UnitBehaviour
 
     protected PassiveAbleBehaviour(UnitObject _subject) : base(_subject)
     {
+        // get passive skill value
     }
 
     protected override void InCombatFunc()
