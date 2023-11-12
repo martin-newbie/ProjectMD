@@ -109,7 +109,7 @@ public abstract class UnitBehaviour
             var target = GetNearestOpponent();
             targetPos = InGameManager.Instance.GetPreferPos(this, target, range);
 
-            if (IsInsideRange(target) && transform.position == targetPos)
+            if (transform.position == targetPos)
             {
                 break;
             }
