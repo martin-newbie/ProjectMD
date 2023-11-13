@@ -9,9 +9,18 @@ public abstract class ActiveAbleBehaviour : PassiveAbleBehaviour
         // get active skill value
     }
 
-    public void ActivateActiveSkill(ActiveSkillValue skillData)
+    public virtual void ActivateActiveSkill(ActiveSkillValue skillData)
     {
         StartActionCoroutine(ActiveSkill(skillData));
+    }
+
+    public virtual ActiveSkillValue GetDefaultSkillValue()
+    {
+        ActiveSkillValue result = new ActiveSkillValue();
+
+        // 반복문으로 스킬벨류 가져와서 result.AddValue로 추가해줌
+
+        return result;
     }
 
     public abstract void CollabseSkill(ActiveSkillValue skillData, UnitBehaviour subjectUnit);
