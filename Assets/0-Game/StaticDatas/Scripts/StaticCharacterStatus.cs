@@ -2,34 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "characterStatusSheet", menuName ="MD/ScriptableData/characterStatusSheet", order = int.MinValue)]
-public class CharacterStatusSheet : SheetDataBase
+[CreateAssetMenu(fileName = "StaticCharacterStatus", menuName = "MD/ScriptableData/StaticCharacterStatus", order = int.MinValue)]
+public class StaticCharacterStatus : SheetDataBase
 {
     protected override string gid => "0";
 
     protected override string range => "C3:S13";
 
-    public List<CharacterStatus> dataList;
+    public List<StaticStatusData> dataList;
 
     protected override void SetData(string data)
     {
-        dataList = new List<CharacterStatus>();
+        dataList = new List<StaticStatusData>();
 
         var datas = data.Split('\n');
         foreach (var item in datas)
         {
-            dataList.Add(new CharacterStatus(item.Split('\t')));
+            dataList.Add(new StaticStatusData(item.Split('\t')));
         }
     }
 }
 
 [System.Serializable]
-public class CharacterStatus
+public class StaticStatusData
 {
     public int keyIndex;
     [SerializeField] Dictionary<StatusType, float> statusDic;
 
-    public CharacterStatus(string[] data)
+    public StaticStatusData(string[] data)
     {
         statusDic = new Dictionary<StatusType, float>();
 

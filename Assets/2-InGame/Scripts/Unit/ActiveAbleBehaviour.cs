@@ -9,21 +9,21 @@ public abstract class ActiveAbleBehaviour : PassiveAbleBehaviour
         // get active skill value
     }
 
-    public void ActivateActiveSkill(SkillValue skillData)
+    public void ActivateActiveSkill(ActiveSkillValue skillData)
     {
         StartActionCoroutine(ActiveSkill(skillData));
     }
 
-    public abstract void CollabseSkill(SkillValue skillData, UnitBehaviour subjectUnit);
-    public abstract IEnumerator ActiveSkill(SkillValue skillData);
+    public abstract void CollabseSkill(ActiveSkillValue skillData, UnitBehaviour subjectUnit);
+    public abstract IEnumerator ActiveSkill(ActiveSkillValue skillData);
 }
 
 
-public class SkillValue
+public class ActiveSkillValue
 {
     public Dictionary<StatusType, float> valueDic = new Dictionary<StatusType, float>();
 
-    public SkillValue()
+    public ActiveSkillValue()
     {
         valueDic = new Dictionary<StatusType, float>();
     }
