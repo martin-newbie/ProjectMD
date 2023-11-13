@@ -27,6 +27,7 @@ public abstract class UnitBehaviour
     #endregion
 
     public Vector3 targetPos = new Vector3();
+    public Coroutine actionCoroutine;
 
     public UnitBehaviour(UnitObject _subject)
     {
@@ -84,7 +85,8 @@ public abstract class UnitBehaviour
 
     protected virtual void StartActionCoroutine(IEnumerator routine)
     {
-        StartCoroutine(action());
+        if (actionCoroutine != null) StopCoroutine(actionCoroutine);
+        actionCoroutine = StartCoroutine(action());
 
         IEnumerator action()
         {
