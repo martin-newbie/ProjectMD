@@ -23,6 +23,7 @@ public class InGameManager : MonoBehaviour
     {
         InitTileList();
         TestMethod_InitUnits();
+        InitSkills();
     }
 
     void InitTileList()
@@ -66,12 +67,19 @@ public class InGameManager : MonoBehaviour
         }
     }
 
+    void InitSkills()
+    {
+        var skillAble = allUnits.FindAll((item) => item.behaviour.group == UnitGroupType.ALLY).Select((item) => item.behaviour as ActiveAbleBehaviour);
+        SkillManager.Instance.InitSkills(skillAble.ToArray());
+    }
+
     void TestMethod_CombatStart()
     {
         foreach (var item in allUnits)
         {
             item.behaviour.state = BehaviourState.INCOMBAT;
         }
+        SkillManager.Instance.StartGame();
     }
 
     UnitBehaviour SetBehaviourInObject(UnitObject unitObj, int idx, UnitGroupType group)

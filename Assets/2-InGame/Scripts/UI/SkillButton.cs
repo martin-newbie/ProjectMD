@@ -6,22 +6,13 @@ using UnityEngine.UI;
 public class SkillButton : MonoBehaviour
 {
     [SerializeField] Image inImage;
-
     [HideInInspector] public RectTransform rect;
-
-    // for test or replace as sprite
-    Color[] attributeColors = new Color[]
-    {
-        new Color(0.8f,0,0),
-        new Color(0.8f,0.8f,0),
-        new Color(0.2f,0.8f,0),
-        new Color(0,0.8f,0.8f),
-        new Color(0,0.2f,0.8f),
-        new Color(0.4f,0f,0.8f),
-    };
+    
+    ActiveAbleBehaviour linkedData;
+    int buttonIdx = -1;
 
     SkillCanvas manager;
-    public int attribute;
+
 
     public void InitButton(SkillCanvas _manager)
     {
@@ -29,10 +20,21 @@ public class SkillButton : MonoBehaviour
         rect = GetComponent<RectTransform>();
     }
 
-    public void SetData(int _attribute)
+    public void ClearButton()
     {
-        attribute = _attribute;
-        inImage.color = attributeColors[attribute];
+        buttonIdx = -1;
+        linkedData = null;
+    }
+
+    public void SetIdx(int idx)
+    {
+        buttonIdx = idx;
+    }
+
+    public void SetData(ActiveAbleBehaviour _linkedData)
+    {
+        linkedData = _linkedData;
+        // set sprite
     }
 
     public void MovePos(Vector3 start, Vector3 target)
@@ -57,52 +59,6 @@ public class SkillButton : MonoBehaviour
 
     public void UseSkill()
     {
-        // use other collabs skills first
-        // transfer buff data to character
-        // make character user skill
-        // disconnect data from character
-
-        int collabsCount = 0;
-        int thisIdx = manager.activatingBtn.IndexOf(this);
-        var left = thisIdx - 1;
-        var right = thisIdx + 1;
-        List<SkillButton> usesBtn = new List<SkillButton>();
-        bool leftFinish = false, rightFinish = false;
-
-        while (!leftFinish || !rightFinish)
-        {
-            if (left >= 0 && collabsCount < 4 && manager.activatingBtn[left].attribute == attribute)
-            {
-                usesBtn.Add(manager.activatingBtn[left]);
-                left = left - 1;
-                collabsCount++;
-            }
-            else
-            {
-                leftFinish = true;
-            }
-
-            if (right < manager.activatingBtn.Count && collabsCount < 4 && manager.activatingBtn[right].attribute == attribute)
-            {
-                usesBtn.Add(manager.activatingBtn[right]);
-                right = right + 1;
-                collabsCount++;
-            }
-            else
-            {
-                rightFinish = true;
-            }
-        }
-
-        foreach (var item in usesBtn)
-        {
-            item.UseSkillAsCollabs();
-        }
-        manager.PushSkillButton(this);
-    }
-
-    public void UseSkillAsCollabs()
-    {
-        manager.PushSkillButton(this);
+        SkillManager.Instance.UseSkill(buttonIdx);
     }
 }

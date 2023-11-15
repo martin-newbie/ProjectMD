@@ -27,30 +27,26 @@ public class SkillCanvas : MonoBehaviour
         }
     }
 
-    public void AddSkillButton()
+    public void AddSkillButton(ActiveAbleBehaviour _linkedData)
     {
-        if (skillBtnPool.Count == 0) return;
-        if (curSkillCount >= 10) return;
-
         var btnTemp = skillBtnPool.Pop();
         btnTemp.gameObject.SetActive(true);
         btnTemp.MovePos(btnStartPos, GetButtonPos(curSkillCount));
-        btnTemp.SetData(Random.Range(0, 6));
+        btnTemp.SetData(_linkedData);
         activatingBtn.Add(btnTemp);
 
         curSkillCount++;
-
+        AlignSkillButton();
     }
 
-    public void PushSkillButton(SkillButton btn)
+    public void RemoveButtonAt(int idx)
     {
-        btn.rect.anchoredPosition = btnStartPos;
-        btn.gameObject.SetActive(false);
-        activatingBtn.Remove(btn);
-        skillBtnPool.Push(btn);
+        var btnTemp = activatingBtn[idx];
+        btnTemp.gameObject.SetActive(false);
+        activatingBtn.Remove(btnTemp);
+        skillBtnPool.Push(btnTemp);
 
         curSkillCount--;
-
         AlignSkillButton();
     }
 
@@ -58,6 +54,7 @@ public class SkillCanvas : MonoBehaviour
     {
         for (int i = 0; i < activatingBtn.Count; i++)
         {
+            activatingBtn[i].SetIdx(i);
             activatingBtn[i].MovePos(activatingBtn[i].rect.anchoredPosition, GetButtonPos(i));
         }
     }

@@ -4,12 +4,15 @@ using UnityEngine;
 
 public abstract class ActiveAbleBehaviour : PassiveAbleBehaviour
 {
+    public AttributeType skillType;
+    public int cost;
+
     protected ActiveAbleBehaviour(UnitObject _subject) : base(_subject)
     {
         // get active skill value
     }
 
-    public virtual void ActivateActiveSkill(ActiveSkillValue skillData)
+    public virtual void UseActiveSkill(ActiveSkillValue skillData)
     {
         StartActionCoroutine(ActiveSkill(skillData));
     }
