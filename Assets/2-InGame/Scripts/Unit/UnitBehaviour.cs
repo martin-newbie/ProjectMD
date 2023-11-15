@@ -211,7 +211,7 @@ public abstract class UnitBehaviour
     {
         subject.StopAllCoroutines();
         state = BehaviourState.RETIRE;
-        InGameManager.Instance.allUnits.Remove(this.subject);
+        InGameManager.Instance.RetireCharacter(this);
         PlayAnim("battle_retire");
     }
 

@@ -16,7 +16,7 @@ public class InGameManager : MonoBehaviour
     public UnitObject unitObjPrefab;
     public SkeletonDataAsset[] humanoidDataAsset;
 
-    [HideInInspector] public List<UnitObject> allUnits = new List<UnitObject>();
+    [HideInInspector] public List<UnitBehaviour> allUnits = new List<UnitBehaviour>();
     List<Vector3> posList = new List<Vector3>();
 
     void Start()
@@ -53,7 +53,7 @@ public class InGameManager : MonoBehaviour
             var behaviour = SetBehaviourInObject(unitObj, i, UnitGroupType.ALLY);
             behaviour.range = (4 - i) * 2 + 2;
 
-            allUnits.Add(unitObj);
+            allUnits.Add(behaviour);
         }
 
         for (int i = 0; i < 4; i++)
@@ -63,13 +63,13 @@ public class InGameManager : MonoBehaviour
             var behaviour = SetBehaviourInObject(unitObj, 0, UnitGroupType.HOSTILE);
             behaviour.range = 4;
 
-            allUnits.Add(unitObj);
+            allUnits.Add(behaviour);
         }
     }
 
     void InitSkills()
     {
-        var skillAble = allUnits.FindAll((item) => item.behaviour.group == UnitGroupType.ALLY).Select((item) => item.behaviour as ActiveAbleBehaviour);
+        var skillAble = allUnits.FindAll((item) => item.group == UnitGroupType.ALLY).Select((item) => item as ActiveAbleBehaviour);
         SkillManager.Instance.InitSkills(skillAble.ToArray());
     }
 
@@ -77,7 +77,7 @@ public class InGameManager : MonoBehaviour
     {
         foreach (var item in allUnits)
         {
-            item.behaviour.state = BehaviourState.INCOMBAT;
+            item.state = BehaviourState.INCOMBAT;
         }
         SkillManager.Instance.StartGame();
     }
@@ -106,9 +106,19 @@ public class InGameManager : MonoBehaviour
         return behaviour;
     }
 
+    public void RetireCharacter(UnitBehaviour unit)
+    {
+        if(unit is ActiveAbleBehaviour)
+        {
+            SkillManager.Instance.RemoveCharacterAtSkills(unit as ActiveAbleBehaviour);
+        }
+
+        allUnits.Remove(unit);
+    }
+
     public UnitBehaviour FindNearestTarget(UnitGroupType group, Vector3 startPos)
     {
-        var groupUnits = allUnits.FindAll((item) => item.behaviour.group == group);
+        var groupUnits = allUnits.FindAll((item) => item.group == group);
 
         float dist = float.MaxValue;
         UnitBehaviour result = null;
@@ -119,7 +129,7 @@ public class InGameManager : MonoBehaviour
             if (calc < dist)
             {
                 dist = calc;
-                result = item.behaviour;
+                result = item;
             }
         }
 
@@ -162,7 +172,7 @@ public class InGameManager : MonoBehaviour
 
     int GetPosCount(Vector3 locate, UnitBehaviour subject)
     {
-        var length = allUnits.FindAll((item) => item.behaviour.targetPos == locate && item.behaviour != subject).Count;
+        var length = allUnits.FindAll((item) => item.targetPos == locate && item != subject).Count;
         return length;
     }
 }

@@ -42,7 +42,7 @@ public class SkillManager : MonoBehaviour
         curDelay += Time.deltaTime;
     }
 
-    void RemoveCharacterAtSkills(ActiveAbleBehaviour retiredUnit)
+    public void RemoveCharacterAtSkills(ActiveAbleBehaviour retiredUnit)
     {
         curActiveUnits.Remove(retiredUnit);
         for (int i = 0; i < deckSkills.Count; i++)
