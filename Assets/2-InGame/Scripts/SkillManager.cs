@@ -16,7 +16,7 @@ public class SkillManager : MonoBehaviour
     List<ActiveAbleBehaviour> curActiveUnits = new List<ActiveAbleBehaviour>();
     List<ActiveAbleBehaviour> deckSkills = new List<ActiveAbleBehaviour>();
 
-    float skillDelay = 1f;
+    float skillDelay = 5f;
     float curDelay;
 
     public void InitSkills(ActiveAbleBehaviour[] activeUnits)
