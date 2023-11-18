@@ -15,6 +15,7 @@ public class InGameManager : MonoBehaviour
 
     public UnitObject unitObjPrefab;
     public SkeletonDataAsset[] humanoidDataAsset;
+    public Sprite[] characterProfiles;
 
     [HideInInspector] public List<UnitBehaviour> allUnits = new List<UnitBehaviour>();
     List<Vector3> posList = new List<Vector3>();
@@ -28,9 +29,9 @@ public class InGameManager : MonoBehaviour
 
     void InitTileList()
     {
-        float mapHalfSize = 10f; // 10 is test, it should loaded from map data
+        float mapSize = 50;
 
-        for (float i = -mapHalfSize; i <= mapHalfSize; i += 0.5f)
+        for (float i = 0; i <= mapSize; i += 0.5f)
         {
             posList.Add(new Vector3(i, 0));
         }
@@ -46,9 +47,10 @@ public class InGameManager : MonoBehaviour
 
     void TestMethod_InitUnits()
     {
+        int[] spawnIdx = new int[4] { 2, 6, 10, 14 };
         for (int i = 0; i < 4; i++)
         {
-            var unitObj = Instantiate(unitObjPrefab, posList[i], Quaternion.identity);
+            var unitObj = Instantiate(unitObjPrefab, posList[spawnIdx[i]], Quaternion.identity);
 
             var behaviour = SetBehaviourInObject(unitObj, i, UnitGroupType.ALLY);
             behaviour.range = (4 - i) * 2 + 2;
@@ -58,7 +60,7 @@ public class InGameManager : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
-            var unitObj = Instantiate(unitObjPrefab, posList[posList.Count - i - 1], Quaternion.identity);
+            var unitObj = Instantiate(unitObjPrefab, posList[spawnIdx[i] + 24], Quaternion.identity);
 
             var behaviour = SetBehaviourInObject(unitObj, 0, UnitGroupType.HOSTILE);
             behaviour.range = 4;
