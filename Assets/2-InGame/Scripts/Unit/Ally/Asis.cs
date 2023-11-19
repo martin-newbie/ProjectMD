@@ -22,7 +22,7 @@ public class Asis : ActiveSkillBehaviour
 
     public override void CollabseSkill(ActiveSkillValue skillData, UnitBehaviour subjectUnit)
     {
-        throw new System.NotImplementedException();
+
     }
 
     public override IEnumerator ActiveSkill(ActiveSkillValue skillData)

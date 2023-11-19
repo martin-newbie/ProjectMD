@@ -16,7 +16,7 @@ public class SkillManager : MonoBehaviour
     List<ActiveSkillBehaviour> curActiveUnits = new List<ActiveSkillBehaviour>();
     List<ActiveSkillBehaviour> deckSkills = new List<ActiveSkillBehaviour>();
 
-    float skillDelay = 5f;
+    float skillDelay = 1f;
     float curDelay;
 
     public void InitSkills(ActiveSkillBehaviour[] activeUnits)
@@ -34,7 +34,7 @@ public class SkillManager : MonoBehaviour
     {
         if (!active) return;
 
-        if(curDelay >= skillDelay)
+        if (curDelay >= skillDelay)
         {
             curDelay = 0;
             AddSkillInDeck();
@@ -47,7 +47,7 @@ public class SkillManager : MonoBehaviour
         curActiveUnits.Remove(retiredUnit);
         for (int i = 0; i < deckSkills.Count; i++)
         {
-            if(deckSkills[i] == retiredUnit)
+            if (deckSkills[i] == retiredUnit)
             {
                 deckSkills.RemoveAt(i);
                 skillCanvas.RemoveButtonAt(i);
@@ -75,12 +75,14 @@ public class SkillManager : MonoBehaviour
         int right = idx + 1;
         List<ActiveSkillBehaviour> collabse = new List<ActiveSkillBehaviour>();
         bool leftFinish = false, rightFinish = false;
+        int startIdx = idx;
 
         while (!leftFinish || !rightFinish)
         {
-            if(left >= 0 && collabseCount < 4 && deckSkills[left] == deckSkills[idx])
+            if (left >= 0 && collabseCount < 4 && deckSkills[left] == deckSkills[idx])
             {
                 collabse.Add(deckSkills[left]);
+                startIdx = left;
                 left = left - 1;
                 collabseCount++;
             }
@@ -89,7 +91,7 @@ public class SkillManager : MonoBehaviour
                 leftFinish = true;
             }
 
-            if(right < deckSkills.Count && collabseCount < 4 && deckSkills[right] == deckSkills[idx])
+            if (right < deckSkills.Count && collabseCount < 4 && deckSkills[right] == deckSkills[idx])
             {
                 collabse.Add(deckSkills[right]);
                 right = right + 1;
@@ -108,15 +110,18 @@ public class SkillManager : MonoBehaviour
         }
         deckSkills[idx].UseActiveSkill(skillValue);
 
-        if(collabseCount > 0)
-        {
-            for (int i = left; i <= left + right - idx; i++)
-            {
-                deckSkills.RemoveAt(left);
-                skillCanvas.RemoveButtonAt(left);
-            }
-        }
 
+        // remove collabse skills
+        if (collabseCount > 0)
+        {
+            deckSkills.RemoveRange(startIdx, collabseCount + 1);
+            skillCanvas.RemoveButtonRange(startIdx, collabseCount + 1);
+        }
+        else
+        {
+            deckSkills.RemoveAt(idx);
+            skillCanvas.RemoveButtonAt(idx);
+        }
 
     }
 }

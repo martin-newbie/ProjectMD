@@ -39,9 +39,25 @@ public class SkillCanvas : MonoBehaviour
         AlignSkillButton();
     }
 
+    public void RemoveButtonRange(int idx, int count)
+    {
+        var btns = activatingBtn.GetRange(idx, count);
+        activatingBtn.RemoveRange(idx, count);
+        foreach (var btn in btns)
+        {
+            btn.ClearButton();
+            btn.gameObject.SetActive(false);
+            skillBtnPool.Push(btn);
+        }
+
+        curSkillCount -= count;
+        AlignSkillButton();
+    }
+
     public void RemoveButtonAt(int idx)
     {
         var btnTemp = activatingBtn[idx];
+        btnTemp.ClearButton();
         btnTemp.gameObject.SetActive(false);
         activatingBtn.Remove(btnTemp);
         skillBtnPool.Push(btnTemp);
