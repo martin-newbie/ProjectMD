@@ -30,6 +30,7 @@ public class InGameManager : MonoBehaviour
         InitTileList();
         InitSkills();
         SpawnAllyUnits();
+        InitGameMode();
         StartCoroutine(gameMode.GameModeRoutine());
     }
     
@@ -50,6 +51,16 @@ public class InGameManager : MonoBehaviour
             behaviour.range = (4 - i) * 2 + 2;
 
             allUnits.Add(behaviour);
+        }
+    }
+
+    void InitGameMode()
+    {
+        switch (gameModeIdx)
+        {
+            case 0:
+                gameMode = new TestGameMode(this);
+                break;
         }
     }
 
