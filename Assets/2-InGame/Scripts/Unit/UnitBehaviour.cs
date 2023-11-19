@@ -233,6 +233,7 @@ public abstract class UnitBehaviour
                 break;
             case BehaviourState.RETREAT:
                 // return to start pos
+                PlayAnim("battle_move", true);
                 break;
         }
     }

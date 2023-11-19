@@ -37,7 +37,7 @@ public class InGameManager : MonoBehaviour
 
     IEnumerator TestGameLogic()
     {
-        int[] spawnIdx = new int[4] { 2, 6, 10, 14 };
+        int[] spawnIdx = new int[4] { 24, 27, 30, 33 };
         for (int i = 0; i < 4; i++)
         {
             var unitObj = Instantiate(unitObjPrefab, posList[spawnIdx[i]], Quaternion.identity);
@@ -50,9 +50,14 @@ public class InGameManager : MonoBehaviour
 
         while (true)
         {
+            setUnitsState(BehaviourState.RETREAT, UnitGroupType.ALLY);
             spawnEnemy();
             yield return StartCoroutine(comingFront(5f));
+            setUnitsState(BehaviourState.INCOMBAT, UnitGroupType.ALLY);
+            setUnitsState(BehaviourState.INCOMBAT, UnitGroupType.HOSTILE);
             yield return new WaitUntil(() => getCountOfEnemy() <= 0);
+            setUnitsState(BehaviourState.STANDBY, UnitGroupType.ALLY);
+            yield return new WaitForSeconds(3f);
         }
 
         int getCountOfEnemy()
@@ -67,11 +72,23 @@ public class InGameManager : MonoBehaviour
             }
             return result;
         }
+        void setUnitsState(BehaviourState state, UnitGroupType group)
+        {
+            foreach (var unit in allUnits)
+            {
+                if (unit.group == group)
+                {
+                    unit.SetBehaviourState(state);
+                }
+            }
+        }
         void spawnEnemy()
         {
+            int[] spawnIdx = new int[4] { 47, 50, 53, 56 };
             for (int i = 0; i < 4; i++)
             {
-                var unitObj = Instantiate(unitObjPrefab, posList[0], Quaternion.identity);
+                var unitObj = Instantiate(unitObjPrefab, posList[spawnIdx[i] + 20], Quaternion.identity);
+                movingObjects.Add(unitObj.gameObject);
 
                 var behaviour = SetBehaviourInObject(unitObj, 0, UnitGroupType.HOSTILE);
                 behaviour.range = 4;
@@ -83,7 +100,7 @@ public class InGameManager : MonoBehaviour
         {
             foreach (var obj in movingObjects)
             {
-                StartCoroutine(moveSingleObj(obj, dur, 5f));
+                StartCoroutine(moveSingleObj(obj, dur, 10f));
             }
             yield return new WaitForSeconds(dur);
             yield break;
@@ -92,7 +109,7 @@ public class InGameManager : MonoBehaviour
         {
             float timer = 0f;
             Vector3 start = obj.transform.position;
-            Vector3 end = obj.transform.position + new Vector3(move, 0, 0);
+            Vector3 end = obj.transform.position + new Vector3(-move, 0, 0);
             while (timer < dur)
             {
                 obj.transform.position = Vector3.Lerp(start, end, timer / dur);
@@ -158,6 +175,7 @@ public class InGameManager : MonoBehaviour
         }
 
         allUnits.Remove(unit);
+        movingObjects.Add(unit.gameObject);
     }
 
     public UnitBehaviour FindNearestTarget(UnitGroupType group, Vector3 startPos)

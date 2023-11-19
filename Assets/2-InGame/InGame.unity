@@ -433,6 +433,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 580927fbbc0fb044d9e5f0df5516f8f4, type: 3}
   - {fileID: 21300000, guid: 4c6582131f2db0248825673edfd42f97, type: 3}
   - {fileID: 21300000, guid: 138de54ceb2556e499bcfc0d1597b64e, type: 3}
+  movingObjects: []
 --- !u!114 &783219648
 MonoBehaviour:
   m_ObjectHideFlags: 0
