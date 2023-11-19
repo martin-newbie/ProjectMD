@@ -78,7 +78,7 @@ public class SkillManager : MonoBehaviour
 
         while (!leftFinish || !rightFinish)
         {
-            if(left >= 0 && collabseCount < 4 && deckSkills[left].skillType == deckSkills[idx].skillType)
+            if(left >= 0 && collabseCount < 4 && deckSkills[left] == deckSkills[idx])
             {
                 collabse.Add(deckSkills[left]);
                 left = left - 1;
@@ -89,7 +89,7 @@ public class SkillManager : MonoBehaviour
                 leftFinish = true;
             }
 
-            if(right < deckSkills.Count && collabseCount < 4 && deckSkills[right].skillType == deckSkills[idx].skillType)
+            if(right < deckSkills.Count && collabseCount < 4 && deckSkills[right] == deckSkills[idx])
             {
                 collabse.Add(deckSkills[right]);
                 right = right + 1;
@@ -114,7 +114,6 @@ public class SkillManager : MonoBehaviour
             {
                 deckSkills.RemoveAt(left);
                 skillCanvas.RemoveButtonAt(left);
-                // skill button remove
             }
         }
 
