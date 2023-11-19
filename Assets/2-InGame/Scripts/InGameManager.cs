@@ -18,24 +18,28 @@ public class InGameManager : MonoBehaviour
     public Sprite[] characterProfiles;
 
     [HideInInspector] public List<UnitBehaviour> allUnits = new List<UnitBehaviour>();
-    List<Vector3> posList = new List<Vector3>();
+    [HideInInspector] public List<Vector3> posList = new List<Vector3>();
 
     [HideInInspector] public List<GameObject> movingObjects = new List<GameObject>();
+
+    int gameModeIdx = 0;
+    IGameModeBehaviour gameMode;
 
     void Start()
     {
         InitTileList();
         InitSkills();
-        StartCoroutine(TestGameLogic());
+        SpawnAllyUnits();
+        StartCoroutine(gameMode.GameModeRoutine());
     }
-
+    
     void InitTileList()
     {
         float mapHalfSize = 20f;
         for (float i = -mapHalfSize; i <= mapHalfSize; i += 0.5f) { posList.Add(new Vector3(i, 0)); }
     }
 
-    IEnumerator TestGameLogic()
+    void SpawnAllyUnits()
     {
         int[] spawnIdx = new int[4] { 24, 27, 30, 33 };
         for (int i = 0; i < 4; i++)
@@ -46,77 +50,6 @@ public class InGameManager : MonoBehaviour
             behaviour.range = (4 - i) * 2 + 2;
 
             allUnits.Add(behaviour);
-        }
-
-        while (true)
-        {
-            setUnitsState(BehaviourState.RETREAT, UnitGroupType.ALLY);
-            spawnEnemy();
-            yield return StartCoroutine(comingFront(5f));
-            setUnitsState(BehaviourState.INCOMBAT, UnitGroupType.ALLY);
-            setUnitsState(BehaviourState.INCOMBAT, UnitGroupType.HOSTILE);
-            yield return new WaitUntil(() => getCountOfEnemy() <= 0);
-            setUnitsState(BehaviourState.STANDBY, UnitGroupType.ALLY);
-            yield return new WaitForSeconds(3f);
-        }
-
-        int getCountOfEnemy()
-        {
-            int result = 0;
-            foreach (var item in allUnits)
-            {
-                if (item.group == UnitGroupType.HOSTILE)
-                {
-                    result++;
-                }
-            }
-            return result;
-        }
-        void setUnitsState(BehaviourState state, UnitGroupType group)
-        {
-            foreach (var unit in allUnits)
-            {
-                if (unit.group == group)
-                {
-                    unit.SetBehaviourState(state);
-                }
-            }
-        }
-        void spawnEnemy()
-        {
-            int[] spawnIdx = new int[4] { 47, 50, 53, 56 };
-            for (int i = 0; i < 4; i++)
-            {
-                var unitObj = Instantiate(unitObjPrefab, posList[spawnIdx[i] + 20], Quaternion.identity);
-                movingObjects.Add(unitObj.gameObject);
-
-                var behaviour = SetBehaviourInObject(unitObj, 0, UnitGroupType.HOSTILE);
-                behaviour.range = 4;
-
-                allUnits.Add(behaviour);
-            }
-        }
-        IEnumerator comingFront(float dur)
-        {
-            foreach (var obj in movingObjects)
-            {
-                StartCoroutine(moveSingleObj(obj, dur, 10f));
-            }
-            yield return new WaitForSeconds(dur);
-            yield break;
-        }
-        IEnumerator moveSingleObj(GameObject obj, float dur, float move)
-        {
-            float timer = 0f;
-            Vector3 start = obj.transform.position;
-            Vector3 end = obj.transform.position + new Vector3(-move, 0, 0);
-            while (timer < dur)
-            {
-                obj.transform.position = Vector3.Lerp(start, end, timer / dur);
-                timer += Time.deltaTime;
-                yield return null;
-            }
-            obj.transform.position = end;
         }
     }
 
@@ -143,7 +76,7 @@ public class InGameManager : MonoBehaviour
         SkillManager.Instance.StartGame();
     }
 
-    UnitBehaviour SetBehaviourInObject(UnitObject unitObj, int idx, UnitGroupType group)
+    public UnitBehaviour SetBehaviourInObject(UnitObject unitObj, int idx, UnitGroupType group)
     {
         UnitBehaviour behaviour = null;
 
