@@ -6,6 +6,8 @@ public class Asis : ActiveSkillBehaviour
 {
     public Asis(UnitObject _subject) : base(_subject)
     {
+        maxAmmo = 1;
+        curAmmo = maxAmmo;
     }
 
     protected override IEnumerator MoveToTargetRange()
@@ -19,7 +21,6 @@ public class Asis : ActiveSkillBehaviour
         var target = GetNearestOpponent();
         ShootBullet(target);
         yield return PlayAnimAndWait("battle_attack");
-        yield return PlayAnimAndWait("battle_reload");
     }
 
     protected override void ShootBullet(UnitBehaviour target, string key = "bullet_pos")
@@ -35,6 +36,7 @@ public class Asis : ActiveSkillBehaviour
         var bullet = Instantiate(probBullet, startPos, Quaternion.identity);
         bullet.GetComponent<SpriteRenderer>().sprite = InGameSpriteManager.Instance.asisGrenadeSprite;
         bullet.StartBulletEffect(startPos, targetPos, 5f, () => target.OnDamage(damage, this), 1);
+        curAmmo--;
     }
 
     public override void CollabseSkill(ActiveSkillValue skillData, UnitBehaviour subjectUnit)

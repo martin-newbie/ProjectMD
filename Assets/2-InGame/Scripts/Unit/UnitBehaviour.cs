@@ -27,6 +27,12 @@ public abstract class UnitBehaviour
     public UnitGroupType group;
     #endregion
 
+    #region runningValue
+    public int curAmmo;
+    public int maxAmmo;
+    public bool isAction;
+    #endregion
+
     public Vector3 targetPos = new Vector3();
     public Coroutine actionCoroutine;
 
@@ -75,12 +81,23 @@ public abstract class UnitBehaviour
     {
         var target = GetNearestOpponent();
 
-        if (target == null) return;
+        if (target == null)
+        {
+            isAction = false;
+            return;
+        }
 
         if (IsInsideRange(target))
         {
             // attack
-            StartActionCoroutine(AttackToTarget());
+            if (curAmmo <= 0)
+            {
+                StartActionCoroutine(Reload());
+            }
+            else
+            {
+                StartActionCoroutine(AttackToTarget());
+            }
         }
         else
         {
@@ -91,6 +108,8 @@ public abstract class UnitBehaviour
 
     protected virtual void StartActionCoroutine(IEnumerator routine)
     {
+        isAction = true;
+
         if (actionCoroutine != null) StopCoroutine(actionCoroutine);
         actionCoroutine = StartCoroutine(action());
 
@@ -154,6 +173,12 @@ public abstract class UnitBehaviour
         yield return StartCoroutine(AttackFinish());
     }
 
+    protected virtual IEnumerator Reload()
+    {
+        yield return PlayAnimAndWait("battle_reload");
+        curAmmo = maxAmmo;
+    }
+
     protected virtual IEnumerator AttackAim()
     {
         var target = GetNearestOpponent();
@@ -193,6 +218,7 @@ public abstract class UnitBehaviour
 
         var bullet = Instantiate(probBullet, startPos, Quaternion.identity);
         bullet.StartBulletEffect(startPos, targetPos, 25f, () => target.OnDamage(damage, this));
+        curAmmo--;
     }
 
     public virtual void OnDamage(float damage, UnitBehaviour from)

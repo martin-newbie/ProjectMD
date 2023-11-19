@@ -6,7 +6,8 @@ public class Seongah : ActiveSkillBehaviour
 {
     public Seongah(UnitObject _subject) : base(_subject)
     {
-
+        maxAmmo = 5;
+        curAmmo = maxAmmo;
     }
 
     protected override IEnumerator AttackLogic()

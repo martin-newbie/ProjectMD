@@ -6,6 +6,8 @@ public class Minel : ActiveSkillBehaviour
 {
     public Minel(UnitObject _subject) : base(_subject)
     {
+        maxAmmo = 30;
+        curAmmo = maxAmmo;
     }
 
     protected override IEnumerator AttackLogic()

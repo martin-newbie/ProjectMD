@@ -9,7 +9,7 @@ public class TestGameMode : IGameModeBehaviour
     public TestGameMode(InGameManager _manager)
     {
         manager = _manager;
-        
+
     }
 
     public IEnumerator GameModeRoutine()
@@ -22,11 +22,10 @@ public class TestGameMode : IGameModeBehaviour
             SetUnitsState(BehaviourState.INCOMBAT, UnitGroupType.ALLY);
             SetUnitsState(BehaviourState.INCOMBAT, UnitGroupType.HOSTILE);
             yield return new WaitUntil(() => GetCountOfEnemy() <= 0);
+            yield return new WaitUntil(() => WaitUntilEveryActionEnd());
             SetUnitsState(BehaviourState.STANDBY, UnitGroupType.ALLY);
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
         }
-
-        
     }
 
     int GetCountOfEnemy()
@@ -40,6 +39,30 @@ public class TestGameMode : IGameModeBehaviour
             }
         }
         return result;
+    }
+
+    bool WaitUntilEveryActionEnd()
+    {
+        int allyCnt = 0;
+        int endCnt = 0;
+
+        foreach (var item in manager.allUnits)
+        {
+            if (item.group == UnitGroupType.ALLY)
+            {
+                allyCnt++;
+            }
+        }
+
+        foreach (var item in manager.allUnits)
+        {
+            if(item.group == UnitGroupType.ALLY && !item.isAction)
+            {
+                endCnt++;
+            }
+        }
+
+        return allyCnt == endCnt;
     }
 
     void SetUnitsState(BehaviourState state, UnitGroupType group)
