@@ -192,7 +192,7 @@ public abstract class UnitBehaviour
         var targetPos = target.GetBoneWorldPos("body") + randPos;
 
         var bullet = Instantiate(probBullet, startPos, Quaternion.identity);
-        bullet.StartBulletEffect(startPos, targetPos, () => target.OnDamage(damage, this));
+        bullet.StartBulletEffect(startPos, targetPos, 3f, () => target.OnDamage(damage, this));
     }
 
     protected virtual void OnDamage(float damage, UnitBehaviour from)
