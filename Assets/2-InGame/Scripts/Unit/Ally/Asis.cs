@@ -16,8 +16,25 @@ public class Asis : ActiveSkillBehaviour
 
     protected override IEnumerator AttackLogic()
     {
-        // shoot grenade not bullet
+        var target = GetNearestOpponent();
+        ShootBullet(target);
         yield return PlayAnimAndWait("battle_attack");
+        yield return PlayAnimAndWait("battle_reload");
+    }
+
+    protected override void ShootBullet(UnitBehaviour target, string key = "bullet_pos")
+    {
+        if (target == null)
+        {
+            return;
+        }
+
+        var startPos = GetBoneWorldPos(key);
+        var targetPos = target.transform.position;
+
+        var bullet = Instantiate(probBullet, startPos, Quaternion.identity);
+        bullet.GetComponent<SpriteRenderer>().sprite = InGameSpriteManager.Instance.asisGrenadeSprite;
+        bullet.StartBulletEffect(startPos, targetPos, 5f, () => target.OnDamage(damage, this), 1);
     }
 
     public override void CollabseSkill(ActiveSkillValue skillData, UnitBehaviour subjectUnit)

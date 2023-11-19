@@ -37,6 +37,9 @@ public class Bullet : MonoBehaviour
             case 0:
                 behaviour = new ProjectileBullet(this);
                 break;
+            case 1:
+                behaviour = new ProjectileHowitzer(this);
+                break;
         }
     }
 }

@@ -387,6 +387,7 @@ GameObject:
   m_Component:
   - component: {fileID: 783219646}
   - component: {fileID: 783219647}
+  - component: {fileID: 783219648}
   m_Layer: 0
   m_Name: InGameManager
   m_TagString: Untagged
@@ -432,6 +433,19 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 580927fbbc0fb044d9e5f0df5516f8f4, type: 3}
   - {fileID: 21300000, guid: 4c6582131f2db0248825673edfd42f97, type: 3}
   - {fileID: 21300000, guid: 138de54ceb2556e499bcfc0d1597b64e, type: 3}
+--- !u!114 &783219648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783219645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f819eb72dbe02a64eb68d8abbdde68a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asisGrenadeSprite: {fileID: 21300000, guid: c7ea53e57a31f4649b0f27b48a6f3456, type: 3}
 --- !u!1 &1160248434
 GameObject:
   m_ObjectHideFlags: 0
