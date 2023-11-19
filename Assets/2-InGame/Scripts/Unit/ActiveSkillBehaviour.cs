@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ActiveAbleBehaviour : PassiveAbleBehaviour
+public abstract class ActiveSkillBehaviour : PassiveSkillBehaviour
 {
     public AttributeType skillType;
     public int cost;
 
-    protected ActiveAbleBehaviour(UnitObject _subject) : base(_subject)
+    protected ActiveSkillBehaviour(UnitObject _subject) : base(_subject)
     {
         // get active skill value
     }

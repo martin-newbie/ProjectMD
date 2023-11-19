@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Nina : UnitBehaviour
+public class Nina : ActiveSkillBehaviour
 {
     public Nina(UnitObject _subject) : base(_subject)
     {
@@ -23,5 +23,24 @@ public class Nina : UnitBehaviour
             PlayAnim("battle_attack");
             yield return new WaitForSeconds(0.15f);
         }
+    }
+
+    public override void CollabseSkill(ActiveSkillValue skillData, UnitBehaviour subjectUnit)
+    {
+    }
+
+    public override IEnumerator ActiveSkill(ActiveSkillValue skillData)
+    {
+        yield break;
+    }
+
+    protected override bool PassiveSkillCondition()
+    {
+        return false;
+    }
+
+    protected override IEnumerator PassiveSkillActive()
+    {
+        yield break;
     }
 }

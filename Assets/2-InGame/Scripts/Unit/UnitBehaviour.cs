@@ -16,6 +16,7 @@ public abstract class UnitBehaviour
     #endregion
 
     #region state
+    public int characterIdx = 0;
     public float range = 0f;
     public float moveSpeed = 3f;
     public float atkEndDelay = 1f;
@@ -39,6 +40,11 @@ public abstract class UnitBehaviour
 
         probBullet = subject.probBullet;
 
+    }
+
+    public void InitCommon(int idx)
+    {
+        characterIdx = idx;
     }
 
     public Coroutine StartCoroutine(IEnumerator routine)

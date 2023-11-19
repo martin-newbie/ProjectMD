@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PassiveAbleBehaviour : UnitBehaviour
+public abstract class PassiveSkillBehaviour : UnitBehaviour
 {
 
     protected float curPassiveCool;
 
-    protected PassiveAbleBehaviour(UnitObject _subject) : base(_subject)
+    protected PassiveSkillBehaviour(UnitObject _subject) : base(_subject)
     {
         // get passive skill value
     }

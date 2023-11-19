@@ -427,7 +427,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0f971ec190c19974e8c2328fb1a5ad49, type: 2}
   - {fileID: 11400000, guid: e95be7e81a8eb1648ae6f3ad06a83698, type: 2}
   - {fileID: 11400000, guid: a2ea2e00141521a40bbbfafba2dbdbc0, type: 2}
-  characterProfiles: []
+  characterProfiles:
+  - {fileID: 21300000, guid: 59b39c11112b71943a8489211e84caa7, type: 3}
+  - {fileID: 21300000, guid: 580927fbbc0fb044d9e5f0df5516f8f4, type: 3}
+  - {fileID: 21300000, guid: 4c6582131f2db0248825673edfd42f97, type: 3}
+  - {fileID: 21300000, guid: 138de54ceb2556e499bcfc0d1597b64e, type: 3}
 --- !u!1 &1160248434
 GameObject:
   m_ObjectHideFlags: 0

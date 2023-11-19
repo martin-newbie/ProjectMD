@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Minel : UnitBehaviour
+public class Minel : ActiveSkillBehaviour
 {
     public Minel(UnitObject _subject) : base(_subject)
     {
@@ -17,5 +17,24 @@ public class Minel : UnitBehaviour
             PlayAnim("battle_attack");
             yield return new WaitForSeconds(0.15f);
         }
+    }
+
+    public override IEnumerator ActiveSkill(ActiveSkillValue skillData)
+    {
+        yield break;
+    }
+
+    public override void CollabseSkill(ActiveSkillValue skillData, UnitBehaviour subjectUnit)
+    {
+    }
+
+    protected override IEnumerator PassiveSkillActive()
+    {
+        yield break;
+    }
+
+    protected override bool PassiveSkillCondition()
+    {
+        return false;
     }
 }

@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class SkillButton : MonoBehaviour
 {
-    [SerializeField] Image inImage;
+    [SerializeField] Image collabseImage;
+    [SerializeField] Image profileImage;
     [HideInInspector] public RectTransform rect;
     
-    ActiveAbleBehaviour linkedData;
+    ActiveSkillBehaviour linkedData;
     int buttonIdx = -1;
 
     SkillCanvas manager;
@@ -31,9 +32,10 @@ public class SkillButton : MonoBehaviour
         buttonIdx = idx;
     }
 
-    public void SetData(ActiveAbleBehaviour _linkedData)
+    public void SetData(ActiveSkillBehaviour _linkedData)
     {
         linkedData = _linkedData;
+        profileImage.sprite = InGameManager.Instance.characterProfiles[linkedData.characterIdx];
         // set sprite
     }
 

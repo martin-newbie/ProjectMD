@@ -13,15 +13,15 @@ public class SkillManager : MonoBehaviour
     public SkillCanvas skillCanvas;
 
     bool active = false;
-    List<ActiveAbleBehaviour> curActiveUnits = new List<ActiveAbleBehaviour>();
-    List<ActiveAbleBehaviour> deckSkills = new List<ActiveAbleBehaviour>();
+    List<ActiveSkillBehaviour> curActiveUnits = new List<ActiveSkillBehaviour>();
+    List<ActiveSkillBehaviour> deckSkills = new List<ActiveSkillBehaviour>();
 
     float skillDelay = 5f;
     float curDelay;
 
-    public void InitSkills(ActiveAbleBehaviour[] activeUnits)
+    public void InitSkills(ActiveSkillBehaviour[] activeUnits)
     {
-        curActiveUnits = new List<ActiveAbleBehaviour>(activeUnits);
+        curActiveUnits = new List<ActiveSkillBehaviour>(activeUnits);
     }
 
     public void StartGame()
@@ -42,7 +42,7 @@ public class SkillManager : MonoBehaviour
         curDelay += Time.deltaTime;
     }
 
-    public void RemoveCharacterAtSkills(ActiveAbleBehaviour retiredUnit)
+    public void RemoveCharacterAtSkills(ActiveSkillBehaviour retiredUnit)
     {
         curActiveUnits.Remove(retiredUnit);
         for (int i = 0; i < deckSkills.Count; i++)
@@ -73,7 +73,7 @@ public class SkillManager : MonoBehaviour
         int collabseCount = 0;
         int left = idx - 1;
         int right = idx + 1;
-        List<ActiveAbleBehaviour> collabse = new List<ActiveAbleBehaviour>();
+        List<ActiveSkillBehaviour> collabse = new List<ActiveSkillBehaviour>();
         bool leftFinish = false, rightFinish = false;
 
         while (!leftFinish || !rightFinish)

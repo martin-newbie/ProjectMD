@@ -27,7 +27,7 @@ public class SkillCanvas : MonoBehaviour
         }
     }
 
-    public void AddSkillButton(ActiveAbleBehaviour _linkedData)
+    public void AddSkillButton(ActiveSkillBehaviour _linkedData)
     {
         var btnTemp = skillBtnPool.Pop();
         btnTemp.gameObject.SetActive(true);

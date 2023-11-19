@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Asis : UnitBehaviour
+public class Asis : ActiveSkillBehaviour
 {
     public Asis(UnitObject _subject) : base(_subject)
     {
@@ -18,5 +18,25 @@ public class Asis : UnitBehaviour
     {
         // shoot grenade not bullet
         yield return PlayAnimAndWait("battle_attack");
+    }
+
+    public override void CollabseSkill(ActiveSkillValue skillData, UnitBehaviour subjectUnit)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override IEnumerator ActiveSkill(ActiveSkillValue skillData)
+    {
+        yield break;
+    }
+
+    protected override bool PassiveSkillCondition()
+    {
+        return false;
+    }
+
+    protected override IEnumerator PassiveSkillActive()
+    {
+        yield break;
     }
 }

@@ -71,7 +71,7 @@ public class InGameManager : MonoBehaviour
 
     void InitSkills()
     {
-        var skillAble = allUnits.FindAll((item) => item.group == UnitGroupType.ALLY).Select((item) => item as ActiveAbleBehaviour);
+        var skillAble = allUnits.FindAll((item) => item.group == UnitGroupType.ALLY).Select((item) => item as ActiveSkillBehaviour);
         SkillManager.Instance.InitSkills(skillAble.ToArray());
     }
 
@@ -104,15 +104,15 @@ public class InGameManager : MonoBehaviour
                 break;
         }
 
-        unitObj.InjectBehaviour(behaviour, humanoidDataAsset[idx], group);
+        unitObj.InjectBehaviour(behaviour, idx, group);
         return behaviour;
     }
 
     public void RetireCharacter(UnitBehaviour unit)
     {
-        if(unit is ActiveAbleBehaviour)
+        if(unit is ActiveSkillBehaviour)
         {
-            SkillManager.Instance.RemoveCharacterAtSkills(unit as ActiveAbleBehaviour);
+            SkillManager.Instance.RemoveCharacterAtSkills(unit as ActiveSkillBehaviour);
         }
 
         allUnits.Remove(unit);
