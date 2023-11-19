@@ -124,6 +124,10 @@ public abstract class UnitBehaviour
     #region Move
     public virtual Coroutine CommonMoveToPosition(Vector3 target)
     {
+        if(target == transform.position)
+        {
+            return null;
+        }
 
         if (target.x > transform.position.x)
         {
