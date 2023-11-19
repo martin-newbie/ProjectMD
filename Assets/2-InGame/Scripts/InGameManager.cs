@@ -20,32 +20,22 @@ public class InGameManager : MonoBehaviour
     [HideInInspector] public List<UnitBehaviour> allUnits = new List<UnitBehaviour>();
     List<Vector3> posList = new List<Vector3>();
 
+    [HideInInspector] public List<GameObject> movingObjects = new List<GameObject>();
+
     void Start()
     {
         InitTileList();
-        TestMethod_InitUnits();
         InitSkills();
+        StartCoroutine(TestGameLogic());
     }
 
     void InitTileList()
     {
-        float mapSize = 50;
-
-        for (float i = 0; i <= mapSize; i += 0.5f)
-        {
-            posList.Add(new Vector3(i, 0));
-        }
+        float mapHalfSize = 20f;
+        for (float i = -mapHalfSize; i <= mapHalfSize; i += 0.5f) { posList.Add(new Vector3(i, 0)); }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TestMethod_CombatStart();
-        }
-    }
-
-    void TestMethod_InitUnits()
+    IEnumerator TestGameLogic()
     {
         int[] spawnIdx = new int[4] { 2, 6, 10, 14 };
         for (int i = 0; i < 4; i++)
@@ -58,14 +48,66 @@ public class InGameManager : MonoBehaviour
             allUnits.Add(behaviour);
         }
 
-        for (int i = 0; i < 4; i++)
+        while (true)
         {
-            var unitObj = Instantiate(unitObjPrefab, posList[spawnIdx[i] + 24], Quaternion.identity);
+            spawnEnemy();
+            yield return StartCoroutine(comingFront(5f));
+            yield return new WaitUntil(() => getCountOfEnemy() <= 0);
+        }
 
-            var behaviour = SetBehaviourInObject(unitObj, 0, UnitGroupType.HOSTILE);
-            behaviour.range = 4;
+        int getCountOfEnemy()
+        {
+            int result = 0;
+            foreach (var item in allUnits)
+            {
+                if (item.group == UnitGroupType.HOSTILE)
+                {
+                    result++;
+                }
+            }
+            return result;
+        }
+        void spawnEnemy()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                var unitObj = Instantiate(unitObjPrefab, posList[0], Quaternion.identity);
 
-            allUnits.Add(behaviour);
+                var behaviour = SetBehaviourInObject(unitObj, 0, UnitGroupType.HOSTILE);
+                behaviour.range = 4;
+
+                allUnits.Add(behaviour);
+            }
+        }
+        IEnumerator comingFront(float dur)
+        {
+            foreach (var obj in movingObjects)
+            {
+                StartCoroutine(moveSingleObj(obj, dur, 5f));
+            }
+            yield return new WaitForSeconds(dur);
+            yield break;
+        }
+        IEnumerator moveSingleObj(GameObject obj, float dur, float move)
+        {
+            float timer = 0f;
+            Vector3 start = obj.transform.position;
+            Vector3 end = obj.transform.position + new Vector3(move, 0, 0);
+            while (timer < dur)
+            {
+                obj.transform.position = Vector3.Lerp(start, end, timer / dur);
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            obj.transform.position = end;
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TestMethod_CombatStart();
         }
     }
 
@@ -110,7 +152,7 @@ public class InGameManager : MonoBehaviour
 
     public void RetireCharacter(UnitBehaviour unit)
     {
-        if(unit is ActiveSkillBehaviour)
+        if (unit is ActiveSkillBehaviour)
         {
             SkillManager.Instance.RemoveCharacterAtSkills(unit as ActiveSkillBehaviour);
         }
@@ -140,7 +182,7 @@ public class InGameManager : MonoBehaviour
 
     public Vector3 GetPreferPos(UnitBehaviour subject, UnitBehaviour target, float range)
     {
-        List<(Vector3, int)> resultList = new List<(Vector3, int)>(); 
+        List<(Vector3, int)> resultList = new List<(Vector3, int)>();
 
         foreach (var item in posList)
         {

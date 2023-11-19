@@ -21,6 +21,7 @@ public class UnitObject : MonoBehaviour
         model.Initialize(true);
         
         behaviour.group = group;
+        if (group == UnitGroupType.HOSTILE) behaviour.SetModelRotByDir(-1);
     }
 
     private void Update()

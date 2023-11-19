@@ -248,7 +248,7 @@ public abstract class UnitBehaviour
         return target.transform.position.x < transform.position.x ? -1 : 1;
     }
 
-    protected void SetModelRotByDir(int dir)
+    public void SetModelRotByDir(int dir)
     {
         if (dir == 1)
             model.transform.rotation = Quaternion.Euler(0, 0, 0);
