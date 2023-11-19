@@ -122,6 +122,27 @@ public abstract class UnitBehaviour
     }
 
     #region Move
+    public virtual Coroutine CommonMoveToPosition(Vector3 target)
+    {
+
+        if (target.x > transform.position.x)
+        {
+            SetModelRotByDir(1);
+        }
+        if (target.x < transform.position.x)
+        {
+            SetModelRotByDir(-1);
+        }
+
+        return StartCoroutine(moveLogic());
+
+        IEnumerator moveLogic()
+        {
+            yield return StartCoroutine(MoveToTargetLerp(target));
+            SetModelRotByDir(1);
+        }
+    }
+
     protected virtual IEnumerator MoveToTargetRange()
     {
         PlayAnim("battle_move", true);

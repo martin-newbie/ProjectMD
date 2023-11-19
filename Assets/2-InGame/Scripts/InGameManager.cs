@@ -29,7 +29,6 @@ public class InGameManager : MonoBehaviour
     {
         InitTileList();
         InitSkills();
-        SpawnAllyUnits();
         InitGameMode();
         StartCoroutine(gameMode.GameModeRoutine());
     }
@@ -38,20 +37,6 @@ public class InGameManager : MonoBehaviour
     {
         float mapHalfSize = 20f;
         for (float i = -mapHalfSize; i <= mapHalfSize; i += 0.5f) { posList.Add(new Vector3(i, 0)); }
-    }
-
-    void SpawnAllyUnits()
-    {
-        int[] spawnIdx = new int[4] { 24, 27, 30, 33 };
-        for (int i = 0; i < 4; i++)
-        {
-            var unitObj = Instantiate(unitObjPrefab, posList[spawnIdx[i]], Quaternion.identity);
-
-            var behaviour = SetBehaviourInObject(unitObj, i, UnitGroupType.ALLY);
-            behaviour.range = (4 - i) * 2 + 2;
-
-            allUnits.Add(behaviour);
-        }
     }
 
     void InitGameMode()

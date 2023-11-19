@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TestGameMode : IGameModeBehaviour
 {
+    int[] spawnIdx = new int[4] { 24, 27, 30, 33 };
+
     InGameManager manager;
 
     public TestGameMode(InGameManager _manager)
@@ -14,6 +16,8 @@ public class TestGameMode : IGameModeBehaviour
 
     public IEnumerator GameModeRoutine()
     {
+        SpawnAllyUnits();
+
         while (true)
         {
             SetUnitsState(BehaviourState.RETREAT, UnitGroupType.ALLY);
@@ -24,7 +28,20 @@ public class TestGameMode : IGameModeBehaviour
             yield return new WaitUntil(() => GetCountOfEnemy() <= 0);
             yield return new WaitUntil(() => WaitUntilEveryActionEnd());
             SetUnitsState(BehaviourState.STANDBY, UnitGroupType.ALLY);
-            yield return new WaitForSeconds(2f);
+            yield return manager.StartCoroutine(ReturnToOriginPoint());
+        }
+    }
+
+    void SpawnAllyUnits()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            var unitObj = Object.Instantiate(manager.unitObjPrefab, manager.posList[spawnIdx[i]], Quaternion.identity);
+
+            var behaviour = manager.SetBehaviourInObject(unitObj, i, UnitGroupType.ALLY);
+            behaviour.range = (4 - i) * 2 + 2;
+
+            manager.allUnits.Add(behaviour);
         }
     }
 
@@ -56,7 +73,7 @@ public class TestGameMode : IGameModeBehaviour
 
         foreach (var item in manager.allUnits)
         {
-            if(item.group == UnitGroupType.ALLY && !item.isAction)
+            if (item.group == UnitGroupType.ALLY && !item.isAction)
             {
                 endCnt++;
             }
@@ -113,5 +130,21 @@ public class TestGameMode : IGameModeBehaviour
             yield return null;
         }
         obj.transform.position = end;
+    }
+
+    IEnumerator ReturnToOriginPoint()
+    {
+        int idx = 3;
+        Coroutine curRoutine = null;
+        foreach (var item in manager.allUnits)
+        {
+            if (item.group == UnitGroupType.ALLY)
+            {
+                curRoutine = item.CommonMoveToPosition(manager.posList[spawnIdx[idx]]);
+                idx--;
+            }
+        }
+
+        yield return curRoutine;
     }
 }
