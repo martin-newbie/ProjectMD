@@ -28,7 +28,6 @@ public class TestGameMode : IGameModeBehaviour
             yield return new WaitUntil(() => GetCountOfEnemy() <= 0);
             yield return new WaitUntil(() => WaitUntilEveryActionEnd());
             SetUnitsState(BehaviourState.STANDBY, UnitGroupType.ALLY);
-            yield return manager.StartCoroutine(ReturnToOriginPoint());
         }
     }
 
@@ -130,21 +129,5 @@ public class TestGameMode : IGameModeBehaviour
             yield return null;
         }
         obj.transform.position = end;
-    }
-
-    IEnumerator ReturnToOriginPoint()
-    {
-        int idx = 3;
-        Coroutine curRoutine = null;
-        foreach (var item in manager.allUnits)
-        {
-            if (item.group == UnitGroupType.ALLY)
-            {
-                curRoutine = item.CommonMoveToPosition(manager.posList[spawnIdx[idx]]);
-                idx--;
-            }
-        }
-
-        yield return curRoutine;
     }
 }
