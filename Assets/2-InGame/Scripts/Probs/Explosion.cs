@@ -11,7 +11,7 @@ public class Explosion : MonoBehaviour
     public void StartExplosion(UnitGroupType targetGroup, float damage, UnitBehaviour from)
     {
         gameObject.SetActive(true);
-        anim.Play();
+        anim.Play("fromBottomExplosion");
 
         List<Collider2D> overlapResults = new List<Collider2D>();
         Physics2D.OverlapCollider(thisCol, filter, overlapResults);
