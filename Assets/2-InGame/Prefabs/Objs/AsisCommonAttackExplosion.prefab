@@ -127,6 +127,8 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  anim: {fileID: 7149353386833272783}
+  thisCol: {fileID: 7149353386833272780}
 --- !u!61 &7149353386833272780
 BoxCollider2D:
   m_ObjectHideFlags: 0

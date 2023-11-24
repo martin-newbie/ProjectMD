@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class Asis : ActiveSkillBehaviour
 {
+
+    Explosion explosion;
+
     public Asis(UnitObject _subject) : base(_subject)
     {
         maxAmmo = 1;
         curAmmo = maxAmmo;
+
+        explosion = InGamePrefabsManager.GetObject("AsisCommonAttackExplosion").GetComponent<Explosion>();
     }
 
     protected override IEnumerator MoveToTargetRange()
@@ -35,8 +40,14 @@ public class Asis : ActiveSkillBehaviour
 
         var bullet = Instantiate(probBullet, startPos, Quaternion.identity);
         bullet.GetComponent<SpriteRenderer>().sprite = InGameSpriteManager.Instance.asisGrenadeSprite;
-        bullet.StartBulletEffect(startPos, targetPos, 5f, () => target.OnDamage(damage, this), 1);
+        bullet.StartBulletEffect(startPos, targetPos, 5f, () => OnCompleteBulletMove(targetPos), 1);
         curAmmo--;
+    }
+
+    private void OnCompleteBulletMove(Vector3 targetPos)
+    {
+        var obj = Instantiate(explosion, targetPos, Quaternion.identity);
+        obj.StartExplosion(GetOpponentGroup(), damage, this);
     }
 
     public override void CollabseSkill(ActiveSkillValue skillData, UnitBehaviour subjectUnit)
