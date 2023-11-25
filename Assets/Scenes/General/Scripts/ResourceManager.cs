@@ -16,16 +16,19 @@ public class ResourceManager : MonoBehaviour
 
     private void Start()
     {
-        
+        characters = Resources.LoadAll<SkeletonDataAsset>("SkeletonDatas/Character");
+        characterProfiles = Resources.LoadAll<Sprite>("Sprites/Profiles");
     }
 
     public static SkeletonDataAsset GetSkeleton(int idx)
     {
+        if (idx >= Instance.characters.Length) idx = 0;
         return Instance.characters[idx];
     }
 
     public static Sprite GetProfile(int idx)
     {
+        if (idx >= Instance.characterProfiles.Length) idx = 0;
         return Instance.characterProfiles[idx];
     }
 }
