@@ -9,16 +9,12 @@ public class ResourceManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        characters = Resources.LoadAll<SkeletonDataAsset>("SkeletonDatas/Character");
+        characterProfiles = Resources.LoadAll<Sprite>("Sprites/Profiles");
     }
 
     SkeletonDataAsset[] characters;
     Sprite[] characterProfiles;
-
-    private void Start()
-    {
-        characters = Resources.LoadAll<SkeletonDataAsset>("SkeletonDatas/Character");
-        characterProfiles = Resources.LoadAll<Sprite>("Sprites/Profiles");
-    }
 
     public static SkeletonDataAsset GetSkeleton(int idx)
     {
