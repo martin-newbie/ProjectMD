@@ -24,6 +24,8 @@ public class LoadoutInfoUI : MonoBehaviour
     [SerializeField] Text atkAttText;
     [SerializeField] Text defAttText;
 
+    CharacterData LinkedData;
+
     public void InitInfo(CharacterData linkedData)
     {
         emptyBox.SetActive(linkedData == null);
@@ -39,7 +41,15 @@ public class LoadoutInfoUI : MonoBehaviour
         skeleton.skeletonDataAsset = ResourceManager.GetSkeleton(linkedData.charIdx);
         skeleton.Initialize(true);
 
+        if (LinkedData != linkedData)
+        {
+            skeleton.AnimationState.SetAnimation(0, "enter", true);
+        }
+        skeleton.AnimationState.AddAnimation(0, "wait", true, 0);
+
         profileImage.sprite = ResourceManager.GetProfile(linkedData.charIdx);
+
+        LinkedData = linkedData;
     }
 
     public void OnInfoButtonClick()

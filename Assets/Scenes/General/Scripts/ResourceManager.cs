@@ -1,6 +1,7 @@
 using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
@@ -10,7 +11,9 @@ public class ResourceManager : MonoBehaviour
     {
         Instance = this;
         characters = Resources.LoadAll<SkeletonDataAsset>("SkeletonDatas/Characters");
-        characterProfiles = Resources.LoadAll<Sprite>("Sprites/Profiles");
+
+        var profiles = Resources.LoadAll<Sprite>("Sprites/Profiles");
+        characterProfiles = profiles.OrderBy((item) => int.Parse(item.name.Split('-')[0])).ToArray();
     }
 
     SkeletonDataAsset[] characters;
