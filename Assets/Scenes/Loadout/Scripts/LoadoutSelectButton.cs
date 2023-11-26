@@ -11,6 +11,8 @@ public class LoadoutSelectButton : MonoBehaviour
 
     [SerializeField] Image profileImage;
     [SerializeField] Text nameText;
+    [SerializeField] Text levelText;
+    [SerializeField] GameObject selectedOutline;
 
     public void InitButton(CharacterData _linkedData, LoadoutSelectPanel _panel)
     {
@@ -18,6 +20,12 @@ public class LoadoutSelectButton : MonoBehaviour
         panel = _panel;
 
         profileImage.sprite = ResourceManager.GetProfile(LinkedData.charIdx);
+        selectedOutline.SetActive(false);
+    }
+
+    public void SetSelectOutline(bool active)
+    {
+        selectedOutline.SetActive(active);
     }
 
     public void OnSelect()

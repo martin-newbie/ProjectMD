@@ -45,6 +45,10 @@ public class LoadoutSelectPanel : MonoBehaviour
     void InitButtonStateUI()
     {
         // Todo later
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            buttons[i].SetSelectOutline(curSelected.Contains(buttons[i].LinkedData.charIdx));
+        }
     }
 
     public void OnConfirmButton()
