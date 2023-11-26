@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Spine.Unity;
 
-public class CharacterInfoUI : MonoBehaviour
+public class LoadoutInfoUI : MonoBehaviour
 {
     [Header("Upper")]
     [SerializeField] SkeletonGraphic skeleton;

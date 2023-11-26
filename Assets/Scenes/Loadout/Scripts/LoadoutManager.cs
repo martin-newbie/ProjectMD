@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class LoadoutManager : MonoBehaviour
 {
+    public static LoadoutManager Instance = null;
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     int[] deckIdxArr;
-    [SerializeField] CharacterInfoUI[] infoButtons;
+    [SerializeField] LoadoutInfoUI[] infoButtons;
+    [SerializeField] LoadoutSelectPanel selectPanel;
 
     private void Start()
     {
@@ -14,6 +21,8 @@ public class LoadoutManager : MonoBehaviour
         {
             item.InitInfo(null);
         }
+        selectPanel.InitPanel();
+        deckIdxArr = new int[0];
     }
 
     void TestUserData()
@@ -40,5 +49,10 @@ public class LoadoutManager : MonoBehaviour
                 infoButtons[i].InitInfo(null);
             }
         }
+    }
+
+    public void OpenSelectPanel()
+    {
+        selectPanel.OpenPanel(deckIdxArr);
     }
 }
