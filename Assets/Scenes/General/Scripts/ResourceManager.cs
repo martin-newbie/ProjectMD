@@ -10,18 +10,25 @@ public class ResourceManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        characters = Resources.LoadAll<SkeletonDataAsset>("SkeletonDatas/Characters");
+        for (int i = 0; i < 100; i++)
+        {
+            var spine = Resources.Load<SkeletonDataAsset>("SkeletonDatas/Characters/" + i.ToString() + "/skeleton_SkeletonData");
+            if(spine != null)
+            {
+                characters.Add(spine);
+            }
+        }
 
         var profiles = Resources.LoadAll<Sprite>("Sprites/Profiles");
         characterProfiles = profiles.OrderBy((item) => int.Parse(item.name.Split('-')[0])).ToArray();
     }
 
-    SkeletonDataAsset[] characters;
+    List<SkeletonDataAsset> characters = new List<SkeletonDataAsset>();
     Sprite[] characterProfiles;
 
     public static SkeletonDataAsset GetSkeleton(int idx)
     {
-        if (idx >= Instance.characters.Length - 1) idx = 0;
+        if (idx >= Instance.characters.Count - 1) idx = 0;
         return Instance.characters[idx];
     }
 
