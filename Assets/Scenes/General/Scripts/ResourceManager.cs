@@ -9,7 +9,7 @@ public class ResourceManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        characters = Resources.LoadAll<SkeletonDataAsset>("SkeletonDatas/Character");
+        characters = Resources.LoadAll<SkeletonDataAsset>("SkeletonDatas/Characters");
         characterProfiles = Resources.LoadAll<Sprite>("Sprites/Profiles");
     }
 

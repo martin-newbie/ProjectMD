@@ -38,6 +38,8 @@ public class LoadoutInfoUI : MonoBehaviour
         skeleton.Update(0f);
         skeleton.skeletonDataAsset = ResourceManager.GetSkeleton(linkedData.charIdx);
         skeleton.Initialize(true);
+
+        profileImage.sprite = ResourceManager.GetProfile(linkedData.charIdx);
     }
 
     public void OnInfoButtonClick()
