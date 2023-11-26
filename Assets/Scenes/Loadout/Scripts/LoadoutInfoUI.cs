@@ -19,7 +19,7 @@ public class LoadoutInfoUI : MonoBehaviour
     [Header("Name")]
     [SerializeField] Image positionImage;
     [SerializeField] Text nameText;
-    
+
     [Header("Attribute")]
     [SerializeField] Text atkAttText;
     [SerializeField] Text defAttText;
@@ -28,13 +28,16 @@ public class LoadoutInfoUI : MonoBehaviour
     {
         emptyBox.SetActive(linkedData == null);
         infoBox.SetActive(linkedData != null);
+        skeleton.gameObject.SetActive(linkedData != null);
 
         if (linkedData == null)
         {
             return;
         }
 
-
+        skeleton.Update(0f);
+        skeleton.skeletonDataAsset = ResourceManager.GetSkeleton(linkedData.charIdx);
+        skeleton.Initialize(true);
     }
 
     public void OnInfoButtonClick()
