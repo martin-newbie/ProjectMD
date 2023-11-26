@@ -24,7 +24,15 @@ public class LoadoutInfoUI : MonoBehaviour
     [SerializeField] Text atkAttText;
     [SerializeField] Text defAttText;
 
-    CharacterData LinkedData;
+    [HideInInspector] public CharacterData LinkedData;
+    Vector2 defaultAnchorPos;
+    public bool isDown;
+    public bool isEnter;
+
+    private void Start()
+    {
+        defaultAnchorPos = skeleton.rectTransform.anchoredPosition;
+    }
 
     public void InitInfo(CharacterData linkedData)
     {
@@ -43,13 +51,55 @@ public class LoadoutInfoUI : MonoBehaviour
 
         if (LinkedData != linkedData)
         {
-            skeleton.AnimationState.SetAnimation(0, "enter", true);
+            SetAnimatoin("enter", true);
         }
-        skeleton.AnimationState.AddAnimation(0, "wait", true, 0);
-
+        AddAnimation("wait", true);
         profileImage.sprite = ResourceManager.GetProfile(linkedData.charIdx);
-
         LinkedData = linkedData;
+    }
+
+    public void SetModelPos(Vector2 anchorPos)
+    {
+        skeleton.rectTransform.anchoredPosition = anchorPos;
+    }
+
+    public void SetModelDefaultPos()
+    {
+        skeleton.rectTransform.anchoredPosition = defaultAnchorPos;
+    }
+
+
+    public void OnPointerDown()
+    {
+        isDown = true;
+        LoadoutManager.Instance.SetDragTarget(this);
+        SetAnimatoin("drag");
+    }
+
+    public void OnPointerEnter()
+    {
+        isEnter = true;
+    }
+
+    public void OnPointerExit()
+    {
+        isEnter = false;
+    }
+
+    public void OnPointerUp()
+    {
+        isDown = false;
+        LoadoutManager.Instance.SwitchDragItem();
+    }
+
+    public void SetAnimatoin(string key, bool loop = false)
+    {
+        skeleton.AnimationState.SetAnimation(0, key, loop);
+    }
+
+    public void AddAnimation(string key, bool loop = false)
+    {
+        skeleton.AnimationState.AddAnimation(0, key, loop, 0);
     }
 
     public void OnInfoButtonClick()
