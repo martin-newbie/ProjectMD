@@ -19,6 +19,7 @@ public class LoadoutSelectPanel : MonoBehaviour
         {
             var temp = Instantiate(buttonPrefab, buttonLayout);
             temp.InitButton(item, this);
+            buttons.Add(temp);
         }
     }
 
@@ -40,6 +41,7 @@ public class LoadoutSelectPanel : MonoBehaviour
         {
             curSelected.Add(charIdx);
         }
+        InitButtonStateUI();
     }
 
     void InitButtonStateUI()

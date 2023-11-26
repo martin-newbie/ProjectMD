@@ -18,13 +18,13 @@ public class ResourceManager : MonoBehaviour
 
     public static SkeletonDataAsset GetSkeleton(int idx)
     {
-        if (idx >= Instance.characters.Length) idx = 0;
+        if (idx >= Instance.characters.Length - 1) idx = 0;
         return Instance.characters[idx];
     }
 
     public static Sprite GetProfile(int idx)
     {
-        if (idx >= Instance.characterProfiles.Length) idx = 0;
+        if (idx >= Instance.characterProfiles.Length - 1) idx = 0;
         return Instance.characterProfiles[idx];
     }
 }
