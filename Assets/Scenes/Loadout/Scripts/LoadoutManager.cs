@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoadoutManager : MonoBehaviour
 {
@@ -18,7 +19,6 @@ public class LoadoutManager : MonoBehaviour
 
     private void Start()
     {
-        TestUserData();
         foreach (var item in infoButtons)
         {
             item.InitInfo(null);
@@ -27,14 +27,6 @@ public class LoadoutManager : MonoBehaviour
         deckIdxArr = new int[0];
     }
 
-    void TestUserData()
-    {
-        UserData user = new UserData();
-        for (int i = 0; i < 20; i++)
-        {
-            user.charDatas.Add(new CharacterData(i));
-        }
-    }
 
     private void Update()
     {
@@ -110,6 +102,9 @@ public class LoadoutManager : MonoBehaviour
 
     public void OnGameStart()
     {
+        if (deckIdxArr.Length <= 0) return;
 
+        TempData.SetDeckUnit(deckIdxArr);
+        SceneManager.LoadScene("InGame");
     }
 }
