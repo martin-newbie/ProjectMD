@@ -35,7 +35,7 @@ public class SkillButton : MonoBehaviour
     public void SetData(ActiveSkillBehaviour _linkedData)
     {
         linkedData = _linkedData;
-        profileImage.sprite = InGameManager.Instance.characterProfiles[linkedData.characterIdx];
+        profileImage.sprite = ResourceManager.GetProfile(linkedData.characterIdx);
         // set sprite
     }
 

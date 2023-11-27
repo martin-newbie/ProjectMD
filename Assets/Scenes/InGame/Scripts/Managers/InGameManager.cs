@@ -14,8 +14,6 @@ public class InGameManager : MonoBehaviour
     }
 
     public UnitObject unitObjPrefab;
-    public SkeletonDataAsset[] humanoidDataAsset;
-    public Sprite[] characterProfiles;
 
     [HideInInspector] public List<UnitBehaviour> allUnits = new List<UnitBehaviour>();
     [HideInInspector] public List<Vector3> posList = new List<Vector3>();

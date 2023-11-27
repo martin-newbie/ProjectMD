@@ -8,18 +8,14 @@ public class InGamePrefabsManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-    }
-
-    [SerializeField] List<GameObject> prefabs = new List<GameObject>();
-    public Dictionary<string, GameObject> prefabDic = new Dictionary<string, GameObject>();
-
-    private void Start()
-    {
         foreach (var item in prefabs)
         {
             prefabDic.Add(item.name, item);
         }
     }
+
+    [SerializeField] List<GameObject> prefabs = new List<GameObject>();
+    public Dictionary<string, GameObject> prefabDic = new Dictionary<string, GameObject>();
 
     public static GameObject GetObject(string key)
     {
