@@ -85,14 +85,14 @@ public class InGameManager : MonoBehaviour
                 behaviour = new Minel(unitObj);
                 break;
             case 2:
-                behaviour = new Nina(unitObj);
+                behaviour = new Asis(unitObj);
                 break;
             case 3:
-                behaviour = new Asis(unitObj);
+                behaviour = new Nina(unitObj);
                 break;
         }
 
-        unitObj.InjectBehaviour(behaviour, idx, group);
+        unitObj.SetBehaviour(behaviour, idx, group);
         return behaviour;
     }
 

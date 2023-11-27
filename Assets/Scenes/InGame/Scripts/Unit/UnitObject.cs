@@ -11,13 +11,13 @@ public class UnitObject : MonoBehaviour
     [Header("Prob")]
     public Bullet probBullet;
 
-    public void InjectBehaviour(UnitBehaviour _behaviour, int idx, UnitGroupType group)
+    public void SetBehaviour(UnitBehaviour _behaviour, int idx, UnitGroupType group)
     {
         behaviour = _behaviour;
         behaviour.InitCommon(idx);
     
         model.Update(0f);
-        model.skeletonDataAsset = InGameManager.Instance.humanoidDataAsset[idx];
+        model.skeletonDataAsset = ResourceManager.GetSkeleton(idx);
         model.Initialize(true);
         
         behaviour.group = group;

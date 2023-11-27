@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestGameMode : IGameModeBehaviour
 {
-    int[] spawnIdx = new int[4] { 24, 27, 30, 33 };
+    int[] spawnIdx = new int[5] { 21, 24, 27, 30, 33 };
 
     InGameManager manager;
 
@@ -33,11 +33,12 @@ public class TestGameMode : IGameModeBehaviour
 
     void SpawnAllyUnits()
     {
-        for (int i = 0; i < 4; i++)
+        int[] units = TempData.Instance.curDeckUnits;
+        for (int i = 0; i < units.Length; i++)
         {
             var unitObj = Object.Instantiate(manager.unitObjPrefab, manager.posList[spawnIdx[i]], Quaternion.identity);
 
-            var behaviour = manager.SetBehaviourInObject(unitObj, i, UnitGroupType.ALLY);
+            var behaviour = manager.SetBehaviourInObject(unitObj, units[i], UnitGroupType.ALLY);
             behaviour.range = (4 - i) * 2 + 2;
 
             manager.allUnits.Add(behaviour);
