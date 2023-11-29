@@ -21,7 +21,7 @@ public abstract class ActiveSkillBehaviour : PassiveSkillBehaviour
     {
         ActiveSkillValue result = new ActiveSkillValue();
 
-        // ¹Ýº¹¹®À¸·Î ½ºÅ³º§·ù °¡Á®¿Í¼­ result.AddValue·Î Ãß°¡ÇØÁÜ
+        // ï¿½Ýºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ result.AddValueï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½
 
         return result;
     }

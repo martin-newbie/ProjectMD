@@ -30,6 +30,13 @@ public class InGameManager : MonoBehaviour
         InitGameMode();
         StartCoroutine(gameMode.GameModeRoutine());
     }
+
+    public void InitSkill()
+    {
+        var playable = allUnits.FindAll((item) => item.group == UnitGroupType.ALLY).Select((item)=> item as ActiveSkillBehaviour).ToArray();
+        SkillManager.Instance.InitSkills(playable);
+        SkillManager.Instance.StartGame();
+    }
     
     void InitTileList()
     {

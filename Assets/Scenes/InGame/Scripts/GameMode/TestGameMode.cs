@@ -43,6 +43,8 @@ public class TestGameMode : IGameModeBehaviour
 
             manager.allUnits.Add(behaviour);
         }
+
+        manager.InitSkill();
     }
 
     int GetCountOfEnemy()
