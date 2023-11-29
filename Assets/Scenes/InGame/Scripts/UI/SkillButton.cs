@@ -7,6 +7,7 @@ public class SkillButton : MonoBehaviour
 {
     [SerializeField] Image collabseImage;
     [SerializeField] Image profileImage;
+    [SerializeField] GameObject disabledImg;
     [HideInInspector] public RectTransform rect;
     
     ActiveSkillBehaviour linkedData;
@@ -19,6 +20,13 @@ public class SkillButton : MonoBehaviour
     {
         manager = _manager;
         rect = GetComponent<RectTransform>();
+    }
+
+    void Update()
+    {
+        if (linkedData == null) return;
+
+        disabledImg.SetActive(!linkedData.ActiveSkillCondition());
     }
 
     public void ClearButton()
@@ -61,6 +69,8 @@ public class SkillButton : MonoBehaviour
 
     public void UseSkill()
     {
+        if (!linkedData.ActiveSkillCondition()) return;
+
         SkillManager.Instance.UseSkill(buttonIdx);
     }
 }
