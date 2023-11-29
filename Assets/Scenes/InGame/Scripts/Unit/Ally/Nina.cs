@@ -45,4 +45,9 @@ public class Nina : ActiveSkillBehaviour
     {
         yield break;
     }
+
+    public override bool ActiveSkillCondition()
+    {
+        return false;
+    }
 }

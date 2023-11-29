@@ -38,4 +38,9 @@ public class Seongah : ActiveSkillBehaviour
     {
         return false;
     }
+
+    public override bool ActiveSkillCondition()
+    {
+        return false;
+    }
 }

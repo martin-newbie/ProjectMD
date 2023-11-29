@@ -39,4 +39,9 @@ public class Minel : ActiveSkillBehaviour
     {
         return false;
     }
+
+    public override bool ActiveSkillCondition()
+    {
+        return false;
+    }
 }

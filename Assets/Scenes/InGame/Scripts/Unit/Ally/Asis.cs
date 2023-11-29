@@ -69,4 +69,9 @@ public class Asis : ActiveSkillBehaviour
     {
         yield break;
     }
+
+    public override bool ActiveSkillCondition()
+    {
+        return false;
+    }
 }

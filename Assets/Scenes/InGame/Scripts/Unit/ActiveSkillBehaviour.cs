@@ -20,14 +20,12 @@ public abstract class ActiveSkillBehaviour : PassiveSkillBehaviour
     public virtual ActiveSkillValue GetDefaultSkillValue()
     {
         ActiveSkillValue result = new ActiveSkillValue();
-
-        // �ݺ������� ��ų���� �����ͼ� result.AddValue�� �߰�����
-
         return result;
     }
 
     public abstract void CollabseSkill(ActiveSkillValue skillData, UnitBehaviour subjectUnit);
     public abstract IEnumerator ActiveSkill(ActiveSkillValue skillData);
+    public abstract bool ActiveSkillCondition();
 }
 
 
