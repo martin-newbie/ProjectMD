@@ -25,6 +25,7 @@ public class LoadoutInfoUI : MonoBehaviour
     [SerializeField] Text defAttText;
 
     [HideInInspector] public CharacterData LinkedData;
+    [HideInInspector] public int btnIdx;
     Vector2 defaultAnchorPos;
     public bool isDown;
     public bool isEnter;
@@ -32,6 +33,11 @@ public class LoadoutInfoUI : MonoBehaviour
     private void Start()
     {
         defaultAnchorPos = skeleton.rectTransform.anchoredPosition;
+    }
+
+    public void InitButton(int idx)
+    {
+        btnIdx = idx;
     }
 
     public void InitInfo(CharacterData linkedData)
@@ -49,7 +55,7 @@ public class LoadoutInfoUI : MonoBehaviour
         skeleton.skeletonDataAsset = ResourceManager.GetSkeleton(linkedData.charIdx);
         skeleton.Initialize(true);
 
-        if (LinkedData != linkedData)
+        if (LinkedData.charIdx != linkedData.charIdx)
         {
             SetAnimatoin("enter", true);
         }

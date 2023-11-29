@@ -19,8 +19,10 @@ public class LoadoutManager : MonoBehaviour
 
     private void Start()
     {
+        int i = 0;
         foreach (var item in infoButtons)
         {
+            item.InitButton(i++);
             item.InitInfo(null);
         }
         selectPanel.InitPanel();
@@ -60,20 +62,15 @@ public class LoadoutManager : MonoBehaviour
         if (last == null)
         {
             prev.SetModelDefaultPos();
-            prev.InitInfo(prev.LinkedData);
-            curDragIdx = -1;
-            return;
+        }
+        else
+        {
+            var temp = deckIdxArr[curDragIdx];
+            deckIdxArr[curDragIdx] = deckIdxArr[last.btnIdx];
+            deckIdxArr[last.btnIdx] = temp;
         }
 
-        var prevData = prev.LinkedData;
-        var lastData = last.LinkedData;
-
-        prev.InitInfo(lastData);
-        last.InitInfo(prevData);
-
-        prev.SetModelDefaultPos();
-        last.SetModelDefaultPos();
-
+        UpdateDeck(deckIdxArr);
         curDragIdx = -1;
     }
 
@@ -92,6 +89,8 @@ public class LoadoutManager : MonoBehaviour
             {
                 infoButtons[i].InitInfo(null);
             }
+
+            infoButtons[i].SetModelDefaultPos();
         }
     }
 
