@@ -3,39 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CommonHPBar : MonoBehaviour, IHealthBar
+public class CommonHPBar : HpBarBase
 {
 
     [Header("UI")]
     public Image hpBar;
+    RectTransform rect;
 
     public float hp { get; set; }
     public float maxHP { get; set; }
 
-    RectTransform parentRect;
-
-    public void InitHpBarUI(RectTransform parent)
-    {
-        parentRect = parent;
-    }
-
-    public void DestroyBar()
+    public override void DestroyBar()
     {
         Destroy(gameObject);
     }
 
-    public void FollowPos(Vector3 pos)
+    public override void FollowPos(Vector3 pos)
     {
         pos.y -= 1f;
-        RectTransformUtility.WorldToScreenPoint(Camera.main, pos);
+        var anchorPos = RectTransformUtility.WorldToScreenPoint(Camera.main, pos);
+        rect.anchoredPosition = anchorPos;
     }
 
-    public void InitBar(float _maxHp)
+    public override void InitBar(float _maxHp)
     {
         maxHP = _maxHp;
+        rect = GetComponent<RectTransform>();
     }
 
-    public void SetBar(float _hp)
+    public override void UpdateFill(float _hp)
     {
         hp = _hp;
         hpBar.fillAmount = hp / maxHP;

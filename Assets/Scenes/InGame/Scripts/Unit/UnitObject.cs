@@ -14,7 +14,7 @@ public class UnitObject : MonoBehaviour
     public void SetBehaviour(UnitBehaviour _behaviour, int idx, UnitGroupType group)
     {
         behaviour = _behaviour;
-        behaviour.InitCommon(idx);
+        behaviour.InitCommon(idx, 0);
     
         model.Update(0f);
         model.skeletonDataAsset = ResourceManager.GetSkeleton(idx);

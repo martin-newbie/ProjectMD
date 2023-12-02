@@ -36,6 +36,8 @@ public abstract class UnitBehaviour
     public Vector3 targetPos = new Vector3();
     public Coroutine actionCoroutine;
 
+    public HpBarBase hpBar;
+
     public UnitBehaviour(UnitObject _subject)
     {
         subject = _subject;
@@ -45,12 +47,14 @@ public abstract class UnitBehaviour
         model = subject.model;
 
         probBullet = subject.probBullet;
-
     }
 
-    public void InitCommon(int idx)
+    public void InitCommon(int idx, int barType)
     {
         characterIdx = idx;
+
+        hpBar = HpBarCanvas.Instance.GetHpBar(barType);
+        hpBar.InitBar(maxHp);
     }
 
     public Coroutine StartCoroutine(IEnumerator routine)
@@ -75,6 +79,8 @@ public abstract class UnitBehaviour
                 InCombatFunc();
                 break;
         }
+
+        hpBar?.FollowPos(transform.position);
     }
 
     protected virtual void InCombatFunc()
@@ -258,6 +264,7 @@ public abstract class UnitBehaviour
         DamageTextCanvas.Instance.PrintDamageText(damage, GetBoneWorldPos("body"), dir, ResistType.NORMAL);
 
         hp -= damage;
+        hpBar.UpdateFill(hp);
         if (hp <= 0 && state != BehaviourState.RETIRE)
         {
             OnRetire();
@@ -270,6 +277,7 @@ public abstract class UnitBehaviour
         state = BehaviourState.RETIRE;
         InGameManager.Instance.RetireCharacter(this);
         PlayAnim("battle_retire");
+        hpBar.DestroyBar();
     }
 
     public virtual void SetBehaviourState(BehaviourState _state)
