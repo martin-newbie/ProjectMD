@@ -11,7 +11,7 @@ public class BossHpBar : HpBarBase
     [SerializeField] Image backHpBar;
 
     [SerializeField] Color[] barColors = new Color[5];
-    float lineValue = 3;
+    float lineValue = 100;
 
     float maxHp;
     float curHp;

@@ -6,7 +6,7 @@ public class TrainingDummy : UnitBehaviour
 {
     public TrainingDummy(UnitObject _subject) : base(_subject)
     {
-        maxHp = 500;
+        maxHp = 100000;
         hp = maxHp;
     }
 
