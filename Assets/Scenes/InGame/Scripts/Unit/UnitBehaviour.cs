@@ -332,6 +332,12 @@ public abstract class UnitBehaviour
         return track;
     }
 
+    protected TrackEntry AddAnim(string key, bool loop = false, float delay = 0f)
+    {
+        var track = model.state.AddAnimation(0, key, loop, delay);
+        return track;
+    }
+
     protected UnitGroupType GetOpponentGroup()
     {
         return (UnitGroupType)((int)group * -1);
