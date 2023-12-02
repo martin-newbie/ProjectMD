@@ -11,10 +11,10 @@ public class UnitObject : MonoBehaviour
     [Header("Prob")]
     public Bullet probBullet;
 
-    public void SetBehaviour(UnitBehaviour _behaviour, int idx, UnitGroupType group)
+    public void SetBehaviour(UnitBehaviour _behaviour, int idx, UnitGroupType group, int barType)
     {
         behaviour = _behaviour;
-        behaviour.InitCommon(idx, 0);
+        behaviour.InitCommon(idx, barType);
     
         model.Update(0f);
         model.skeletonDataAsset = ResourceManager.GetSkeleton(idx);

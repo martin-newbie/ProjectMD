@@ -49,7 +49,7 @@ public class InGameManager : MonoBehaviour
         switch (gameModeIdx)
         {
             case 0:
-                gameMode = new TestGameMode(this);
+                gameMode = new TestBossGameMode(this);
                 break;
         }
     }
@@ -77,7 +77,7 @@ public class InGameManager : MonoBehaviour
         SkillManager.Instance.StartGame();
     }
 
-    public UnitBehaviour SetBehaviourInObject(UnitObject unitObj, int idx, UnitGroupType group)
+    public UnitBehaviour SetBehaviourInObject(UnitObject unitObj, int idx, UnitGroupType group, int barType)
     {
         UnitBehaviour behaviour = null;
 
@@ -97,7 +97,7 @@ public class InGameManager : MonoBehaviour
                 break;
         }
 
-        unitObj.SetBehaviour(behaviour, idx, group);
+        unitObj.SetBehaviour(behaviour, idx, group, barType);
         return behaviour;
     }
 

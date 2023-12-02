@@ -11,6 +11,8 @@ public class HpBarCanvas : MonoBehaviour
     }
 
     public HpBarBase commonHpBar;
+    public HpBarBase bossHpBar;
+
     public RectTransform canvasRt;
 
     public HpBarBase GetHpBar(int type)
@@ -22,6 +24,9 @@ public class HpBarCanvas : MonoBehaviour
             case 0:
                 hpBar = Instantiate(commonHpBar, transform);
                 (hpBar as CommonHPBar).InitCanvas(canvasRt);
+                break;
+            case 1:
+                hpBar = Instantiate(bossHpBar, transform);
                 break;
             default:
                 break;

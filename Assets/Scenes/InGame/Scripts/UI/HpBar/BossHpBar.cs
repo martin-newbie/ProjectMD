@@ -21,6 +21,7 @@ public class BossHpBar : HpBarBase
 
     public override void DestroyBar()
     {
+        gameObject.SetActive(false);
     }
 
     public override void FollowPos(Vector3 pos)
@@ -47,7 +48,7 @@ public class BossHpBar : HpBarBase
         float calcHp = visualedHp % lineValue;
         filledHpBar.fillAmount = calcHp / lineValue;
 
-        int curLine = (int)(visualedHp / maxHP);
+        int curLine = (int)(visualedHp / lineValue);
         int visualIdx = (curLine + barColors.Length) % barColors.Length;
         int backIdx = (visualIdx - 1 + barColors.Length) % barColors.Length;
 

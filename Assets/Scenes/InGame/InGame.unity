@@ -839,6 +839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   commonHpBar: {fileID: 7174687129383964873, guid: aad710ac4ad34c643a7c7005ec8de566, type: 3}
+  bossHpBar: {fileID: 7416965733037896152, guid: 3452b021b7082794b98b1a9edad1f556, type: 3}
   canvasRt: {fileID: 412512160}
 --- !u!1 &1769597385
 GameObject:

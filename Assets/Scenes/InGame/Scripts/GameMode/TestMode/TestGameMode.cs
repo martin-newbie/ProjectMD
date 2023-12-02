@@ -38,7 +38,7 @@ public class TestGameMode : IGameModeBehaviour
         {
             var unitObj = Object.Instantiate(manager.unitObjPrefab, manager.posList[spawnIdx[i]], Quaternion.identity);
 
-            var behaviour = manager.SetBehaviourInObject(unitObj, units[i], UnitGroupType.ALLY);
+            var behaviour = manager.SetBehaviourInObject(unitObj, units[i], UnitGroupType.ALLY, 0);
             behaviour.range = (4 - i) * 2 + 2;
 
             manager.allUnits.Add(behaviour);
@@ -103,7 +103,7 @@ public class TestGameMode : IGameModeBehaviour
             var unitObj = Object.Instantiate(manager.unitObjPrefab, manager.posList[spawnIdx[i] + 20], Quaternion.identity);
             manager.movingObjects.Add(unitObj.gameObject);
 
-            var behaviour = manager.SetBehaviourInObject(unitObj, 0, UnitGroupType.HOSTILE);
+            var behaviour = manager.SetBehaviourInObject(unitObj, 0, UnitGroupType.HOSTILE, 1);
             behaviour.range = 4;
 
             manager.allUnits.Add(behaviour);
