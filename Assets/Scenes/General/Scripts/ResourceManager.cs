@@ -28,7 +28,6 @@ public class ResourceManager : MonoBehaviour
 
     public static SkeletonDataAsset GetSkeleton(int idx)
     {
-        if (idx >= Instance.characters.Count - 1) idx = 0;
         return Instance.characters[idx];
     }
 

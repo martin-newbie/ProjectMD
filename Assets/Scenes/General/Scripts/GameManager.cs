@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     void TestInitUserData()
     {
         UserData user = new UserData();
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 26; i++)
         {
             user.charDatas.Add(new CharacterData(i));
         }
