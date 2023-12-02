@@ -38,7 +38,7 @@ public class BossHpBar : HpBarBase
     public override void UpdateFill(float _hp)
     {
         curHp = _hp;
-        distSpeed = Mathf.Abs(visualedHp - curHp);
+        distSpeed = Mathf.Abs(visualedHp - curHp) / curHp * 500f;
     }
 
     void Update()
