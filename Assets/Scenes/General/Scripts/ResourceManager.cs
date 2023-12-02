@@ -15,7 +15,7 @@ public class ResourceManager : MonoBehaviour
             var spine = Resources.Load<SkeletonDataAsset>("SkeletonDatas/Characters/" + i.ToString() + "/skeleton_SkeletonData");
             if(spine != null)
             {
-                characters.Add(spine);
+                characters.Add(i, spine);
             }
         }
 
@@ -23,7 +23,7 @@ public class ResourceManager : MonoBehaviour
         characterProfiles = profiles.OrderBy((item) => int.Parse(item.name.Split('-')[0])).ToArray();
     }
 
-    List<SkeletonDataAsset> characters = new List<SkeletonDataAsset>();
+    Dictionary<int, SkeletonDataAsset> characters = new Dictionary<int, SkeletonDataAsset>();
     Sprite[] characterProfiles;
 
     public static SkeletonDataAsset GetSkeleton(int idx)

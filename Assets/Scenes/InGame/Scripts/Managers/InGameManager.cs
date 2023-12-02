@@ -93,7 +93,19 @@ public class InGameManager : MonoBehaviour
                 behaviour = new Asis(unitObj);
                 break;
             case 3:
+                behaviour = new Ilena(unitObj);
+                break;
+            case 4:
+                behaviour = new Luria(unitObj);
+                break;
+            case 17:
+                behaviour = new Fei(unitObj);
+                break;
+            case 24:
                 behaviour = new Nina(unitObj);
+                break;
+            case 25:
+                behaviour = new Aiden(unitObj);
                 break;
         }
 
