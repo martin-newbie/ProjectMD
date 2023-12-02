@@ -19,7 +19,7 @@ public class HpBarCanvas : MonoBehaviour
         switch (type)
         {
             case 0:
-                hpBar = Instantiate(commonHpBar, transform) as HpBarBase;
+                hpBar = Instantiate(commonHpBar, transform);
                 break;
             default:
                 break;

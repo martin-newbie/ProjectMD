@@ -28,7 +28,7 @@ public class DamageText : MonoBehaviour
 
         IEnumerator textMoving()
         {
-            var startPos = target.ToInterfacePosition(canvasRect);
+            var startPos = target.WorldToRectPosition(canvasRect);
             var endPos = startPos + new Vector3(Random.Range(50f, 100f) * dir, Random.Range(50f, 100f));
 
             float dur = 0.25f;

@@ -8,10 +8,15 @@ public class CommonHPBar : HpBarBase
 
     [Header("UI")]
     public Image hpBar;
+
+    RectTransform canvasRt;
     RectTransform rect;
 
-    public float hp { get; set; }
-    public float maxHP { get; set; }
+
+    public void InitBar(RectTransform _canvasRt)
+    {
+        canvasRt = _canvasRt;
+    }
 
     public override void DestroyBar()
     {
@@ -21,7 +26,7 @@ public class CommonHPBar : HpBarBase
     public override void FollowPos(Vector3 pos)
     {
         pos.y -= 1f;
-        var anchorPos = RectTransformUtility.WorldToScreenPoint(Camera.main, pos);
+        var anchorPos = pos.WorldToRectPosition(canvasRt);
         rect.anchoredPosition = anchorPos;
     }
 

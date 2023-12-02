@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class HpBarBase : MonoBehaviour
 {
-    float hp { get; set; }
-    float maxHP { get; set; }
+    protected float hp;
+    protected float maxHP;
 
     public abstract void InitBar(float _maxHp);
     public abstract void FollowPos(Vector3 pos);

@@ -838,7 +838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49adea45b0c2de343b0d08bcce94104c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commonHpBar: {fileID: 7174687129383964875, guid: aad710ac4ad34c643a7c7005ec8de566, type: 3}
+  commonHpBar: {fileID: 7174687129383964873, guid: aad710ac4ad34c643a7c7005ec8de566, type: 3}
 --- !u!1 &1769597385
 GameObject:
   m_ObjectHideFlags: 0
