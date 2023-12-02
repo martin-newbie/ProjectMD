@@ -26,7 +26,7 @@ public class CommonHPBar : HpBarBase
 
     public override void FollowPos(Vector3 pos)
     {
-        pos.y -= 1f;
+        pos.y -= 0.25f;
         var anchorPos = pos.WorldToRectPosition(canvasRt);
         rect.anchoredPosition = anchorPos;
     }
