@@ -11,13 +11,13 @@ public class BossHpBar : HpBarBase
     [SerializeField] Image backHpBar;
 
     [SerializeField] Color[] barColors = new Color[5];
-    float lineValue = 100;
+    float lineValue = 3;
 
     float maxHp;
     float curHp;
-    int lineCount;
 
     float visualedHp;
+    float distSpeed;
 
     public override void DestroyBar()
     {
@@ -32,18 +32,18 @@ public class BossHpBar : HpBarBase
     {
         maxHP = _maxHp;
 
-        lineCount = (int)(maxHP / lineValue);
         visualedHp = lineValue - 0.001f;
     }
 
     public override void UpdateFill(float _hp)
     {
         curHp = _hp;
+        distSpeed = Mathf.Abs(visualedHp - curHp);
     }
 
     void Update()
     {
-        visualedHp = Mathf.Lerp(curHp, visualedHp, Time.deltaTime * 100f);
+        visualedHp = Mathf.Lerp(visualedHp, curHp, distSpeed * Time.deltaTime);
 
         float calcHp = visualedHp % lineValue;
         filledHpBar.fillAmount = calcHp / lineValue;
