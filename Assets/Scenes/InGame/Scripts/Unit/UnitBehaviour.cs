@@ -85,6 +85,7 @@ public abstract class UnitBehaviour
 
     protected virtual void InCombatFunc()
     {
+
         var target = GetNearestOpponent();
 
         if (target == null)
@@ -277,7 +278,9 @@ public abstract class UnitBehaviour
         state = BehaviourState.RETIRE;
         InGameManager.Instance.RetireCharacter(this);
         PlayAnim("battle_retire");
+
         hpBar.DestroyBar();
+        hpBar = null;
     }
 
     public virtual void SetBehaviourState(BehaviourState _state)

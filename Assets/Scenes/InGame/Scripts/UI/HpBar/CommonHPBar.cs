@@ -13,9 +13,10 @@ public class CommonHPBar : HpBarBase
     RectTransform rect;
 
 
-    public void InitBar(RectTransform _canvasRt)
+    public void InitCanvas(RectTransform _canvasRt)
     {
         canvasRt = _canvasRt;
+        rect = GetComponent<RectTransform>();
     }
 
     public override void DestroyBar()
@@ -33,7 +34,6 @@ public class CommonHPBar : HpBarBase
     public override void InitBar(float _maxHp)
     {
         maxHP = _maxHp;
-        rect = GetComponent<RectTransform>();
     }
 
     public override void UpdateFill(float _hp)
