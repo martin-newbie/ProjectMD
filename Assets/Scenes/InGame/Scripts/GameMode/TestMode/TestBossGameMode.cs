@@ -29,10 +29,7 @@ public class TestBossGameMode : IGameModeBehaviour
         for (int i = 0; i < units.Length; i++)
         {
             var unitObj = Object.Instantiate(manager.unitObjPrefab, manager.posList[spawnIdx[i]], Quaternion.identity);
-
             var behaviour = manager.SetBehaviourInObject(unitObj, units[i], UnitGroupType.ALLY, 0);
-            behaviour.range = (4 - i) * 2 + 2;
-
             manager.allUnits.Add(behaviour);
         }
 

@@ -16,7 +16,7 @@ public abstract class UnitBehaviour
     #endregion
 
     #region state
-    public int characterIdx = 0;
+    public int keyIndex = 0;
     public float range = 0f;
     public float moveSpeed = 3f;
     public float atkEndDelay = 1f;
@@ -49,13 +49,14 @@ public abstract class UnitBehaviour
         probBullet = subject.probBullet;
 
         // set datas
-        maxAmmo = StaticDataManager.GetConstUnitData(characterIdx).ammoCount;
+        maxAmmo = StaticDataManager.GetConstUnitData(keyIndex).ammoCount;
         curAmmo = maxAmmo;
+        range = StaticDataManager.GetConstUnitData(keyIndex).range;
     }
 
     public void InitCommon(int idx, int barType)
     {
-        characterIdx = idx;
+        keyIndex = idx;
 
         hpBar = HpBarCanvas.Instance.GetHpBar(barType);
         hpBar.InitBar(maxHp);
