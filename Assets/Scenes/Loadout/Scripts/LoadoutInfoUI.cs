@@ -62,7 +62,7 @@ public class LoadoutInfoUI : MonoBehaviour
         AddAnimation("wait", true);
 
         profileImage.sprite = ResourceManager.GetProfile(linkedData.charIdx);
-        nameText.text = StaticDataManager.GetConstUnitData(LinkedData.charIdx).name;
+        nameText.text = StaticDataManager.GetConstUnitData(linkedData.charIdx).name;
 
         LinkedData = linkedData;
     }
