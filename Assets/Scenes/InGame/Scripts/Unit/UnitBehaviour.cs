@@ -47,6 +47,10 @@ public abstract class UnitBehaviour
         model = subject.model;
 
         probBullet = subject.probBullet;
+
+        // set datas
+        maxAmmo = StaticDataManager.GetConstUnitData(characterIdx).ammoCount;
+        curAmmo = maxAmmo;
     }
 
     public void InitCommon(int idx, int barType)

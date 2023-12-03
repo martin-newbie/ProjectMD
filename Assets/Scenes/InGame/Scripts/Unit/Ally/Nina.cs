@@ -6,8 +6,6 @@ public class Nina : ActiveSkillBehaviour
 {
     public Nina(UnitObject _subject) : base(_subject)
     {
-        maxAmmo = 30;
-        curAmmo = maxAmmo;
     }
 
     protected override IEnumerator MoveToTargetRange()

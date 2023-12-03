@@ -6,8 +6,6 @@ public class Aiden : ActiveSkillBehaviour
 {
     public Aiden(UnitObject _subject) : base(_subject)
     {
-        maxAmmo = 50;
-        curAmmo = maxAmmo;
     }
 
     public override IEnumerator ActiveSkill(ActiveSkillValue skillData)

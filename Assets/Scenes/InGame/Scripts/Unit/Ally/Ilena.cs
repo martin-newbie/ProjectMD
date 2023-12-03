@@ -6,8 +6,6 @@ public class Ilena : ActiveSkillBehaviour
 {
     public Ilena(UnitObject _subject) : base(_subject)
     {
-        maxAmmo = 32;
-        curAmmo = maxAmmo;
     }
 
     public override IEnumerator ActiveSkill(ActiveSkillValue skillData)

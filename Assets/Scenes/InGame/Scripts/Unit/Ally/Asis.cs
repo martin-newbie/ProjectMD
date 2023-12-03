@@ -9,9 +9,6 @@ public class Asis : ActiveSkillBehaviour
 
     public Asis(UnitObject _subject) : base(_subject)
     {
-        maxAmmo = 1;
-        curAmmo = maxAmmo;
-
         explosion = InGamePrefabsManager.GetObject("AsisCommonAttackExplosion").GetComponent<Explosion>();
     }
 

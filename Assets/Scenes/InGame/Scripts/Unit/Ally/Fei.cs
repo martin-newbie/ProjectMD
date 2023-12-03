@@ -6,8 +6,6 @@ public class Fei : ActiveSkillBehaviour
 {
     public Fei(UnitObject _subject) : base(_subject)
     {
-        maxAmmo = 30;
-        curAmmo = maxAmmo;
     }
 
     public override IEnumerator ActiveSkill(ActiveSkillValue skillData)
