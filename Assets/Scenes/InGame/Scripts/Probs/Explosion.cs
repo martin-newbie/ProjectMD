@@ -5,13 +5,11 @@ using UnityEngine;
 public class Explosion : MonoBehaviour
 {
     [SerializeField] ContactFilter2D filter;
-    [SerializeField] Animation anim;
     [SerializeField] Collider2D thisCol;
 
     public void StartExplosion(UnitGroupType targetGroup, float damage, UnitBehaviour from)
     {
         gameObject.SetActive(true);
-        anim.Play("fromBottomExplosion");
 
         List<Collider2D> overlapResults = new List<Collider2D>();
         Physics2D.OverlapCollider(thisCol, filter, overlapResults);
@@ -26,14 +24,10 @@ public class Explosion : MonoBehaviour
                 }
             }
         }
-
-        StartCoroutine(ExplosionCoroutine());
     }
 
-    IEnumerator ExplosionCoroutine()
+    public void DestroyObject()
     {
-        yield return new WaitForSeconds(anim.GetClip("fromBottomExplosion").length);
         Destroy(gameObject);
-        yield break;
     }
 }
