@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestGameMode : IGameModeBehaviour
 {
-    int[] spawnIdx = new int[5] { 21, 24, 27, 30, 33 };
+    int[] spawnIdx = new int[5] { 33, 30, 27, 24, 21 };
 
     InGameManager manager;
 

@@ -47,11 +47,6 @@ public abstract class UnitBehaviour
         model = subject.model;
 
         probBullet = subject.probBullet;
-
-        // set datas
-        maxAmmo = StaticDataManager.GetConstUnitData(keyIndex).ammoCount;
-        curAmmo = maxAmmo;
-        range = StaticDataManager.GetConstUnitData(keyIndex).range;
     }
 
     public void InitCommon(int idx, int barType)
@@ -60,6 +55,11 @@ public abstract class UnitBehaviour
 
         hpBar = HpBarCanvas.Instance.GetHpBar(barType);
         hpBar.InitBar(maxHp);
+
+        // set datas
+        maxAmmo = StaticDataManager.GetConstUnitData(keyIndex).ammoCount;
+        curAmmo = maxAmmo;
+        range = StaticDataManager.GetConstUnitData(keyIndex).range;
     }
 
     public Coroutine StartCoroutine(IEnumerator routine)
