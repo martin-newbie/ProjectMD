@@ -31,14 +31,13 @@ public class BossHpBar : HpBarBase
     public override void InitBar(float _maxHp)
     {
         maxHP = _maxHp;
-
         visualedHp = lineValue - 0.001f;
     }
 
     public override void UpdateFill(float _hp)
     {
         curHp = _hp;
-        distSpeed = Mathf.Abs(visualedHp - curHp) / curHp * 500f;
+        distSpeed = Mathf.Abs(visualedHp - curHp) / curHp * 1000f;
     }
 
     void Update()
