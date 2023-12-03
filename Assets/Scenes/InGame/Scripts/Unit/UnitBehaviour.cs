@@ -229,6 +229,17 @@ public abstract class UnitBehaviour
         yield return new WaitForSeconds(atkEndDelay);
     }
 
+    protected virtual IEnumerator CommonBurstFire(int count, float delay = 0.15f)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            var target = GetNearestOpponent();
+            ShootBullet(target);
+            PlayAnim("battle_attack");
+            yield return new WaitForSeconds(delay);
+        }
+    }
+
     protected abstract IEnumerator AttackLogic();
     #endregion
 

@@ -16,13 +16,7 @@ public class Nina : ActiveSkillBehaviour
 
     protected override IEnumerator AttackLogic()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            var target = GetNearestOpponent();
-            ShootBullet(target);
-            PlayAnim("battle_attack");
-            yield return new WaitForSeconds(0.15f);
-        }
+        yield return StartCoroutine(CommonBurstFire(3));
     }
 
     public override void CollabseSkill(ActiveSkillValue skillData, UnitBehaviour subjectUnit)

@@ -24,13 +24,7 @@ public class Ilena : ActiveSkillBehaviour
 
     protected override IEnumerator AttackLogic()
     {
-        for (int i = 0; i < 4; i++)
-        {
-            var target = GetNearestOpponent();
-            ShootBullet(target);
-            PlayAnim("battle_attack");
-            yield return new WaitForSeconds(0.15f);
-        }
+        yield return StartCoroutine(CommonBurstFire(4));
     }
 
     protected override IEnumerator PassiveSkillActive()
