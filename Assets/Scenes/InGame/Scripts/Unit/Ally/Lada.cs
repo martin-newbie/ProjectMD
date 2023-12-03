@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Lada : ActiveSkillBehaviour
 {
+
+    GameObject muzzleEffect;
+
     public Lada(UnitObject _subject) : base(_subject)
     {
+        muzzleEffect = InGamePrefabsManager.GetObject("ShotGunMuzzle");
     }
 
     public override IEnumerator ActiveSkill(ActiveSkillValue skillData)
@@ -24,7 +28,15 @@ public class Lada : ActiveSkillBehaviour
 
     protected override IEnumerator AttackLogic()
     {
-        throw new System.NotImplementedException();
+        var target = GetNearestOpponent();
+        Instantiate(muzzleEffect, GetBoneWorldPos("bullet_pos"), model.transform.rotation);
+        yield return PlayAnimAndWait("battle_attack");
+        for (int i = 0; i < 3; i++)
+        {
+            target?.OnDamage(4, this);
+        }
+        yield return PlayAnimAndWait("battle_pump");
+        yield break;
     }
 
     protected override IEnumerator PassiveSkillActive()
@@ -35,5 +47,16 @@ public class Lada : ActiveSkillBehaviour
     protected override bool PassiveSkillCondition()
     {
         return false;
+    }
+
+    protected override IEnumerator Reload()
+    {
+        yield return PlayAnimAndWait("battle_reload_1");
+        for (int i = 0; i < maxAmmo; i++)
+        {
+            curAmmo++;
+            yield return PlayAnimAndWait("battle_reload_2");
+        }
+        yield return PlayAnimAndWait("battle_reload_3");
     }
 }

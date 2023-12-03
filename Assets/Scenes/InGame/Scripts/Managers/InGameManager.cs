@@ -101,6 +101,12 @@ public class InGameManager : MonoBehaviour
             case 17:
                 behaviour = new Fei(unitObj);
                 break;
+            case 18:
+                behaviour = new Lada(unitObj);
+                break;
+            case 22:
+                behaviour = new Yui(unitObj);
+                break;
             case 24:
                 behaviour = new Nina(unitObj);
                 break;

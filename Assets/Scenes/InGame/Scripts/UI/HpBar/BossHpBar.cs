@@ -17,7 +17,6 @@ public class BossHpBar : HpBarBase
     float curHp;
 
     float visualedHp;
-    float distSpeed;
 
     public override void DestroyBar()
     {
@@ -37,12 +36,11 @@ public class BossHpBar : HpBarBase
     public override void UpdateFill(float _hp)
     {
         curHp = _hp;
-        distSpeed = Mathf.Abs(visualedHp - curHp) / curHp * 1000f;
     }
 
     void Update()
     {
-        visualedHp = Mathf.Lerp(visualedHp, curHp, distSpeed * Time.deltaTime);
+        visualedHp = Mathf.Lerp(visualedHp, curHp, 50 * Time.deltaTime);
 
         float calcHp = visualedHp % lineValue;
         filledHpBar.fillAmount = calcHp / lineValue;
