@@ -20,6 +20,8 @@ public class LoadoutSelectButton : MonoBehaviour
         panel = _panel;
 
         profileImage.sprite = ResourceManager.GetProfile(LinkedData.charIdx);
+        nameText.text = StaticDataManager.GetConstUnitData(LinkedData.charIdx).name;
+
         selectedOutline.SetActive(false);
     }
 

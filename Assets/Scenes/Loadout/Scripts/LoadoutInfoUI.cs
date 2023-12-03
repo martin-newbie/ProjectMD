@@ -60,7 +60,10 @@ public class LoadoutInfoUI : MonoBehaviour
             SetAnimatoin("enter", true);
         }
         AddAnimation("wait", true);
+
         profileImage.sprite = ResourceManager.GetProfile(linkedData.charIdx);
+        nameText.text = StaticDataManager.GetConstUnitData(LinkedData.charIdx).name;
+
         LinkedData = linkedData;
     }
 
