@@ -33,7 +33,8 @@ public class ResourceManager : MonoBehaviour
 
     public static Sprite GetProfile(int idx)
     {
-        if (idx >= Instance.characterProfiles.Length - 1) idx = 0;
+        if (idx > Instance.characterProfiles.Length - 1)
+            idx = 0;
         return Instance.characterProfiles[idx];
     }
 }
