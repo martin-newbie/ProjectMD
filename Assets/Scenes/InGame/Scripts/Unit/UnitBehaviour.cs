@@ -21,8 +21,8 @@ public abstract class UnitBehaviour
     public BehaviourState state;
     public UnitGroupType group;
     public UnitStatus staticStatus;
-    public List<StatusType> buffList;
-    public List<StatusType> debuffList;
+    public Dictionary<StatusType, float> buffList;
+    public Dictionary<StatusType, float> debuffList;
     #endregion
 
     #region runningValue
@@ -46,8 +46,8 @@ public abstract class UnitBehaviour
 
         probBullet = subject.probBullet;
 
-        buffList = new List<StatusType>();
-        debuffList = new List<StatusType>();
+        buffList = new Dictionary<StatusType, float>();
+        debuffList = new Dictionary<StatusType, float>();
     }
 
     public virtual void InitCommon(int idx, int barType)
@@ -377,7 +377,28 @@ public abstract class UnitBehaviour
         result += staticStatus.GetTotalStatus(type, level);
 
         // add result from equipment
-        // add result 
+        // add result from unique weapon
+
+        // add result from buff and debuff
+        #region buff/debuff
+        float buff = 0f;
+        float debuff = 0f;
+
+        if(buffList.ContainsKey(type) && buffList[type] > 0f)
+        {
+            buff = buffList[type];
+        }
+        if(debuffList.ContainsKey(type) && debuffList[type] > 0f)
+        {
+            debuff = debuffList[type];
+        }
+
+        float buffedValue = result * buff;
+        float debuffedValue = result * debuff;
+
+        result += buffedValue;
+        result -= debuffedValue;
+        #endregion
 
         return result;
     }
