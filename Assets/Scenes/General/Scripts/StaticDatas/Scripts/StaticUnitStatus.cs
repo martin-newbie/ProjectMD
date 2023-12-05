@@ -77,7 +77,7 @@ public class UnitStatus
 
     float GetLevelStatus(int level, float defaultValue, float growthValue)
     {
-        return defaultValue + level * defaultValue * growthValue;
+        return defaultValue + growthValue * (1 - Mathf.Pow((float)System.Math.E, -0.03f * level));
     }
 }
 

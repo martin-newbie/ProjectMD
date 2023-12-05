@@ -33,7 +33,7 @@ public class Lada : ActiveSkillBehaviour
         yield return PlayAnimAndWait("battle_attack");
         for (int i = 0; i < 3; i++)
         {
-            target?.OnDamage(4, this);
+            target?.OnDamage(GetDamageStruct(), this);
         }
         yield return PlayAnimAndWait("battle_pump");
         yield break;

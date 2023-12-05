@@ -7,7 +7,7 @@ public class Explosion : MonoBehaviour
     [SerializeField] ContactFilter2D filter;
     [SerializeField] Collider2D thisCol;
 
-    public void StartExplosion(UnitGroupType targetGroup, float damage, UnitBehaviour from)
+    public void StartExplosion(UnitGroupType targetGroup, DamageStruct value, UnitBehaviour from)
     {
         gameObject.SetActive(true);
 
@@ -20,7 +20,7 @@ public class Explosion : MonoBehaviour
                 var unit = item.GetComponent<UnitObject>().behaviour;
                 if(unit.group == targetGroup)
                 {
-                    unit.OnDamage(damage, from);
+                    unit.OnDamage(value, from);
                 }
             }
         }

@@ -20,7 +20,9 @@ public abstract class UnitBehaviour
     public float hp = 100f;
     public BehaviourState state;
     public UnitGroupType group;
-    public UnitStatus status;
+    public UnitStatus staticStatus;
+    public List<StatusType> buffList;
+    public List<StatusType> debuffList;
     #endregion
 
     #region runningValue
@@ -43,12 +45,15 @@ public abstract class UnitBehaviour
         model = subject.model;
 
         probBullet = subject.probBullet;
+
+        buffList = new List<StatusType>();
+        debuffList = new List<StatusType>();
     }
 
     public virtual void InitCommon(int idx, int barType)
     {
         keyIndex = idx;
-        status = StaticDataManager.GetUnitStatus(keyIndex);
+        staticStatus = StaticDataManager.GetUnitStatus(keyIndex);
 
         hp = GetStatus(StatusType.HP);
         hpBar = HpBarCanvas.Instance.GetHpBar(barType);
@@ -133,7 +138,7 @@ public abstract class UnitBehaviour
     #region Move
     public virtual Coroutine CommonMoveToPosition(Vector3 target)
     {
-        if(target == transform.position)
+        if (target == transform.position)
         {
             return null;
         }
@@ -262,12 +267,13 @@ public abstract class UnitBehaviour
         var targetPos = target.GetBoneWorldPos("body") + randPos;
 
         var bullet = Instantiate(probBullet, startPos, Quaternion.identity);
-        bullet.StartBulletEffect(startPos, targetPos, 25f, () => target?.OnDamage(GetStatus(StatusType.DMG), this));
+        bullet.StartBulletEffect(startPos, targetPos, 25f, () => target?.OnDamage(GetDamageStruct(), this));
         curAmmo--;
     }
 
-    public virtual void OnDamage(float damage, UnitBehaviour from)
+    public virtual void OnDamage(DamageStruct value, UnitBehaviour from)
     {
+        float damage = value.GetValue(StatusType.DMG);
         // check death
 
         // calculate damage
@@ -367,6 +373,25 @@ public abstract class UnitBehaviour
 
     public float GetStatus(StatusType type, int level = 0)
     {
-        return status.GetTotalStatus(type, level);
+        float result = 0;
+        result += staticStatus.GetTotalStatus(type, level);
+
+        // add result from equipment
+        // add result 
+
+        return result;
+    }
+
+    public DamageStruct GetDamageStruct()
+    {
+        Dictionary<StatusType, float> structValue = new Dictionary<StatusType, float>();
+        structValue.Add(StatusType.DMG, GetStatus(StatusType.DMG));
+        structValue.Add(StatusType.ACCURACY, GetStatus(StatusType.ACCURACY));
+        structValue.Add(StatusType.CRI_RATE, GetStatus(StatusType.CRI_RATE));
+        structValue.Add(StatusType.CRI_DAMAGE, GetStatus(StatusType.CRI_DAMAGE));
+        structValue.Add(StatusType.STABLE, GetStatus(StatusType.STABLE));
+
+        DamageStruct dmg = new DamageStruct(structValue);
+        return dmg;
     }
 }
