@@ -6,8 +6,12 @@ public class TrainingDummy : UnitBehaviour
 {
     public TrainingDummy(UnitObject _subject) : base(_subject)
     {
-        maxHp = 100000;
-        hp = maxHp;
+    }
+
+    public override void InitCommon(int idx, int barType)
+    {
+        base.InitCommon(idx, barType);
+        hp = 100000;
     }
 
     protected override void InCombatFunc()

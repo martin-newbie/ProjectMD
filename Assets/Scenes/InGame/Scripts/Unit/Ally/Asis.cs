@@ -44,7 +44,7 @@ public class Asis : ActiveSkillBehaviour
     private void OnCompleteBulletMove(Vector3 targetPos)
     {
         var obj = Instantiate(explosion, targetPos, Quaternion.identity);
-        obj.StartExplosion(GetOpponentGroup(), damage, this);
+        obj.StartExplosion(GetOpponentGroup(), GetStatus(StatusType.DMG), this);
     }
 
     public override void CollabseSkill(ActiveSkillValue skillData, UnitBehaviour subjectUnit)

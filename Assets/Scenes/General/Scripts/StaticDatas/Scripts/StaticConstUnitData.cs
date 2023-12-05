@@ -30,8 +30,8 @@ public class ConstUnitData
     public string name;
     public int ammoCount;
     public int burstCount;
-    public float range;
-    public float moveSpeed;
+    public int atkType;
+    public int defType;
 
     public ConstUnitData(string[] data)
     {
@@ -41,7 +41,7 @@ public class ConstUnitData
         name = data[idx++];
         ammoCount = int.Parse(data[idx++]);
         burstCount = int.Parse(data[idx++]);
-        range = float.Parse(data[idx++]);
-        moveSpeed = float.Parse(data[idx++]);
+        atkType = int.Parse(data[idx++]);
+        defType = int.Parse(data[idx++]);
     }
 }

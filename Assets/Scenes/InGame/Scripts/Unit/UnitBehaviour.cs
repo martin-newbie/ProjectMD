@@ -17,14 +17,10 @@ public abstract class UnitBehaviour
 
     #region state
     public int keyIndex = 0;
-    public float range = 0f;
-    public float moveSpeed = 3f;
-    public float atkEndDelay = 1f;
-    public float damage = 10f;
     public float hp = 100f;
-    public float maxHp = 100f;
     public BehaviourState state;
     public UnitGroupType group;
+    public UnitStatus status;
     #endregion
 
     #region runningValue
@@ -49,17 +45,18 @@ public abstract class UnitBehaviour
         probBullet = subject.probBullet;
     }
 
-    public void InitCommon(int idx, int barType)
+    public virtual void InitCommon(int idx, int barType)
     {
         keyIndex = idx;
+        status = StaticDataManager.GetUnitStatus(keyIndex);
 
+        hp = GetStatus(StatusType.HP);
         hpBar = HpBarCanvas.Instance.GetHpBar(barType);
-        hpBar.InitBar(maxHp);
+        hpBar.InitBar(GetStatus(StatusType.HP));
 
         // set datas
         maxAmmo = StaticDataManager.GetConstUnitData(keyIndex).ammoCount;
         curAmmo = maxAmmo;
-        range = StaticDataManager.GetConstUnitData(keyIndex).range;
     }
 
     public Coroutine StartCoroutine(IEnumerator routine)
@@ -171,7 +168,7 @@ public abstract class UnitBehaviour
         while (true)
         {
             var target = GetNearestOpponent();
-            targetPos = InGameManager.Instance.GetPreferPos(this, target, range);
+            targetPos = InGameManager.Instance.GetPreferPos(this, target, GetStatus(StatusType.RANGE));
 
             if (transform.position == targetPos)
             {
@@ -179,14 +176,14 @@ public abstract class UnitBehaviour
             }
 
             SetModelRotByTarget(target);
-            var nextPos = InGameManager.Instance.GetNextPos(this, target, range);
+            var nextPos = InGameManager.Instance.GetNextPos(this, target, GetStatus(StatusType.RANGE));
             yield return StartCoroutine(MoveToTargetLerp(nextPos));
         }
     }
 
     protected virtual IEnumerator MoveToTargetLerp(Vector3 target)
     {
-        float dur = Vector3.Distance(transform.position, target) / moveSpeed;
+        float dur = Vector3.Distance(transform.position, target) / GetStatus(StatusType.MOVE_SPEED);
         float timer = 0f;
         Vector3 startPos = transform.position;
 
@@ -226,7 +223,7 @@ public abstract class UnitBehaviour
     protected virtual IEnumerator AttackFinish()
     {
         PlayAnim("battle_wait", true);
-        yield return new WaitForSeconds(atkEndDelay);
+        yield return new WaitForSeconds(GetStatus(StatusType.ATK_DELAY));
     }
 
     protected virtual IEnumerator CommonBurstFire(int count, float delay = 0.15f)
@@ -245,7 +242,7 @@ public abstract class UnitBehaviour
 
     protected virtual bool IsInsideRange(UnitBehaviour target)
     {
-        return Vector3.Distance(transform.position, target.transform.position) <= range;
+        return Vector3.Distance(transform.position, target.transform.position) <= GetStatus(StatusType.RANGE);
     }
 
     protected virtual UnitBehaviour GetNearestOpponent()
@@ -265,7 +262,7 @@ public abstract class UnitBehaviour
         var targetPos = target.GetBoneWorldPos("body") + randPos;
 
         var bullet = Instantiate(probBullet, startPos, Quaternion.identity);
-        bullet.StartBulletEffect(startPos, targetPos, 25f, () => target?.OnDamage(damage, this));
+        bullet.StartBulletEffect(startPos, targetPos, 25f, () => target?.OnDamage(GetStatus(StatusType.DMG), this));
         curAmmo--;
     }
 
@@ -368,4 +365,8 @@ public abstract class UnitBehaviour
     }
 
 
+    public float GetStatus(StatusType type, int level = 0)
+    {
+        return status.GetTotalStatus(type, level);
+    }
 }

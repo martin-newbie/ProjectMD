@@ -101,8 +101,6 @@ public class TestGameMode : IGameModeBehaviour
             manager.movingObjects.Add(unitObj.gameObject);
 
             var behaviour = manager.SetBehaviourInObject(unitObj, 0, UnitGroupType.HOSTILE, 1);
-            behaviour.range = 4;
-
             manager.allUnits.Add(behaviour);
         }
     }
