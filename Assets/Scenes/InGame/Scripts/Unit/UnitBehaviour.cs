@@ -391,6 +391,7 @@ public abstract class UnitBehaviour
         if(debuffList.ContainsKey(type) && debuffList[type] > 0f)
         {
             debuff = debuffList[type];
+            if (debuff > 0.8f) debuff = 0.8f;
         }
 
         float buffedValue = result * buff;
