@@ -1111,6 +1111,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1208450591}
   m_CullTransparentMesh: 1
+--- !u!1 &1285453150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1285453152}
+  - component: {fileID: 1285453151}
+  m_Layer: 0
+  m_Name: 03:Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1285453151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285453150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0fbe1c602c53ab489cf2a01f137cb31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  signinGo: {fileID: 0}
+  joinGo: {fileID: 0}
+  txtUID: {fileID: 0}
+  txtNickName: {fileID: 0}
+  txtSuccessLogin: {fileID: 0}
+  btn: {fileID: 478023190}
+  btnSubmit: {fileID: 0}
+  inputField: {fileID: 0}
+  btnSignin: {fileID: 0}
+  signinInputField: {fileID: 0}
+--- !u!4 &1285453152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285453150}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.3496575, y: 0.55465037, z: 576.8615}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1424182866
 GameObject:
   m_ObjectHideFlags: 0
