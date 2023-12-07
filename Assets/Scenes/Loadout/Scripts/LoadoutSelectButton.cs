@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LoadoutSelectButton : MonoBehaviour
 {
 
-    [HideInInspector] public CharacterData LinkedData;
+    [HideInInspector] public UnitData LinkedData;
     LoadoutSelectPanel panel;
 
     [SerializeField] Image profileImage;
@@ -14,13 +14,13 @@ public class LoadoutSelectButton : MonoBehaviour
     [SerializeField] Text levelText;
     [SerializeField] GameObject selectedOutline;
 
-    public void InitButton(CharacterData _linkedData, LoadoutSelectPanel _panel)
+    public void InitButton(UnitData _linkedData, LoadoutSelectPanel _panel)
     {
         LinkedData = _linkedData;
         panel = _panel;
 
-        profileImage.sprite = ResourceManager.GetProfile(LinkedData.charIdx);
-        nameText.text = StaticDataManager.GetConstUnitData(LinkedData.charIdx).name;
+        profileImage.sprite = ResourceManager.GetProfile(LinkedData.unitIdx);
+        nameText.text = StaticDataManager.GetConstUnitData(LinkedData.unitIdx).name;
 
         selectedOutline.SetActive(false);
     }
@@ -32,6 +32,6 @@ public class LoadoutSelectButton : MonoBehaviour
 
     public void OnSelect()
     {
-        panel.SelectButton(LinkedData.charIdx);
+        panel.SelectButton(LinkedData.unitIdx);
     }
 }

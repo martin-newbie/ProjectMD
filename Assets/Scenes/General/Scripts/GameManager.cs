@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
         UserData user = new UserData();
         for (int i = 0; i < 26; i++)
         {
-            user.charDatas.Add(new CharacterData(i));
+            user.unitDatas.Add(new UnitData(i));
         }
     }
 }

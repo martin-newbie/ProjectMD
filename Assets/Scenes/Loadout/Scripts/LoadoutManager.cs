@@ -82,7 +82,7 @@ public class LoadoutManager : MonoBehaviour
             if (i < deckIdxArr.Length)
             {
                 int charIdx = idxArr[i];
-                var info = UserData.Instance.charDatas.Find((item) => item.charIdx == charIdx);
+                var info = UserData.Instance.unitDatas.Find((item) => item.unitIdx == charIdx);
                 infoButtons[i].InitInfo(info);
             }
             else

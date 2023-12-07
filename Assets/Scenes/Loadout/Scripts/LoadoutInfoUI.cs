@@ -24,7 +24,7 @@ public class LoadoutInfoUI : MonoBehaviour
     [SerializeField] Text atkAttText;
     [SerializeField] Text defAttText;
 
-    [HideInInspector] public CharacterData LinkedData;
+    [HideInInspector] public UnitData LinkedData;
     [HideInInspector] public int btnIdx;
     Vector2 defaultAnchorPos;
     public bool isDown;
@@ -40,7 +40,7 @@ public class LoadoutInfoUI : MonoBehaviour
         btnIdx = idx;
     }
 
-    public void InitInfo(CharacterData linkedData)
+    public void InitInfo(UnitData linkedData)
     {
         emptyBox.SetActive(linkedData == null);
         infoBox.SetActive(linkedData != null);
@@ -52,17 +52,17 @@ public class LoadoutInfoUI : MonoBehaviour
         }
 
         skeleton.Update(0f);
-        skeleton.skeletonDataAsset = ResourceManager.GetSkeleton(linkedData.charIdx);
+        skeleton.skeletonDataAsset = ResourceManager.GetSkeleton(linkedData.unitIdx);
         skeleton.Initialize(true);
 
-        if (LinkedData.charIdx != linkedData.charIdx)
+        if (LinkedData.unitIdx != linkedData.unitIdx)
         {
             SetAnimatoin("enter", true);
         }
         AddAnimation("wait", true);
 
-        profileImage.sprite = ResourceManager.GetProfile(linkedData.charIdx);
-        nameText.text = StaticDataManager.GetConstUnitData(linkedData.charIdx).name;
+        profileImage.sprite = ResourceManager.GetProfile(linkedData.unitIdx);
+        nameText.text = StaticDataManager.GetConstUnitData(linkedData.unitIdx).name;
 
         LinkedData = linkedData;
     }

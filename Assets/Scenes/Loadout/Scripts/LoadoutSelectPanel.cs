@@ -14,7 +14,7 @@ public class LoadoutSelectPanel : MonoBehaviour
 
     public void InitPanel()
     {
-        var list = UserData.Instance.charDatas;
+        var list = UserData.Instance.unitDatas;
         foreach (var item in list)
         {
             var temp = Instantiate(buttonPrefab, buttonLayout);
@@ -49,7 +49,7 @@ public class LoadoutSelectPanel : MonoBehaviour
         // Todo later
         for (int i = 0; i < buttons.Count; i++)
         {
-            buttons[i].SetSelectOutline(curSelected.Contains(buttons[i].LinkedData.charIdx));
+            buttons[i].SetSelectOutline(curSelected.Contains(buttons[i].LinkedData.unitIdx));
         }
     }
 

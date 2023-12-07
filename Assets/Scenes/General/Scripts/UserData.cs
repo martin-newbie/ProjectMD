@@ -10,27 +10,28 @@ public class UserData
 
     public string userName;
 
-    public List<CharacterData> charDatas;
+    public List<UnitData> unitDatas;
 
     public UserData()
     {
         Instance = this;
-        charDatas = new List<CharacterData>();
+        unitDatas = new List<UnitData>();
     }
 }
 
 [System.Serializable]
-public class CharacterData
+public class UnitData
 {
-    public int charIdx;
-    public float charExp;
+    public int unitIdx;
+    public int level;
+    public float exp;
 
     public int[] equipmentLevel;
     public float[] equipmentExp;
 
-    public CharacterData(int idx)
+    public UnitData(int idx)
     {
-        charIdx = idx;
+        unitIdx = idx;
         equipmentLevel = new int[3];
         equipmentExp = new float[3];
     }

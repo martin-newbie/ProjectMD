@@ -15,20 +15,22 @@ public abstract class UnitBehaviour
     public Bullet probBullet;
     #endregion
 
-    #region state
-    public int keyIndex = 0;
-    public float hp = 100f;
-    public BehaviourState state;
-    public UnitGroupType group;
     public UnitStatus staticStatus;
-    public Dictionary<StatusType, float> buffList;
-    public Dictionary<StatusType, float> debuffList;
+
+    #region state
+    public float hp;
+    public int level;
+    public int keyIndex;
     #endregion
 
     #region runningValue
     public int curAmmo;
     public int maxAmmo;
     public bool isAction;
+    public BehaviourState state;
+    public UnitGroupType group;
+    public Dictionary<StatusType, float> buffList;
+    public Dictionary<StatusType, float> debuffList;
     #endregion
 
     public Vector3 targetPos = new Vector3();
@@ -371,7 +373,7 @@ public abstract class UnitBehaviour
     }
 
 
-    public float GetStatus(StatusType type, int level = 0)
+    public float GetStatus(StatusType type)
     {
         float result = 0;
         result += staticStatus.GetTotalStatus(type, level);
