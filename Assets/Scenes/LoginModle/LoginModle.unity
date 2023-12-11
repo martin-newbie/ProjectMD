@@ -1150,6 +1150,10 @@ MonoBehaviour:
   inputField: {fileID: 0}
   btnSignin: {fileID: 0}
   signinInputField: {fileID: 0}
+  Host: localhost
+  User: root
+  Password: 0000
+  Database: projectmd_db
 --- !u!4 &1285453152
 Transform:
   m_ObjectHideFlags: 0
