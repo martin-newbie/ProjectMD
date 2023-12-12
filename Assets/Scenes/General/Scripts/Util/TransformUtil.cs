@@ -13,4 +13,13 @@ public static class TransformUtil
 
         return anchorPos;
     }
+
+    public static Vector3 MouseToRectPosition(this Vector3 originPos, RectTransform rectTransform)
+    {
+        var anchorPos = new Vector2();
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, originPos, Camera.main, out anchorPos);
+
+        return anchorPos;
+
+    }
 }

@@ -47,10 +47,7 @@ public class LoadoutManager : MonoBehaviour
     {
         if (curDragIdx < 0) return;
 
-        var mousePos = Input.mousePosition;
-        var anchorPos = new Vector2();
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(infoButtons[curDragIdx].GetComponent<RectTransform>(), mousePos, Camera.main, out anchorPos);
-
+        var anchorPos = Input.mousePosition.MouseToRectPosition(infoButtons[curDragIdx].GetComponent<RectTransform>());
         infoButtons[curDragIdx].SetModelPos(anchorPos);
     }
 

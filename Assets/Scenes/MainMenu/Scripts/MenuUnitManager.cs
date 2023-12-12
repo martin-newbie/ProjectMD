@@ -8,6 +8,14 @@ public class MenuUnitManager : MonoBehaviour
     public float width;
     public MenuUnit[] unitObjs;
 
+    private void Start()
+    {
+        foreach (var item in unitObjs)
+        {
+            item.InitButton(GetComponent<RectTransform>());
+        }
+    }
+
     public void InitUnits(int[] idxArr)
     {
         for (int i = 0; i < unitObjs.Length; i++)
@@ -16,7 +24,7 @@ public class MenuUnitManager : MonoBehaviour
             if (i < idxArr.Length)
             {
                 obj.gameObject.SetActive(true);
-                obj.InitUnit(idxArr[i]);
+                obj.UpdateUnitIdx(idxArr[i]);
             }
             else
             {
