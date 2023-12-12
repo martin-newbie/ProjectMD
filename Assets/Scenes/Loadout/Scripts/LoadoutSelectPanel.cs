@@ -26,7 +26,7 @@ public class LoadoutSelectPanel : MonoBehaviour
     public void OpenPanel(int[] selected)
     {
         gameObject.SetActive(true);
-        curSelected = selected.ToList();
+        curSelected = new List<int>(selected);
 
         InitButtonStateUI();
     }

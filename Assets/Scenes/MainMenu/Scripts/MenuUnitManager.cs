@@ -6,7 +6,7 @@ using UnityEngine;
 public class MenuUnitManager : MonoBehaviour
 {
     public float width;
-    public SkeletonGraphic[] unitObjs;
+    public MenuUnit[] unitObjs;
 
     public void InitUnits(int[] idxArr)
     {
@@ -16,9 +16,7 @@ public class MenuUnitManager : MonoBehaviour
             if (i < idxArr.Length - 1)
             {
                 obj.gameObject.SetActive(true);
-                obj.Update(0f);
-                obj.skeletonDataAsset = ResourceManager.GetSkeleton(idxArr[i]);
-                obj.Initialize(true);
+                obj.InitUnit(idxArr[i]);
             }
             else
             {
@@ -35,7 +33,7 @@ public class MenuUnitManager : MonoBehaviour
         {
             float randX = Random.Range(-width, width);
             var pos = new Vector2(randX, -130);
-            unitObjs[i].rectTransform.anchoredPosition = pos;
+            unitObjs[i].GetComponent<RectTransform>().anchoredPosition = pos;
         }
     }
 }
