@@ -22,6 +22,6 @@ public class FakeLogin : MonoBehaviour
 
     public void OnStartButton()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("Menu");
     }
 }

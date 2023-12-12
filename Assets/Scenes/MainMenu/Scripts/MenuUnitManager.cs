@@ -13,7 +13,7 @@ public class MenuUnitManager : MonoBehaviour
         for (int i = 0; i < unitObjs.Length; i++)
         {
             var obj = unitObjs[i];
-            if (i < idxArr.Length - 1)
+            if (i < idxArr.Length)
             {
                 obj.gameObject.SetActive(true);
                 obj.InitUnit(idxArr[i]);
