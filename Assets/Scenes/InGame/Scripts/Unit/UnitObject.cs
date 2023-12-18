@@ -15,13 +15,13 @@ public class UnitObject : MonoBehaviour
     {
         behaviour = _behaviour;
         behaviour.InitCommon(idx, barType);
-    
+
         model.Update(0f);
         model.skeletonDataAsset = ResourceManager.GetSkeleton(idx);
         model.Initialize(true);
-        
+
         behaviour.group = group;
-        if (group == UnitGroupType.HOSTILE) behaviour.SetModelRotByDir(-1);
+        behaviour.SetModelRotByDir((int)group);
     }
 
     private void Update()
