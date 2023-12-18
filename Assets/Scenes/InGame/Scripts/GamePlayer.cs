@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GamePlayer
 {
-    public List<UnitBehaviour> units = new List<UnitBehaviour>();
+    public bool isGameActive = false;
 
+    public List<UnitBehaviour> units = new List<UnitBehaviour>();
 
     // about skill
     List<ActiveSkillBehaviour> skillUnits = new List<ActiveSkillBehaviour>();
@@ -26,6 +27,7 @@ public class GamePlayer
 
     public void Update()
     {
+        if (!isGameActive) return;
 
         if (curDelay >= skillDelay)
         {
@@ -38,15 +40,21 @@ public class GamePlayer
     }
 
 
-    public void RemoveCharacterAtSkills(ActiveSkillBehaviour retiredUnit)
+    public void RemoveCharacter(UnitBehaviour retiredUnit)
     {
-        skillUnits.Remove(retiredUnit);
-        for (int i = 0; i < skillDeck.Count; i++)
+        units.Remove(retiredUnit);
+        InGameManager.Instance.allUnits.Remove(retiredUnit);
+
+        if (retiredUnit is ActiveSkillBehaviour)
         {
-            if (skillDeck[i] == retiredUnit)
+            skillUnits.Remove(retiredUnit as ActiveSkillBehaviour);
+            for (int i = 0; i < skillDeck.Count; i++)
             {
-                skillDeck.RemoveAt(i);
-                i--;
+                if (skillDeck[i] == retiredUnit)
+                {
+                    skillDeck.RemoveAt(i);
+                    i--;
+                }
             }
         }
     }
