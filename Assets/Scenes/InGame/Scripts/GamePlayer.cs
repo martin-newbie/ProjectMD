@@ -56,11 +56,16 @@ public class GamePlayer
             {
                 if (skillDeck[i] == retiredUnit)
                 {
-                    skillDeck.RemoveAt(i);
+                    RemoveCharacterSkillAt(i);
                     i--;
                 }
             }
         }
+    }
+
+    protected virtual void RemoveCharacterSkillAt(int idx)
+    {
+        skillDeck.RemoveAt(idx);
     }
 
     protected virtual UnitBehaviour SpawnUnit(int idx)
@@ -82,14 +87,15 @@ public class GamePlayer
         curDelay += Time.deltaTime;
     }
 
-    protected virtual void AddSkillInDeck()
+    protected virtual ActiveSkillBehaviour AddSkillInDeck()
     {
-        if (skillDeck.Count >= 10) return;
+        if (skillDeck.Count >= 10) return null;
 
         int rand = Random.Range(0, skillUnits.Count);
         var skillData = skillUnits[rand];
 
         skillDeck.Add(skillData);
+        return skillData;
     }
 
     public virtual void UseSkill(int idx)
@@ -138,12 +144,22 @@ public class GamePlayer
         // remove collabse skills
         if (collabseCount > 0)
         {
-            skillDeck.RemoveRange(startIdx, collabseCount + 1);
+            RemoveSkillsRange(startIdx, collabseCount);
         }
         else
         {
-            skillDeck.RemoveAt(idx);
+            RemoveSkillAt(idx);
         }
 
+    }
+
+    protected virtual void RemoveSkillsRange(int startIdx, int collabseCount)
+    {
+        skillDeck.RemoveRange(startIdx, collabseCount + 1);
+    }
+
+    protected virtual void RemoveSkillAt(int idx)
+    {
+        skillDeck.RemoveAt(idx);
     }
 }
