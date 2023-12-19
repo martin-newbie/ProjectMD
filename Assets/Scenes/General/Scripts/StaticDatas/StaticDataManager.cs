@@ -21,4 +21,18 @@ public class StaticDataManager : MonoBehaviour
     {
         return Instance.constUnitStatus.dataList[keyIndex];
     }
+
+    private void Start()
+    {
+        var staticDatas = new SheetDataBase[]
+        {
+            unitStatus,
+            constUnitStatus,
+        };
+
+        foreach (var item in staticDatas)
+        {
+            item.LoadData();
+        }
+    }
 }
