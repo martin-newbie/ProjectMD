@@ -425,6 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitObjPrefab: {fileID: 5598236503841212976, guid: 705689cac2c796c47b5d9947a7f25d75, type: 3}
+  skillCanvas: {fileID: 1832389324}
   posList: []
   movingObjects: []
 --- !u!114 &783219648

@@ -16,12 +16,17 @@ public class TestGameMode : IGameModeBehaviour
 
     public IEnumerator GameModeRoutine()
     {
-        SpawnAllyUnits();
+        var player = new PlayableGamePlayer(TempData.Instance.curDeckUnits, spawnIdx, UnitGroupType.ALLY, InGameManager.Instance.skillCanvas);
+        int[] enemySpawnIdx = new int[4] { 47, 50, 53, 56 };
+        var enemyPlayer = new TestEnemyGamePlayer(new int[] { 0, 0, 0, 0 }, enemySpawnIdx, UnitGroupType.HOSTILE);
+
+        player.SpawnCharacter();
 
         while (true)
         {
             SetUnitsState(BehaviourState.RETREAT, UnitGroupType.ALLY);
-            SpawnEnemy();
+            enemyPlayer.SpawnCharacter();
+
             yield return manager.StartCoroutine(ComingFront(5f));
             SetUnitsState(BehaviourState.INCOMBAT, UnitGroupType.ALLY);
             SetUnitsState(BehaviourState.INCOMBAT, UnitGroupType.HOSTILE);
@@ -29,19 +34,6 @@ public class TestGameMode : IGameModeBehaviour
             yield return new WaitUntil(() => WaitUntilEveryActionEnd());
             SetUnitsState(BehaviourState.STANDBY, UnitGroupType.ALLY);
         }
-    }
-
-    void SpawnAllyUnits()
-    {
-        int[] units = TempData.Instance.curDeckUnits;
-        for (int i = 0; i < units.Length; i++)
-        {
-            var unitObj = Object.Instantiate(manager.unitObjPrefab, manager.posList[spawnIdx[i]], Quaternion.identity);
-            var behaviour = manager.SetBehaviourInObject(unitObj, units[i], UnitGroupType.ALLY, 0);
-            manager.allUnits.Add(behaviour);
-        }
-
-        manager.InitSkill();
     }
 
     int GetCountOfEnemy()
@@ -89,19 +81,6 @@ public class TestGameMode : IGameModeBehaviour
             {
                 unit.SetBehaviourState(state);
             }
-        }
-    }
-
-    void SpawnEnemy()
-    {
-        int[] spawnIdx = new int[4] { 47, 50, 53, 56 };
-        for (int i = 0; i < 4; i++)
-        {
-            var unitObj = Object.Instantiate(manager.unitObjPrefab, manager.posList[spawnIdx[i] + 20], Quaternion.identity);
-            manager.movingObjects.Add(unitObj.gameObject);
-
-            var behaviour = manager.SetBehaviourInObject(unitObj, 0, UnitGroupType.HOSTILE, 1);
-            manager.allUnits.Add(behaviour);
         }
     }
 
