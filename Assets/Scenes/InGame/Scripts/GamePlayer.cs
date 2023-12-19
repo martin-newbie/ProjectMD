@@ -6,10 +6,10 @@ public class GamePlayer
 {
     public bool isGameActive = false;
 
-    public List<UnitBehaviour> units = new List<UnitBehaviour>();
-    int[] unitIdx;
-    int[] posIdx;
-    UnitGroupType group;
+    public List<UnitBehaviour> playerUnits = new List<UnitBehaviour>();
+    protected int[] unitIdx;
+    protected int[] posIdx;
+    protected UnitGroupType group;
 
     // about skill
     List<ActiveSkillBehaviour> skillUnits = new List<ActiveSkillBehaviour>();
@@ -35,6 +35,8 @@ public class GamePlayer
             var unit = SpawnUnit(i);
             unit.InjectDeadEvent(() => { RemoveCharacter(unit); });
 
+            playerUnits.Add(unit);
+            InGameManager.Instance.allUnits.Add(unit);
             if (unit is ActiveSkillBehaviour)
             {
                 skillUnits.Add(unit as ActiveSkillBehaviour);
@@ -46,7 +48,7 @@ public class GamePlayer
 
     public virtual void RemoveCharacter(UnitBehaviour retiredUnit)
     {
-        units.Remove(retiredUnit);
+        playerUnits.Remove(retiredUnit);
         InGameManager.Instance.allUnits.Remove(retiredUnit);
 
         if (retiredUnit is ActiveSkillBehaviour)

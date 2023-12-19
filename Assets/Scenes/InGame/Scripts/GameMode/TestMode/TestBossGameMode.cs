@@ -1,39 +1,27 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TestBossGameMode : IGameModeBehaviour
 {
-    int[] spawnIdx = new int[5] { 33, 30, 27, 24, 21 };
-
+    int[] spawnIdx = { 33, 30, 27, 24, 21 };
     InGameManager manager;
 
     public TestBossGameMode(InGameManager _manager)
     {
         manager = _manager;
-
     }
 
     public IEnumerator GameModeRoutine()
     {
-        SpawnAllyUnits();
+        var playablePlayer = new PlayableGamePlayer(TempData.Instance.curDeckUnits, spawnIdx, UnitGroupType.ALLY, manager.skillCanvas);
+        int[] bossIdx = { 0 };
+        int[] posIdx = { 50 };
+        var bossPlayer = new TestBossGamePlayer(bossIdx, posIdx, UnitGroupType.HOSTILE);
 
+        playablePlayer.SpawnCharacter();
+        bossPlayer.SpawnCharacter();
         SetUnitsState(BehaviourState.INCOMBAT, UnitGroupType.ALLY);
-        SpawnEnemy();
         yield return new WaitUntil(() => GetCountOfEnemy() <= 0);
-    }
-
-    void SpawnAllyUnits()
-    {
-        int[] units = TempData.Instance.curDeckUnits;
-        for (int i = 0; i < units.Length; i++)
-        {
-            var unitObj = Object.Instantiate(manager.unitObjPrefab, manager.posList[spawnIdx[i]], Quaternion.identity);
-            var behaviour = manager.SetBehaviourInObject(unitObj, units[i], UnitGroupType.ALLY, 0);
-            manager.allUnits.Add(behaviour);
-        }
-
-        manager.InitSkill();
     }
 
     void SetUnitsState(BehaviourState state, UnitGroupType group)

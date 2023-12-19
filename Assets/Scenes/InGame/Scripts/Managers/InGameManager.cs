@@ -14,6 +14,7 @@ public class InGameManager : MonoBehaviour
     }
 
     public UnitObject unitObjPrefab;
+    public SkillCanvas skillCanvas;
 
     [HideInInspector] public List<UnitBehaviour> allUnits = new List<UnitBehaviour>();
     [HideInInspector] public List<Vector3> posList = new List<Vector3>();
@@ -79,9 +80,14 @@ public class InGameManager : MonoBehaviour
 
     public UnitBehaviour SpawnUnit(Vector3 spawnPos, int idx, UnitGroupType group, int barType)
     {
-        var unitObj = Instantiate(unitObjPrefab, spawnPos, Quaternion.identity);
+        var unitObj = SpawnUnitObject(spawnPos);
         var behaviour = SetBehaviourInObject(unitObj, idx, group, barType);
         return behaviour;
+    }
+
+    public UnitObject SpawnUnitObject(Vector3 spawnPos)
+    {
+        return Instantiate(unitObjPrefab, spawnPos, Quaternion.identity);
     }
 
     public UnitBehaviour SetBehaviourInObject(UnitObject unitObj, int idx, UnitGroupType group, int barType)
