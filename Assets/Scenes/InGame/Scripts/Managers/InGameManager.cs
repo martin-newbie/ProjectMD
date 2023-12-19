@@ -27,7 +27,6 @@ public class InGameManager : MonoBehaviour
     void Start()
     {
         InitTileList();
-        InitSkills();
         InitGameMode();
         StartCoroutine(gameMode.GameModeRoutine());
     }
@@ -35,8 +34,6 @@ public class InGameManager : MonoBehaviour
     public void InitSkill()
     {
         var playable = allUnits.FindAll((item) => item.group == UnitGroupType.ALLY).Select((item)=> item as ActiveSkillBehaviour).ToArray();
-        SkillManager.Instance.InitSkills(playable);
-        SkillManager.Instance.StartGame();
     }
     
     void InitTileList()
@@ -53,29 +50,6 @@ public class InGameManager : MonoBehaviour
                 gameMode = new TestGameMode(this);
                 break;
         }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TestMethod_CombatStart();
-        }
-    }
-
-    void InitSkills()
-    {
-        var skillAble = allUnits.FindAll((item) => item.group == UnitGroupType.ALLY).Select((item) => item as ActiveSkillBehaviour);
-        SkillManager.Instance.InitSkills(skillAble.ToArray());
-    }
-
-    void TestMethod_CombatStart()
-    {
-        foreach (var item in allUnits)
-        {
-            item.state = BehaviourState.INCOMBAT;
-        }
-        SkillManager.Instance.StartGame();
     }
 
     public UnitBehaviour SpawnUnit(Vector3 spawnPos, int idx, UnitGroupType group, int barType)
@@ -130,17 +104,6 @@ public class InGameManager : MonoBehaviour
 
         unitObj.SetBehaviour(behaviour, idx, group, barType);
         return behaviour;
-    }
-
-    public void RetireCharacter(UnitBehaviour unit)
-    {
-        if (unit is ActiveSkillBehaviour)
-        {
-            SkillManager.Instance.RemoveCharacterAtSkills(unit as ActiveSkillBehaviour);
-        }
-
-        allUnits.Remove(unit);
-        movingObjects.Add(unit.gameObject);
     }
 
     public UnitBehaviour FindNearestTarget(UnitGroupType group, Vector3 startPos)

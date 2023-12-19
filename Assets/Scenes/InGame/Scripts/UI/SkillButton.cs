@@ -70,7 +70,6 @@ public class SkillButton : MonoBehaviour
     public void UseSkill()
     {
         if (!linkedData.ActiveSkillCondition()) return;
-
-        SkillManager.Instance.UseSkill(buttonIdx);
+        PlayableGamePlayer.Instance.UseSkill(buttonIdx);
     }
 }

@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class PlayableGamePlayer : GamePlayer
 {
+    public static PlayableGamePlayer Instance = null;
+
     SkillCanvas skillCanvas;
 
     public PlayableGamePlayer(int[] _unitIdx, int[] _posIdx, UnitGroupType _group, SkillCanvas _skillCanvas) : base(_unitIdx, _posIdx, _group)
     {
         skillCanvas = _skillCanvas;
+        Instance = this;
     }
 
     protected override void RemoveCharacterSkillAt(int idx)
