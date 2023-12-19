@@ -18,10 +18,4 @@ public class TestEnemyGamePlayer : GamePlayer
         InGameManager.Instance.movingObjects.Add(unit.gameObject);
         return unit;
     }
-
-    public override void RemoveCharacter(UnitBehaviour retiredUnit)
-    {
-        base.RemoveCharacter(retiredUnit);
-        InGameManager.Instance.movingObjects.Add(retiredUnit.gameObject);
-    }
 }

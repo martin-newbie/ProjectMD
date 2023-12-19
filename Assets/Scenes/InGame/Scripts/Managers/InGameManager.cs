@@ -31,6 +31,11 @@ public class InGameManager : MonoBehaviour
         StartCoroutine(gameMode.GameModeRoutine());
     }
 
+    private void Update()
+    {
+        gameMode?.Update();
+    }
+
     public void InitSkill()
     {
         var playable = allUnits.FindAll((item) => item.group == UnitGroupType.ALLY).Select((item)=> item as ActiveSkillBehaviour).ToArray();

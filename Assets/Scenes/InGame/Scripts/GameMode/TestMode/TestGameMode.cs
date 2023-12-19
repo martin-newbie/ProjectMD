@@ -7,19 +7,21 @@ public class TestGameMode : IGameModeBehaviour
     int[] spawnIdx = new int[5] { 33, 30, 27, 24, 21 };
 
     InGameManager manager;
+    
+    GamePlayer player;
+    GamePlayer enemyPlayer;
 
     public TestGameMode(InGameManager _manager)
     {
         manager = _manager;
 
+        player = new PlayableGamePlayer(TempData.Instance.curDeckUnits, spawnIdx, UnitGroupType.ALLY, InGameManager.Instance.skillCanvas);
+        int[] enemySpawnIdx = new int[4] { 47, 50, 53, 56 };
+        enemyPlayer = new TestEnemyGamePlayer(new int[] { 0, 0, 0, 0 }, enemySpawnIdx, UnitGroupType.HOSTILE);
     }
 
     public IEnumerator GameModeRoutine()
     {
-        var player = new PlayableGamePlayer(TempData.Instance.curDeckUnits, spawnIdx, UnitGroupType.ALLY, InGameManager.Instance.skillCanvas);
-        int[] enemySpawnIdx = new int[4] { 47, 50, 53, 56 };
-        var enemyPlayer = new TestEnemyGamePlayer(new int[] { 0, 0, 0, 0 }, enemySpawnIdx, UnitGroupType.HOSTILE);
-
         player.SpawnCharacter();
 
         while (true)
@@ -120,5 +122,11 @@ public class TestGameMode : IGameModeBehaviour
             yield return null;
         }
         obj.transform.position = end;
+    }
+
+    public void Update()
+    {
+        player?.Update();
+        enemyPlayer?.Update();
     }
 }

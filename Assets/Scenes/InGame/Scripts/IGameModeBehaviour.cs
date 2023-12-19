@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IGameModeBehaviour
 {
-    public abstract IEnumerator GameModeRoutine();
+    public IEnumerator GameModeRoutine();
+    public void Update();
 }

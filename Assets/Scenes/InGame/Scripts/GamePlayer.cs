@@ -49,6 +49,7 @@ public class GamePlayer
     public virtual void RemoveCharacter(UnitBehaviour retiredUnit)
     {
         playerUnits.Remove(retiredUnit);
+        InGameManager.Instance.movingObjects.Add(retiredUnit.gameObject);
         InGameManager.Instance.allUnits.Remove(retiredUnit);
 
         if (retiredUnit is ActiveSkillBehaviour)
