@@ -149,6 +149,7 @@ public abstract class UnitBehaviour
             return null;
         }
 
+        PlayAnim("battle_move", true);
         if (target.x > transform.position.x)
         {
             SetModelRotByDir(1);
@@ -158,13 +159,8 @@ public abstract class UnitBehaviour
             SetModelRotByDir(-1);
         }
 
-        return StartCoroutine(moveLogic());
-
-        IEnumerator moveLogic()
-        {
-            yield return StartCoroutine(MoveToTargetLerp(target));
-            SetModelRotByDir(1);
-        }
+        StartActionCoroutine(MoveToTargetLerp(target));
+        return actionCoroutine;
     }
 
     protected virtual IEnumerator MoveToTargetRange()
@@ -394,11 +390,11 @@ public abstract class UnitBehaviour
         float buff = 0f;
         float debuff = 0f;
 
-        if(buffList.ContainsKey(type) && buffList[type] > 0f)
+        if (buffList.ContainsKey(type) && buffList[type] > 0f)
         {
             buff = buffList[type];
         }
-        if(debuffList.ContainsKey(type) && debuffList[type] > 0f)
+        if (debuffList.ContainsKey(type) && debuffList[type] > 0f)
         {
             debuff = debuffList[type];
             if (debuff > 0.8f) debuff = 0.8f; // maximum debuff value

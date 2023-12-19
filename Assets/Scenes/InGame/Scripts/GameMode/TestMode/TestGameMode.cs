@@ -49,7 +49,12 @@ public class TestGameMode : IGameModeBehaviour
                 yield return null;
             }
 
+            player.ReturnOriginPos();
             yield return new WaitUntil(() => WaitUntilEveryActionEnd());
+            foreach (var item in player.playerUnits)
+            {
+                item.SetModelRotByDir(1);
+            }
             SetUnitsState(BehaviourState.STANDBY, UnitGroupType.ALLY);
         }
     }

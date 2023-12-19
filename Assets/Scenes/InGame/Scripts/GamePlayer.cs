@@ -166,6 +166,18 @@ public class GamePlayer
         skillDeck.RemoveAt(idx);
     }
 
+    public virtual void ReturnOriginPos()
+    {
+        for (int i = 0; i < unitIdx.Length; i++)
+        {
+            var unit = playerUnits.Find((item) => item.keyIndex == unitIdx[i]);
+            if (unit != null)
+            {
+                unit.CommonMoveToPosition(InGameManager.Instance.posList[posIdx[i]]);
+            }
+        }
+    }
+
     public virtual void OnEnd()
     {
         isGameActive = false;
