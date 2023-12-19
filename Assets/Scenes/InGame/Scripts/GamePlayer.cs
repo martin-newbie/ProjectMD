@@ -165,4 +165,9 @@ public class GamePlayer
     {
         skillDeck.RemoveAt(idx);
     }
+
+    public virtual void OnEnd()
+    {
+        isGameActive = false;
+    }
 }

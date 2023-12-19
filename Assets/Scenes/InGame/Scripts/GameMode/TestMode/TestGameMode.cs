@@ -37,11 +37,13 @@ public class TestGameMode : IGameModeBehaviour
             {
                 if(GetCountOf(UnitGroupType.HOSTILE) <= 0)
                 {
+                    enemyPlayer.OnEnd();
                     break;
                 }
 
                 if(GetCountOf(UnitGroupType.ALLY) <= 0)
                 {
+                    player.OnEnd();
                     yield break;
                 }
                 yield return null;
