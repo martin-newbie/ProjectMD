@@ -30,18 +30,32 @@ public class TestGameMode : IGameModeBehaviour
             yield return manager.StartCoroutine(ComingFront(5f));
             SetUnitsState(BehaviourState.INCOMBAT, UnitGroupType.ALLY);
             SetUnitsState(BehaviourState.INCOMBAT, UnitGroupType.HOSTILE);
-            yield return new WaitUntil(() => GetCountOfEnemy() <= 0);
+
+            while (true)
+            {
+                if(GetCountOf(UnitGroupType.HOSTILE) <= 0)
+                {
+                    break;
+                }
+
+                if(GetCountOf(UnitGroupType.ALLY) <= 0)
+                {
+                    yield break;
+                }
+                yield return null;
+            }
+
             yield return new WaitUntil(() => WaitUntilEveryActionEnd());
             SetUnitsState(BehaviourState.STANDBY, UnitGroupType.ALLY);
         }
     }
 
-    int GetCountOfEnemy()
+    int GetCountOf(UnitGroupType group)
     {
         int result = 0;
         foreach (var item in manager.allUnits)
         {
-            if (item.group == UnitGroupType.HOSTILE)
+            if (item.group == group)
             {
                 result++;
             }

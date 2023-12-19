@@ -295,7 +295,7 @@ public abstract class UnitBehaviour
         DamageTextCanvas.Instance.PrintDamageText(damage, GetBoneWorldPos("body"), dir, ResistType.NORMAL);
 
         hp -= damage;
-        hpBar.UpdateFill(hp);
+        hpBar?.UpdateFill(hp);
         if (hp <= 0 && state != BehaviourState.RETIRE)
         {
             OnRetire();
