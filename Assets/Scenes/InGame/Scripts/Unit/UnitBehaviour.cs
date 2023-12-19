@@ -1,8 +1,11 @@
 using Spine;
 using Spine.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public abstract class UnitBehaviour
 {
@@ -35,8 +38,9 @@ public abstract class UnitBehaviour
 
     public Vector3 targetPos = new Vector3();
     public Coroutine actionCoroutine;
-
     public HpBarBase hpBar;
+
+    Action retireAction;
 
     public UnitBehaviour(UnitObject _subject)
     {
@@ -273,6 +277,11 @@ public abstract class UnitBehaviour
         curAmmo--;
     }
 
+    public virtual void InjectDeadEvent(Action _retireAction)
+    {
+        retireAction = _retireAction;
+    }
+
     public virtual void OnDamage(DamageStruct value, UnitBehaviour from)
     {
         float damage = value.GetValue(StatusType.DMG);
@@ -297,9 +306,8 @@ public abstract class UnitBehaviour
     {
         subject.StopAllCoroutines();
         state = BehaviourState.RETIRE;
-        InGameManager.Instance.RetireCharacter(this);
         PlayAnim("battle_retire");
-
+        retireAction?.Invoke();
         hpBar.DestroyBar();
         hpBar = null;
     }

@@ -77,6 +77,13 @@ public class InGameManager : MonoBehaviour
         SkillManager.Instance.StartGame();
     }
 
+    public UnitBehaviour SpawnUnit(Vector3 spawnPos, int idx, UnitGroupType group, int barType)
+    {
+        var unitObj = Instantiate(unitObjPrefab, spawnPos, Quaternion.identity);
+        var behaviour = SetBehaviourInObject(unitObj, idx, group, barType);
+        return behaviour;
+    }
+
     public UnitBehaviour SetBehaviourInObject(UnitObject unitObj, int idx, UnitGroupType group, int barType)
     {
         UnitBehaviour behaviour = null;

@@ -7,6 +7,9 @@ public class GamePlayer
     public bool isGameActive = false;
 
     public List<UnitBehaviour> units = new List<UnitBehaviour>();
+    int[] unitIdx;
+    int[] posIdx;
+    UnitGroupType group;
 
     // about skill
     List<ActiveSkillBehaviour> skillUnits = new List<ActiveSkillBehaviour>();
@@ -18,29 +21,30 @@ public class GamePlayer
     float skillDelay = 1f;
     float curDelay;
 
-    public GamePlayer(int[] unitIdx, int[] posIdx)
+    public GamePlayer(int[] _unitIdx, int[] _posIdx, UnitGroupType _group)
     {
-        // spawn and init units
-        // set skill delay due to the units
-        // set cost charging time due to the units
+        unitIdx = _unitIdx;
+        posIdx = _posIdx;
+        group = _group;
     }
 
-    public void Update()
+    public virtual void SpawnCharacter()
     {
-        if (!isGameActive) return;
-
-        if (curDelay >= skillDelay)
+        for (int i = 0; i < unitIdx.Length; i++)
         {
-            curDelay = 0;
-            AddSkillInDeck();
+            var unit = SpawnUnit(i);
+            unit.InjectDeadEvent(() => { RemoveCharacter(unit); });
+
+            if (unit is ActiveSkillBehaviour)
+            {
+                skillUnits.Add(unit as ActiveSkillBehaviour);
+            }
         }
 
-        skillCost += Time.deltaTime * costCharge;
-        curDelay += Time.deltaTime;
+        isGameActive = true;
     }
 
-
-    public void RemoveCharacter(UnitBehaviour retiredUnit)
+    public virtual void RemoveCharacter(UnitBehaviour retiredUnit)
     {
         units.Remove(retiredUnit);
         InGameManager.Instance.allUnits.Remove(retiredUnit);
@@ -59,7 +63,26 @@ public class GamePlayer
         }
     }
 
-    void AddSkillInDeck()
+    protected virtual UnitBehaviour SpawnUnit(int idx)
+    {
+        return InGameManager.Instance.SpawnUnit(InGameManager.Instance.posList[posIdx[idx]], unitIdx[idx], group, 0);
+    }
+
+    public virtual void Update()
+    {
+        if (!isGameActive) return;
+
+        if (curDelay >= skillDelay)
+        {
+            curDelay = 0;
+            AddSkillInDeck();
+        }
+
+        skillCost += Time.deltaTime * costCharge;
+        curDelay += Time.deltaTime;
+    }
+
+    protected virtual void AddSkillInDeck()
     {
         if (skillDeck.Count >= 10) return;
 
@@ -69,7 +92,7 @@ public class GamePlayer
         skillDeck.Add(skillData);
     }
 
-    public void UseSkill(int idx)
+    public virtual void UseSkill(int idx)
     {
         int collabseCount = 0;
         int left = idx - 1;
@@ -80,7 +103,7 @@ public class GamePlayer
 
         while (!leftFinish || !rightFinish)
         {
-            if (left >= 0 && collabseCount < 4 && skillDeck[left] == skillDeck[idx])
+            if (left >= 0 && collabseCount < 4 && skillDeck[left].skillType == skillDeck[idx].skillType)
             {
                 collabse.Add(skillDeck[left]);
                 startIdx = left;
@@ -92,7 +115,7 @@ public class GamePlayer
                 leftFinish = true;
             }
 
-            if (right < skillDeck.Count && collabseCount < 4 && skillDeck[right] == skillDeck[idx])
+            if (right < skillDeck.Count && collabseCount < 4 && skillDeck[right].skillType == skillDeck[idx].skillType)
             {
                 collabse.Add(skillDeck[right]);
                 right = right + 1;
