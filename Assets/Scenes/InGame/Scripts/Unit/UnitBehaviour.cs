@@ -142,11 +142,11 @@ public abstract class UnitBehaviour
     }
 
     #region Move
-    public virtual Coroutine CommonMoveToPosition(Vector3 target)
+    public virtual IEnumerator CommonMoveToPosEndWait(Vector3 target)
     {
         if (target == transform.position)
         {
-            return null;
+            yield break;
         }
 
         PlayAnim("battle_move", true);
@@ -160,7 +160,10 @@ public abstract class UnitBehaviour
         }
 
         StartActionCoroutine(MoveToTargetLerp(target));
-        return actionCoroutine;
+        yield return actionCoroutine;
+
+        PlayAnim("battle_wait", true);
+        SetModelRotByDir((int)group);
     }
 
     protected virtual IEnumerator MoveToTargetRange()

@@ -188,7 +188,7 @@ public class GamePlayer
             var unit = playerUnits.Find((item) => item.keyIndex == unitIdx[i]);
             if (unit != null)
             {
-                unit.CommonMoveToPosition(InGameManager.Instance.posList[posIdx[i]]);
+                InGameManager.Instance.StartCoroutine(unit.CommonMoveToPosEndWait(InGameManager.Instance.posList[posIdx[i]]));
             }
         }
     }

@@ -58,6 +58,7 @@ public class TestGameMode : IGameModeBehaviour
             }
 
             player.SetUnitsState(BehaviourState.STANDBY);
+            yield return new WaitForSeconds(1f);
         }
     }
 
