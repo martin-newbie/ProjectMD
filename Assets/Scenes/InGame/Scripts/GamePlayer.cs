@@ -81,6 +81,11 @@ public class GamePlayer
         }
     }
 
+    public virtual int GetCountOfUnits()
+    {
+        return playerUnits.Count;
+    }
+
     protected virtual void RemoveCharacterSkillAt(int idx)
     {
         skillDeck.RemoveAt(idx);

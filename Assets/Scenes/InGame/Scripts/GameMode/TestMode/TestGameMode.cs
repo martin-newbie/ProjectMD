@@ -34,16 +34,16 @@ public class TestGameMode : IGameModeBehaviour
 
             while (true)
             {
-                if(GetCountOf(UnitGroupType.HOSTILE) <= 0)
+                if(enemyPlayer.GetCountOfUnits() <= 0)
                 {
                     enemyPlayer.OnEnd();
                     break;
                 }
 
-                if(GetCountOf(UnitGroupType.ALLY) <= 0)
+                if(player.GetCountOfUnits() <= 0)
                 {
                     player.OnEnd();
-                    yield break;
+                    goto StageEnd;
                 }
                 yield return null;
             }
@@ -60,6 +60,9 @@ public class TestGameMode : IGameModeBehaviour
             player.SetUnitsState(BehaviourState.STANDBY);
             yield return new WaitForSeconds(1f);
         }
+
+    StageEnd:
+        yield break;
     }
 
     int GetCountOf(UnitGroupType group)
