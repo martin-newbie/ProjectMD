@@ -49,7 +49,6 @@ public class GamePlayer
     public virtual void RemoveCharacter(UnitBehaviour retiredUnit)
     {
         playerUnits.Remove(retiredUnit);
-        InGameManager.Instance.movingObjects.Add(retiredUnit.gameObject);
         InGameManager.Instance.allUnits.Remove(retiredUnit);
 
         if (retiredUnit is ActiveSkillBehaviour)
@@ -63,6 +62,22 @@ public class GamePlayer
                     i--;
                 }
             }
+        }
+
+        InGameManager.Instance.StartCoroutine(disappearObject(retiredUnit));
+
+        IEnumerator disappearObject(UnitBehaviour unit)
+        {
+            yield return new WaitForSeconds(2f);
+            unit.gameObject.SetActive(false);
+        }
+    }
+
+    public virtual void SetUnitsState(BehaviourState state)
+    {
+        foreach (var unit in playerUnits)
+        {
+            unit.SetBehaviourState(state);
         }
     }
 

@@ -16,6 +16,7 @@ public class TestGameMode : IGameModeBehaviour
         manager = _manager;
 
         player = new PlayableGamePlayer(TempData.Instance.curDeckUnits, spawnIdx, UnitGroupType.ALLY, InGameManager.Instance.skillCanvas);
+
         int[] enemySpawnIdx = new int[4] { 47, 50, 53, 56 };
         enemyPlayer = new TestEnemyGamePlayer(new int[] { 0, 0, 0, 0 }, enemySpawnIdx, UnitGroupType.HOSTILE);
     }
@@ -26,12 +27,10 @@ public class TestGameMode : IGameModeBehaviour
 
         while (true)
         {
-            SetUnitsState(BehaviourState.RETREAT, UnitGroupType.ALLY);
             enemyPlayer.SpawnCharacter();
 
-            yield return manager.StartCoroutine(ComingFront(5f));
-            SetUnitsState(BehaviourState.INCOMBAT, UnitGroupType.ALLY);
-            SetUnitsState(BehaviourState.INCOMBAT, UnitGroupType.HOSTILE);
+            player.SetUnitsState(BehaviourState.INCOMBAT);
+            enemyPlayer.SetUnitsState(BehaviourState.INCOMBAT);
 
             while (true)
             {
@@ -49,13 +48,16 @@ public class TestGameMode : IGameModeBehaviour
                 yield return null;
             }
 
+            yield return new WaitUntil(() => WaitUntilEveryActionEnd());
             player.ReturnOriginPos();
             yield return new WaitUntil(() => WaitUntilEveryActionEnd());
+
             foreach (var item in player.playerUnits)
             {
                 item.SetModelRotByDir(1);
             }
-            SetUnitsState(BehaviourState.STANDBY, UnitGroupType.ALLY);
+
+            player.SetUnitsState(BehaviourState.STANDBY);
         }
     }
 
@@ -94,41 +96,6 @@ public class TestGameMode : IGameModeBehaviour
         }
 
         return allyCnt == endCnt;
-    }
-
-    void SetUnitsState(BehaviourState state, UnitGroupType group)
-    {
-        foreach (var unit in manager.allUnits)
-        {
-            if (unit.group == group)
-            {
-                unit.SetBehaviourState(state);
-            }
-        }
-    }
-
-    IEnumerator ComingFront(float dur)
-    {
-        foreach (var obj in manager.movingObjects)
-        {
-            manager.StartCoroutine(MoveSingleObj(obj, dur, 10f));
-        }
-        yield return new WaitForSeconds(dur);
-        yield break;
-    }
-
-    IEnumerator MoveSingleObj(GameObject obj, float dur, float move)
-    {
-        float timer = 0f;
-        Vector3 start = obj.transform.position;
-        Vector3 end = obj.transform.position + new Vector3(-move, 0, 0);
-        while (timer < dur)
-        {
-            obj.transform.position = Vector3.Lerp(start, end, timer / dur);
-            timer += Time.deltaTime;
-            yield return null;
-        }
-        obj.transform.position = end;
     }
 
     public void Update()
