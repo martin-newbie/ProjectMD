@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class LoadoutSelectPanel : MonoBehaviour
@@ -9,17 +7,18 @@ public class LoadoutSelectPanel : MonoBehaviour
     [SerializeField] LoadoutSelectButton buttonPrefab;
     [SerializeField] Transform buttonLayout;
     List<LoadoutSelectButton> buttons = new List<LoadoutSelectButton>();
-    List<int> curSelected;
+    [HideInInspector] public List<int> curSelected;
 
     int deckIdx;
 
     public void InitPanel()
     {
         var list = UserData.Instance.unitDatas;
-        foreach (var item in list)
+
+        for (int i = 0; i < list.Count; i++)
         {
             var temp = Instantiate(buttonPrefab, buttonLayout);
-            temp.InitButton(item, this);
+            temp.InitButton(this);
             buttons.Add(temp);
         }
     }
@@ -30,7 +29,8 @@ public class LoadoutSelectPanel : MonoBehaviour
         curSelected = new List<int>(selected);
         deckIdx = deck;
 
-        InitButtonStateUI();
+        var unitDatas = SortUnitData(UserData.Instance.unitDatas);
+        SetButtonsData(unitDatas);
     }
 
     public void SelectButton(int charIdx)
@@ -43,16 +43,38 @@ public class LoadoutSelectPanel : MonoBehaviour
         {
             curSelected.Add(charIdx);
         }
-        InitButtonStateUI();
+
+        SetButtonsData(UserData.Instance.unitDatas);
     }
 
-    void InitButtonStateUI()
+    void SetButtonsData(List<UnitData> unitDatas)
     {
-        // Todo later
         for (int i = 0; i < buttons.Count; i++)
         {
-            buttons[i].SetSelectOutline(curSelected.Contains(buttons[i].LinkedData.unitIdx));
+            var btn = buttons[i];
+            btn.SetButtonData(unitDatas[i]);
         }
+    }
+
+    List<UnitData> SortUnitData(List<UnitData> unitDatas)
+    {
+        for (int i = 0; i < unitDatas.Count; i++)
+        {
+            var item = unitDatas[i];
+
+            if (curSelected.Contains(item.unitIdx))
+            {
+                unitDatas.Remove(item);
+                unitDatas.Insert(0, item);
+            }
+            else if (UserData.Instance.AlreadySelected(item.unitIdx))
+            {
+                unitDatas.Remove(item);
+                unitDatas.Add(item);
+            }
+        }
+
+        return unitDatas;
     }
 
     public void OnConfirmButton()

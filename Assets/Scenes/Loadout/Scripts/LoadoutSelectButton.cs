@@ -12,22 +12,33 @@ public class LoadoutSelectButton : MonoBehaviour
     [SerializeField] Image profileImage;
     [SerializeField] Text nameText;
     [SerializeField] Text levelText;
-    [SerializeField] GameObject selectedOutline;
+    [SerializeField] GameObject selectedCurrent;
+    [SerializeField] GameObject selectedOther;
 
-    public void InitButton(UnitData _linkedData, LoadoutSelectPanel _panel)
+    public void InitButton(LoadoutSelectPanel _panel)
+    {
+        panel = _panel;
+        selectedCurrent.SetActive(false);
+        selectedOther.SetActive(false);
+    }
+
+    public void SetButtonData(UnitData _linkedData)
     {
         LinkedData = _linkedData;
-        panel = _panel;
+        selectedCurrent.SetActive(false);
+        selectedOther.SetActive(false);
 
         profileImage.sprite = ResourceManager.GetProfile(LinkedData.unitIdx);
         nameText.text = StaticDataManager.GetConstUnitData(LinkedData.unitIdx).name;
 
-        selectedOutline.SetActive(false);
-    }
-
-    public void SetSelectOutline(bool active)
-    {
-        selectedOutline.SetActive(active);
+        if (panel.curSelected.Contains(LinkedData.unitIdx))
+        {
+            selectedCurrent.SetActive(true);
+        }
+        else if (UserData.Instance.AlreadySelected(LinkedData.unitIdx))
+        {
+            selectedOther.SetActive(true);
+        }
     }
 
     public void OnSelect()
