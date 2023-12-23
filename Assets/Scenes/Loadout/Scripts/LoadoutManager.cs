@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LoadoutManager : MonoBehaviour
 {
@@ -12,23 +13,33 @@ public class LoadoutManager : MonoBehaviour
     }
 
     int[] deckIdxArr;
+    int showIdx;
     int curDragIdx = -1;
 
     [SerializeField] List<LoadoutInfoUI> infoButtons;
+    [SerializeField] List<Button> deckSelectButtons;
     [SerializeField] LoadoutSelectPanel selectPanel;
 
     private void Start()
     {
-        int i = 0;
-        foreach (var item in infoButtons)
+        for (int i = 0; i < infoButtons.Count; i++)
         {
+            var item = infoButtons[i];
             item.InitButton(i++);
             item.InitInfo(null);
         }
+
+        for (int i = 0; i < deckSelectButtons.Count; i++)
+        {
+            var item = deckSelectButtons[i];
+            int idx = i;
+            item.onClick.AddListener(() => SelectDeck(idx));
+        }
         selectPanel.InitPanel();
         deckIdxArr = new int[0];
-    }
 
+        UpdateDeck(0);
+    }
 
     private void Update()
     {
@@ -67,18 +78,24 @@ public class LoadoutManager : MonoBehaviour
             deckIdxArr[last.btnIdx] = temp;
         }
 
-        UpdateDeck(deckIdxArr);
+        UpdateDeck(showIdx);
         curDragIdx = -1;
     }
 
-    public void UpdateDeck(int[] idxArr)
+    public void SelectDeck(int i)
     {
-        deckIdxArr = idxArr;
+        showIdx = i;
+        UpdateDeck(showIdx);
+    }
+
+    public void UpdateDeck(int deckIdx)
+    {
+        deckIdxArr = TempData.Instance.allDeckUnits[deckIdx];
         for (int i = 0; i < infoButtons.Count; i++)
         {
             if (i < deckIdxArr.Length)
             {
-                int charIdx = idxArr[i];
+                int charIdx = deckIdxArr[i];
                 var info = UserData.Instance.unitDatas.Find((item) => item.unitIdx == charIdx);
                 infoButtons[i].InitInfo(info);
             }
@@ -93,14 +110,12 @@ public class LoadoutManager : MonoBehaviour
 
     public void OpenSelectPanel()
     {
-        selectPanel.OpenPanel(deckIdxArr);
+        selectPanel.OpenPanel(deckIdxArr, showIdx);
     }
 
     public void OnGameStart()
     {
         if (deckIdxArr.Length <= 0) return;
-
-        TempData.SetDeckUnit(deckIdxArr);
         SceneManager.LoadScene("InGame");
     }
 }

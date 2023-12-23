@@ -9,8 +9,9 @@ public class LoadoutSelectPanel : MonoBehaviour
     [SerializeField] LoadoutSelectButton buttonPrefab;
     [SerializeField] Transform buttonLayout;
     List<LoadoutSelectButton> buttons = new List<LoadoutSelectButton>();
-
     List<int> curSelected;
+
+    int deckIdx;
 
     public void InitPanel()
     {
@@ -23,10 +24,11 @@ public class LoadoutSelectPanel : MonoBehaviour
         }
     }
 
-    public void OpenPanel(int[] selected)
+    public void OpenPanel(int[] selected, int deck)
     {
         gameObject.SetActive(true);
         curSelected = new List<int>(selected);
+        deckIdx = deck;
 
         InitButtonStateUI();
     }
@@ -55,7 +57,8 @@ public class LoadoutSelectPanel : MonoBehaviour
 
     public void OnConfirmButton()
     {
-        LoadoutManager.Instance.UpdateDeck(curSelected.ToArray());
+        TempData.SetDeckUnitAt(curSelected.ToArray(), deckIdx);
+        LoadoutManager.Instance.UpdateDeck(deckIdx);
         gameObject.SetActive(false);
     }
 }

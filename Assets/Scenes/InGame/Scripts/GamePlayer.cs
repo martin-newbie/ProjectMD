@@ -6,14 +6,16 @@ public class GamePlayer
 {
     public bool isGameActive = false;
 
-    public List<UnitBehaviour> playerUnits = new List<UnitBehaviour>();
-    protected int[] unitIdx;
-    protected int[] posIdx;
+    public List<UnitBehaviour> curUnits = new List<UnitBehaviour>();
+    public List<List<UnitBehaviour>> allUnits = new List<List<UnitBehaviour>>();
     protected UnitGroupType group;
 
     // about skill
     List<ActiveSkillBehaviour> skillUnits = new List<ActiveSkillBehaviour>();
     List<ActiveSkillBehaviour> skillDeck = new List<ActiveSkillBehaviour>();
+    int[][] unitIdx;
+    int[][] posIdx;
+    int curShow;
 
     public float skillCost;
     public float costCharge;
@@ -21,34 +23,60 @@ public class GamePlayer
     float skillDelay = 1f;
     float curDelay;
 
-    public GamePlayer(int[] _unitIdx, int[] _posIdx, UnitGroupType _group)
+    public GamePlayer(int[][] _unitIdx, int[][] _posIdx, UnitGroupType _group)
     {
+        group = _group;
+
+        for (int i = 0; i < _unitIdx.GetLength(0); i++)
+        {
+            allUnits.Add(new List<UnitBehaviour>());
+            for (int j = 0; j < _unitIdx.GetLength(1); j++)
+            {
+                var unit = SpawnUnit(_unitIdx[i][j], _posIdx[i][j]);
+                unit.InjectDeadEvent(() => { RemoveCharacter(unit); });
+                unit.gameObject.SetActive(false);
+
+                allUnits[i].Add(unit);
+            }
+        }
+
         unitIdx = _unitIdx;
         posIdx = _posIdx;
-        group = _group;
     }
 
-    public virtual void SpawnCharacter()
+    public virtual void ShowUnits(int show)
     {
-        for (int i = 0; i < unitIdx.Length; i++)
-        {
-            var unit = SpawnUnit(i);
-            unit.InjectDeadEvent(() => { RemoveCharacter(unit); });
+        curShow = show;
+        var listUnit = allUnits[curShow];
 
-            playerUnits.Add(unit);
-            InGameManager.Instance.allUnits.Add(unit);
+        for (int i = 0; i < listUnit.Count; i++)
+        {
+            var unit = listUnit[i];
+            unit.gameObject.SetActive(true);
+            curUnits.Add(unit);
+
             if (unit is ActiveSkillBehaviour)
             {
                 skillUnits.Add(unit as ActiveSkillBehaviour);
             }
         }
+    }
 
-        isGameActive = true;
+    protected virtual void ClearUnits()
+    {
+        foreach (var unit in curUnits)
+        {
+            InGameManager.Instance.allUnits.Remove(unit);
+        }
+        curUnits.Clear();
+        skillUnits.Clear();
+        skillDeck.Clear();
     }
 
     public virtual void RemoveCharacter(UnitBehaviour retiredUnit)
     {
-        playerUnits.Remove(retiredUnit);
+        curUnits.Remove(retiredUnit);
+        allUnits[curShow].Remove(retiredUnit);
         InGameManager.Instance.allUnits.Remove(retiredUnit);
 
         if (retiredUnit is ActiveSkillBehaviour)
@@ -75,7 +103,7 @@ public class GamePlayer
 
     public virtual void SetUnitsState(BehaviourState state)
     {
-        foreach (var unit in playerUnits)
+        foreach (var unit in curUnits)
         {
             unit.SetBehaviourState(state);
         }
@@ -83,7 +111,7 @@ public class GamePlayer
 
     public virtual int GetCountOfUnits()
     {
-        return playerUnits.Count;
+        return curUnits.Count;
     }
 
     protected virtual void RemoveCharacterSkillAt(int idx)
@@ -91,9 +119,9 @@ public class GamePlayer
         skillDeck.RemoveAt(idx);
     }
 
-    protected virtual UnitBehaviour SpawnUnit(int idx)
+    protected virtual UnitBehaviour SpawnUnit(int unitIdx, int posIdx)
     {
-        return InGameManager.Instance.SpawnUnit(InGameManager.Instance.posList[posIdx[idx]], unitIdx[idx], group, 0);
+        return InGameManager.Instance.SpawnUnit(InGameManager.Instance.posList[posIdx], unitIdx, group, 0);
     }
 
     public virtual void Update()
@@ -188,13 +216,10 @@ public class GamePlayer
 
     public virtual void ReturnOriginPos()
     {
-        for (int i = 0; i < unitIdx.Length; i++)
+        for (int i = 0; i < curUnits.Count; i++)
         {
-            var unit = playerUnits.Find((item) => item.keyIndex == unitIdx[i]);
-            if (unit != null)
-            {
-                InGameManager.Instance.StartCoroutine(unit.CommonMoveToPosEndWait(InGameManager.Instance.posList[posIdx[i]]));
-            }
+            var unit = curUnits[i];
+            InGameManager.Instance.StartCoroutine(unit.CommonMoveToPosEndWait(InGameManager.Instance.posList[i]));
         }
     }
 

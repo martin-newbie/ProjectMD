@@ -14,20 +14,15 @@ public class TestGameMode : IGameModeBehaviour
     public TestGameMode(InGameManager _manager)
     {
         manager = _manager;
-
-        player = new PlayableGamePlayer(TempData.Instance.curDeckUnits, spawnIdx, UnitGroupType.ALLY, InGameManager.Instance.skillCanvas);
-
-        int[] enemySpawnIdx = new int[4] { 47, 50, 53, 56 };
-        enemyPlayer = new TestEnemyGamePlayer(new int[] { 0, 0, 0, 0 }, enemySpawnIdx, UnitGroupType.HOSTILE);
     }
 
     public IEnumerator GameModeRoutine()
     {
-        player.SpawnCharacter();
+        player.ShowUnits(0);
 
         while (true)
         {
-            enemyPlayer.SpawnCharacter();
+            enemyPlayer.ShowUnits(0);
 
             player.SetUnitsState(BehaviourState.INCOMBAT);
             enemyPlayer.SetUnitsState(BehaviourState.INCOMBAT);
@@ -52,7 +47,7 @@ public class TestGameMode : IGameModeBehaviour
             player.ReturnOriginPos();
             yield return new WaitUntil(() => WaitUntilEveryActionEnd());
 
-            foreach (var item in player.playerUnits)
+            foreach (var item in player.curUnits)
             {
                 item.SetModelRotByDir(1);
             }

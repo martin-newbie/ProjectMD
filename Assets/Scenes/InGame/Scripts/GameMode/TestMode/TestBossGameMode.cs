@@ -12,17 +12,12 @@ public class TestBossGameMode : IGameModeBehaviour
     public TestBossGameMode(InGameManager _manager)
     {
         manager = _manager;
-
-        int[] bossIdx = { 0 };
-        int[] posIdx = { 50 };
-        playablePlayer = new PlayableGamePlayer(TempData.Instance.curDeckUnits, spawnIdx, UnitGroupType.ALLY, manager.skillCanvas);
-        bossPlayer = new TestBossGamePlayer(bossIdx, posIdx, UnitGroupType.HOSTILE);
     }
 
     public IEnumerator GameModeRoutine()
     {
-        playablePlayer.SpawnCharacter();
-        bossPlayer.SpawnCharacter();
+        playablePlayer.ShowUnits(0);
+        bossPlayer.ShowUnits(0);
         SetUnitsState(BehaviourState.INCOMBAT, UnitGroupType.ALLY);
         yield return new WaitUntil(() => GetCountOfEnemy() <= 0);
     }
