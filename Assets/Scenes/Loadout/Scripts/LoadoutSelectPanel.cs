@@ -57,7 +57,7 @@ public class LoadoutSelectPanel : MonoBehaviour
 
     public void OnConfirmButton()
     {
-        TempData.SetDeckUnitAt(curSelected.ToArray(), deckIdx);
+        UserData.Instance.SetDeckUnitAt(curSelected.ToArray(), deckIdx);
         LoadoutManager.Instance.UpdateDeck(deckIdx);
         gameObject.SetActive(false);
     }

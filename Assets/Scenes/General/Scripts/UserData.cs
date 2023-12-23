@@ -5,17 +5,43 @@ public class UserData
 {
     public static UserData Instance = null;
 
-    public int playerLevel;
+    public int userLevel;
     public float currentExp;
-
     public string userName;
 
     public List<UnitData> unitDatas;
+    public List<int[]> allDeckUnits;
 
     public UserData()
     {
         Instance = this;
         unitDatas = new List<UnitData>();
+        allDeckUnits = new List<int[]>();
+        for (int i = 0; i < 4; i++)
+        {
+            allDeckUnits.Add(new int[0]);
+        }
+    }
+
+    public void SetDeckUnitAt(int[] units, int show)
+    {
+        Instance.allDeckUnits[show] = units;
+    }
+
+    public bool AlreadySelected(int unitId)
+    {
+        for (int i = 0; i < allDeckUnits.Count; i++)
+        {
+            var deck = allDeckUnits[i];
+            for (int j = 0; j < deck.Length; j++)
+            {
+                if (deck[i] == unitId)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
 

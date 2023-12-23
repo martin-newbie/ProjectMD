@@ -90,7 +90,7 @@ public class LoadoutManager : MonoBehaviour
 
     public void UpdateDeck(int deckIdx)
     {
-        deckIdxArr = TempData.Instance.allDeckUnits[deckIdx];
+        deckIdxArr = UserData.Instance.allDeckUnits[deckIdx];
         for (int i = 0; i < infoButtons.Count; i++)
         {
             if (i < deckIdxArr.Length)
