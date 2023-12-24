@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 [System.Serializable]
 public class UserData
@@ -32,13 +33,10 @@ public class UserData
     {
         for (int i = 0; i < allDeckUnits.Count; i++)
         {
-            var deck = allDeckUnits[i];
-            for (int j = 0; j < deck.Length; j++)
+            var deck = allDeckUnits[i].ToList();
+            if (deck.Contains(unitId))
             {
-                if (deck[i] == unitId)
-                {
-                    return true;
-                }
+                return true;
             }
         }
         return false;
