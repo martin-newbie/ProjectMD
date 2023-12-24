@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LoadoutSelectPanel : MonoBehaviour
@@ -10,6 +11,7 @@ public class LoadoutSelectPanel : MonoBehaviour
     [HideInInspector] public List<int> curSelected;
 
     int deckIdx;
+    List<UnitData> marshaledDataList = new List<UnitData>();
 
     public void InitPanel()
     {
@@ -29,8 +31,8 @@ public class LoadoutSelectPanel : MonoBehaviour
         curSelected = new List<int>(selected);
         deckIdx = deck;
 
-        var unitDatas = SortUnitData(UserData.Instance.unitDatas);
-        SetButtonsData(unitDatas);
+        marshaledDataList = SortUnitData(UserData.Instance.unitDatas.ToList());
+        SetButtonsData();
     }
 
     public void SelectButton(int charIdx)
@@ -44,23 +46,24 @@ public class LoadoutSelectPanel : MonoBehaviour
             curSelected.Add(charIdx);
         }
 
-        SetButtonsData(UserData.Instance.unitDatas);
+        SetButtonsData();
     }
 
-    void SetButtonsData(List<UnitData> unitDatas)
+    void SetButtonsData()
     {
         for (int i = 0; i < buttons.Count; i++)
         {
             var btn = buttons[i];
-            btn.SetButtonData(unitDatas[i]);
+            btn.SetButtonData(marshaledDataList[i]);
         }
     }
 
     List<UnitData> SortUnitData(List<UnitData> unitDatas)
     {
-        for (int i = 0; i < unitDatas.Count; i++)
+        var listOrigin = unitDatas.ToList();
+        for (int i = 0; i < listOrigin.Count; i++)
         {
-            var item = unitDatas[i];
+            var item = listOrigin[i];
 
             if (curSelected.Contains(item.unitIdx))
             {
