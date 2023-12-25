@@ -29,10 +29,11 @@ public abstract class GamePlayer
         unitIdx = _unitIdx;
         posIdx = _posIdx;
 
-        for (int i = 0; i < unitIdx.GetLength(0); i++)
+        for (int i = 0; i < unitIdx.Length; i++)
         {
             allUnits.Add(new List<UnitBehaviour>());
-            for (int j = 0; j < unitIdx.GetLength(1); j++)
+            var units = unitIdx[i];
+            for (int j = 0; j < units.Length; j++)
             {
                 var unit = SpawnUnit(unitIdx[i][j], posIdx[i][j]);
                 unit.InjectDeadEvent(() => { RemoveActiveUnit(unit); });
