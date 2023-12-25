@@ -7,7 +7,7 @@ using Spine.Unity;
 public class LoadoutInfoUI : MonoBehaviour
 {
     [Header("Upper")]
-    [SerializeField] SkeletonGraphic skeleton;
+    [SerializeField] public SkeletonGraphic skeleton;
     [SerializeField] GameObject emptyBox;
     [SerializeField] GameObject infoBox;
 

@@ -61,12 +61,25 @@ public class LoadoutManager : MonoBehaviour
 
         var anchorPos = Input.mousePosition.MouseToRectPosition(infoButtons[curDragIdx].GetComponent<RectTransform>());
         infoButtons[curDragIdx].SetModelPos(anchorPos);
+
+        for (int i = 0; i < infoButtons.Count; i++)
+        {
+            if (curDragIdx != i && infoButtons[i].isEnter)
+            {
+                infoButtons[i].skeleton.transform.localScale = Vector3.one;
+            }
+            else
+            {
+                infoButtons[i].skeleton.transform.localScale = Vector3.one * 1.25f;
+            }
+        }
     }
 
     public void SwitchDragItem()
     {
         var prev = infoButtons[curDragIdx];
-        var last = infoButtons.Find((item) => !item.isDown && item.isEnter);
+        var last = infoButtons.Find((item) => item != prev && item.isEnter);
+        last.skeleton.transform.localScale = Vector3.one * 1.25f;
 
         if (last == null)
         {
