@@ -22,14 +22,16 @@ public class TestGameMode : IGameModeBehaviour
             posIdx[i] = spawnIdx;
         }
 
+        int[][] enemyPosIdx = new int[4][];
         int[][] enemyIdx = new int[4][];
         for (int i = 0; i < 4; i++)
         {
-            enemyIdx[i] = new int[5] { 0, 0, 0, 0, 0 };
+            enemyIdx[i] = new int[4] { 0, 0, 0, 0 };
+            enemyPosIdx[i] = new int[4] { 47, 50, 53, 56 };
         }
 
         player = new PlayableGamePlayer(UserData.Instance.allDeckUnits.ToArray(), posIdx, UnitGroupType.ALLY, manager.skillCanvas);
-        enemyPlayer = new TestEnemyGamePlayer(enemyIdx, posIdx, UnitGroupType.HOSTILE);
+        enemyPlayer = new TestEnemyGamePlayer(enemyIdx, enemyPosIdx, UnitGroupType.HOSTILE);
 
         player.ShowUnits(0);
     }
