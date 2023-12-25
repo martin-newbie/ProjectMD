@@ -79,7 +79,6 @@ public class LoadoutManager : MonoBehaviour
     {
         var prev = infoButtons[curDragIdx];
         var last = infoButtons.Find((item) => item != prev && item.isEnter);
-        last.skeleton.transform.localScale = Vector3.one * 1.25f;
 
         if (last == null)
         {
@@ -87,9 +86,12 @@ public class LoadoutManager : MonoBehaviour
         }
         else
         {
+            last.skeleton.transform.localScale = Vector3.one * 1.25f;
+
             var temp = deckIdxArr[curDragIdx];
             deckIdxArr[curDragIdx] = deckIdxArr[last.btnIdx];
             deckIdxArr[last.btnIdx] = temp;
+            UserData.Instance.allDeckUnits[showIdx] = deckIdxArr;
         }
 
         UpdateDeck(showIdx);
