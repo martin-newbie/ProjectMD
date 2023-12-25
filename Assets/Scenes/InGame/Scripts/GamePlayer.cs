@@ -37,8 +37,7 @@ public abstract class GamePlayer
             {
                 var unit = SpawnUnit(unitIdx[i][j], posIdx[i][j]);
                 unit.InjectDeadEvent(() => { RemoveActiveUnit(unit); });
-                unit.gameObject.SetActive(false);
-
+                unit.DeactiveUnit();
                 allUnits[i].Add(unit);
             }
         }
@@ -46,21 +45,23 @@ public abstract class GamePlayer
 
     public virtual void ShowUnits(int show)
     {
-        var prevListUnit = allUnits[curShow];
+        if (curShow != show)
+        {
+            var prevListUnit = allUnits[curShow];
+            for (int i = 0; i < prevListUnit.Count; i++)
+            {
+                var unit = prevListUnit[i];
+                RemoveActiveUnit(unit);
+            }
+        }
         curShow = show;
         var listUnit = allUnits[curShow];
 
-        for (int i = 0; i < prevListUnit.Count; i++)
-        {
-            var unit = listUnit[i];
-            RemoveActiveUnit(unit);
-        }
 
         var posArr = posIdx[curShow];
         for (int i = 0; i < listUnit.Count; i++)
         {
             var unit = listUnit[i];
-            unit.gameObject.SetActive(true);
             unit.transform.position = InGameManager.Instance.GetPosWithIdx(posArr[i]);
             AddActiveUnit(unit);
         }
@@ -79,7 +80,6 @@ public abstract class GamePlayer
 
     public virtual void AddActiveUnit(UnitBehaviour addedUnit)
     {
-
         if (addedUnit.state == BehaviourState.RETIRE)
         {
             return;

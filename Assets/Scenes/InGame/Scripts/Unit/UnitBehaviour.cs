@@ -414,10 +414,14 @@ public abstract class UnitBehaviour
         {
             return;
         }
+
+        state = BehaviourState.STANDBY;
+        gameObject.SetActive(true);
         hpBar.gameObject.SetActive(true);
     }
     public void DeactiveUnit()
     {
+        gameObject.SetActive(false);
         hpBar.gameObject.SetActive(false);
     }
 }

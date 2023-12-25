@@ -44,10 +44,31 @@ public class TestGameMode : IGameModeBehaviour
             yield return new WaitUntil(() => isCombat);
             enemyPlayer.ShowUnits(wave);
 
+            player.SetUnitsState(BehaviourState.INCOMBAT);
+            enemyPlayer.SetUnitsState(BehaviourState.INCOMBAT);
+
             yield return new WaitUntil(() => enemyPlayer.curUnits.Count <= 0);
+
+            yield return new WaitUntil(() => WaitUntilEveryActionEnd(player.curUnits.ToArray()));
+            player.ReturnOriginPos();
+            yield return new WaitUntil(() => WaitUntilEveryActionEnd(player.curUnits.ToArray()));
+
+            player.SetUnitsState(BehaviourState.STANDBY);
             isCombat = false;
             wave++;
         }
+    }
+
+    bool WaitUntilEveryActionEnd(UnitBehaviour[] units)
+    {
+        foreach (var item in units)
+        {
+            if (!item.isAction)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void Update()
