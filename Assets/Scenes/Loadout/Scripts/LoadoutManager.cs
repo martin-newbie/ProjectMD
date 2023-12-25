@@ -25,7 +25,7 @@ public class LoadoutManager : MonoBehaviour
         for (int i = 0; i < infoButtons.Count; i++)
         {
             var item = infoButtons[i];
-            item.InitButton(i++);
+            item.InitButton(i);
             item.InitInfo(null);
         }
 
@@ -89,7 +89,7 @@ public class LoadoutManager : MonoBehaviour
             last.skeleton.transform.localScale = Vector3.one * 1.25f;
 
             var temp = deckIdxArr[curDragIdx];
-            deckIdxArr[curDragIdx] = deckIdxArr[last.btnIdx];
+            deckIdxArr[prev.btnIdx] = deckIdxArr[last.btnIdx];
             deckIdxArr[last.btnIdx] = temp;
             UserData.Instance.allDeckUnits[showIdx] = deckIdxArr;
         }
