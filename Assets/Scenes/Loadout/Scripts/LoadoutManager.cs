@@ -20,7 +20,7 @@ public class LoadoutManager : MonoBehaviour
     [SerializeField] List<Button> deckSelectButtons;
     [SerializeField] LoadoutSelectPanel selectPanel;
 
-    private void Start()
+    IEnumerator Start()
     {
         for (int i = 0; i < infoButtons.Count; i++)
         {
@@ -38,6 +38,7 @@ public class LoadoutManager : MonoBehaviour
         selectPanel.InitPanel();
         deckIdxArr = new int[0];
 
+        yield return null;
         UpdateDeck(0);
     }
 
