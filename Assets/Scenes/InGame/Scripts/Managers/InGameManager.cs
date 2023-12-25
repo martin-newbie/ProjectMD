@@ -165,6 +165,11 @@ public class InGameManager : MonoBehaviour
         return startPos;
     }
 
+    public Vector3 GetPosWithIdx(int idx)
+    {
+        return posList[idx];
+    }
+
     int GetPosCount(Vector3 locate, UnitBehaviour subject)
     {
         var length = allUnits.FindAll((item) => item.targetPos == locate && item != subject).Count;

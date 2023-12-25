@@ -254,12 +254,10 @@ public abstract class UnitBehaviour
     {
         return Vector3.Distance(transform.position, target.transform.position) <= GetStatus(StatusType.RANGE);
     }
-
     protected virtual UnitBehaviour GetNearestOpponent()
     {
         return InGameManager.Instance.FindNearestTarget(GetOpponentGroup(), transform.position);
     }
-
     protected virtual void ShootBullet(UnitBehaviour target, string key = "bullet_pos")
     {
         if (target == null)
@@ -275,12 +273,10 @@ public abstract class UnitBehaviour
         bullet.StartBulletEffect(startPos, targetPos, 25f, () => target?.OnDamage(GetDamageStruct(), this));
         curAmmo--;
     }
-
     public virtual void InjectDeadEvent(Action _retireAction)
     {
         retireAction = _retireAction;
     }
-
     public virtual void OnDamage(DamageStruct value, UnitBehaviour from)
     {
         float damage = value.GetValue(StatusType.DMG);
@@ -300,7 +296,6 @@ public abstract class UnitBehaviour
             OnRetire();
         }
     }
-
     protected virtual void OnRetire()
     {
         subject.StopAllCoroutines();
@@ -310,7 +305,6 @@ public abstract class UnitBehaviour
         hpBar.DestroyBar();
         hpBar = null;
     }
-
     public virtual void SetBehaviourState(BehaviourState _state)
     {
         state = _state;
@@ -327,18 +321,15 @@ public abstract class UnitBehaviour
                 break;
         }
     }
-
     protected void SetModelRotByTarget(UnitBehaviour target)
     {
         int dir = GetTargetDir(target);
         SetModelRotByDir(dir);
     }
-
     protected int GetTargetDir(UnitBehaviour target)
     {
         return target.transform.position.x < transform.position.x ? -1 : 1;
     }
-
     public void SetModelRotByDir(int dir)
     {
         if (dir == 1)
@@ -346,31 +337,26 @@ public abstract class UnitBehaviour
         if (dir == -1)
             model.transform.rotation = Quaternion.Euler(0, 180, 0);
     }
-
     protected WaitForSeconds PlayAnimAndWait(string key, bool loop = false)
     {
         PlayAnim(key, loop);
         var anim = model.Skeleton.Data.FindAnimation(key);
         return new WaitForSeconds(anim.Duration);
     }
-
     protected TrackEntry PlayAnim(string key, bool loop = false)
     {
         var track = model.state.SetAnimation(0, key, loop);
         return track;
     }
-
     protected TrackEntry AddAnim(string key, bool loop = false, float delay = 0f)
     {
         var track = model.state.AddAnimation(0, key, loop, delay);
         return track;
     }
-
     protected UnitGroupType GetOpponentGroup()
     {
         return (UnitGroupType)((int)group * -1);
     }
-
     protected Vector3 GetBoneWorldPos(string key)
     {
         var bone = model.skeleton.FindSlot(key).Bone;
@@ -378,8 +364,6 @@ public abstract class UnitBehaviour
 
         return result;
     }
-
-
     public float GetStatus(StatusType type)
     {
         float result = 0;
@@ -412,7 +396,6 @@ public abstract class UnitBehaviour
 
         return result;
     }
-
     public DamageStruct GetDamageStruct()
     {
         Dictionary<StatusType, float> structValue = new Dictionary<StatusType, float>();
@@ -424,5 +407,17 @@ public abstract class UnitBehaviour
 
         DamageStruct dmg = new DamageStruct(structValue);
         return dmg;
+    }
+    public void ActiveUnit()
+    {
+        if(state == BehaviourState.RETIRE)
+        {
+            return;
+        }
+        hpBar.gameObject.SetActive(true);
+    }
+    public void DeactiveUnit()
+    {
+        hpBar.gameObject.SetActive(false);
     }
 }

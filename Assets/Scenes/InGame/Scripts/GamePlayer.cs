@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GamePlayer
+public abstract class GamePlayer
 {
     public bool isGameActive = false;
 
@@ -15,8 +15,8 @@ public class GamePlayer
     List<ActiveSkillBehaviour> skillDeck = new List<ActiveSkillBehaviour>();
     int[][] unitIdx;
     int[][] posIdx;
-    int curShow;
 
+    public int curShow;
     public float skillCost;
     public float costCharge;
 
@@ -26,39 +26,42 @@ public class GamePlayer
     public GamePlayer(int[][] _unitIdx, int[][] _posIdx, UnitGroupType _group)
     {
         group = _group;
+        unitIdx = _unitIdx;
+        posIdx = _posIdx;
 
-        for (int i = 0; i < _unitIdx.GetLength(0); i++)
+        for (int i = 0; i < unitIdx.GetLength(0); i++)
         {
             allUnits.Add(new List<UnitBehaviour>());
-            for (int j = 0; j < _unitIdx.GetLength(1); j++)
+            for (int j = 0; j < unitIdx.GetLength(1); j++)
             {
-                var unit = SpawnUnit(_unitIdx[i][j], _posIdx[i][j]);
-                unit.InjectDeadEvent(() => { RemoveCharacter(unit); });
+                var unit = SpawnUnit(unitIdx[i][j], posIdx[i][j]);
+                unit.InjectDeadEvent(() => { RemoveActiveUnit(unit); });
                 unit.gameObject.SetActive(false);
 
                 allUnits[i].Add(unit);
             }
         }
-
-        unitIdx = _unitIdx;
-        posIdx = _posIdx;
     }
 
     public virtual void ShowUnits(int show)
     {
+        var prevListUnit = allUnits[curShow];
         curShow = show;
         var listUnit = allUnits[curShow];
 
+        for (int i = 0; i < prevListUnit.Count; i++)
+        {
+            var unit = listUnit[i];
+            RemoveActiveUnit(unit);
+        }
+
+        var posArr = posIdx[curShow];
         for (int i = 0; i < listUnit.Count; i++)
         {
             var unit = listUnit[i];
             unit.gameObject.SetActive(true);
-            curUnits.Add(unit);
-
-            if (unit is ActiveSkillBehaviour)
-            {
-                skillUnits.Add(unit as ActiveSkillBehaviour);
-            }
+            unit.transform.position = InGameManager.Instance.GetPosWithIdx(posArr[i]);
+            AddActiveUnit(unit);
         }
     }
 
@@ -73,18 +76,34 @@ public class GamePlayer
         skillDeck.Clear();
     }
 
-    public virtual void RemoveCharacter(UnitBehaviour retiredUnit)
+    public virtual void AddActiveUnit(UnitBehaviour addedUnit)
     {
-        curUnits.Remove(retiredUnit);
-        allUnits[curShow].Remove(retiredUnit);
-        InGameManager.Instance.allUnits.Remove(retiredUnit);
 
-        if (retiredUnit is ActiveSkillBehaviour)
+        if (addedUnit.state == BehaviourState.RETIRE)
         {
-            skillUnits.Remove(retiredUnit as ActiveSkillBehaviour);
+            return;
+        }
+
+        addedUnit.ActiveUnit();
+        curUnits.Add(addedUnit);
+        if (addedUnit is ActiveSkillBehaviour)
+        {
+            skillUnits.Add(addedUnit as ActiveSkillBehaviour);
+        }
+    }
+
+    public virtual void RemoveActiveUnit(UnitBehaviour removedUnit)
+    {
+        removedUnit.DeactiveUnit();
+        curUnits.Remove(removedUnit);
+        InGameManager.Instance.allUnits.Remove(removedUnit);
+
+        if (removedUnit is ActiveSkillBehaviour)
+        {
+            skillUnits.Remove(removedUnit as ActiveSkillBehaviour);
             for (int i = 0; i < skillDeck.Count; i++)
             {
-                if (skillDeck[i] == retiredUnit)
+                if (skillDeck[i] == removedUnit)
                 {
                     RemoveCharacterSkillAt(i);
                     i--;
@@ -92,7 +111,7 @@ public class GamePlayer
             }
         }
 
-        InGameManager.Instance.StartCoroutine(disappearObject(retiredUnit));
+        InGameManager.Instance.StartCoroutine(disappearObject(removedUnit));
 
         IEnumerator disappearObject(UnitBehaviour unit)
         {

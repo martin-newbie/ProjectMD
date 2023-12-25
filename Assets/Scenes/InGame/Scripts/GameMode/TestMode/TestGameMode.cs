@@ -5,101 +5,77 @@ using UnityEngine;
 public class TestGameMode : IGameModeBehaviour
 {
     int[] spawnIdx = new int[5] { 33, 30, 27, 24, 21 };
+    bool isCombat;
 
     InGameManager manager;
-    
+
     GamePlayer player;
     GamePlayer enemyPlayer;
 
     public TestGameMode(InGameManager _manager)
     {
         manager = _manager;
+
+        int[][] posIdx = new int[4][];
+        for (int i = 0; i < 4; i++)
+        {
+            posIdx[i] = spawnIdx;
+        }
+
+        int[][] enemyIdx = new int[4][];
+        for (int i = 0; i < 4; i++)
+        {
+            enemyIdx[i] = new int[5] { 0, 0, 0, 0, 0 };
+        }
+
+        player = new PlayableGamePlayer(UserData.Instance.allDeckUnits.ToArray(), posIdx, UnitGroupType.ALLY, manager.skillCanvas);
+        enemyPlayer = new TestEnemyGamePlayer(enemyIdx, posIdx, UnitGroupType.HOSTILE);
+
+        player.ShowUnits(0);
     }
 
     public IEnumerator GameModeRoutine()
     {
-        player.ShowUnits(0);
-
-        while (true)
+        int wave = 0;
+        while (wave < 4)
         {
-            enemyPlayer.ShowUnits(0);
+            yield return new WaitUntil(() => isCombat);
+            enemyPlayer.ShowUnits(wave);
 
-            player.SetUnitsState(BehaviourState.INCOMBAT);
-            enemyPlayer.SetUnitsState(BehaviourState.INCOMBAT);
-
-            while (true)
-            {
-                if(enemyPlayer.GetCountOfUnits() <= 0)
-                {
-                    enemyPlayer.OnEnd();
-                    break;
-                }
-
-                if(player.GetCountOfUnits() <= 0)
-                {
-                    player.OnEnd();
-                    goto StageEnd;
-                }
-                yield return null;
-            }
-
-            yield return new WaitUntil(() => WaitUntilEveryActionEnd());
-            player.ReturnOriginPos();
-            yield return new WaitUntil(() => WaitUntilEveryActionEnd());
-
-            foreach (var item in player.curUnits)
-            {
-                item.SetModelRotByDir(1);
-            }
-
-            player.SetUnitsState(BehaviourState.STANDBY);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitUntil(() => enemyPlayer.curUnits.Count <= 0);
+            isCombat = false;
+            wave++;
         }
-
-    StageEnd:
-        yield break;
-    }
-
-    int GetCountOf(UnitGroupType group)
-    {
-        int result = 0;
-        foreach (var item in manager.allUnits)
-        {
-            if (item.group == group)
-            {
-                result++;
-            }
-        }
-        return result;
-    }
-
-    bool WaitUntilEveryActionEnd()
-    {
-        int allyCnt = 0;
-        int endCnt = 0;
-
-        foreach (var item in manager.allUnits)
-        {
-            if (item.group == UnitGroupType.ALLY)
-            {
-                allyCnt++;
-            }
-        }
-
-        foreach (var item in manager.allUnits)
-        {
-            if (item.group == UnitGroupType.ALLY && !item.isAction)
-            {
-                endCnt++;
-            }
-        }
-
-        return allyCnt == endCnt;
     }
 
     public void Update()
     {
         player?.Update();
         enemyPlayer?.Update();
+
+        if (!isCombat)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                player.ShowUnits(0);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                player.ShowUnits(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                player.ShowUnits(2);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                player.ShowUnits(3);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                isCombat = true;
+            }
+        }
     }
 }
