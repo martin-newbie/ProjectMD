@@ -7,7 +7,7 @@ public class StaticConstUnitData : SheetDataBase
 {
     protected override string gid => "930077113";
 
-    protected override string range => "C4:I29";
+    protected override string range => "C4:J29";
 
     public List<ConstUnitData> dataList;
 
@@ -27,6 +27,7 @@ public class StaticConstUnitData : SheetDataBase
 public class ConstUnitData
 {
     public int keyIndex;
+    public int modelIndex;
     public string name;
     public int defaultClass;
     public int ammoCount;
@@ -39,6 +40,7 @@ public class ConstUnitData
         int idx = 0;
 
         keyIndex = int.Parse(data[idx++]);
+        modelIndex = int.Parse(data[idx++]);
         name = data[idx++];
         defaultClass = int.Parse(data[idx++]);
         ammoCount = int.Parse(data[idx++]);

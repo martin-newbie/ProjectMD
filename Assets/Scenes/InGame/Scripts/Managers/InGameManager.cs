@@ -38,13 +38,16 @@ public class InGameManager : MonoBehaviour
 
     public void InitSkill()
     {
-        var playable = allUnits.FindAll((item) => item.group == UnitGroupType.ALLY).Select((item)=> item as ActiveSkillBehaviour).ToArray();
+        var playable = allUnits.FindAll((item) => item.group == UnitGroupType.ALLY).Select((item) => item as ActiveSkillBehaviour).ToArray();
     }
-    
+
     void InitTileList()
     {
         float mapHalfSize = 20f;
-        for (float i = -mapHalfSize; i <= mapHalfSize; i += 0.5f) { posList.Add(new Vector3(i, 0)); }
+        for (float i = -mapHalfSize; i <= mapHalfSize; i += 0.5f)
+        {
+            posList.Add(new Vector3(i, 0));
+        }
     }
 
     void InitGameMode()
