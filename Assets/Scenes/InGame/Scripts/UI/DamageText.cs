@@ -35,13 +35,13 @@ public class DamageText : MonoBehaviour
             switch (resist)
             {
                 case ResistType.NORMAL:
-                    damageTxt.fontSize = 30;
+                    damageTxt.fontSize = 25;
                     damageTxt.color = Color.white;
 
                     outLine.enabled = false;
                     break;
                 case ResistType.WEAK:
-                    damageTxt.fontSize = 25;
+                    damageTxt.fontSize = 15;
                     damageTxt.color = Color.gray;
 
                     outLine.enabled = true;
@@ -49,7 +49,7 @@ public class DamageText : MonoBehaviour
                     break;
                 case ResistType.RESIST:
                     damageTxt.fontSize = 40;
-                    damageTxt.color = new Color(1, 0.76f, 1);
+                    damageTxt.color = new Color(1, 0.76f, 0);
 
                     outLine.enabled = true;
                     outLine.effectColor = new Color(0.77f, 0.25f, 0);

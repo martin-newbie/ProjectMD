@@ -87,6 +87,7 @@ public abstract class GamePlayer
 
         addedUnit.ActiveUnit();
         curUnits.Add(addedUnit);
+        InGameManager.Instance.allUnits.Add(addedUnit);
         if (addedUnit is ActiveSkillBehaviour)
         {
             skillUnits.Add(addedUnit as ActiveSkillBehaviour);
