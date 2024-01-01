@@ -16,8 +16,10 @@ public class UnitObject : MonoBehaviour
         behaviour = _behaviour;
         behaviour.InitCommon(idx, barType);
 
+        var constData = StaticDataManager.GetConstUnitData(idx);
+
         model.Update(0f);
-        model.skeletonDataAsset = ResourceManager.GetSkeleton(idx);
+        model.skeletonDataAsset = ResourceManager.GetSkeleton(constData.modelIndex);
         model.Initialize(true);
 
         behaviour.group = group;
