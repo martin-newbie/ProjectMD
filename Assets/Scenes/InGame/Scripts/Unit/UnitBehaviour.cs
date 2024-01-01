@@ -19,6 +19,7 @@ public abstract class UnitBehaviour
     #endregion
 
     public UnitStatus staticStatus;
+    public ConstUnitData constData;
 
     #region state
     public float hp;
@@ -60,13 +61,14 @@ public abstract class UnitBehaviour
     {
         keyIndex = idx;
         staticStatus = StaticDataManager.GetUnitStatus(keyIndex);
+        constData = StaticDataManager.GetConstUnitData(keyIndex);
 
         hp = GetStatus(StatusType.HP);
         hpBar = HpBarCanvas.Instance.GetHpBar(barType);
         hpBar.InitBar(GetStatus(StatusType.HP));
 
         // set datas
-        maxAmmo = StaticDataManager.GetConstUnitData(keyIndex).ammoCount;
+        maxAmmo = constData.ammoCount;
         curAmmo = maxAmmo;
     }
 
@@ -279,15 +281,32 @@ public abstract class UnitBehaviour
     }
     public virtual void OnDamage(DamageStruct value, UnitBehaviour from)
     {
+
         float damage = value.GetValue(StatusType.DMG);
         // check death
+
+        int atk = from.constData.atkType;
+        int def = constData.defType;
+        ResistType resist;
+        if(atk == def)
+        {
+            resist = ResistType.WEAK;
+        }
+        else if((atk == 0 && def == 1) || (atk == 1 && def == 2) || (atk == 2 && def == 0))
+        {
+            resist = ResistType.NORMAL;
+        }
+        else
+        {
+            resist = ResistType.RESIST;
+        }
 
         // calculate damage
         // give damage
         // print damage text
 
         int dir = transform.position.x < from.transform.position.x ? -1 : 1;
-        DamageTextCanvas.Instance.PrintDamageText(damage, GetBoneWorldPos("body"), dir, ResistType.NORMAL);
+        DamageTextCanvas.Instance.PrintDamageText(damage, GetBoneWorldPos("body"), dir, resist);
 
         hp -= damage;
         hpBar?.UpdateFill(hp);

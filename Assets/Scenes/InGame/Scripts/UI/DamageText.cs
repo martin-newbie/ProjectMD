@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class DamageText : MonoBehaviour
 {
     public Text damageTxt;
+    public Outline outLine;
     CanvasGroup alphaGroup;
     RectTransform rectTr;
     RectTransform canvasRect;
@@ -15,7 +16,7 @@ public class DamageText : MonoBehaviour
     {
         alphaGroup = GetComponent<CanvasGroup>();
         rectTr = GetComponent<RectTransform>();
-        
+
         manager = _manager;
         canvasRect = manager.canvasRect;
     }
@@ -30,6 +31,30 @@ public class DamageText : MonoBehaviour
         {
             var startPos = target.WorldToRectPosition(canvasRect);
             var endPos = startPos + new Vector3(Random.Range(50f, 100f) * dir, Random.Range(50f, 100f));
+
+            switch (resist)
+            {
+                case ResistType.NORMAL:
+                    damageTxt.fontSize = 30;
+                    damageTxt.color = Color.white;
+
+                    outLine.enabled = false;
+                    break;
+                case ResistType.WEAK:
+                    damageTxt.fontSize = 25;
+                    damageTxt.color = Color.gray;
+
+                    outLine.enabled = true;
+                    outLine.effectColor = Color.blue;
+                    break;
+                case ResistType.RESIST:
+                    damageTxt.fontSize = 40;
+                    damageTxt.color = new Color(1, 0.76f, 1);
+
+                    outLine.enabled = true;
+                    outLine.effectColor = new Color(0.77f, 0.25f, 0);
+                    break;
+            }
 
             float dur = 0.25f;
             float timer = 0f;
