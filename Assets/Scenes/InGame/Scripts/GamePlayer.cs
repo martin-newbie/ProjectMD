@@ -38,6 +38,7 @@ public abstract class GamePlayer
                 var unit = SpawnUnit(unitIdx[i][j], posIdx[i][j]);
                 unit.InjectDeadEvent(() => { RemoveActiveUnit(unit); });
                 unit.DeactiveUnit();
+                unit.gameObject.SetActive(false);
                 allUnits[i].Add(unit);
             }
         }
@@ -51,7 +52,8 @@ public abstract class GamePlayer
             for (int i = 0; i < prevListUnit.Count; i++)
             {
                 var unit = prevListUnit[i];
-                RemoveActiveUnit(unit);
+                if (unit.state != BehaviourState.RETIRE)
+                    RemoveActiveUnit(unit);
             }
         }
         curShow = show;
@@ -240,7 +242,7 @@ public abstract class GamePlayer
         for (int i = 0; i < curUnits.Count; i++)
         {
             var unit = curUnits[i];
-            InGameManager.Instance.StartCoroutine(unit.CommonMoveToPosEndWait(InGameManager.Instance.posList[i]));
+            InGameManager.Instance.StartCoroutine(unit.CommonMoveToPosEndWait(InGameManager.Instance.posList[posIdx[curShow][i]]));
         }
     }
 

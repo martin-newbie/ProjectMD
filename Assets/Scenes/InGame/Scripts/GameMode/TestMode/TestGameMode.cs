@@ -63,7 +63,7 @@ public class TestGameMode : IGameModeBehaviour
     {
         foreach (var item in units)
         {
-            if (!item.isAction)
+            if (item.isAction)
             {
                 return false;
             }

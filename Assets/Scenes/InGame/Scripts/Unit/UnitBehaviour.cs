@@ -440,7 +440,6 @@ public abstract class UnitBehaviour
     }
     public void DeactiveUnit()
     {
-        gameObject.SetActive(false);
         hpBar.gameObject.SetActive(false);
     }
 }
