@@ -54,6 +54,18 @@ public class DamageText : MonoBehaviour
                     outLine.enabled = true;
                     outLine.effectColor = new Color(0.77f, 0.25f, 0);
                     break;
+                case ResistType.MISS:
+                    damageTxt.fontSize = 25;
+                    damageTxt.color = Color.white;
+                    damageTxt.text = "miss";
+                    outLine.enabled = false;
+                    break;
+                case ResistType.IGNORE:
+                    damageTxt.fontSize = 25;
+                    damageTxt.color = Color.white;
+                    damageTxt.text = "ignore";
+                    outLine.enabled = false;
+                    break;
             }
 
             float dur = 0.25f;

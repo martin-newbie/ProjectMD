@@ -32,4 +32,6 @@ public enum ResistType
     NORMAL,
     WEAK,
     RESIST,
+    MISS,
+    IGNORE,
 }
