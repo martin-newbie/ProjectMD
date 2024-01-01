@@ -147,6 +147,11 @@ public abstract class GamePlayer
         return InGameManager.Instance.SpawnUnit(InGameManager.Instance.posList[posIdx], unitIdx, group, 0);
     }
 
+    public virtual void StartGame()
+    {
+        isGameActive = true;
+    }
+
     public virtual void Update()
     {
         if (!isGameActive) return;
@@ -164,6 +169,7 @@ public abstract class GamePlayer
     protected virtual ActiveSkillBehaviour AddSkillInDeck()
     {
         if (skillDeck.Count >= 10) return null;
+        if (skillUnits.Count <= 0) return null;
 
         int rand = Random.Range(0, skillUnits.Count);
         var skillData = skillUnits[rand];

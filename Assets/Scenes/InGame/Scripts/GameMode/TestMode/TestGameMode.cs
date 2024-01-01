@@ -39,9 +39,12 @@ public class TestGameMode : IGameModeBehaviour
     public IEnumerator GameModeRoutine()
     {
         int wave = 0;
+        yield return new WaitUntil(() => isCombat);
+        player.StartGame();
+        enemyPlayer.StartGame();
+
         while (wave < 4)
         {
-            yield return new WaitUntil(() => isCombat);
             enemyPlayer.ShowUnits(wave);
 
             player.SetUnitsState(BehaviourState.INCOMBAT);
