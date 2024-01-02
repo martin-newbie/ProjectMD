@@ -161,7 +161,7 @@ public abstract class UnitBehaviour
             SetModelRotByDir(-1);
         }
 
-        StartActionCoroutine(MoveToTargetLerp(target));
+        StartActionCoroutine(MoveToEnd(target));
         yield return actionCoroutine;
 
         PlayAnim("battle_wait", true);
@@ -180,34 +180,36 @@ public abstract class UnitBehaviour
         while (true)
         {
             var target = GetNearestOpponent();
-            targetPos = InGameManager.Instance.GetPreferPos(this, target, GetStatus(StatusType.RANGE));
-
-            if (transform.position == targetPos)
+            if (IsInsideRange(target))
             {
                 break;
             }
 
-            SetModelRotByTarget(target);
-            var nextPos = InGameManager.Instance.GetNextPos(this, target, GetStatus(StatusType.RANGE));
-            yield return StartCoroutine(MoveToTargetLerp(nextPos));
+            MoveToTarget(target);
+            yield return null;
         }
     }
 
-    protected virtual IEnumerator MoveToTargetLerp(Vector3 target)
+    protected virtual IEnumerator MoveToEnd(Vector3 endPos)
     {
-        float dur = Vector3.Distance(transform.position, target) / GetStatus(StatusType.MOVE_SPEED);
+        float dur = Vector3.Distance(endPos, transform.position) / GetStatus(StatusType.MOVE_SPEED);
         float timer = 0f;
-        Vector3 startPos = transform.position;
+        var startPos = transform.position;
 
-        while (timer <= dur)
+        while (timer < dur)
         {
-            transform.position = Vector3.Lerp(startPos, target, timer / dur);
+            transform.position = Vector3.Lerp(startPos, endPos, timer / dur);
             timer += Time.deltaTime;
             yield return null;
         }
-
-        transform.position = target;
         yield break;
+    }
+
+    protected virtual void MoveToTarget(UnitBehaviour target)
+    {
+        SetModelRotByTarget(target);
+        int dir = GetTargetDir(target);
+        transform.Translate(Vector3.right * dir * GetStatus(StatusType.MOVE_SPEED) * Time.deltaTime);
     }
     #endregion
 
@@ -288,11 +290,11 @@ public abstract class UnitBehaviour
         int atk = from.constData.atkType;
         int def = constData.defType;
         ResistType resist;
-        if(atk == def)
+        if (atk == def)
         {
             resist = ResistType.WEAK;
         }
-        else if((atk == 0 && def == 1) || (atk == 1 && def == 2) || (atk == 2 && def == 0))
+        else if ((atk == 0 && def == 1) || (atk == 1 && def == 2) || (atk == 2 && def == 0))
         {
             resist = ResistType.NORMAL;
         }
@@ -429,7 +431,7 @@ public abstract class UnitBehaviour
     }
     public void ActiveUnit()
     {
-        if(state == BehaviourState.RETIRE)
+        if (state == BehaviourState.RETIRE)
         {
             return;
         }

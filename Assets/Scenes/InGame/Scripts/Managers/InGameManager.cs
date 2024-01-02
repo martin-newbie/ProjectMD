@@ -17,8 +17,6 @@ public class InGameManager : MonoBehaviour
     public SkillCanvas skillCanvas;
 
     [HideInInspector] public List<UnitBehaviour> allUnits = new List<UnitBehaviour>();
-    [HideInInspector] public List<Vector3> posList = new List<Vector3>();
-
     [HideInInspector] public List<GameObject> movingObjects = new List<GameObject>();
 
     int gameModeIdx = 0;
@@ -26,7 +24,6 @@ public class InGameManager : MonoBehaviour
 
     void Start()
     {
-        InitTileList();
         InitGameMode();
         StartCoroutine(gameMode.GameModeRoutine());
     }
@@ -39,15 +36,6 @@ public class InGameManager : MonoBehaviour
     public void InitSkill()
     {
         var playable = allUnits.FindAll((item) => item.group == UnitGroupType.ALLY).Select((item) => item as ActiveSkillBehaviour).ToArray();
-    }
-
-    void InitTileList()
-    {
-        float mapHalfSize = 20f;
-        for (float i = -mapHalfSize; i <= mapHalfSize; i += 0.5f)
-        {
-            posList.Add(new Vector3(i, 0));
-        }
     }
 
     void InitGameMode()
@@ -132,50 +120,5 @@ public class InGameManager : MonoBehaviour
         }
 
         return result;
-    }
-
-    public Vector3 GetPreferPos(UnitBehaviour subject, UnitBehaviour target, float range)
-    {
-        List<(Vector3, int)> resultList = new List<(Vector3, int)>();
-
-        foreach (var item in posList)
-        {
-            if (Vector3.Distance(item, target.transform.position) <= range)
-            {
-                resultList.Add((item, GetPosCount(item, subject)));
-            }
-        }
-
-        return resultList.OrderBy((item) => Vector3.Distance(subject.transform.position, item.Item1) + item.Item2 * 100).ElementAt(0).Item1;
-    }
-
-    public Vector3 GetNextPos(UnitBehaviour subject, UnitBehaviour target, float range)
-    {
-        Vector3 final = GetPreferPos(subject, target, range);
-        Vector3 startPos = subject.transform.position;
-
-        if (final.x > startPos.x)
-        {
-            startPos.x += 0.5f;
-            return startPos;
-        }
-        if (final.x < startPos.x)
-        {
-            startPos.x -= 0.5f;
-            return startPos;
-        }
-
-        return startPos;
-    }
-
-    public Vector3 GetPosWithIdx(int idx)
-    {
-        return posList[idx];
-    }
-
-    int GetPosCount(Vector3 locate, UnitBehaviour subject)
-    {
-        var length = allUnits.FindAll((item) => item.targetPos == locate && item != subject).Count;
-        return length;
     }
 }

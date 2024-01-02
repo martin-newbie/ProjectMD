@@ -30,9 +30,6 @@ public class TestGameMode : IGameModeBehaviour
             enemyPosIdx[i] = new int[4] { 47, 50, 53, 56 };
         }
 
-        player = new PlayableGamePlayer(UserData.Instance.allDeckUnits.ToArray(), posIdx, UnitGroupType.ALLY, manager.skillCanvas);
-        enemyPlayer = new TestEnemyGamePlayer(enemyIdx, enemyPosIdx, UnitGroupType.HOSTILE);
-
         player.ShowUnits(0);
     }
 

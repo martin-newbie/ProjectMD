@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class TestBossGamePlayer : GamePlayer
 {
-    public TestBossGamePlayer(int[][] _unitIdx, int[][] _posIdx, UnitGroupType _group) : base(_unitIdx, _posIdx, _group)
+    public TestBossGamePlayer(int[][] _unitIdx, Vector3[][] _posIdx, UnitGroupType _group) : base(_unitIdx, _posIdx, _group)
     {
     }
 
-    protected override UnitBehaviour SpawnUnit(int unitIdx, int posIdx)
+    protected override UnitBehaviour SpawnUnit(int unitIdx, Vector3 pos)
     {
-        var obj = InGameManager.Instance.SpawnUnitObject(InGameManager.Instance.posList[posIdx]);
+        var obj = InGameManager.Instance.SpawnUnitObject(pos);
         var behaviour = new TrainingDummy(obj);
         obj.SetBehaviour(behaviour, 0, group, 1);
         return behaviour;

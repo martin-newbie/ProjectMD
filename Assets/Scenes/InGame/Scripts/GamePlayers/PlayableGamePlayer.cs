@@ -8,7 +8,7 @@ public class PlayableGamePlayer : GamePlayer
 
     SkillCanvas skillCanvas;
 
-    public PlayableGamePlayer(int[][] _unitIdx, int[][] _posIdx, UnitGroupType _group, SkillCanvas _skillCanvas) : base(_unitIdx, _posIdx, _group)
+    public PlayableGamePlayer(int[][] _unitIdx, Vector3[][] _posIdx, UnitGroupType _group, SkillCanvas _skillCanvas) : base(_unitIdx, _posIdx, _group)
     {
         skillCanvas = _skillCanvas;
         Instance = this;
