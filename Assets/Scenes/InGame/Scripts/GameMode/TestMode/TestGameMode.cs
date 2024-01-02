@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TestGameMode : IGameModeBehaviour
 {
-    int[] spawnIdx = new int[5] { 33, 30, 27, 24, 21 };
     bool isCombat;
 
     InGameManager manager;
@@ -16,20 +15,30 @@ public class TestGameMode : IGameModeBehaviour
     {
         manager = _manager;
 
-        int[][] posIdx = new int[4][];
+        Vector3[][] posIdx = new Vector3[4][];
         for (int i = 0; i < 4; i++)
         {
-            posIdx[i] = spawnIdx;
+            posIdx[i] = new Vector3[5];
+            for (int j = 0; j < 5; j++)
+            {
+                posIdx[i][j] = new Vector3(-2 - (1.5f * j), 0, 0);
+            }
         }
 
-        int[][] enemyPosIdx = new int[4][];
+        Vector3[][] enemyPos = new Vector3[4][];
         int[][] enemyIdx = new int[4][];
         for (int i = 0; i < 4; i++)
         {
             enemyIdx[i] = new int[4] { 0, 0, 0, 0 };
-            enemyPosIdx[i] = new int[4] { 47, 50, 53, 56 };
+            enemyPos[i] = new Vector3[4];
+            for (int j = 0; j < 4; j++)
+            {
+                enemyPos[i][j] = new Vector3(2 + (1.5f * j), 0, 0);
+            }
         }
 
+        player = new PlayableGamePlayer(UserData.Instance.allDeckUnits.ToArray(), posIdx, UnitGroupType.ALLY, manager.skillCanvas);
+        enemyPlayer = new TestEnemyGamePlayer(enemyIdx, enemyPos, UnitGroupType.HOSTILE);
         player.ShowUnits(0);
     }
 
