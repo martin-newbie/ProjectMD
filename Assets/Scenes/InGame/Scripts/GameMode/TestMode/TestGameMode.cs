@@ -33,7 +33,7 @@ public class TestGameMode : IGameModeBehaviour
             enemyPos[i] = new Vector3[4];
             for (int j = 0; j < 4; j++)
             {
-                enemyPos[i][j] = new Vector3(2 + (1.5f * j), 0, 0);
+                enemyPos[i][j] = new Vector3(2 + (1.5f * j) + 10, 0, 0);
             }
         }
 
@@ -48,6 +48,18 @@ public class TestGameMode : IGameModeBehaviour
         yield return new WaitUntil(() => isCombat);
         player.StartGame();
         enemyPlayer.StartGame();
+
+        player.AllUnitsMoveFront();
+        enemyPlayer.ShowUnits(wave);
+
+        InGameManager.Instance.MapScrollFor(10f / 2.5f, 2.5f);
+        yield return (enemyPlayer as TestEnemyGamePlayer).MoveUnitsFront(false);
+
+        player.SetUnitsState(BehaviourState.INCOMBAT);
+        enemyPlayer.SetUnitsState(BehaviourState.INCOMBAT);
+
+        yield break;
+        // test break
 
         while (wave < 4)
         {

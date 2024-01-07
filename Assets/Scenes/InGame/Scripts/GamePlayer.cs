@@ -142,11 +142,11 @@ public abstract class GamePlayer
         skillDeck.RemoveAt(idx);
     }
 
-    public void AllUnitsGoFront()
+    public void AllUnitsMoveFront()
     {
         foreach (var item in curUnits)
         {
-            item.PlayAnim("battle_move");
+            item.PlayAnim("battle_move", true);
         }
     }
 

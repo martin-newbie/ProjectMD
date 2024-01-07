@@ -507,6 +507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitObjPrefab: {fileID: 5598236503841212976, guid: 705689cac2c796c47b5d9947a7f25d75, type: 3}
   skillCanvas: {fileID: 1832389324}
+  scrollMap: {fileID: 2090278849}
   movingObjects: []
 --- !u!114 &783219648
 MonoBehaviour:
@@ -1250,6 +1251,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2090278848}
+  - component: {fileID: 2090278849}
   m_Layer: 0
   m_Name: Backgrounds
   m_TagString: Untagged
@@ -1274,6 +1276,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2090278849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090278847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48892b7ced04315459016088dbe5e410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgrounds:
+  - {fileID: 1287278320}
+  - {fileID: 1149782002}
+  - {fileID: 35369441}
+  minPos: 19.11
 --- !u!1 &2132110584
 GameObject:
   m_ObjectHideFlags: 0
