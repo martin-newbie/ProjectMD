@@ -40,7 +40,7 @@ public class WebRequest : MonoBehaviour
             var queue = requestQueue.Dequeue();
             using (UnityWebRequest request = UnityWebRequest.Post(queue.sendUrl, queue.form))
             {
-                Debug.Log("보냄");
+                Debug.Log("send");
                 yield return request.SendWebRequest();
                 if (request.isNetworkError || request.isHttpError)
                 {
@@ -51,7 +51,6 @@ public class WebRequest : MonoBehaviour
                     Debug.Log(request.downloadHandler.text);
                     queue.endAction?.Invoke(request.downloadHandler.text);
                 }
-                Debug.Log(request.downloadHandler.text);
             }
         }
     }
