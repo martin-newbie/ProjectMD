@@ -15,6 +15,7 @@ public class InGameManager : MonoBehaviour
 
     public UnitObject unitObjPrefab;
     public SkillCanvas skillCanvas;
+    public BackgroundScroll scrollMap;
 
     [HideInInspector] public List<UnitBehaviour> allUnits = new List<UnitBehaviour>();
     [HideInInspector] public List<GameObject> movingObjects = new List<GameObject>();
@@ -36,6 +37,12 @@ public class InGameManager : MonoBehaviour
     public void InitSkill()
     {
         var playable = allUnits.FindAll((item) => item.group == UnitGroupType.ALLY).Select((item) => item as ActiveSkillBehaviour).ToArray();
+    }
+
+    public Coroutine MapScrollFor(float dur, float speed)
+    {
+        StartCoroutine(scrollMap.ScrollBackgroundFor(dur, speed));
+        return null;
     }
 
     void InitGameMode()

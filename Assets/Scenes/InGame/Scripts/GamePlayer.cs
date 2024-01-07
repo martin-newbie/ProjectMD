@@ -142,6 +142,14 @@ public abstract class GamePlayer
         skillDeck.RemoveAt(idx);
     }
 
+    public void AllUnitsGoFront()
+    {
+        foreach (var item in curUnits)
+        {
+            item.PlayAnim("battle_move");
+        }
+    }
+
     protected virtual UnitBehaviour SpawnUnit(int unitIdx, Vector3 pos)
     {
         return InGameManager.Instance.SpawnUnit(pos, unitIdx, group, 0);

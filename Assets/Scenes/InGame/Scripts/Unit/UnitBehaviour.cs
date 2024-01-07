@@ -364,12 +364,12 @@ public abstract class UnitBehaviour
         var anim = model.Skeleton.Data.FindAnimation(key);
         return new WaitForSeconds(anim.Duration);
     }
-    protected TrackEntry PlayAnim(string key, bool loop = false)
+    public TrackEntry PlayAnim(string key, bool loop = false)
     {
         var track = model.state.SetAnimation(0, key, loop);
         return track;
     }
-    protected TrackEntry AddAnim(string key, bool loop = false, float delay = 0f)
+    public TrackEntry AddAnim(string key, bool loop = false, float delay = 0f)
     {
         var track = model.state.AddAnimation(0, key, loop, delay);
         return track;

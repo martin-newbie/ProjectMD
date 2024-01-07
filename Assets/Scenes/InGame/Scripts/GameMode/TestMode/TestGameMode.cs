@@ -15,13 +15,13 @@ public class TestGameMode : IGameModeBehaviour
     {
         manager = _manager;
 
-        Vector3[][] posIdx = new Vector3[4][];
+        Vector3[][] userPoses = new Vector3[4][];
         for (int i = 0; i < 4; i++)
         {
-            posIdx[i] = new Vector3[5];
+            userPoses[i] = new Vector3[5];
             for (int j = 0; j < 5; j++)
             {
-                posIdx[i][j] = new Vector3(-2 - (1.5f * j), 0, 0);
+                userPoses[i][j] = new Vector3(-2 - (1.5f * j), 0, 0);
             }
         }
 
@@ -37,7 +37,7 @@ public class TestGameMode : IGameModeBehaviour
             }
         }
 
-        player = new PlayableGamePlayer(UserData.Instance.allDeckUnits.ToArray(), posIdx, UnitGroupType.ALLY, manager.skillCanvas);
+        player = new PlayableGamePlayer(UserData.Instance.allDeckUnits.ToArray(), userPoses, UnitGroupType.ALLY, manager.skillCanvas);
         enemyPlayer = new TestEnemyGamePlayer(enemyIdx, enemyPos, UnitGroupType.HOSTILE);
         player.ShowUnits(0);
     }
