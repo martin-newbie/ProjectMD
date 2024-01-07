@@ -9,7 +9,7 @@ public class FakeLogin : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(uploaduserdata());
+        WebRequest.Instance.PostWebRequest("Temp_Project_Login", "121212");
         TestInitUserData();
     }
 
@@ -26,31 +26,4 @@ public class FakeLogin : MonoBehaviour
     {
         SceneManager.LoadScene("Menu");
     }
-
-    IEnumerator uploaduserdata()
-    {
-        string id = "근섭";
-        string pwd = "3333";
-        WWWForm form = new WWWForm();
-        form.AddField("input_id", id);
-        form.AddField("input_pwd", pwd);
-
-        string url = "projectmd.dothome.co.kr/phps/Temp_Project_Login.php";
-        using (UnityWebRequest request = UnityWebRequest.Post(url, form))
-        {
-            Debug.Log("보냄");
-            yield return request.SendWebRequest();
-            if (request.isNetworkError || request.isHttpError)
-            {
-                Debug.Log(request.error);
-            }
-            else
-            {
-                Debug.Log(request.downloadHandler.text);
-            }
-            Debug.Log(request.downloadHandler.text);
-
-        }
-    }
-
 }
