@@ -9,7 +9,9 @@ public class FakeLogin : MonoBehaviour
 
     private void Start()
     {
-        WebRequest.Instance.PostWebRequest("Temp_Project_Login", "121212");
+        WebRequest.Instance.PostWebRequest("Temp_Project_Login", "121212", (data)=> {
+            UserData.Instance = JsonUtility.FromJson<UserData>(data);
+        });
         TestInitUserData();
     }
 
