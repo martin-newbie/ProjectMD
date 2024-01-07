@@ -58,26 +58,31 @@ public class TestGameMode : IGameModeBehaviour
         player.SetUnitsState(BehaviourState.INCOMBAT);
         enemyPlayer.SetUnitsState(BehaviourState.INCOMBAT);
 
-        yield break;
-        // test break
+        yield return new WaitUntil(() => enemyPlayer.curUnits.Count <= 0);
+        yield return new WaitUntil(() => WaitUntilEveryActionEnd(player.curUnits.ToArray()));
+        player.ReturnOriginPos();
+        yield return new WaitUntil(() => WaitUntilEveryActionEnd(player.curUnits.ToArray()));
+        player.SetUnitsState(BehaviourState.STANDBY);
+        wave++;
 
         while (wave < 4)
         {
             enemyPlayer.ShowUnits(wave);
+            yield return (enemyPlayer as TestEnemyGamePlayer).MoveUnitsFront(true);
 
             player.SetUnitsState(BehaviourState.INCOMBAT);
             enemyPlayer.SetUnitsState(BehaviourState.INCOMBAT);
 
             yield return new WaitUntil(() => enemyPlayer.curUnits.Count <= 0);
-
             yield return new WaitUntil(() => WaitUntilEveryActionEnd(player.curUnits.ToArray()));
             player.ReturnOriginPos();
             yield return new WaitUntil(() => WaitUntilEveryActionEnd(player.curUnits.ToArray()));
-
             player.SetUnitsState(BehaviourState.STANDBY);
-            isCombat = false;
             wave++;
+
         }
+
+        yield break;
     }
 
     bool WaitUntilEveryActionEnd(UnitBehaviour[] units)
