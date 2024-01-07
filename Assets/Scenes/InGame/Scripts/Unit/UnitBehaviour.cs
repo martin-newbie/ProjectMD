@@ -180,6 +180,10 @@ public abstract class UnitBehaviour
         while (true)
         {
             var target = GetNearestOpponent();
+            if(target == null)
+            {
+                break;
+            }
             if (IsInsideRange(target))
             {
                 break;
