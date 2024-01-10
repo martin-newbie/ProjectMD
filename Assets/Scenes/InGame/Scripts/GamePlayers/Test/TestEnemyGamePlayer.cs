@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestEnemyGamePlayer : GamePlayer
 {
-    public TestEnemyGamePlayer(int[][] _unitIdx, Vector3[][] _posIdx, UnitGroupType _group) : base(_unitIdx, _posIdx, _group)
+    public TestEnemyGamePlayer(DeckData[] _unitIdx, Vector3[][] _posIdx, UnitGroupType _group) : base(_unitIdx, _posIdx, _group)
     {
 
     }

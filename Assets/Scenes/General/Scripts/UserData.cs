@@ -11,29 +11,29 @@ public class UserData
     public string userName;
 
     public List<UnitData> unitDatas;
-    public List<int[]> allDeckUnits;
+    public DeckData[] decks;
 
     public UserData()
     {
         Instance = this;
         unitDatas = new List<UnitData>();
-        allDeckUnits = new List<int[]>();
-        for (int i = 0; i < 4; i++)
+        decks = new DeckData[4];
+        for (int i = 0; i < decks.Length; i++)
         {
-            allDeckUnits.Add(new int[0]);
+            decks[i] = new DeckData();
         }
     }
 
     public void SetDeckUnitAt(int[] units, int show)
     {
-        Instance.allDeckUnits[show] = units;
+        decks[show].unitsIdx = units;
     }
 
     public bool AlreadySelected(int unitId)
     {
-        for (int i = 0; i < allDeckUnits.Count; i++)
+        for (int i = 0; i < decks.Length; i++)
         {
-            var deck = allDeckUnits[i].ToList();
+            var deck = decks[i].unitsIdx;
             if (deck.Contains(unitId))
             {
                 return true;
@@ -59,4 +59,10 @@ public class UnitData
         equipmentLevel = new int[3];
         equipmentExp = new float[3];
     }
+}
+
+[System.Serializable]
+public class DeckData
+{
+    public int[] unitsIdx;
 }

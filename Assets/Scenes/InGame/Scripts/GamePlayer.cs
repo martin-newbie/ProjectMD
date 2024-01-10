@@ -13,7 +13,7 @@ public abstract class GamePlayer
     // about skill
     List<ActiveSkillBehaviour> skillUnits = new List<ActiveSkillBehaviour>();
     List<ActiveSkillBehaviour> skillDeck = new List<ActiveSkillBehaviour>();
-    int[][] unitIdx;
+    DeckData[] unitIdx;
     Vector3[][] posArr;
 
     public int curShow;
@@ -23,7 +23,7 @@ public abstract class GamePlayer
     float skillDelay = 1f;
     float curDelay;
 
-    public GamePlayer(int[][] _unitIdx, Vector3[][] _posArr, UnitGroupType _group)
+    public GamePlayer(DeckData[] _unitIdx, Vector3[][] _posArr, UnitGroupType _group)
     {
         group = _group;
         unitIdx = _unitIdx;
@@ -33,9 +33,9 @@ public abstract class GamePlayer
         {
             allUnits.Add(new List<UnitBehaviour>());
             var units = unitIdx[i];
-            for (int j = 0; j < units.Length; j++)
+            for (int j = 0; j < units.unitsIdx.Length; j++)
             {
-                var unit = SpawnUnit(unitIdx[i][j], posArr[i][j]);
+                var unit = SpawnUnit(units.unitsIdx[j], posArr[i][j]);
                 unit.InjectDeadEvent(() => { RemoveActiveUnit(unit); });
                 unit.DeactiveUnit();
                 unit.gameObject.SetActive(false);

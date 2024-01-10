@@ -1,31 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class FakeLogin : MonoBehaviour
 {
+    public InputField idInput;
 
-    private void Start()
+    
+    public void OnStartButton()
     {
-        WebRequest.Instance.PostWebRequest("Temp_Project_Login", "121212", (data)=> {
-            UserData.Instance = JsonUtility.FromJson<UserData>(data);
-        });
         TestInitUserData();
     }
 
     void TestInitUserData()
     {
-        UserData user = new UserData();
-        for (int i = 0; i < 26; i++)
+        if (string.IsNullOrEmpty(idInput.text))
         {
-            user.unitDatas.Add(new UnitData(i));
+            // no account login
+            SceneManager.LoadScene("Menu");
+            
+        }
+        else
+        {
+            WebRequest.Instance.PostWebRequest("Temp_Project_Login", "121212", (data) =>
+            {
+                var login = JsonUtility.FromJson<LoginPost>(data);
+                if (login.isError)
+                {
+                    // play error image
+                }
+                else
+                {
+                    UserData.Instance = login.userData;
+                    SceneManager.LoadScene("Menu");
+                }
+            });
         }
     }
+}
 
-    public void OnStartButton()
-    {
-        SceneManager.LoadScene("Menu");
-    }
+public class LoginPost
+{
+    public bool isError;
+    public UserData userData;
 }

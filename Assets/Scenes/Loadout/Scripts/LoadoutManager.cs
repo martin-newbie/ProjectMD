@@ -91,7 +91,7 @@ public class LoadoutManager : MonoBehaviour
             var temp = deckIdxArr[curDragIdx];
             deckIdxArr[prev.btnIdx] = deckIdxArr[last.btnIdx];
             deckIdxArr[last.btnIdx] = temp;
-            UserData.Instance.allDeckUnits[showIdx] = deckIdxArr;
+            UserData.Instance.SetDeckUnitAt(deckIdxArr, showIdx);
         }
 
         UpdateDeck(showIdx);
@@ -106,7 +106,7 @@ public class LoadoutManager : MonoBehaviour
 
     public void UpdateDeck(int deckIdx)
     {
-        deckIdxArr = UserData.Instance.allDeckUnits[deckIdx];
+        deckIdxArr = UserData.Instance.decks[deckIdx].unitsIdx;
         for (int i = 0; i < infoButtons.Count; i++)
         {
             if (i < deckIdxArr.Length)

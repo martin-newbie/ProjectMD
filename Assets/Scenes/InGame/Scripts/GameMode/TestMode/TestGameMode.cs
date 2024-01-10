@@ -26,10 +26,10 @@ public class TestGameMode : IGameModeBehaviour
         }
 
         Vector3[][] enemyPos = new Vector3[4][];
-        int[][] enemyIdx = new int[4][];
+        DeckData[] enemyData = new DeckData[4];
         for (int i = 0; i < 4; i++)
         {
-            enemyIdx[i] = new int[4] { 0, 0, 0, 0 };
+            enemyData[i].unitsIdx = new int[4] { 0, 0, 0, 0 };
             enemyPos[i] = new Vector3[4];
             for (int j = 0; j < 4; j++)
             {
@@ -37,8 +37,8 @@ public class TestGameMode : IGameModeBehaviour
             }
         }
 
-        player = new PlayableGamePlayer(UserData.Instance.allDeckUnits.ToArray(), userPoses, UnitGroupType.ALLY, manager.skillCanvas);
-        enemyPlayer = new TestEnemyGamePlayer(enemyIdx, enemyPos, UnitGroupType.HOSTILE);
+        player = new PlayableGamePlayer(UserData.Instance.decks, userPoses, UnitGroupType.ALLY, manager.skillCanvas);
+        enemyPlayer = new TestEnemyGamePlayer(enemyData, enemyPos, UnitGroupType.HOSTILE);
         player.ShowUnits(0);
     }
 
