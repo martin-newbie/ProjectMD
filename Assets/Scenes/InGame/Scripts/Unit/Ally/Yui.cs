@@ -30,13 +30,4 @@ public class Yui : ActiveSkillBehaviour
         yield return PlayAnimAndWait("battle_attack");
     }
 
-    protected override IEnumerator PassiveSkillActive()
-    {
-        yield break;
-    }
-
-    protected override bool PassiveSkillCondition()
-    {
-        return false;
-    }
 }

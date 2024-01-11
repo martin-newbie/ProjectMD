@@ -57,16 +57,6 @@ public class Asis : ActiveSkillBehaviour
         yield break;
     }
 
-    protected override bool PassiveSkillCondition()
-    {
-        return false;
-    }
-
-    protected override IEnumerator PassiveSkillActive()
-    {
-        yield break;
-    }
-
     public override bool ActiveSkillCondition()
     {
         return false;

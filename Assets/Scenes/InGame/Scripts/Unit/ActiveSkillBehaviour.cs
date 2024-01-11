@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ActiveSkillBehaviour : PassiveSkillBehaviour
+public abstract class ActiveSkillBehaviour : UnitBehaviour
 {
     public AttributeType skillType;
     public int cost;

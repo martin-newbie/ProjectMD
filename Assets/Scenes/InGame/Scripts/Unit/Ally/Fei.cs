@@ -27,13 +27,4 @@ public class Fei : ActiveSkillBehaviour
         yield return StartCoroutine(CommonBurstFire(3));
     }
 
-    protected override IEnumerator PassiveSkillActive()
-    {
-        yield break;
-    }
-
-    protected override bool PassiveSkillCondition()
-    {
-        return false;
-    }
 }

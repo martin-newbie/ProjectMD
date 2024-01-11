@@ -27,13 +27,4 @@ public class Aiden : ActiveSkillBehaviour
         yield return StartCoroutine(CommonBurstFire(5));
     }
 
-    protected override IEnumerator PassiveSkillActive()
-    {
-        yield break;
-    }
-
-    protected override bool PassiveSkillCondition()
-    {
-        return false;
-    }
 }

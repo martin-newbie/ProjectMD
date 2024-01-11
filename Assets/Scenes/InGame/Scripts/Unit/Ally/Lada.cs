@@ -39,16 +39,6 @@ public class Lada : ActiveSkillBehaviour
         yield break;
     }
 
-    protected override IEnumerator PassiveSkillActive()
-    {
-        yield break;
-    }
-
-    protected override bool PassiveSkillCondition()
-    {
-        return false;
-    }
-
     protected override IEnumerator Reload()
     {
         yield return PlayAnimAndWait("battle_reload_1");

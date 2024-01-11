@@ -27,13 +27,4 @@ public class Ilena : ActiveSkillBehaviour
         yield return StartCoroutine(CommonBurstFire(4));
     }
 
-    protected override IEnumerator PassiveSkillActive()
-    {
-        yield break;
-    }
-
-    protected override bool PassiveSkillCondition()
-    {
-        return false;
-    }
 }

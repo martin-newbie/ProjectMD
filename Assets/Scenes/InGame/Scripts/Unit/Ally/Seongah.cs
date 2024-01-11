@@ -27,16 +27,6 @@ public class Seongah : ActiveSkillBehaviour
     {
     }
 
-    protected override IEnumerator PassiveSkillActive()
-    {
-        yield break;
-    }
-
-    protected override bool PassiveSkillCondition()
-    {
-        return false;
-    }
-
     public override bool ActiveSkillCondition()
     {
         return false;

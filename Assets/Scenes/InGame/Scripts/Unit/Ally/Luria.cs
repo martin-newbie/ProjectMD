@@ -36,16 +36,6 @@ public class Luria : ActiveSkillBehaviour
         }
     }
 
-    protected override IEnumerator PassiveSkillActive()
-    {
-        yield break;
-    }
-
-    protected override bool PassiveSkillCondition()
-    {
-        return false;
-    }
-
     protected override IEnumerator MoveToTargetRange()
     {
         PlayAnim("battle_move", true);
