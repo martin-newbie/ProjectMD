@@ -8,7 +8,7 @@ public class FakeLogin : MonoBehaviour
 {
     public InputField idInput;
 
-    
+
     public void OnStartButton()
     {
         TestInitUserData();
@@ -19,8 +19,11 @@ public class FakeLogin : MonoBehaviour
         if (string.IsNullOrEmpty(idInput.text))
         {
             // no account login
+            for (int i = 0; i < 26; i++)
+            {
+                UserData.Instance.unitDatas.Add(new UnitData(i));
+            }
             SceneManager.LoadScene("Menu");
-            
         }
         else
         {

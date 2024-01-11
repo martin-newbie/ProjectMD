@@ -65,4 +65,9 @@ public class UnitData
 public class DeckData
 {
     public int[] unitsIdx;
+
+    public DeckData()
+    {
+        unitsIdx = new int[0];
+    }
 }

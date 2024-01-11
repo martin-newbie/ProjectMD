@@ -29,7 +29,9 @@ public class TestGameMode : IGameModeBehaviour
         DeckData[] enemyData = new DeckData[4];
         for (int i = 0; i < 4; i++)
         {
+            enemyData[i] = new DeckData();
             enemyData[i].unitsIdx = new int[4] { 0, 0, 0, 0 };
+
             enemyPos[i] = new Vector3[4];
             for (int j = 0; j < 4; j++)
             {
