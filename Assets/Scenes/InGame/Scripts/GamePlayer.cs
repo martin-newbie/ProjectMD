@@ -167,8 +167,10 @@ public abstract class GamePlayer
             AddSkillInDeck();
         }
 
-        cost += GetCostRecovery() * Time.deltaTime;
-        curDelay += Time.deltaTime;
+        if (cost <= 10f)
+        {
+            CostRecoverLogic();
+        }
     }
 
     protected virtual ActiveSkillBehaviour AddSkillInDeck()
@@ -238,6 +240,32 @@ public abstract class GamePlayer
 
     }
 
+    protected virtual void CostRecoverLogic()
+    {
+        if (cost >= 10f)
+        {
+            cost = 10f;
+        }
+        else
+        {
+            cost += GetCostRecovery() * Time.deltaTime / 10000f;
+        }
+        curDelay += Time.deltaTime;
+    }
+
+    protected virtual float GetCostRecovery()
+    {
+        float value = 0f;
+        if (curUnits.Count > 0)
+        {
+            foreach (var item in curUnits)
+            {
+                value += item.GetStatus(StatusType.COST_RECOVERY);
+            }
+        }
+        return value;
+    }
+
     protected virtual void RemoveSkillsRange(int startIdx, int collabseCount)
     {
         skillDeck.RemoveRange(startIdx, collabseCount + 1);
@@ -261,18 +289,5 @@ public abstract class GamePlayer
     {
         isGameActive = false;
         curDelay = 0f;
-    }
-
-    protected virtual float GetCostRecovery()
-    {
-        float value = 0f;
-        if (curUnits.Count > 0)
-        {
-            foreach (var item in curUnits)
-            {
-                value += item.GetStatus(StatusType.COST_RECOVERY);
-            }
-        }
-        return value;
     }
 }
