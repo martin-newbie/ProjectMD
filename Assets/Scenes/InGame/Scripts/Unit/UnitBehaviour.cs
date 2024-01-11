@@ -325,7 +325,7 @@ public abstract class UnitBehaviour
         {
 
             // defense
-            float def = (1666f / 1666f + GetStatus(StatusType.DEF));
+            float def = (1666f / (1666f + GetStatus(StatusType.DEF)));
 
             // critical
             float criRate = value.GetValue(StatusType.CRI_RATE);
@@ -333,7 +333,7 @@ public abstract class UnitBehaviour
 
             damage *= def;
             damage *= affinityModify;
-            damage *= isCri ? value.GetValue(StatusType.CRI_DAMAGE) : 1f;
+            damage *= isCri ? value.GetValue(StatusType.CRI_DAMAGE) * 0.01f : 1f;
 
             hp -= damage;
             hpBar?.UpdateFill(hp);
