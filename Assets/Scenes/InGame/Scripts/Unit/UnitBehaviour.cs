@@ -183,7 +183,7 @@ public abstract class UnitBehaviour
         while (true)
         {
             var target = GetNearestOpponent();
-            if(target == null)
+            if (target == null)
             {
                 break;
             }
@@ -294,34 +294,62 @@ public abstract class UnitBehaviour
         float damage = value.GetValue(StatusType.DMG);
         // check death
 
-        int atk = from.constData.atkType;
-        int def = constData.defType;
+        int atkType = from.constData.atkType;
+        int defType = constData.defType;
+        float affinityModify;
+        bool isCri = false;
+
         ResistType resist;
-        if (atk == def)
+        if (atkType == defType)
         {
             resist = ResistType.WEAK;
+            affinityModify = 1.5f;
         }
-        else if ((atk == 0 && def == 1) || (atk == 1 && def == 2) || (atk == 2 && def == 0))
+        else if ((atkType == 0 && defType == 1) || (atkType == 1 && defType == 2) || (atkType == 2 && defType == 0))
         {
             resist = ResistType.NORMAL;
+            affinityModify = 1f;
         }
         else
         {
             resist = ResistType.RESIST;
+            affinityModify = 0.5f;
         }
 
-        // calculate damage
-        // give damage
-        // print damage text
+        float hitRate = (700 / ((GetStatus(StatusType.DODGE) - value.GetValue(StatusType.ACCURACY)) + 700));
+        if(hitRate < randomRate())
+        {
+            resist = ResistType.MISS;
+        }
+        else
+        {
+
+            // defense
+            float def = (1666f / 1666f + GetStatus(StatusType.DEF));
+
+            // critical
+            float criRate = value.GetValue(StatusType.CRI_RATE);
+            isCri = criRate > randomRate();
+
+            damage *= def;
+            damage *= affinityModify;
+            damage *= isCri ? value.GetValue(StatusType.CRI_DAMAGE) : 1f;
+
+            hp -= damage;
+            hpBar?.UpdateFill(hp);
+            if (hp <= 0 && state != BehaviourState.RETIRE)
+            {
+                OnRetire();
+            }
+        }
 
         int dir = transform.position.x < from.transform.position.x ? -1 : 1;
-        DamageTextCanvas.Instance.PrintDamageText(damage, GetBoneWorldPos("body"), dir, resist);
+        DamageTextCanvas.Instance.PrintDamageText(damage, GetBoneWorldPos("body"), dir, resist, isCri);
 
-        hp -= damage;
-        hpBar?.UpdateFill(hp);
-        if (hp <= 0 && state != BehaviourState.RETIRE)
+
+        float randomRate()
         {
-            OnRetire();
+            return Random.Range(0f, 1f);
         }
     }
     protected virtual void OnRetire()
