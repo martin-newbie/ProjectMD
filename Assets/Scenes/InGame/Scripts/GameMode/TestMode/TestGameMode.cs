@@ -37,8 +37,9 @@ public class TestGameMode : IGameModeBehaviour
             }
         }
 
-        player = new PlayableGamePlayer(UserData.Instance.decks, userPoses, UnitGroupType.ALLY, manager.skillCanvas);
-        enemyPlayer = new TestEnemyGamePlayer(enemyData, enemyPos, UnitGroupType.HOSTILE);
+        int tempStageLevel = UserData.Instance.userLevel;
+        player = new PlayableGamePlayer(UserData.Instance.decks, userPoses, UnitGroupType.ALLY, manager.skillCanvas, UserData.Instance.userLevel);
+        enemyPlayer = new TestEnemyGamePlayer(enemyData, enemyPos, UnitGroupType.HOSTILE, tempStageLevel);
         player.ShowUnits(0);
     }
 

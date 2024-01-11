@@ -7,10 +7,12 @@ public class PlayableGamePlayer : GamePlayer
     public static PlayableGamePlayer Instance = null;
 
     SkillCanvas skillCanvas;
+    int userLevel;
 
-    public PlayableGamePlayer(DeckData[] _unitIdx, Vector3[][] _posIdx, UnitGroupType _group, SkillCanvas _skillCanvas) : base(_unitIdx, _posIdx, _group)
+    public PlayableGamePlayer(DeckData[] _unitIdx, Vector3[][] _posIdx, UnitGroupType _group, SkillCanvas _skillCanvas, int _userLevel) : base(_unitIdx, _posIdx, _group)
     {
         skillCanvas = _skillCanvas;
+        userLevel = _userLevel;
         Instance = this;
     }
 
@@ -40,5 +42,10 @@ public class PlayableGamePlayer : GamePlayer
     {
         base.RemoveSkillAt(idx);
         skillCanvas.RemoveButtonAt(idx);
+    }
+
+    protected override UnitBehaviour SpawnUnit(int unitIdx, Vector3 pos)
+    {
+        return InGameManager.Instance.SpawnUnit(pos, unitIdx, group, userLevel, 0);
     }
 }

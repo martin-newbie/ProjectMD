@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class TestEnemyGamePlayer : GamePlayer
 {
-    public TestEnemyGamePlayer(DeckData[] _unitIdx, Vector3[][] _posIdx, UnitGroupType _group) : base(_unitIdx, _posIdx, _group)
-    {
+    int stageLevel;
 
+    public TestEnemyGamePlayer(DeckData[] _unitIdx, Vector3[][] _posIdx, UnitGroupType _group, int _stageLevel) : base(_unitIdx, _posIdx, _group)
+    {
+        stageLevel = _stageLevel;
     }
 
     public Coroutine MoveUnitsFront(bool isMoveAni)
@@ -17,6 +19,11 @@ public class TestEnemyGamePlayer : GamePlayer
         }
 
         return InGameManager.Instance.StartCoroutine(UnitsMove());
+    }
+
+    protected override UnitBehaviour SpawnUnit(int unitIdx, Vector3 pos)
+    {
+        return InGameManager.Instance.SpawnUnit(pos, unitIdx, group, stageLevel, 0);
     }
 
     IEnumerator UnitsMove()

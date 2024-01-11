@@ -150,10 +150,7 @@ public abstract class GamePlayer
         }
     }
 
-    protected virtual UnitBehaviour SpawnUnit(int unitIdx, Vector3 pos)
-    {
-        return InGameManager.Instance.SpawnUnit(pos, unitIdx, group, 0);
-    }
+    protected abstract UnitBehaviour SpawnUnit(int unitIdx, Vector3 pos);
 
     public virtual void StartGame()
     {

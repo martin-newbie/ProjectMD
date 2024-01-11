@@ -8,9 +8,9 @@ public class TrainingDummy : UnitBehaviour
     {
     }
 
-    public override void InitCommon(int idx, int barType)
+    public override void InitCommon(int idx, int level, int barType)
     {
-        base.InitCommon(idx, barType);
+        base.InitCommon(idx, level, barType);
         hp = 100000;
     }
 

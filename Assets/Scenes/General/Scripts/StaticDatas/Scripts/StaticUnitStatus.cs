@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [CreateAssetMenu(fileName = "StaticUnitStatus", menuName = "MD/ScriptableData/StaticUnitStatus", order = int.MinValue)]
 public class StaticUnitStatus : SheetDataBase
@@ -27,8 +28,8 @@ public class StaticUnitStatus : SheetDataBase
 public class UnitStatus
 {
     public int keyIndex;
-    [SerializeField] Dictionary<StatusType, float> defaultValueList;
-    [SerializeField] Dictionary<StatusType, float> growthValueList;
+    [SerializeField] public Dictionary<StatusType, float> defaultValueList;
+    [SerializeField] public Dictionary<StatusType, float> growthValueList;
 
     public UnitStatus(string[] data)
     {
@@ -72,6 +73,16 @@ public class UnitStatus
             result = GetLevelStatus(level, defaultValue, increaseValue);
         }
 
+        return result;
+    }
+
+    public Dictionary<StatusType, float> GetCalculatedValueDictionary(int level = 0)
+    {
+        var result = new Dictionary<StatusType, float>();
+        foreach (var key in defaultValueList.Keys)
+        {
+            result.Add(key, GetTotalStatus(key, level));
+        }
         return result;
     }
 

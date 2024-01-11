@@ -33,6 +33,7 @@ public abstract class UnitBehaviour
     public bool isAction;
     public BehaviourState state;
     public UnitGroupType group;
+    public Dictionary<StatusType, float> statusList;
     public Dictionary<StatusType, float> buffList;
     public Dictionary<StatusType, float> debuffList;
     #endregion
@@ -57,10 +58,12 @@ public abstract class UnitBehaviour
         debuffList = new Dictionary<StatusType, float>();
     }
 
-    public virtual void InitCommon(int idx, int barType)
+    public virtual void InitCommon(int idx, int level, int barType)
     {
         keyIndex = idx;
+
         staticStatus = StaticDataManager.GetUnitStatus(keyIndex);
+        statusList = staticStatus.GetCalculatedValueDictionary(level);
         constData = StaticDataManager.GetConstUnitData(keyIndex);
 
         hp = GetStatus(StatusType.HP);
@@ -392,7 +395,7 @@ public abstract class UnitBehaviour
     public float GetStatus(StatusType type)
     {
         float result = 0;
-        result += staticStatus.GetTotalStatus(type, level);
+        result += statusList[type];
 
         // add result from equipment
         // add result from unique weapon

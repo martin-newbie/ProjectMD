@@ -55,10 +55,10 @@ public class InGameManager : MonoBehaviour
         }
     }
 
-    public UnitBehaviour SpawnUnit(Vector3 spawnPos, int idx, UnitGroupType group, int barType)
+    public UnitBehaviour SpawnUnit(Vector3 spawnPos, int idx, UnitGroupType group, int level, int barType)
     {
         var unitObj = SpawnUnitObject(spawnPos);
-        var behaviour = SetBehaviourInObject(unitObj, idx, group, barType);
+        var behaviour = SetBehaviourInObject(unitObj, idx, group, level, barType);
         return behaviour;
     }
 
@@ -67,7 +67,7 @@ public class InGameManager : MonoBehaviour
         return Instantiate(unitObjPrefab, spawnPos, Quaternion.identity);
     }
 
-    public UnitBehaviour SetBehaviourInObject(UnitObject unitObj, int idx, UnitGroupType group, int barType)
+    public UnitBehaviour SetBehaviourInObject(UnitObject unitObj, int idx, UnitGroupType group, int level, int barType)
     {
         UnitBehaviour behaviour = null;
 
@@ -105,7 +105,7 @@ public class InGameManager : MonoBehaviour
                 break;
         }
 
-        unitObj.SetBehaviour(behaviour, idx, group, barType);
+        unitObj.SetBehaviour(behaviour, idx, group, level, barType);
         return behaviour;
     }
 
