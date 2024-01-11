@@ -17,10 +17,10 @@ public abstract class GamePlayer
     Vector3[][] posArr;
 
     public int curShow;
-    public float skillCost;
-    public float costCharge;
 
-    float skillDelay = 1f;
+    public float cost;
+
+    float skillDelay = 8f;
     float curDelay;
 
     public GamePlayer(DeckData[] _unitIdx, Vector3[][] _posArr, UnitGroupType _group)
@@ -167,7 +167,7 @@ public abstract class GamePlayer
             AddSkillInDeck();
         }
 
-        skillCost += Time.deltaTime * costCharge;
+        cost += GetCostRecovery() * Time.deltaTime;
         curDelay += Time.deltaTime;
     }
 
@@ -260,5 +260,19 @@ public abstract class GamePlayer
     public virtual void OnEnd()
     {
         isGameActive = false;
+        curDelay = 0f;
+    }
+
+    protected virtual float GetCostRecovery()
+    {
+        float value = 0f;
+        if (curUnits.Count > 0)
+        {
+            foreach (var item in curUnits)
+            {
+                value += item.GetStatus(StatusType.COST_RECOVERY);
+            }
+        }
+        return value;
     }
 }

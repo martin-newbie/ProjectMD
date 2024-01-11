@@ -8,7 +8,7 @@ public class StaticUnitStatus : SheetDataBase
 {
     protected override string gid => "0";
 
-    protected override string range => "D4:T29";
+    protected override string range => "D4:V29";
 
     public List<UnitStatus> dataList;
 
@@ -54,6 +54,8 @@ public class UnitStatus
         defaultValueList.Add(StatusType.MOVE_SPEED, float.Parse(data[idx++]));
         defaultValueList.Add(StatusType.RANGE, float.Parse(data[idx++]));
         defaultValueList.Add(StatusType.CC_RESIST, float.Parse(data[idx++]));
+        defaultValueList.Add(StatusType.COST_RECOVERY, float.Parse(data[idx++]));
+        defaultValueList.Add(StatusType.SKILL_RECOVERY, float.Parse(data[idx++]));
     }
 
     public float GetTotalStatus(StatusType type, int level = 0)
@@ -107,4 +109,6 @@ public enum StatusType
     MOVE_SPEED,
     RANGE,
     CC_RESIST,
+    COST_RECOVERY,
+    SKILL_RECOVERY,
 }
