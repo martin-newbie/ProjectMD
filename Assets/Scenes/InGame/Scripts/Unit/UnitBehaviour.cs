@@ -328,7 +328,7 @@ public abstract class UnitBehaviour
             float def = (1666f / (1666f + GetStatus(StatusType.DEF)));
 
             // critical
-            float criRate = value.GetValue(StatusType.CRI_RATE);
+            float criRate = value.GetValue(StatusType.CRI_RATE) * 0.01f;
             isCri = criRate > randomRate();
 
             damage *= def;
