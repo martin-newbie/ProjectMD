@@ -8,12 +8,31 @@ public class PlayableGamePlayer : GamePlayer
 
     SkillCanvas skillCanvas;
     int userLevel;
+    int prevCost = 0;
 
     public PlayableGamePlayer(DeckData[] _unitIdx, Vector3[][] _posIdx, UnitGroupType _group, SkillCanvas _skillCanvas, int _userLevel) : base(_unitIdx, _posIdx, _group)
     {
         skillCanvas = _skillCanvas;
         userLevel = _userLevel;
         Instance = this;
+    }
+
+    protected override void CostRecoveryLogic()
+    {
+        base.CostRecoveryLogic();
+        SetCostUI(cost / 10);
+    }
+
+    private void SetCostUI(float value)
+    {
+        skillCanvas.skillCost.SetCostValueUI(value);
+
+        int intCost = Mathf.FloorToInt(cost);
+        if(prevCost != intCost)
+        {
+            prevCost = intCost;
+            skillCanvas.skillCost.CostRecoverAction(value);
+        }
     }
 
     protected override void RemoveCharacterSkillAt(int idx)

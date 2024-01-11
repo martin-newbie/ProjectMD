@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SkillCanvas : MonoBehaviour
 {
+    [Header("Skill Button")]
     public SkillButton skillButtonPrefab;
     public Transform buttonParent;
     Stack<SkillButton> skillBtnPool = new Stack<SkillButton>();
@@ -12,6 +13,9 @@ public class SkillCanvas : MonoBehaviour
 
     Vector3 btnStartPos = new Vector3(2812.5f, -150f);
     int curSkillCount;
+
+    [Header("Cost")]
+    public SkillCost skillCost;
 
     private void Start()
     {

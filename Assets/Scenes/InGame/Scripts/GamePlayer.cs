@@ -169,7 +169,7 @@ public abstract class GamePlayer
 
         if (cost <= 10f)
         {
-            CostRecoverLogic();
+            CostRecoveryLogic();
         }
     }
 
@@ -240,7 +240,7 @@ public abstract class GamePlayer
 
     }
 
-    protected virtual void CostRecoverLogic()
+    protected virtual void CostRecoveryLogic()
     {
         if (cost >= 10f)
         {
