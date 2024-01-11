@@ -31,7 +31,7 @@ public class PlayableGamePlayer : GamePlayer
         if(prevCost != intCost)
         {
             prevCost = intCost;
-            skillCanvas.skillCost.CostRecoverAction(value);
+            skillCanvas.skillCost.CostRecoverAction(prevCost);
         }
     }
 

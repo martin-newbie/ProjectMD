@@ -14,12 +14,12 @@ public class SkillCost : MonoBehaviour
         costImage.fillAmount = value;
     }
 
-    public void CostRecoverAction(float value)
+    public void CostRecoverAction(int cost)
     {
         // set position
         // recover effect
 
-        costText.text = Mathf.FloorToInt(value / 10).ToString();
+        costText.text = Mathf.FloorToInt(cost).ToString();
         // text effect
     }
 }
