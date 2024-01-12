@@ -28,7 +28,7 @@ public class PlayableGamePlayer : GamePlayer
         skillCanvas.skillCost.SetCostValueUI(value);
 
         int intCost = Mathf.FloorToInt(cost);
-        if(prevCost != intCost)
+        if (prevCost != intCost)
         {
             prevCost = intCost;
             skillCanvas.skillCost.CostRecoverAction(prevCost);
@@ -65,6 +65,6 @@ public class PlayableGamePlayer : GamePlayer
 
     protected override UnitBehaviour SpawnUnit(int unitIdx, Vector3 pos)
     {
-        return InGameManager.Instance.SpawnUnit(pos, unitIdx, group, userLevel, 0);
+        return InGameManager.Instance.SpawnUnit(pos, unitIdx, group, UserData.Instance.unitDatas.Find((item) => item.unitIdx == unitIdx).level, 0);
     }
 }
