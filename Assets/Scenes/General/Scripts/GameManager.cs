@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         new TempData();
-        new UserData();
     }
 
 }

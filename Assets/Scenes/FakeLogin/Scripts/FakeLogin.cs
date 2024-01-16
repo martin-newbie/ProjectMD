@@ -16,31 +16,19 @@ public class FakeLogin : MonoBehaviour
 
     void TestInitUserData()
     {
-        if (string.IsNullOrEmpty(idInput.text))
+        WebRequest.Post("User_Data/Test_Server_Login", idInput.text, (data) =>
         {
-            // no account login
-            for (int i = 0; i < 26; i++)
+            var login = JsonUtility.FromJson<LoginPost>(data);
+            if (login.isError)
             {
-                UserData.Instance.unitDatas.Add(new UnitData(i));
+                // play error image
             }
-            SceneManager.LoadScene("Menu");
-        }
-        else
-        {
-            WebRequest.Instance.PostWebRequest("Temp_Project_Login", "121212", (data) =>
+            else
             {
-                var login = JsonUtility.FromJson<LoginPost>(data);
-                if (login.isError)
-                {
-                    // play error image
-                }
-                else
-                {
-                    UserData.Instance = login.userData;
-                    SceneManager.LoadScene("Menu");
-                }
-            });
-        }
+                UserData.Instance = login.userData;
+                SceneManager.LoadScene("Menu");
+            }
+        });
     }
 }
 
