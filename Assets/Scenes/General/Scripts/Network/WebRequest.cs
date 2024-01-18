@@ -26,7 +26,7 @@ public class WebRequest : MonoBehaviour
         {
             builder.Append(bodyParamKeys[i] + "=" + bodyParamValues[i]);
         }
-        string paramsUrl = /*base url +*/ url + "?" + builder.ToString();
+        string paramsUrl = url + "?" + builder.ToString();
 
         request.sendUrl = paramsUrl;
         request.endAction = endAction;
@@ -63,7 +63,6 @@ public class WebRequest : MonoBehaviour
             var queue = requestQueue.Dequeue();
             using (UnityWebRequest request = queue.request(GetSendUri() + queue.sendUrl, queue.form))
             {
-                Debug.Log("send");
                 yield return request.SendWebRequest();
                 if (request.isNetworkError || request.isHttpError)
                 {

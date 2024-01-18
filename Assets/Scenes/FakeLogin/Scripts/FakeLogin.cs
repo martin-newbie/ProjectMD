@@ -16,7 +16,7 @@ public class FakeLogin : MonoBehaviour
 
     void TestInitUserData()
     {
-        WebRequest.Post("User_Data/Test_Server_Login", idInput.text, (data) =>
+        WebRequest.Post("user/login", idInput.text, (data) =>
         {
             var login = JsonUtility.FromJson<LoginPost>(data);
             if (login.isError)
