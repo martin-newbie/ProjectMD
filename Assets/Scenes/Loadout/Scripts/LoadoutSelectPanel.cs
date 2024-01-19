@@ -15,7 +15,7 @@ public class LoadoutSelectPanel : MonoBehaviour
 
     public void InitPanel()
     {
-        var list = UserData.Instance.unitDatas;
+        var list = UserData.Instance.units;
 
         for (int i = 0; i < list.Count; i++)
         {
@@ -31,7 +31,7 @@ public class LoadoutSelectPanel : MonoBehaviour
         curSelected = new List<int>(selected);
         deckIdx = deck;
 
-        marshaledDataList = SortUnitData(UserData.Instance.unitDatas.ToList());
+        marshaledDataList = SortUnitData(UserData.Instance.units.ToList());
         SetButtonsData();
     }
 
@@ -65,12 +65,12 @@ public class LoadoutSelectPanel : MonoBehaviour
         {
             var item = listOrigin[i];
 
-            if (curSelected.Contains(item.unitIdx))
+            if (curSelected.Contains(item.index))
             {
                 unitDatas.Remove(item);
                 unitDatas.Insert(0, item);
             }
-            else if (UserData.Instance.AlreadySelected(item.unitIdx))
+            else if (UserData.Instance.AlreadySelected(item.index))
             {
                 unitDatas.Remove(item);
                 unitDatas.Add(item);

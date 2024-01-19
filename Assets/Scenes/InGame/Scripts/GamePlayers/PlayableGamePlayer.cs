@@ -65,6 +65,6 @@ public class PlayableGamePlayer : GamePlayer
 
     protected override UnitBehaviour SpawnUnit(int unitIdx, Vector3 pos)
     {
-        return InGameManager.Instance.SpawnUnit(pos, unitIdx, group, UserData.Instance.unitDatas.Find((item) => item.unitIdx == unitIdx).level, 0);
+        return InGameManager.Instance.SpawnUnit(pos, unitIdx, group, UserData.Instance.units.Find((item) => item.index == unitIdx).level, 0);
     }
 }

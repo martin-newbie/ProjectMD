@@ -28,14 +28,14 @@ public class LoadoutSelectButton : MonoBehaviour
         selectedCurrent.SetActive(false);
         selectedOther.SetActive(false);
 
-        profileImage.sprite = ResourceManager.GetProfile(LinkedData.unitIdx);
-        nameText.text = StaticDataManager.GetConstUnitData(LinkedData.unitIdx).name;
+        profileImage.sprite = ResourceManager.GetProfile(LinkedData.index);
+        nameText.text = StaticDataManager.GetConstUnitData(LinkedData.index).name;
 
-        if (panel.curSelected.Contains(LinkedData.unitIdx))
+        if (panel.curSelected.Contains(LinkedData.index))
         {
             selectedCurrent.SetActive(true);
         }
-        else if (UserData.Instance.AlreadySelected(LinkedData.unitIdx))
+        else if (UserData.Instance.AlreadySelected(LinkedData.index))
         {
             selectedOther.SetActive(true);
         }
@@ -43,6 +43,6 @@ public class LoadoutSelectButton : MonoBehaviour
 
     public void OnSelect()
     {
-        panel.SelectButton(LinkedData.unitIdx);
+        panel.SelectButton(LinkedData.index);
     }
 }

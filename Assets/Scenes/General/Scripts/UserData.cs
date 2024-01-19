@@ -6,17 +6,21 @@ public class UserData
 {
     public static UserData Instance = null;
 
-    public int userLevel;
-    public float currentExp;
-    public string userName;
+    public int id;
+    public string uuid;
+    public string nickname;
+    public int level;
+    public float exp;
+    public int dia;
+    public int coin;
 
-    public List<UnitData> unitDatas;
+    public List<UnitData> units;
     public DeckData[] decks;
 
     public UserData()
     {
         Instance = this;
-        unitDatas = new List<UnitData>();
+
         decks = new DeckData[4];
         for (int i = 0; i < decks.Length; i++)
         {
@@ -46,19 +50,11 @@ public class UserData
 [System.Serializable]
 public class UnitData
 {
-    public int unitIdx;
+    public int id;
+    public int index;
     public int level;
     public float exp;
-
-    public int[] equipmentLevel;
-    public float[] equipmentExp;
-
-    public UnitData(int idx)
-    {
-        unitIdx = idx;
-        equipmentLevel = new int[3];
-        equipmentExp = new float[3];
-    }
+    public string user_uuid;
 }
 
 [System.Serializable]

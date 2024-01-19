@@ -52,17 +52,17 @@ public class LoadoutInfoUI : MonoBehaviour
         }
 
         skeleton.Update(0f);
-        skeleton.skeletonDataAsset = ResourceManager.GetSkeleton(linkedData.unitIdx);
+        skeleton.skeletonDataAsset = ResourceManager.GetSkeleton(linkedData.index);
         skeleton.Initialize(true);
 
-        if (LinkedData.unitIdx != linkedData.unitIdx)
+        if (LinkedData.index != linkedData.index)
         {
             SetAnimatoin("enter", true);
         }
         AddAnimation("wait", true);
 
-        profileImage.sprite = ResourceManager.GetProfile(linkedData.unitIdx);
-        nameText.text = StaticDataManager.GetConstUnitData(linkedData.unitIdx).name;
+        profileImage.sprite = ResourceManager.GetProfile(linkedData.index);
+        nameText.text = StaticDataManager.GetConstUnitData(linkedData.index).name;
 
         LinkedData = linkedData;
     }
