@@ -10,24 +10,25 @@ public class Bullet : MonoBehaviour
     public Coroutine StartBulletEffect(Vector3 start, Vector3 end, float moveSpeed, Action onFinish = null, int bulletType = 0)
     {
         SetBulletBehaviour(bulletType);
-        return StartCoroutine(bulletMove());
+        return StartCoroutine(bulletMove(start, end, moveSpeed, onFinish));
+    }
 
-        IEnumerator bulletMove()
+    protected virtual IEnumerator bulletMove(Vector3 start, Vector3 end, float moveSpeed, Action onFinish = null)
+    {
+        float dur = Vector3.Distance(start, end) / moveSpeed;
+        float timer = 0f;
+
+        while (timer < dur)
         {
-            float dur = Vector3.Distance(start, end) / moveSpeed;
-            float timer = 0f;
-
-            while (timer < dur)
-            {
-                behaviour.ProjectileAction(start, end, timer / dur);
-                timer += Time.deltaTime;
-                yield return null;
-            }
-
-            onFinish?.Invoke();
-            Destroy(gameObject);
-            yield break;
+            behaviour.ProjectileAction(start, end, timer / dur);
+            timer += Time.deltaTime;
+            yield return null;
         }
+
+        onFinish?.Invoke();
+        behaviour.OnEnd(end);
+        Destroy(gameObject);
+        yield break;
     }
 
     void SetBulletBehaviour(int idx)

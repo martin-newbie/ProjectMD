@@ -14,4 +14,5 @@ public class ProjectileBullet : ProjectileBehaviour
         transform.rotation = Quaternion.Euler(0, rotY, 0);
         transform.position = Vector3.Lerp(start, end, t);
     }
+
 }

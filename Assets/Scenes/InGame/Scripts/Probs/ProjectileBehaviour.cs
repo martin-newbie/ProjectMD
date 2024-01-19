@@ -16,6 +16,11 @@ public abstract class ProjectileBehaviour
         transform = subject.transform;
     }
 
+    public virtual void OnEnd(Vector3 endPos)
+    {
+        InGamePrefabsManager.PlayCommonHit(endPos);
+    }
+
     public abstract void ProjectileAction(Vector3 start, Vector3 end, float t);
 
 }

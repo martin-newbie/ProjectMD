@@ -21,4 +21,15 @@ public class InGamePrefabsManager : MonoBehaviour
     {
         return Instance.prefabDic[key];
     }
+
+    public static void PlayCommonHit(Vector3 pos)
+    {
+        string key = "hit_effect";
+        var obj = Instantiate(GetObject(key));
+        var anim = obj.GetComponent<Animator>();
+
+        obj.transform.position = pos;
+        anim.SetTrigger("trigger");
+        Destroy(obj, 0.18f);
+    }
 }
