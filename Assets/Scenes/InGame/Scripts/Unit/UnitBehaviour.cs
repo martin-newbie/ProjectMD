@@ -276,8 +276,8 @@ public abstract class UnitBehaviour
             return;
         }
 
-        var randPos = new Vector3(0, Random.Range(-0.25f, 0.25f));
-        var startPos = GetBoneWorldPos(key) + randPos;
+        var randPos = new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.25f, 0.25f));
+        var startPos = GetBoneWorldPos(key);
         var targetPos = target.GetBoneWorldPos("body") + randPos;
 
         var bullet = Instantiate(probBullet, startPos, Quaternion.identity);

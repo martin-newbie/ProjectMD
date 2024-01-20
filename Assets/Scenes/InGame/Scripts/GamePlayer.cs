@@ -114,14 +114,14 @@ public abstract class GamePlayer
                 }
             }
         }
-
+/*
         InGameManager.Instance.StartCoroutine(disappearObject(removedUnit));
 
         IEnumerator disappearObject(UnitBehaviour unit)
         {
             yield return new WaitForSeconds(2f);
             unit.gameObject.SetActive(false);
-        }
+        }*/
     }
 
     public virtual void SetUnitsState(BehaviourState state)
