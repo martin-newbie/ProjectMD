@@ -64,7 +64,8 @@ public class Asis : ActiveSkillBehaviour
     public override IEnumerator ActiveSkill(DamageStruct skillData)
     {
         var target = GetNearestOpponent();
-        Instantiate(skillEffect, GetBoneWorldPos("bullet_pos"), Quaternion.Euler(0, 0, 90 * GetTargetDir(target) * -1)).StartMuzzle(this, skillData, GetOpponentGroup());
+        int atkDir = GetTargetDir(target);
+        Instantiate(skillEffect, new Vector3(atkDir * 1f, 0.8f, 0), Quaternion.Euler(0, 0, 90 * atkDir * -1)).StartMuzzle(this, skillData, GetOpponentGroup());
         yield return PlayAnimAndWait("active_skill");
         AddBuff(StatusType.DEF, 0, 20);
         yield return PlayAnimAndWait("battle_reload");

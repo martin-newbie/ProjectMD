@@ -88,6 +88,9 @@ public class InGameManager : MonoBehaviour
             case 4:
                 behaviour = new Luria(unitObj);
                 break;
+            case 6:
+                behaviour = new Picardy(unitObj);
+                break;
             case 17:
                 behaviour = new Fei(unitObj);
                 break;
