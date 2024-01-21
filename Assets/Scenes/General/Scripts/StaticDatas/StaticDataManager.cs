@@ -22,6 +22,12 @@ public class StaticDataManager : MonoBehaviour
         return Instance.constUnitStatus.dataList[keyIndex];
     }
 
+    public StaticUnitSkillStatus unitSkillStatus;
+    public static UnitSkillStatus GetUnitSkillStatus(int keyIndex)
+    {
+        return Instance.unitSkillStatus.dataList[keyIndex];
+    }
+
     private void Start()
     {
         var staticDatas = new SheetDataBase[]

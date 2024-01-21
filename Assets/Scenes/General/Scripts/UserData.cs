@@ -55,6 +55,8 @@ public class UnitData
     public int level;
     public float exp;
     public string user_uuid;
+
+    public int[] skill_level;
 }
 
 [System.Serializable]

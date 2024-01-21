@@ -88,6 +88,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitStatus: {fileID: 11400000, guid: 9b1d656d0a4dab44d9dbc92974368cf1, type: 2}
   constUnitStatus: {fileID: 11400000, guid: 55cd90e2c6c79604db644a9bc1e750dd, type: 2}
+  unitSkillStatus: {fileID: 11400000, guid: bc841376608aaab44b11e63efcc4d6ca, type: 2}
 --- !u!1 &7297942923472383156
 GameObject:
   m_ObjectHideFlags: 0
