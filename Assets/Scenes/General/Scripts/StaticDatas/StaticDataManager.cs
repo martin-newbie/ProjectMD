@@ -34,6 +34,7 @@ public class StaticDataManager : MonoBehaviour
         {
             unitStatus,
             constUnitStatus,
+            unitSkillStatus,
         };
 
         foreach (var item in staticDatas)

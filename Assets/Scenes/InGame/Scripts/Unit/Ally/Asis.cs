@@ -54,13 +54,14 @@ public class Asis : ActiveSkillBehaviour
 
     }
 
-    public override IEnumerator ActiveSkill(DamageStruct skillData)
+    public override DamageStruct GetDefaultSkillValue()
     {
-        yield return StartActionCoroutine(ActiveSkillAction(skillData));
-        yield break;
+        var value = base.GetDefaultSkillValue();
+        value.AddIncreaseValue(StatusType.DMG, skillStatus.GetActiveSkillValue(1));
+        return value;
     }
 
-    IEnumerator ActiveSkillAction(DamageStruct skillData)
+    public override IEnumerator ActiveSkill(DamageStruct skillData)
     {
         var target = GetNearestOpponent();
         Instantiate(skillEffect, GetBoneWorldPos("bullet_pos"), Quaternion.Euler(0, 0, 90 * GetTargetDir(target) * -1)).StartMuzzle(this, skillData, GetOpponentGroup());

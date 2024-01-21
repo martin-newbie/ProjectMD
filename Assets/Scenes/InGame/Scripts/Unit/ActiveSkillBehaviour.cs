@@ -5,11 +5,12 @@ using UnityEngine;
 public abstract class ActiveSkillBehaviour : UnitBehaviour
 {
     public AttributeType skillType;
+    public UnitSkillStatus skillStatus;
     public int cost;
 
     protected ActiveSkillBehaviour(UnitObject _subject) : base(_subject)
     {
-        // get active skill value
+        skillStatus = StaticDataManager.GetUnitSkillStatus(keyIndex);
     }
 
     public virtual void UseActiveSkill(DamageStruct skillData)
@@ -19,7 +20,7 @@ public abstract class ActiveSkillBehaviour : UnitBehaviour
 
     public virtual DamageStruct GetDefaultSkillValue()
     {
-        DamageStruct result = new DamageStruct();
+        DamageStruct result = GetDamageStruct();
         return result;
     }
 

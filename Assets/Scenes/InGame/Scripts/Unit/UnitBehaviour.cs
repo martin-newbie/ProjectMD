@@ -294,6 +294,8 @@ public abstract class UnitBehaviour
         StartCoroutine(buff());
         IEnumerator buff()
         {
+            if (!buffList.ContainsKey(type)) buffList.Add(type, 0f);
+
             buffList[type] += value;
             yield return new WaitForSeconds(time);
             buffList[type] -= value;

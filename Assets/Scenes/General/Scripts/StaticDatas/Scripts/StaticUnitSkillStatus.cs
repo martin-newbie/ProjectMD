@@ -67,4 +67,9 @@ public class UnitSkillStatus
         sub_max = float.Parse(data[idx++]);
         sub_assist = float.Parse(data[idx++]);
     }
+
+    public float GetActiveSkillValue(int skillLevel)
+    {
+        return ((active_max - active_min) / 5 * skillLevel + active_min) * 0.01f;
+    }
 }
