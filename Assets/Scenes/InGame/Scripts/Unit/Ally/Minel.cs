@@ -13,12 +13,12 @@ public class Minel : ActiveSkillBehaviour
         yield return StartCoroutine(CommonBurstFire(3));
     }
 
-    public override IEnumerator ActiveSkill(ActiveSkillValue skillData)
+    public override IEnumerator ActiveSkill(DamageStruct skillData)
     {
         yield break;
     }
 
-    public override void CollabseSkill(ActiveSkillValue skillData, UnitBehaviour subjectUnit)
+    public override void CollabseBuff(DamageStruct skillData, UnitBehaviour subjectUnit)
     {
     }
 

@@ -30,10 +30,10 @@ public class TestGameMode : IGameModeBehaviour
         for (int i = 0; i < 4; i++)
         {
             enemyData[i] = new DeckData();
-            enemyData[i].unitsIdx = new int[4] { 0, 0, 0, 0 };
+            enemyData[i].unitsIdx = new int[3] { 0, 0, 0 };
 
-            enemyPos[i] = new Vector3[4];
-            for (int j = 0; j < 4; j++)
+            enemyPos[i] = new Vector3[3];
+            for (int j = 0; j < 3; j++)
             {
                 enemyPos[i][j] = new Vector3(2 + (1.5f * j) + 10, 0, 0);
             }

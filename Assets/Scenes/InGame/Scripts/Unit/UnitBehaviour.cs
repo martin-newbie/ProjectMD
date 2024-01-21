@@ -131,16 +131,17 @@ public abstract class UnitBehaviour
         }
     }
 
-    protected virtual void StartActionCoroutine(IEnumerator routine)
+    public virtual Coroutine StartActionCoroutine(IEnumerator routine)
     {
         isAction = true;
 
         if (actionCoroutine != null) StopCoroutine(actionCoroutine);
         actionCoroutine = StartCoroutine(action());
+        return actionCoroutine;
 
         IEnumerator action()
         {
-            state = BehaviourState.NOTHING;
+            state = BehaviourState.ACTING;
             yield return StartCoroutine(routine);
             state = BehaviourState.INCOMBAT;
         }
@@ -288,6 +289,26 @@ public abstract class UnitBehaviour
     {
         retireAction = _retireAction;
     }
+    public virtual void AddBuff(StatusType type, float value, float time)
+    {
+        StartCoroutine(buff());
+        IEnumerator buff()
+        {
+            buffList[type] += value;
+            yield return new WaitForSeconds(time);
+            buffList[type] -= value;
+        }
+    }
+    public virtual void AddDebuff(StatusType type, float value, float time)
+    {
+        StartCoroutine(debuff());
+        IEnumerator debuff()
+        {
+            debuffList[type] += value;
+            yield return new WaitForSeconds(time);
+            debuffList[type] -= value;
+        }
+    }
     public virtual void OnDamage(DamageStruct value, UnitBehaviour from)
     {
 
@@ -368,11 +389,9 @@ public abstract class UnitBehaviour
         switch (state)
         {
             case BehaviourState.STANDBY:
-                // just play idle animation
                 PlayAnim("battle_wait", true);
                 break;
             case BehaviourState.RETREAT:
-                // return to start pos
                 PlayAnim("battle_move", true);
                 break;
         }

@@ -12,53 +12,18 @@ public abstract class ActiveSkillBehaviour : UnitBehaviour
         // get active skill value
     }
 
-    public virtual void UseActiveSkill(ActiveSkillValue skillData)
+    public virtual void UseActiveSkill(DamageStruct skillData)
     {
         StartActionCoroutine(ActiveSkill(skillData));
     }
 
-    public virtual ActiveSkillValue GetDefaultSkillValue()
+    public virtual DamageStruct GetDefaultSkillValue()
     {
-        ActiveSkillValue result = new ActiveSkillValue();
+        DamageStruct result = new DamageStruct();
         return result;
     }
 
-    public abstract void CollabseSkill(ActiveSkillValue skillData, UnitBehaviour subjectUnit);
-    public abstract IEnumerator ActiveSkill(ActiveSkillValue skillData);
+    public abstract void CollabseBuff(DamageStruct skillData, UnitBehaviour subjectUnit);
+    public abstract IEnumerator ActiveSkill(DamageStruct skillData);
     public abstract bool ActiveSkillCondition();
-}
-
-
-public class ActiveSkillValue
-{
-    public Dictionary<StatusType, float> valueDic = new Dictionary<StatusType, float>();
-
-    public ActiveSkillValue()
-    {
-        valueDic = new Dictionary<StatusType, float>();
-    }
-
-    public void AddValue(StatusType type, float value)
-    {
-        if (valueDic.ContainsKey(type))
-        {
-            valueDic[type] += value;
-        }
-        else
-        {
-            valueDic.Add(type, value);
-        }
-    }
-
-    public float GetAttribute(StatusType type)
-    {
-        if (valueDic.ContainsKey(type))
-        {
-            return valueDic[type];
-        }
-        else
-        {
-            return 0f;
-        }
-    }
 }

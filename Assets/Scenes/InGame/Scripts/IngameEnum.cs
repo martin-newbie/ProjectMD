@@ -2,7 +2,7 @@
 
 public enum BehaviourState
 {
-    NOTHING,
+    ACTING,
     INCOMBAT,
     STANDBY,
     RETREAT,

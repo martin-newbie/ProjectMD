@@ -13,6 +13,13 @@ public struct DamageStruct
 
     public float GetValue(StatusType type)
     {
-        return damageValues[type];
+        if (damageValues.ContainsKey(type))
+        {
+            return damageValues[type];
+        }
+        else
+        {
+            return 0f;
+        }
     }
 }

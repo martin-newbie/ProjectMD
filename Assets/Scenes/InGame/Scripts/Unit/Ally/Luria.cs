@@ -8,7 +8,7 @@ public class Luria : ActiveSkillBehaviour
     {
     }
 
-    public override IEnumerator ActiveSkill(ActiveSkillValue skillData)
+    public override IEnumerator ActiveSkill(DamageStruct skillData)
     {
         yield break;
     }
@@ -18,7 +18,7 @@ public class Luria : ActiveSkillBehaviour
         return false;
     }
 
-    public override void CollabseSkill(ActiveSkillValue skillData, UnitBehaviour subjectUnit)
+    public override void CollabseBuff(DamageStruct skillData, UnitBehaviour subjectUnit)
     {
     }
 

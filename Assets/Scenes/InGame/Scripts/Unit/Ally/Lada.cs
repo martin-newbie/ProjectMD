@@ -12,7 +12,7 @@ public class Lada : ActiveSkillBehaviour
         muzzleEffect = InGamePrefabsManager.GetObject("ShotGunMuzzle");
     }
 
-    public override IEnumerator ActiveSkill(ActiveSkillValue skillData)
+    public override IEnumerator ActiveSkill(DamageStruct skillData)
     {
         yield break;
     }
@@ -22,7 +22,7 @@ public class Lada : ActiveSkillBehaviour
         return false;
     }
 
-    public override void CollabseSkill(ActiveSkillValue skillData, UnitBehaviour subjectUnit)
+    public override void CollabseBuff(DamageStruct skillData, UnitBehaviour subjectUnit)
     {
     }
 

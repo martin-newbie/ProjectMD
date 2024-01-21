@@ -20,8 +20,8 @@ public abstract class GamePlayer
 
     public float cost;
 
-    float skillDelay = 8f;
-    float curDelay;
+    protected float skillDelay = 8f;
+    protected float curDelay;
 
     public GamePlayer(DeckData[] _unitIdx, Vector3[][] _posArr, UnitGroupType _group)
     {
@@ -114,14 +114,6 @@ public abstract class GamePlayer
                 }
             }
         }
-/*
-        InGameManager.Instance.StartCoroutine(disappearObject(removedUnit));
-
-        IEnumerator disappearObject(UnitBehaviour unit)
-        {
-            yield return new WaitForSeconds(2f);
-            unit.gameObject.SetActive(false);
-        }*/
     }
 
     public virtual void SetUnitsState(BehaviourState state)
@@ -223,7 +215,7 @@ public abstract class GamePlayer
         var skillValue = skillDeck[idx].GetDefaultSkillValue();
         foreach (var skill in collabse)
         {
-            skill.CollabseSkill(skillValue, skillDeck[idx]);
+            skill.CollabseBuff(skillValue, skillDeck[idx]);
         }
         skillDeck[idx].UseActiveSkill(skillValue);
 

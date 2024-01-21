@@ -15,6 +15,8 @@ public class PlayableGamePlayer : GamePlayer
         skillCanvas = _skillCanvas;
         userLevel = _userLevel;
         Instance = this;
+
+        skillDelay = 1f;
     }
 
     protected override void CostRecoveryLogic()
