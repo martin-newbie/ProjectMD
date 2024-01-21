@@ -179,6 +179,11 @@ public abstract class GamePlayer
 
     public virtual void UseSkill(int idx)
     {
+        if(cost < skillDeck[idx].cost)
+        {
+            return;
+        }
+
         int collabseCount = 0;
         int left = idx - 1;
         int right = idx + 1;
@@ -218,7 +223,7 @@ public abstract class GamePlayer
             skill.CollabseBuff(skillValue, skillDeck[idx]);
         }
         skillDeck[idx].UseActiveSkill(skillValue);
-
+        cost -= skillDeck[idx].cost;
 
         // remove collabse skills
         if (collabseCount > 0)

@@ -7,7 +7,7 @@ public class StaticUnitSkillStatus : SheetDataBase
 {
     protected override string gid => "1734931170";
 
-    protected override string range => "D4:Q29";
+    protected override string range => "D4:R29";
 
     public List<UnitSkillStatus> dataList;
 
@@ -27,6 +27,7 @@ public class StaticUnitSkillStatus : SheetDataBase
 public class UnitSkillStatus
 {
     public int unitIndex;
+    public int cost;
 
     public float active_min;
     public float active_max;
@@ -50,6 +51,8 @@ public class UnitSkillStatus
         int idx = 0;
 
         unitIndex = int.Parse(data[idx++]);
+        cost = int.Parse(data[idx++]);
+
         active_min = float.Parse(data[idx++]);
         active_max = float.Parse(data[idx++]);
         active_assist_1 = float.Parse(data[idx++]);

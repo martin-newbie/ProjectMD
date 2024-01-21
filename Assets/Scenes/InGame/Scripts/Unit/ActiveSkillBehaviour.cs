@@ -10,7 +10,13 @@ public abstract class ActiveSkillBehaviour : UnitBehaviour
 
     protected ActiveSkillBehaviour(UnitObject _subject) : base(_subject)
     {
+    }
+
+    public override void InitCommon(int idx, int level, int barType)
+    {
+        base.InitCommon(idx, level, barType);
         skillStatus = StaticDataManager.GetUnitSkillStatus(keyIndex);
+        cost = skillStatus.cost;
     }
 
     public virtual void UseActiveSkill(DamageStruct skillData)

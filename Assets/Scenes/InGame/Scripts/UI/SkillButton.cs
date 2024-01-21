@@ -7,6 +7,7 @@ public class SkillButton : MonoBehaviour
 {
     [SerializeField] Image collabseImage;
     [SerializeField] Image profileImage;
+    [SerializeField] Text costText;
     [SerializeField] GameObject disabledImg;
     [HideInInspector] public RectTransform rect;
     
@@ -27,6 +28,7 @@ public class SkillButton : MonoBehaviour
         if (linkedData == null) return;
 
         disabledImg.SetActive(!linkedData.ActiveSkillCondition());
+        costText.text = linkedData.cost.ToString();
     }
 
     public void ClearButton()

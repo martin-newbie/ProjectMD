@@ -506,6 +506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collabseImage: {fileID: 4715846205687628799}
   profileImage: {fileID: 3763419980100863682}
+  costText: {fileID: 1790771482093192058}
   disabledImg: {fileID: 1626078992407617570}
   rect: {fileID: 0}
 --- !u!1 &9142595661060521028
