@@ -15,35 +15,10 @@ public class UserData
     public int coin;
 
     public List<UnitData> units;
-    public DeckData[] decks;
 
     public UserData()
     {
         Instance = this;
-
-        decks = new DeckData[4];
-        for (int i = 0; i < decks.Length; i++)
-        {
-            decks[i] = new DeckData();
-        }
-    }
-
-    public void SetDeckUnitAt(int[] units, int show)
-    {
-        decks[show].unitsIdx = units;
-    }
-
-    public bool AlreadySelected(int unitId)
-    {
-        for (int i = 0; i < decks.Length; i++)
-        {
-            var deck = decks[i].unitsIdx;
-            if (deck.Contains(unitId))
-            {
-                return true;
-            }
-        }
-        return false;
     }
 }
 
@@ -62,10 +37,9 @@ public class UnitData
 [System.Serializable]
 public class DeckData
 {
-    public int[] unitsIdx;
+    public int id;
+    public int deck_index;
+    public string user_uuid;
 
-    public DeckData()
-    {
-        unitsIdx = new int[0];
-    }
+    public int[] unit_indexes;
 }

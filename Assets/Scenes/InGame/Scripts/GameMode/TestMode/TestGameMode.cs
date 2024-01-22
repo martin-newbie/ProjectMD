@@ -30,7 +30,7 @@ public class TestGameMode : IGameModeBehaviour
         for (int i = 0; i < 4; i++)
         {
             enemyData[i] = new DeckData();
-            enemyData[i].unitsIdx = new int[3] { 0, 0, 0 };
+            enemyData[i].unit_indexes = new int[3] { 0, 0, 0 };
 
             enemyPos[i] = new Vector3[3];
             for (int j = 0; j < 3; j++)
@@ -38,11 +38,6 @@ public class TestGameMode : IGameModeBehaviour
                 enemyPos[i][j] = new Vector3(2 + (1.5f * j) + 10, 0, 0);
             }
         }
-
-        int tempStageLevel = UserData.Instance.level;
-        player = new PlayableGamePlayer(UserData.Instance.decks, userPoses, UnitGroupType.ALLY, manager.skillCanvas, UserData.Instance.level);
-        enemyPlayer = new TestEnemyGamePlayer(enemyData, enemyPos, UnitGroupType.HOSTILE, tempStageLevel);
-        player.ShowUnits(0);
     }
 
     public IEnumerator GameModeRoutine()

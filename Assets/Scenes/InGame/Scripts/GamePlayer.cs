@@ -28,20 +28,6 @@ public abstract class GamePlayer
         group = _group;
         unitIdx = _unitIdx;
         posArr = _posArr;
-
-        for (int i = 0; i < unitIdx.Length; i++)
-        {
-            allUnits.Add(new List<UnitBehaviour>());
-            var units = unitIdx[i];
-            for (int j = 0; j < units.unitsIdx.Length; j++)
-            {
-                var unit = SpawnUnit(units.unitsIdx[j], posArr[i][j]);
-                unit.InjectDeadEvent(() => { RemoveActiveUnit(unit); });
-                unit.DeactiveUnit();
-                unit.gameObject.SetActive(false);
-                allUnits[i].Add(unit);
-            }
-        }
     }
 
     public virtual void ShowUnits(int show)

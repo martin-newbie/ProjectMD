@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,15 +13,18 @@ public class LoadoutManager : MonoBehaviour
         Instance = this;
     }
 
+    public bool isInit = false;
+
     int[] deckIdxArr;
-    int showIdx;
+    int showDeckIdx;
     int curDragIdx = -1;
 
     [SerializeField] List<LoadoutInfoUI> infoButtons;
     [SerializeField] List<Button> deckSelectButtons;
     [SerializeField] LoadoutSelectPanel selectPanel;
+    DeckData[] decks;
 
-    IEnumerator Start()
+    void Start()
     {
         for (int i = 0; i < infoButtons.Count; i++)
         {
@@ -38,8 +42,13 @@ public class LoadoutManager : MonoBehaviour
         selectPanel.InitPanel();
         deckIdxArr = new int[0];
 
-        yield return null;
-        UpdateDeck(0);
+        WebRequest.Post("loadout/test-deck-enter", UserData.Instance.uuid, (data) =>
+        {
+            var result = JsonUtility.FromJson<RecieveDeckData>(data);
+            decks = result.decks;
+            isInit = true;
+            UpdateDeck(0);
+        });
     }
 
     private void Update()
@@ -91,42 +100,74 @@ public class LoadoutManager : MonoBehaviour
             var temp = deckIdxArr[curDragIdx];
             deckIdxArr[prev.btnIdx] = deckIdxArr[last.btnIdx];
             deckIdxArr[last.btnIdx] = temp;
-            UserData.Instance.SetDeckUnitAt(deckIdxArr, showIdx);
         }
 
-        UpdateDeck(showIdx);
+        UpdateDeck(showDeckIdx);
         curDragIdx = -1;
     }
 
     public void SelectDeck(int i)
     {
-        showIdx = i;
-        UpdateDeck(showIdx);
+        showDeckIdx = i;
+        UpdateDeck(showDeckIdx);
+    }
+
+    public void SetDeck(int[] indexes, int deckIdx)
+    {
+        var sendData = new SendDeckData();
+        sendData.id = decks[deckIdx].id;
+        sendData.user_uuid = decks[deckIdx].user_uuid;
+        sendData.deck_index = deckIdx;
+        sendData.unit1 = indexes[0];
+        sendData.unit2 = indexes[1];
+        sendData.unit3 = indexes[2];
+        sendData.unit4 = indexes[3];
+        sendData.unit5 = indexes[4];
+        var sendJson = JsonUtility.ToJson(sendData);
+        WebRequest.Post("loadout/test-deck-save", sendJson, (data) =>
+        {
+            decks[deckIdx].unit_indexes = indexes;
+            UpdateDeck(deckIdx);
+        });
     }
 
     public void UpdateDeck(int deckIdx)
     {
-        deckIdxArr = UserData.Instance.decks[deckIdx].unitsIdx;
+        deckIdxArr = decks[deckIdx].unit_indexes;
         for (int i = 0; i < infoButtons.Count; i++)
         {
-            if (i < deckIdxArr.Length)
-            {
-                int charIdx = deckIdxArr[i];
-                var info = UserData.Instance.units.Find((item) => item.index == charIdx);
-                infoButtons[i].InitInfo(info);
-            }
-            else
+            int id = deckIdxArr[i];
+            if (id < 0)
             {
                 infoButtons[i].InitInfo(null);
+                continue;
             }
 
+            var info = UserData.Instance.units.Find((item) => item.id == id);
+            infoButtons[i].InitInfo(info);
             infoButtons[i].SetModelDefaultPos();
         }
     }
 
+    public bool AlreadySelected(int unitIndex, int deckIndex)
+    {
+        bool result = false;
+        for (int i = 0; i < decks.Length; i++)
+        {
+            if (deckIndex == i) continue;
+
+            if (decks[i].unit_indexes.Contains(unitIndex))
+            {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
     public void OpenSelectPanel()
     {
-        selectPanel.OpenPanel(deckIdxArr, showIdx);
+        selectPanel.OpenPanel(deckIdxArr, showDeckIdx);
     }
 
     public void OnGameStart()
@@ -134,4 +175,25 @@ public class LoadoutManager : MonoBehaviour
         if (deckIdxArr.Length <= 0) return;
         SceneManager.LoadScene("InGame");
     }
+
+    public void Back()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+}
+
+[System.Serializable]
+public class SendDeckData : DeckData
+{
+    public int unit1;
+    public int unit2;
+    public int unit3;
+    public int unit4;
+    public int unit5;
+}
+
+[System.Serializable]
+public class RecieveDeckData
+{
+    public DeckData[] decks;
 }

@@ -10,7 +10,7 @@ public class LoadoutSelectPanel : MonoBehaviour
     List<LoadoutSelectButton> buttons = new List<LoadoutSelectButton>();
     [HideInInspector] public List<int> curSelected;
 
-    int deckIdx;
+    public int deckIdx;
     List<UnitData> marshaledDataList = new List<UnitData>();
 
     public void InitPanel()
@@ -28,7 +28,14 @@ public class LoadoutSelectPanel : MonoBehaviour
     public void OpenPanel(int[] selected, int deck)
     {
         gameObject.SetActive(true);
-        curSelected = new List<int>(selected);
+        curSelected = new List<int>();
+        foreach (var item in selected)
+        {
+            if (item >= 0)
+            {
+                curSelected.Add(item);
+            }
+        }
         deckIdx = deck;
 
         marshaledDataList = SortUnitData(UserData.Instance.units.ToList());
@@ -70,7 +77,7 @@ public class LoadoutSelectPanel : MonoBehaviour
                 unitDatas.Remove(item);
                 unitDatas.Insert(0, item);
             }
-            else if (UserData.Instance.AlreadySelected(item.index))
+            else if (LoadoutManager.Instance.AlreadySelected(item.id, deckIdx))
             {
                 unitDatas.Remove(item);
                 unitDatas.Add(item);
@@ -82,7 +89,20 @@ public class LoadoutSelectPanel : MonoBehaviour
 
     public void OnConfirmButton()
     {
-        UserData.Instance.SetDeckUnitAt(curSelected.ToArray(), deckIdx);
+        var resultArray = new int[5];
+        for (int i = 0; i < 5; i++)
+        {
+            if (i < curSelected.Count)
+            {
+                resultArray[i] = curSelected[i];
+            }
+            else
+            {
+                resultArray[i] = -1;
+            }
+        }
+
+        LoadoutManager.Instance.SetDeck(resultArray, deckIdx);
         LoadoutManager.Instance.UpdateDeck(deckIdx);
         gameObject.SetActive(false);
     }

@@ -35,20 +35,19 @@ public class WebRequest : MonoBehaviour
         Instance.requestQueue.Enqueue(request);
     }
 
-    public static void Post(string url, string json, Action<string> endAction = null)
+    public static void Post(string url, string data, Action<string> endAction = null)
     {
         var request = new WebRequestData();
         var form = new WWWForm();
 
         // add id in form
-        form.AddField("input_data", json);
+        form.AddField("input_data", data);
 
         request.sendUrl = url;
         request.form = form;
         request.endAction = endAction;
         request.request = (url, form) => { return UnityWebRequest.Post(url, form); };
 
-        Debug.Log(url);
         Instance.requestQueue.Enqueue(request);
     }
 
@@ -63,6 +62,7 @@ public class WebRequest : MonoBehaviour
             var queue = requestQueue.Dequeue();
             using (UnityWebRequest request = queue.request(GetSendUri() + queue.sendUrl, queue.form))
             {
+                Debug.Log(request.url);
                 yield return request.SendWebRequest();
                 if (request.isNetworkError || request.isHttpError)
                 {
