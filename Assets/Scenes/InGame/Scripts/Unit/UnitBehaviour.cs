@@ -231,7 +231,8 @@ public abstract class UnitBehaviour
 
     protected virtual IEnumerator Reload()
     {
-        yield return PlayAnimAndWait("battle_reload");
+        // add reload time
+        yield return PlayAnimAndWait("battle_reload", false);
         curAmmo = maxAmmo;
     }
 
@@ -248,14 +249,14 @@ public abstract class UnitBehaviour
         yield return new WaitForSeconds(GetStatus(StatusType.ATK_DELAY));
     }
 
-    protected virtual IEnumerator CommonBurstFire(int count, float delay = 0.15f)
+    protected virtual IEnumerator CommonBurstFire(int count)
     {
         for (int i = 0; i < count; i++)
         {
             var target = GetNearestOpponent();
             ShootBullet(target);
-            PlayAnim("battle_attack");
-            yield return new WaitForSeconds(delay);
+            float delay = GetStatus(StatusType.RPM);
+            yield return PlayAnimAndWait("battle_attack", false, delay);
         }
     }
 
@@ -340,7 +341,7 @@ public abstract class UnitBehaviour
         }
 
         float hitRate = (700 / ((GetStatus(StatusType.DODGE) - value.GetValue(StatusType.ACCURACY)) + 700));
-        if(hitRate < randomRate())
+        if (hitRate < randomRate())
         {
             resist = ResistType.MISS;
         }
@@ -414,11 +415,22 @@ public abstract class UnitBehaviour
         if (dir == -1)
             model.transform.rotation = Quaternion.Euler(0, 180, 0);
     }
-    protected WaitForSeconds PlayAnimAndWait(string key, bool loop = false)
+    protected WaitForSeconds PlayAnimAndWait(string key, bool loop = false, float duration = -1f)
     {
         PlayAnim(key, loop);
         var anim = model.Skeleton.Data.FindAnimation(key);
-        return new WaitForSeconds(anim.Duration);
+
+        if (duration <= 0f)
+        {
+            model.timeScale = 1f;
+            return new WaitForSeconds(anim.Duration);
+        }
+        else
+        {
+            float timeScale = anim.Duration / duration;
+            model.timeScale = timeScale;
+            return new WaitForSeconds(duration);
+        }
     }
     public TrackEntry PlayAnim(string key, bool loop = false)
     {
