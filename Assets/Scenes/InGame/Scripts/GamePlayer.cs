@@ -7,14 +7,11 @@ public abstract class GamePlayer
     public bool isGameActive = false;
 
     public List<UnitBehaviour> curUnits = new List<UnitBehaviour>();
-    public List<List<UnitBehaviour>> allUnits = new List<List<UnitBehaviour>>();
     protected UnitGroupType group;
 
     // about skill
     List<ActiveSkillBehaviour> skillUnits = new List<ActiveSkillBehaviour>();
     List<ActiveSkillBehaviour> skillDeck = new List<ActiveSkillBehaviour>();
-    DeckData[] unitIdx;
-    Vector3[][] posArr;
 
     public int curShow;
 
@@ -23,59 +20,16 @@ public abstract class GamePlayer
     protected float skillDelay = 8f;
     protected float curDelay;
 
-    public GamePlayer(DeckData[] _unitIdx, Vector3[][] _posArr, UnitGroupType _group)
+    public GamePlayer(UnitGroupType _group)
     {
         group = _group;
-        unitIdx = _unitIdx;
-        posArr = _posArr;
-    }
-
-    public virtual void ShowUnits(int show)
-    {
-        if (curShow != show)
-        {
-            var prevListUnit = allUnits[curShow];
-            for (int i = 0; i < prevListUnit.Count; i++)
-            {
-                var unit = prevListUnit[i];
-                if (unit.state != BehaviourState.RETIRE)
-                    RemoveActiveUnit(unit);
-            }
-        }
-        curShow = show;
-        var listUnit = allUnits[curShow];
-
-
-        var posArr = this.posArr[curShow];
-        for (int i = 0; i < listUnit.Count; i++)
-        {
-            var unit = listUnit[i];
-            unit.transform.position = posArr[i];
-            AddActiveUnit(unit);
-        }
-    }
-
-    protected virtual void ClearUnits()
-    {
-        foreach (var unit in curUnits)
-        {
-            InGameManager.Instance.allUnits.Remove(unit);
-        }
-        curUnits.Clear();
-        skillUnits.Clear();
-        skillDeck.Clear();
     }
 
     public virtual void AddActiveUnit(UnitBehaviour addedUnit)
     {
-        if (addedUnit.state == BehaviourState.RETIRE)
-        {
-            return;
-        }
-
-        addedUnit.ActiveUnit();
         curUnits.Add(addedUnit);
         InGameManager.Instance.allUnits.Add(addedUnit);
+
         if (addedUnit is ActiveSkillBehaviour)
         {
             skillUnits.Add(addedUnit as ActiveSkillBehaviour);
@@ -84,7 +38,6 @@ public abstract class GamePlayer
 
     public virtual void RemoveActiveUnit(UnitBehaviour removedUnit)
     {
-        removedUnit.DeactiveUnit();
         curUnits.Remove(removedUnit);
         InGameManager.Instance.allUnits.Remove(removedUnit);
 
@@ -110,25 +63,18 @@ public abstract class GamePlayer
         }
     }
 
-    public virtual int GetCountOfUnits()
-    {
-        return curUnits.Count;
-    }
-
     protected virtual void RemoveCharacterSkillAt(int idx)
     {
         skillDeck.RemoveAt(idx);
     }
 
-    public void AllUnitsMoveFront()
+    public void AllUnitsPlayAnim(string key, bool loop = false)
     {
         foreach (var item in curUnits)
         {
-            item.PlayAnim("battle_move", true);
+            item.PlayAnim(key, loop);
         }
     }
-
-    protected abstract UnitBehaviour SpawnUnit(int unitIdx, Vector3 pos);
 
     public virtual void StartGame()
     {
@@ -257,15 +203,6 @@ public abstract class GamePlayer
     protected virtual void RemoveSkillAt(int idx)
     {
         skillDeck.RemoveAt(idx);
-    }
-
-    public virtual void ReturnOriginPos()
-    {
-        for (int i = 0; i < curUnits.Count; i++)
-        {
-            var unit = curUnits[i];
-            InGameManager.Instance.StartCoroutine(unit.CommonMoveToPosEndWait(posArr[curShow][i]));
-        }
     }
 
     public virtual void OnEnd()

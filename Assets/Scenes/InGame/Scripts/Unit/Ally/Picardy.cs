@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Picardy : ActiveSkillBehaviour
 {
-    public Picardy(UnitObject _subject) : base(_subject)
+    public Picardy(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
     }
 

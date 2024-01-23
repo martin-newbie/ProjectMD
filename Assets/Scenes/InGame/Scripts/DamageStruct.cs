@@ -13,6 +13,18 @@ public struct DamageStruct
         increaseValues = new Dictionary<StatusType, float>();
     }
 
+    public void SetValue(StatusType type, float value)
+    {
+        if (!defaultValues.ContainsKey(type))
+        {
+            defaultValues.Add(type, value);
+        }
+        else
+        {
+            defaultValues[type] = value;
+        }
+    }
+
     public void AddDefaultValue(StatusType type, float value)
     {
         if (!defaultValues.ContainsKey(type))

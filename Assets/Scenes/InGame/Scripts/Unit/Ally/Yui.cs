@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Yui : ActiveSkillBehaviour
 {
-    public Yui(UnitObject _subject) : base(_subject)
+    public Yui(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
     }
 

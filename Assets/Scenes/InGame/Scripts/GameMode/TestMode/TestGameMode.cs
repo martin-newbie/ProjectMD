@@ -47,7 +47,7 @@ public class TestGameMode : IGameModeBehaviour
         player.StartGame();
         enemyPlayer.StartGame();
 
-        player.AllUnitsMoveFront();
+        player.AllUnitsPlayAnim();
         enemyPlayer.ShowUnits(wave);
 
         InGameManager.Instance.MapScrollFor(10f / 2.5f, 2.5f);

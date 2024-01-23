@@ -8,14 +8,9 @@ public abstract class ActiveSkillBehaviour : UnitBehaviour
     public UnitSkillStatus skillStatus;
     public int cost;
 
-    protected ActiveSkillBehaviour(UnitObject _subject) : base(_subject)
+    protected ActiveSkillBehaviour(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
-    }
-
-    public override void InitCommon(int idx, int level, int barType)
-    {
-        base.InitCommon(idx, level, barType);
-        skillStatus = StaticDataManager.GetUnitSkillStatus(keyIndex);
+        skillStatus = StaticDataManager.GetUnitSkillStatus(constData.keyIndex);
         cost = skillStatus.cost;
     }
 

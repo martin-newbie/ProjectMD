@@ -15,7 +15,7 @@ public class TestEnemyGamePlayer : GamePlayer
     {
         if (isMoveAni)
         {
-            AllUnitsMoveFront();
+            AllUnitsPlayAnim();
         }
 
         return InGameManager.Instance.StartCoroutine(UnitsMove());

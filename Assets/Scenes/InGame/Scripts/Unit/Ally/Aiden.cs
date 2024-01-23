@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Aiden : ActiveSkillBehaviour
 {
-    public Aiden(UnitObject _subject) : base(_subject)
+    public Aiden(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
     }
 

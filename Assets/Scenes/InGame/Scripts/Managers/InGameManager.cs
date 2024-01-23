@@ -55,10 +55,10 @@ public class InGameManager : MonoBehaviour
         }
     }
 
-    public UnitBehaviour SpawnUnit(Vector3 spawnPos, int idx, UnitGroupType group, int level, int barType)
+    public UnitBehaviour SpawnUnit(Vector3 spawnPos, UnitGroupType group, UnitData data, Dictionary<StatusType, float> status, int barType)
     {
         var unitObj = SpawnUnitObject(spawnPos);
-        var behaviour = SetBehaviourInObject(unitObj, idx, group, level, barType);
+        var behaviour = SetBehaviourInObject(unitObj, group, data, status, barType);
         return behaviour;
     }
 
@@ -67,48 +67,48 @@ public class InGameManager : MonoBehaviour
         return Instantiate(unitObjPrefab, spawnPos, Quaternion.identity);
     }
 
-    public UnitBehaviour SetBehaviourInObject(UnitObject unitObj, int idx, UnitGroupType group, int level, int barType)
+    public UnitBehaviour SetBehaviourInObject(UnitObject unitObj, UnitGroupType group, UnitData data, Dictionary<StatusType, float> status, int barType)
     {
         UnitBehaviour behaviour = null;
 
-        switch (idx)
+        switch (data.index)
         {
             case 0:
-                behaviour = new Seongah(unitObj);
+                behaviour = new Seongah(data, status);
                 break;
             case 1:
-                behaviour = new Minel(unitObj);
+                behaviour = new Minel(data, status);
                 break;
             case 2:
-                behaviour = new Asis(unitObj);
+                behaviour = new Asis(data, status);
                 break;
             case 3:
-                behaviour = new Ilena(unitObj);
+                behaviour = new Ilena(data, status);
                 break;
             case 4:
-                behaviour = new Luria(unitObj);
+                behaviour = new Luria(data, status);
                 break;
             case 6:
-                behaviour = new Picardy(unitObj);
+                behaviour = new Picardy(data, status);
                 break;
             case 17:
-                behaviour = new Fei(unitObj);
+                behaviour = new Fei(data, status);
                 break;
             case 18:
-                behaviour = new Lada(unitObj);
+                behaviour = new Lada(data, status);
                 break;
             case 22:
-                behaviour = new Yui(unitObj);
+                behaviour = new Yui(data, status);
                 break;
             case 24:
-                behaviour = new Nina(unitObj);
+                behaviour = new Nina(data, status);
                 break;
             case 25:
-                behaviour = new Aiden(unitObj);
+                behaviour = new Aiden(data, status);
                 break;
         }
 
-        unitObj.SetBehaviour(behaviour, idx, group, level, barType);
+        unitObj.SetBehaviour(behaviour, group, barType);
         return behaviour;
     }
 

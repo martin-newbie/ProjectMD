@@ -18,22 +18,18 @@ public abstract class UnitBehaviour
     public Bullet probBullet;
     #endregion
 
+    public UnitData unitData;
     public UnitStatus staticStatus;
     public ConstUnitData constData;
 
-    #region state
-    public float hp;
-    public int level;
-    public int keyIndex;
-    #endregion
-
     #region runningValue
+    public float hp;
     public int curAmmo;
     public int maxAmmo;
     public bool isAction;
     public BehaviourState state;
     public UnitGroupType group;
-    public Dictionary<StatusType, float> statusList;
+    public Dictionary<StatusType, float> statusData;
     public Dictionary<StatusType, float> buffList;
     public Dictionary<StatusType, float> debuffList;
     #endregion
@@ -44,7 +40,13 @@ public abstract class UnitBehaviour
 
     Action retireAction;
 
-    public UnitBehaviour(UnitObject _subject)
+    public UnitBehaviour(UnitData _unitData, Dictionary<StatusType, float> _statusData)
+    {
+        unitData = _unitData;
+        statusData = _statusData;
+    }
+
+    public virtual void InitObject(UnitObject _subject, int barType)
     {
         subject = _subject;
 
@@ -56,21 +58,13 @@ public abstract class UnitBehaviour
 
         buffList = new Dictionary<StatusType, float>();
         debuffList = new Dictionary<StatusType, float>();
-    }
 
-    public virtual void InitCommon(int idx, int level, int barType)
-    {
-        keyIndex = idx;
-
-        staticStatus = StaticDataManager.GetUnitStatus(keyIndex);
-        statusList = staticStatus.GetCalculatedValueDictionary(level);
-        constData = StaticDataManager.GetConstUnitData(keyIndex);
+        constData = StaticDataManager.GetConstUnitData(unitData.index);
 
         hp = GetStatus(StatusType.HP);
         hpBar = HpBarCanvas.Instance.GetHpBar(barType);
         hpBar.InitBar(GetStatus(StatusType.HP));
 
-        // set datas
         maxAmmo = constData.ammoCount;
         curAmmo = maxAmmo;
     }
@@ -456,7 +450,7 @@ public abstract class UnitBehaviour
     public float GetStatus(StatusType type)
     {
         float result = 0;
-        result += statusList[type];
+        result += statusData[type];
 
         // add result from equipment
         // add result from unique weapon
@@ -496,20 +490,5 @@ public abstract class UnitBehaviour
 
         DamageStruct dmg = new DamageStruct(structValue);
         return dmg;
-    }
-    public void ActiveUnit()
-    {
-        if (state == BehaviourState.RETIRE)
-        {
-            return;
-        }
-
-        state = BehaviourState.STANDBY;
-        gameObject.SetActive(true);
-        hpBar.gameObject.SetActive(true);
-    }
-    public void DeactiveUnit()
-    {
-        hpBar.gameObject.SetActive(false);
     }
 }

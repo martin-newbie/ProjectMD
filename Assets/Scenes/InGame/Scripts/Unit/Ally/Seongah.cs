@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Seongah : ActiveSkillBehaviour
 {
-    public Seongah(UnitObject _subject) : base(_subject)
+    public Seongah(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
     }
 

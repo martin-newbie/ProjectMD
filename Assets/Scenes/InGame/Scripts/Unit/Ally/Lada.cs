@@ -7,7 +7,7 @@ public class Lada : ActiveSkillBehaviour
 
     GameObject muzzleEffect;
 
-    public Lada(UnitObject _subject) : base(_subject)
+    public Lada(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
         muzzleEffect = InGamePrefabsManager.GetObject("ShotGunMuzzle");
     }

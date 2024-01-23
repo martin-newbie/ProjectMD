@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Fei : ActiveSkillBehaviour
 {
-    public Fei(UnitObject _subject) : base(_subject)
+    public Fei(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
     }
 

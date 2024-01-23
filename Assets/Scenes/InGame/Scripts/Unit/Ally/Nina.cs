@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Nina : ActiveSkillBehaviour
 {
-    public Nina(UnitObject _subject) : base(_subject)
+    public Nina(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
     }
 

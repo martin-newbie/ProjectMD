@@ -111,4 +111,5 @@ public enum StatusType
     CC_RESIST,
     COST_RECOVERY,
     SKILL_RECOVERY,
+    PENETRATE,
 }

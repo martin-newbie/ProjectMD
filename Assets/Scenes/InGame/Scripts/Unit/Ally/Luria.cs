@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Luria : ActiveSkillBehaviour
 {
-    public Luria(UnitObject _subject) : base(_subject)
+    public Luria(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
     }
 

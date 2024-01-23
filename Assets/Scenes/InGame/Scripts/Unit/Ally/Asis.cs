@@ -8,7 +8,7 @@ public class Asis : ActiveSkillBehaviour
     Explosion explosion;
     BigShotgunMuzzle skillEffect;
 
-    public Asis(UnitObject _subject) : base(_subject)
+    public Asis(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
         explosion = InGamePrefabsManager.GetObject("AsisCommonAttackExplosion").GetComponent<Explosion>();
         skillEffect = InGamePrefabsManager.GetObject("AsisSkillEffect").GetComponent<BigShotgunMuzzle>();

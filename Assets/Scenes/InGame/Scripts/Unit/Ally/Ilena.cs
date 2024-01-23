@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ilena : ActiveSkillBehaviour
 {
-    public Ilena(UnitObject _subject) : base(_subject)
+    public Ilena(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
     }
 

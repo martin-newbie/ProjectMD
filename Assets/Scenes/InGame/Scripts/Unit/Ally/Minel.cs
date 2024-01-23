@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Minel : ActiveSkillBehaviour
 {
-    public Minel(UnitObject _subject) : base(_subject)
+    public Minel(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
     }
 

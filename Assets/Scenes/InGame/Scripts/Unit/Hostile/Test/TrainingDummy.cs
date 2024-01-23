@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class TrainingDummy : UnitBehaviour
 {
-    public TrainingDummy(UnitObject _subject) : base(_subject)
+    public TrainingDummy(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
     }
 
-    public override void InitCommon(int idx, int level, int barType)
+    public override void InitObject(UnitObject _subject, int barType)
     {
-        base.InitCommon(idx, level, barType);
+        base.InitObject(_subject, barType);
         hp = 100000;
     }
 
