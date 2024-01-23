@@ -16,7 +16,7 @@ public class LoadoutManager : MonoBehaviour
     public bool isInit = false;
 
     int[] deckIdxArr;
-    int showDeckIdx;
+    int selectedDeck;
     int curDragIdx = -1;
 
     [SerializeField] List<LoadoutInfoUI> infoButtons;
@@ -102,14 +102,14 @@ public class LoadoutManager : MonoBehaviour
             deckIdxArr[last.btnIdx] = temp;
         }
 
-        UpdateDeck(showDeckIdx);
+        UpdateDeck(selectedDeck);
         curDragIdx = -1;
     }
 
     public void SelectDeck(int i)
     {
-        showDeckIdx = i;
-        UpdateDeck(showDeckIdx);
+        selectedDeck = i;
+        UpdateDeck(selectedDeck);
     }
 
     public void SetDeck(int[] indexes, int deckIdx)
@@ -167,12 +167,14 @@ public class LoadoutManager : MonoBehaviour
 
     public void OpenSelectPanel()
     {
-        selectPanel.OpenPanel(deckIdxArr, showDeckIdx);
+        selectPanel.OpenPanel(deckIdxArr, selectedDeck);
     }
 
     public void OnGameStart()
     {
         if (deckIdxArr.Length <= 0) return;
+
+        TempData.Instance.selectedDeck = selectedDeck;
         SceneManager.LoadScene("InGame");
     }
 
