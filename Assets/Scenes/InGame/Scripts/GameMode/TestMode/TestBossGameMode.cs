@@ -14,39 +14,13 @@ public class TestBossGameMode : IGameModeBehaviour
         manager = _manager;
     }
 
-    public IEnumerator GameModeRoutine()
+    public void Start()
     {
-        SetUnitsState(BehaviourState.INCOMBAT, UnitGroupType.ALLY);
-        yield return new WaitUntil(() => GetCountOfEnemy() <= 0);
-    }
-
-    void SetUnitsState(BehaviourState state, UnitGroupType group)
-    {
-        foreach (var unit in manager.allUnits)
-        {
-            if (unit.group == group)
-            {
-                unit.SetBehaviourState(state);
-            }
-        }
-    }
-
-    int GetCountOfEnemy()
-    {
-        int result = 0;
-        foreach (var item in manager.allUnits)
-        {
-            if (item.group == UnitGroupType.HOSTILE)
-            {
-                result++;
-            }
-        }
-        return result;
+        throw new System.NotImplementedException();
     }
 
     public void Update()
     {
-        playablePlayer?.Update();
-        bossPlayer?.Update();
+        throw new System.NotImplementedException();
     }
 }

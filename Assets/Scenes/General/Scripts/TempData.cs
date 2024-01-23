@@ -10,4 +10,6 @@ public class TempData
     {
         Instance = this;
     }
+
+    public int selectedDeck;
 }

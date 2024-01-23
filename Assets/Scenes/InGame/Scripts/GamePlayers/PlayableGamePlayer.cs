@@ -9,11 +9,18 @@ public class PlayableGamePlayer : GamePlayer
     SkillCanvas skillCanvas;
     int prevCost = 0;
 
-    public PlayableGamePlayer(UnitData[] unitDatas, UnitGroupType _group, SkillCanvas _skillCanvas): base(_group)
+    public PlayableGamePlayer(UnitData[] unitDatas, UnitGroupType _group, SkillCanvas _skillCanvas) : base(_group)
     {
-        skillCanvas = _skillCanvas;
         Instance = this;
+        skillCanvas = _skillCanvas;
 
+        for (int i = 0; i < unitDatas.Length; i++)
+        {
+            var data = unitDatas[i];
+            var unitStatus = StaticDataManager.GetUnitStatus(data.index).GetCalculatedValueDictionary();
+            var unit = InGameManager.Instance.SpawnUnit(new Vector3(-3 - (i * 1.5f), 0, 0), group, data, unitStatus, 0);
+            AddActiveUnit(unit);
+        }
         // skillDelay = 1f;
     }
 

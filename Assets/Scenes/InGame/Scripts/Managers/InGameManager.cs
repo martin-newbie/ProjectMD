@@ -26,7 +26,7 @@ public class InGameManager : MonoBehaviour
     void Start()
     {
         InitGameMode();
-        StartCoroutine(gameMode.GameModeRoutine());
+        gameMode?.Start();
     }
 
     private void Update()
