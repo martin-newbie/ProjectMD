@@ -16,8 +16,6 @@ public class TestBossGameMode : IGameModeBehaviour
 
     public IEnumerator GameModeRoutine()
     {
-        playablePlayer.ShowUnits(0);
-        bossPlayer.ShowUnits(0);
         SetUnitsState(BehaviourState.INCOMBAT, UnitGroupType.ALLY);
         yield return new WaitUntil(() => GetCountOfEnemy() <= 0);
     }

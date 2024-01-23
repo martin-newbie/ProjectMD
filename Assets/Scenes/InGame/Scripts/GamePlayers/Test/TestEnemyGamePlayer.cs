@@ -6,7 +6,7 @@ public class TestEnemyGamePlayer : GamePlayer
 {
     int stageLevel;
 
-    public TestEnemyGamePlayer(DeckData[] _unitIdx, Vector3[][] _posIdx, UnitGroupType _group, int _stageLevel) : base(_unitIdx, _posIdx, _group)
+    public TestEnemyGamePlayer(UnitData[] unitDatas, UnitGroupType _group, int _stageLevel) : base(_group)
     {
         stageLevel = _stageLevel;
     }
@@ -15,15 +15,10 @@ public class TestEnemyGamePlayer : GamePlayer
     {
         if (isMoveAni)
         {
-            AllUnitsPlayAnim();
+            AllUnitsPlayAnim("battle_move", true);
         }
 
         return InGameManager.Instance.StartCoroutine(UnitsMove());
-    }
-
-    protected override UnitBehaviour SpawnUnit(int unitIdx, Vector3 pos)
-    {
-        return InGameManager.Instance.SpawnUnit(pos, unitIdx, group, stageLevel, 0);
     }
 
     IEnumerator UnitsMove()
