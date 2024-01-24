@@ -78,6 +78,9 @@ public class TestGameMode : IGameModeBehaviour
 
         int waveCount = 0;
         (player as PlayableGamePlayer).ActiveAllUnits();
+        player.StartGame();
+        enemyPlayer.StartGame();
+
         while (waveCount < 4)
         {
             (enemyPlayer as TestEnemyGamePlayer).ActiveUnitAt(waveCount);
