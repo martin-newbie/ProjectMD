@@ -13,8 +13,6 @@ public abstract class GamePlayer
     List<ActiveSkillBehaviour> skillUnits = new List<ActiveSkillBehaviour>();
     List<ActiveSkillBehaviour> skillDeck = new List<ActiveSkillBehaviour>();
 
-    public int curShow;
-
     public float cost;
 
     protected float skillDelay = 8f;
@@ -55,12 +53,9 @@ public abstract class GamePlayer
         }
     }
 
-    public virtual void SetUnitsState(BehaviourState state)
+    public virtual int GetCountOfUnits()
     {
-        foreach (var unit in curUnits)
-        {
-            unit.SetBehaviourState(state);
-        }
+        return curUnits.Count;
     }
 
     protected virtual void RemoveCharacterSkillAt(int idx)

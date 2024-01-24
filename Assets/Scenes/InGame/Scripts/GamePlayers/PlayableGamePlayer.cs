@@ -19,9 +19,18 @@ public class PlayableGamePlayer : GamePlayer
             var data = unitDatas[i];
             var unitStatus = StaticDataManager.GetUnitStatus(data.index).GetCalculatedValueDictionary();
             var unit = InGameManager.Instance.SpawnUnit(new Vector3(-3 - (i * 1.5f), 0, 0), group, data, unitStatus, 0);
+            unit.InjectDeadEvent(() => RemoveActiveUnit(unit));
             AddActiveUnit(unit);
         }
         // skillDelay = 1f;
+    }
+
+    public void ActiveAllUnits()
+    {
+        foreach (var unit in curUnits)
+        {
+            unit.SetBehaviourState(BehaviourState.INCOMBAT);
+        }
     }
 
     protected override void CostRecoveryLogic()

@@ -10,6 +10,11 @@ public abstract class ActiveSkillBehaviour : UnitBehaviour
 
     protected ActiveSkillBehaviour(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
+    }
+
+    public override void InitObject(UnitObject _subject, int barType)
+    {
+        base.InitObject(_subject, barType);
         skillStatus = StaticDataManager.GetUnitSkillStatus(constData.keyIndex);
         cost = skillStatus.cost;
     }
