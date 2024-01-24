@@ -64,6 +64,9 @@ public class TestGameMode : IGameModeBehaviour
     {
         if (!isInit) return;
 
+        player.Update();
+        enemyPlayer.Update();
+
         var backUnit = InGameManager.Instance.allUnits.OrderBy(item => item.transform.position.x).ElementAt(0).transform.position;
         var frontUnit = InGameManager.Instance.allUnits.OrderByDescending(item => item.transform.position.x).ElementAt(0).transform.position;
         var midPos = (backUnit.x + frontUnit.x) / 2;
