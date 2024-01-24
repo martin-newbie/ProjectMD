@@ -33,6 +33,22 @@ public class PlayableGamePlayer : GamePlayer
         }
     }
 
+    public bool EveryUnitActionEnds()
+    {
+        bool result = true;
+
+        foreach (var item in curUnits)
+        {
+            if (item.isAction)
+            {
+                result = false;
+                break;
+            }
+        }
+
+        return result;
+    }
+
     protected override void CostRecoveryLogic()
     {
         base.CostRecoveryLogic();

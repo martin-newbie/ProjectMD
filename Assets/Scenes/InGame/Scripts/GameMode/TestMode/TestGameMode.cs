@@ -66,7 +66,6 @@ public class TestGameMode : IGameModeBehaviour
 
         var backUnit = InGameManager.Instance.allUnits.OrderBy(item => item.transform.position.x).ElementAt(0).transform.position;
         var frontUnit = InGameManager.Instance.allUnits.OrderByDescending(item => item.transform.position.x).ElementAt(0).transform.position;
-        var minPos = backUnit.x;
         var midPos = (backUnit.x + frontUnit.x) / 2;
         var camPos = new Vector3(midPos, 0f, -10f);
         mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, camPos, Time.deltaTime * 15f);
@@ -92,6 +91,8 @@ public class TestGameMode : IGameModeBehaviour
                 }
                 yield return null;
             }
+
+            yield return new WaitUntil((player as PlayableGamePlayer).EveryUnitActionEnds);
             waveCount++;
         }
 
