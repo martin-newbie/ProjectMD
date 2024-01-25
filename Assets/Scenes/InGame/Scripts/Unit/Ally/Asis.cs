@@ -65,7 +65,7 @@ public class Asis : ActiveSkillBehaviour
     {
         var target = GetNearestOpponent();
         int atkDir = GetTargetDir(target);
-        Instantiate(skillEffect, new Vector3(atkDir * 1f, 0.8f, 0), Quaternion.Euler(0, 0, 90 * atkDir * -1)).StartMuzzle(this, skillData.damageData, GetOpponentGroup());
+        Instantiate(skillEffect, new Vector3(atkDir * 1f, 0.8f, 0) + transform.position, Quaternion.Euler(0, 0, 90 * atkDir * -1)).StartMuzzle(this, skillData.damageData, GetOpponentGroup());
         yield return PlayAnimAndWait("active_skill");
         AddBuff(StatusType.DEF, 0, 20);
         yield return PlayAnimAndWait("battle_reload");
