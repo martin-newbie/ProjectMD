@@ -35,7 +35,7 @@ public abstract class UnitBehaviour
     #endregion
 
     public Vector3 targetPos = new Vector3();
-    public Coroutine actionCoroutine;
+    protected List<Coroutine> activatingRoutines = new List<Coroutine>();
     public HpBarBase hpBar;
 
     Action retireAction;
@@ -69,9 +69,11 @@ public abstract class UnitBehaviour
         curAmmo = maxAmmo;
     }
 
-    public Coroutine StartCoroutine(IEnumerator routine)
+    public Coroutine StartCoroutine(IEnumerator function)
     {
-        return subject.StartCoroutine(routine);
+        var coroutine = subject.StartCoroutine(function);
+        activatingRoutines.Add(coroutine);
+        return coroutine;
     }
     public void StopCoroutine(Coroutine routine)
     {
@@ -129,9 +131,8 @@ public abstract class UnitBehaviour
     {
         isAction = true;
 
-        if (actionCoroutine != null) StopCoroutine(actionCoroutine);
-        actionCoroutine = StartCoroutine(action());
-        return actionCoroutine;
+        StopAllCoroutine();
+        return StartCoroutine(action());
 
         IEnumerator action()
         {
@@ -139,6 +140,16 @@ public abstract class UnitBehaviour
             yield return StartCoroutine(routine);
             state = BehaviourState.INCOMBAT;
         }
+    }
+
+    protected void StopAllCoroutine()
+    {
+        foreach (var coroutine in activatingRoutines)
+        {
+            if (coroutine != null) StopCoroutine(coroutine);
+        }
+
+        activatingRoutines = new List<Coroutine>();
     }
 
     #region Move
@@ -182,10 +193,6 @@ public abstract class UnitBehaviour
                 break;
             }
             if (IsInsideRange(target))
-            {
-                break;
-            }
-            if(state == BehaviourState.ACTIVE_SKILL)
             {
                 break;
             }

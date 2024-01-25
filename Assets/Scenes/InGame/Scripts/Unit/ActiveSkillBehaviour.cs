@@ -23,9 +23,9 @@ public abstract class ActiveSkillBehaviour : UnitBehaviour
     {
         isAction = true;
 
-        if (actionCoroutine != null) StopCoroutine(actionCoroutine);
-        actionCoroutine = StartCoroutine(StartActiveSkillRoutine(ActiveSkill(skillData)));
-        return actionCoroutine;
+        StopAllCoroutine();
+        var coroutine = StartCoroutine(StartActiveSkillRoutine(ActiveSkill(skillData)));
+        return coroutine;
     }
 
     protected virtual IEnumerator StartActiveSkillRoutine(IEnumerator routine)
