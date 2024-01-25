@@ -102,7 +102,8 @@ public class TestGameMode : IGameModeBehaviour
             waveCount++;
         }
 
-        // post win event
+        player.isGameActive = false;
+        enemyPlayer.isGameActive = false;
         yield break;
     }
 
