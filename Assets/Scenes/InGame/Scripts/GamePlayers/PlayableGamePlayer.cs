@@ -22,7 +22,7 @@ public class PlayableGamePlayer : GamePlayer
             unit.InjectDeadEvent(() => RemoveActiveUnit(unit));
             AddActiveUnit(unit);
         }
-        // skillDelay = 1f;
+        skillDelay = 1f;
     }
 
     public void ActiveAllUnits()
@@ -93,5 +93,11 @@ public class PlayableGamePlayer : GamePlayer
     {
         base.RemoveSkillAt(idx);
         skillCanvas.RemoveButtonAt(idx);
+    }
+
+    // test
+    protected override float GetCostRecovery()
+    {
+        return 100000f;
     }
 }

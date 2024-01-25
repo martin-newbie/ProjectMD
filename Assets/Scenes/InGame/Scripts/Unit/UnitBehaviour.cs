@@ -159,8 +159,7 @@ public abstract class UnitBehaviour
             SetModelRotByDir(-1);
         }
 
-        StartActionCoroutine(MoveToEnd(target));
-        yield return actionCoroutine;
+        yield return StartActionCoroutine(MoveToEnd(target));
 
         PlayAnim("battle_wait", true);
         SetModelRotByDir((int)group);
@@ -186,8 +185,12 @@ public abstract class UnitBehaviour
             {
                 break;
             }
+            if(state == BehaviourState.ACTIVE_SKILL)
+            {
+                break;
+            }
 
-            MoveToTarget(target);
+            MoveToTargetFrame(target);
             yield return null;
         }
     }
@@ -207,7 +210,7 @@ public abstract class UnitBehaviour
         yield break;
     }
 
-    protected virtual void MoveToTarget(UnitBehaviour target)
+    protected virtual void MoveToTargetFrame(UnitBehaviour target)
     {
         SetModelRotByTarget(target);
         int dir = GetTargetDir(target);

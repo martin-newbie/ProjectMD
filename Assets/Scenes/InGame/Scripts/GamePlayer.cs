@@ -85,6 +85,8 @@ public abstract class GamePlayer
             curDelay = 0;
             AddSkillInDeck();
         }
+        curDelay += Time.deltaTime;
+
 
         if (cost <= 10f)
         {
@@ -175,7 +177,6 @@ public abstract class GamePlayer
         {
             cost += GetCostRecovery() * Time.deltaTime / 10000f;
         }
-        curDelay += Time.deltaTime;
     }
 
     protected virtual float GetCostRecovery()

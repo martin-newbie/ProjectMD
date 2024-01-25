@@ -5,7 +5,8 @@ using UnityEngine;
 public class SeongahSkillBullet : MonoBehaviour
 {
 
-    public float bulletSpeed;
+    [SerializeField] float bulletSpeed;
+    [SerializeField] ParticleSystem bulletTail;
 
     UnitBehaviour owner;
     UnitGroupType targetType;
@@ -26,8 +27,7 @@ public class SeongahSkillBullet : MonoBehaviour
         int rotY = dir == 1 ? 0 : -180;
         transform.rotation = Quaternion.Euler(0, rotY, 0);
 
-        penetrateEffect = InGamePrefabsManager.GetObject("seongahPenetrateEffect").GetComponent<PenetrateEffect>();
-
+        penetrateEffect = InGamePrefabsManager.GetObject("SeongahPenetrate").GetComponent<PenetrateEffect>();
         moveable = true;
     }
 
@@ -40,18 +40,12 @@ public class SeongahSkillBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!moveable) return;
         if (!collision.CompareTag("Player")) return;
-
-        if (damage.GetValue(StatusType.PENETRATE) < 0f)
-        {
-            GetComponent<SpriteRenderer>().enabled = false;
-            moveable = false;
-            return;
-        }
 
         var target = collision.GetComponent<UnitObject>().behaviour;
         if (target.group != targetType) return;
-
+        if (target.state == BehaviourState.RETIRE) return;
 
         target.OnDamage(damage, owner);
         var effect = Instantiate(penetrateEffect, new Vector3(target.transform.position.x, transform.position.y, 0), transform.rotation);
@@ -59,5 +53,13 @@ public class SeongahSkillBullet : MonoBehaviour
 
         damage.SetValue(StatusType.PENETRATE, damage.GetValue(StatusType.PENETRATE) - 1);
         
+        if(damage.GetValue(StatusType.PENETRATE) <= 0)
+        {
+            GetComponent<SpriteRenderer>().enabled = false;
+            bulletTail.Stop();
+            moveable = false;
+            Destroy(gameObject, 1f);
+            return;
+        }
     }
 }

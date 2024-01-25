@@ -7,6 +7,7 @@ public enum BehaviourState
     STANDBY,
     RETREAT,
     RETIRE,
+    ACTIVE_SKILL,
 }
 
 public enum UnitGroupType

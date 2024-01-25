@@ -67,10 +67,13 @@ public class TestGameMode : IGameModeBehaviour
         player.Update();
         enemyPlayer.Update();
 
-        var frontUnit = player.curUnits.OrderByDescending(item => item.transform.position.x).ElementAt(0).transform.position;
-        var frontPos = frontUnit.x;
-        var camPos = new Vector3(frontPos + 3, 0f, -10f);
-        mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, camPos, Time.deltaTime * 15f);
+        if (player.isGameActive && player.curUnits.Count > 0)
+        {
+            var frontUnit = player.curUnits.OrderByDescending(item => item.transform.position.x).ElementAt(0).transform.position;
+            var frontPos = frontUnit.x;
+            var camPos = new Vector3(frontPos + 3, 0f, -10f);
+            mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, camPos, Time.deltaTime * 15f);
+        }
     }
 
     IEnumerator GameLogic()
@@ -89,6 +92,7 @@ public class TestGameMode : IGameModeBehaviour
             {
                 if (player.GetCountOfUnits() <= 0)
                 {
+                    player.isGameActive = false;
                     // post lose event
                 }
                 yield return null;

@@ -19,9 +19,20 @@ public abstract class ActiveSkillBehaviour : UnitBehaviour
         cost = skillStatus.cost;
     }
 
-    public virtual void UseActiveSkill(SkillData skillData)
+    public virtual Coroutine UseActiveSkill(SkillData skillData)
     {
-        StartActionCoroutine(ActiveSkill(skillData));
+        isAction = true;
+
+        if (actionCoroutine != null) StopCoroutine(actionCoroutine);
+        actionCoroutine = StartCoroutine(StartActiveSkillRoutine(ActiveSkill(skillData)));
+        return actionCoroutine;
+    }
+
+    protected virtual IEnumerator StartActiveSkillRoutine(IEnumerator routine)
+    {
+        state = BehaviourState.ACTIVE_SKILL;
+        yield return StartCoroutine(routine);
+        state = BehaviourState.INCOMBAT;
     }
 
     public virtual SkillData GetDefaultSkillValue()

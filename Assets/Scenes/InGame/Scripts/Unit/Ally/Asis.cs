@@ -77,7 +77,7 @@ public class Asis : ActiveSkillBehaviour
     {
         var hostile = GetNearestOpponent();
 
-        if (IsInsideRange(hostile) && (state == BehaviourState.ACTING || state == BehaviourState.INCOMBAT))
+        if (hostile != null && IsInsideRange(hostile) && (state == BehaviourState.ACTING || state == BehaviourState.INCOMBAT))
         {
             return true;
         }
