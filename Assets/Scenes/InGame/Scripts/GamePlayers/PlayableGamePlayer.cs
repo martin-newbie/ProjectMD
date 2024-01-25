@@ -21,6 +21,7 @@ public class PlayableGamePlayer : GamePlayer
             var unit = InGameManager.Instance.SpawnUnit(new Vector3(-3 - (i * 1.5f), 0, 0), group, data, unitStatus, 0);
             unit.InjectDeadEvent(() => RemoveActiveUnit(unit));
             unit.state = BehaviourState.STANDBY;
+            unit.SetActiveHpBar(true);
             AddActiveUnit(unit);
         }
         skillDelay = 1f;

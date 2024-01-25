@@ -502,4 +502,9 @@ public abstract class UnitBehaviour
         DamageStruct dmg = new DamageStruct(structValue);
         return dmg;
     }
+
+    public void SetActiveHpBar(bool active)
+    {
+        hpBar.gameObject.SetActive(active);
+    }
 }

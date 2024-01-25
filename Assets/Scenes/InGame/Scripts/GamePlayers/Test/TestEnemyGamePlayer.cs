@@ -34,6 +34,7 @@ public class TestEnemyGamePlayer : GamePlayer
                 var unit = InGameManager.Instance.SpawnUnit(spawnPos, group, data, statusData, 0);
                 unit.state = BehaviourState.STANDBY;
                 unit.InjectDeadEvent(() => RemoveActiveUnit(unit));
+                unit.SetActiveHpBar(false);
                 waveList[i].Add(unit);
             }
         }

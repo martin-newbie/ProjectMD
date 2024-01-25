@@ -23,14 +23,15 @@ public abstract class GamePlayer
         group = _group;
     }
 
-    public virtual void AddActiveUnit(UnitBehaviour addedUnit)
+    public virtual void AddActiveUnit(UnitBehaviour unit)
     {
-        curUnits.Add(addedUnit);
-        InGameManager.Instance.allUnits.Add(addedUnit);
+        unit.SetActiveHpBar(true);
+        curUnits.Add(unit);
+        InGameManager.Instance.allUnits.Add(unit);
 
-        if (addedUnit is ActiveSkillBehaviour)
+        if (unit is ActiveSkillBehaviour)
         {
-            skillUnits.Add(addedUnit as ActiveSkillBehaviour);
+            skillUnits.Add(unit as ActiveSkillBehaviour);
         }
     }
 
