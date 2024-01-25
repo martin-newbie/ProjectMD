@@ -144,12 +144,13 @@ public abstract class GamePlayer
             }
         }
 
-        var skillValue = skillDeck[idx].GetDefaultSkillValue();
+        var skillData = skillDeck[idx].GetDefaultSkillValue();
+        skillData.collabseCount = collabseCount;
         foreach (var skill in collabse)
         {
-            skill.CollabseBuff(skillValue, skillDeck[idx]);
+            skill.CollabseBuff(skillData, skillDeck[idx]);
         }
-        skillDeck[idx].UseActiveSkill(skillValue);
+        skillDeck[idx].UseActiveSkill(skillData);
         cost -= skillDeck[idx].cost;
 
         // remove collabse skills

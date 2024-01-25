@@ -19,18 +19,25 @@ public abstract class ActiveSkillBehaviour : UnitBehaviour
         cost = skillStatus.cost;
     }
 
-    public virtual void UseActiveSkill(DamageStruct skillData)
+    public virtual void UseActiveSkill(SkillData skillData)
     {
         StartActionCoroutine(ActiveSkill(skillData));
     }
 
-    public virtual DamageStruct GetDefaultSkillValue()
+    public virtual SkillData GetDefaultSkillValue()
     {
-        DamageStruct result = GetDamageStruct();
+        SkillData result = new SkillData();
+        result.damageData = GetDamageStruct();
         return result;
     }
 
-    public abstract void CollabseBuff(DamageStruct skillData, UnitBehaviour subjectUnit);
-    public abstract IEnumerator ActiveSkill(DamageStruct skillData);
+    public abstract void CollabseBuff(SkillData skillData, UnitBehaviour subjectUnit);
+    public abstract IEnumerator ActiveSkill(SkillData skillData);
     public abstract bool ActiveSkillCondition();
+}
+
+public class SkillData
+{
+    public int collabseCount;
+    public DamageStruct damageData;
 }

@@ -19,11 +19,11 @@ public class Nina : ActiveSkillBehaviour
         yield return StartCoroutine(CommonBurstFire(3));
     }
 
-    public override void CollabseBuff(DamageStruct skillData, UnitBehaviour subjectUnit)
+    public override void CollabseBuff(SkillData skillData, UnitBehaviour subjectUnit)
     {
     }
 
-    public override IEnumerator ActiveSkill(DamageStruct skillData)
+    public override IEnumerator ActiveSkill(SkillData skillData)
     {
         yield break;
     }

@@ -8,7 +8,7 @@ public class Fei : ActiveSkillBehaviour
     {
     }
 
-    public override IEnumerator ActiveSkill(DamageStruct skillData)
+    public override IEnumerator ActiveSkill(SkillData skillData)
     {
         yield break;
     }
@@ -18,7 +18,7 @@ public class Fei : ActiveSkillBehaviour
         return false;
     }
 
-    public override void CollabseBuff(DamageStruct skillData, UnitBehaviour subjectUnit)
+    public override void CollabseBuff(SkillData skillData, UnitBehaviour subjectUnit)
     {
     }
 

@@ -49,23 +49,23 @@ public class Asis : ActiveSkillBehaviour
         obj.StartExplosion(GetOpponentGroup(), GetDamageStruct(), this);
     }
 
-    public override void CollabseBuff(DamageStruct skillData, UnitBehaviour subjectUnit)
+    public override void CollabseBuff(SkillData skillData, UnitBehaviour subjectUnit)
     {
 
     }
 
-    public override DamageStruct GetDefaultSkillValue()
+    public override SkillData GetDefaultSkillValue()
     {
         var value = base.GetDefaultSkillValue();
-        value.AddIncreaseValue(StatusType.DMG, skillStatus.GetActiveSkillValue(1));
+        value.damageData.AddIncreaseValue(StatusType.DMG, skillStatus.GetActiveSkillValue(1));
         return value;
     }
 
-    public override IEnumerator ActiveSkill(DamageStruct skillData)
+    public override IEnumerator ActiveSkill(SkillData skillData)
     {
         var target = GetNearestOpponent();
         int atkDir = GetTargetDir(target);
-        Instantiate(skillEffect, new Vector3(atkDir * 1f, 0.8f, 0), Quaternion.Euler(0, 0, 90 * atkDir * -1)).StartMuzzle(this, skillData, GetOpponentGroup());
+        Instantiate(skillEffect, new Vector3(atkDir * 1f, 0.8f, 0), Quaternion.Euler(0, 0, 90 * atkDir * -1)).StartMuzzle(this, skillData.damageData, GetOpponentGroup());
         yield return PlayAnimAndWait("active_skill");
         AddBuff(StatusType.DEF, 0, 20);
         yield return PlayAnimAndWait("battle_reload");

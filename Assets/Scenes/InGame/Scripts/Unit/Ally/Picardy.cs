@@ -8,7 +8,7 @@ public class Picardy : ActiveSkillBehaviour
     {
     }
 
-    public override IEnumerator ActiveSkill(DamageStruct skillData)
+    public override IEnumerator ActiveSkill(SkillData skillData)
     {
         throw new System.NotImplementedException();
     }
@@ -18,7 +18,7 @@ public class Picardy : ActiveSkillBehaviour
         return false;
     }
 
-    public override void CollabseBuff(DamageStruct skillData, UnitBehaviour subjectUnit)
+    public override void CollabseBuff(SkillData skillData, UnitBehaviour subjectUnit)
     {
 
     }

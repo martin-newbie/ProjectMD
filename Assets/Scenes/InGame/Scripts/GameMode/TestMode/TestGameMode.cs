@@ -67,10 +67,9 @@ public class TestGameMode : IGameModeBehaviour
         player.Update();
         enemyPlayer.Update();
 
-        var backUnit = InGameManager.Instance.allUnits.OrderBy(item => item.transform.position.x).ElementAt(0).transform.position;
-        var frontUnit = InGameManager.Instance.allUnits.OrderByDescending(item => item.transform.position.x).ElementAt(0).transform.position;
-        var midPos = (backUnit.x + frontUnit.x) / 2;
-        var camPos = new Vector3(midPos, 0f, -10f);
+        var frontUnit = player.curUnits.OrderByDescending(item => item.transform.position.x).ElementAt(0).transform.position;
+        var frontPos = frontUnit.x;
+        var camPos = new Vector3(frontPos + 3, 0f, -10f);
         mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, camPos, Time.deltaTime * 15f);
     }
 
