@@ -318,6 +318,8 @@ public abstract class UnitBehaviour
     }
     public virtual void OnDamage(DamageStruct value, UnitBehaviour from)
     {
+        if (state == BehaviourState.STANDBY) return;
+
         float damage = value.GetValue(StatusType.DMG);
         // check death
 
