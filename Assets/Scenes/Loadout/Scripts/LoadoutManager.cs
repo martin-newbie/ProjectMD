@@ -42,7 +42,7 @@ public class LoadoutManager : MonoBehaviour
         selectPanel.InitPanel();
         deckIdxArr = new int[0];
 
-        WebRequest.Post("test-loadout/deck-enter", UserData.Instance.uuid, (data) =>
+        WebRequest.Post(TempData.Instance.selectedGameMode.ToKey("loadout/deck-enter"), UserData.Instance.uuid, (data) =>
         {
             var result = JsonUtility.FromJson<RecieveDeckData>(data);
             decks = result.decks;
@@ -124,7 +124,7 @@ public class LoadoutManager : MonoBehaviour
         sendData.unit4 = indexes[3];
         sendData.unit5 = indexes[4];
         var sendJson = JsonUtility.ToJson(sendData);
-        WebRequest.Post("test-loadout/deck-save", sendJson, (data) =>
+        WebRequest.Post(TempData.Instance.selectedGameMode.ToKey("loadout/deck-save"), sendJson, (data) =>
         {
             decks[deckIdx].unit_indexes = indexes;
             UpdateDeck(deckIdx);
@@ -180,7 +180,7 @@ public class LoadoutManager : MonoBehaviour
 
     public void Back()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("GameMenu");
     }
 }
 

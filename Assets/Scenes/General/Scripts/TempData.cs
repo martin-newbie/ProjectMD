@@ -12,4 +12,28 @@ public class TempData
     }
 
     public int selectedDeck;
+    public GameMode selectedGameMode;
 }
+
+public static class TempDataUtil
+{
+    public static string ToKey(this GameMode mode, string controllerUrl = "")
+    {
+        if (!string.IsNullOrEmpty(controllerUrl))
+        {
+            controllerUrl = "-" + controllerUrl;
+        }
+
+        return mode.ToString().ToLower() + controllerUrl;
+    }
+}
+
+public enum GameMode
+{
+    TEST,
+    STAGE,
+    DUNGEON,
+    RAID,
+    PVP
+}
+
