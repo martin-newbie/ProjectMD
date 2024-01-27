@@ -30,7 +30,7 @@ public class BossHpBar : HpBarBase
     public override void InitBar(float _maxHp)
     {
         maxHP = _maxHp;
-        visualedHp = lineValue - 0.001f;
+        visualedHp = 0;
     }
 
     public override void UpdateFill(float _hp)
