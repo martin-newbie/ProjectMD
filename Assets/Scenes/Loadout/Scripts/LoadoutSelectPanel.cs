@@ -50,7 +50,7 @@ public class LoadoutSelectPanel : MonoBehaviour
         }
         else
         {
-            if (curSelected.Count < 5 && !LoadoutManager.Instance.AlreadySelected(charIdx, deckIdx))
+            if (curSelected.Count < 5)
             {
                 curSelected.Add(charIdx);
             }

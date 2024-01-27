@@ -13,20 +13,17 @@ public class LoadoutSelectButton : MonoBehaviour
     [SerializeField] Text nameText;
     [SerializeField] Text levelText;
     [SerializeField] GameObject selectedCurrent;
-    [SerializeField] GameObject selectedOther;
 
     public void InitButton(LoadoutSelectPanel _panel)
     {
         panel = _panel;
         selectedCurrent.SetActive(false);
-        selectedOther.SetActive(false);
     }
 
     public void SetButtonData(UnitData _linkedData)
     {
         LinkedData = _linkedData;
         selectedCurrent.SetActive(false);
-        selectedOther.SetActive(false);
 
         profileImage.sprite = ResourceManager.GetProfile(LinkedData.index);
         nameText.text = StaticDataManager.GetConstUnitData(LinkedData.index).name;
@@ -34,10 +31,6 @@ public class LoadoutSelectButton : MonoBehaviour
         if (panel.curSelected.Contains(LinkedData.id))
         {
             selectedCurrent.SetActive(true);
-        }
-        else if (LoadoutManager.Instance.AlreadySelected(LinkedData.id, panel.deckIdx))
-        {
-            selectedOther.SetActive(true);
         }
     }
 
