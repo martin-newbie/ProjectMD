@@ -27,7 +27,7 @@ public class Seongah : ActiveSkillBehaviour
     {
         var target = GetPreferTarget();
         skillData.damageData.SetValue(StatusType.PENETRATE, skillData.collabseCount + 1);
-        PlayAnim("battle_wait", true);
+        PlayAnimAndWait("battle_wait", true);
 
         yield return PlayAnimAndWait("active_skill");
         var bullet = Instantiate(skillBullet, GetBoneWorldPos("bullet_pos"), model.transform.rotation);

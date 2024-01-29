@@ -68,7 +68,7 @@ public abstract class GamePlayer
     {
         foreach (var item in curUnits)
         {
-            item.PlayAnim(key, loop);
+            item.PlayAnimAndWait(key, loop);
         }
     }
 

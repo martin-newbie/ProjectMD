@@ -27,7 +27,8 @@ public class Luria : ActiveSkillBehaviour
         for (int i = 0; i < 3; i++)
         {
             var target = GetPreferTarget();
-            PlayAnim("battle_attack");
+            float atkTime = GetAnimTime("battle_attack");
+            PlayAnimAndWait("battle_attack", false, atkTime / GetStatus(StatusType.ATK_TIMESCALE));
 
             ShootBullet(target, "bullet_pos1");
             yield return new WaitForSeconds(0.07f);
@@ -38,9 +39,9 @@ public class Luria : ActiveSkillBehaviour
 
     protected override IEnumerator MoveToTargetRange()
     {
-        PlayAnim("battle_move", true);
+        PlayAnimAndWait("battle_move", true);
         yield return StartCoroutine(CombatMoveLogic());
-        PlayAnim("battle_move_stop", true);
+        PlayAnimAndWait("battle_move_stop", true);
         AddAnim("battle_wait", true);
     }
 }

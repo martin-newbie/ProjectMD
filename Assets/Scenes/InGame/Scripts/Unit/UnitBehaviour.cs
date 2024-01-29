@@ -173,7 +173,7 @@ public abstract class UnitBehaviour
             yield break;
         }
 
-        PlayAnim("battle_move", true);
+        PlayAnimAndWait("battle_move", true);
         if (target.x > transform.position.x)
         {
             SetModelRotByDir(1);
@@ -185,15 +185,15 @@ public abstract class UnitBehaviour
 
         yield return StartActionCoroutine(MoveToEnd(target));
 
-        PlayAnim("battle_wait", true);
+        PlayAnimAndWait("battle_wait", true);
         SetModelRotByDir((int)group);
     }
 
     protected virtual IEnumerator MoveToTargetRange()
     {
-        PlayAnim("battle_move", true);
+        PlayAnimAndWait("battle_move", true);
         yield return StartCoroutine(CombatMoveLogic());
-        PlayAnim("battle_wait", true);
+        PlayAnimAndWait("battle_wait", true);
     }
 
     protected virtual IEnumerator CombatMoveLogic()
@@ -265,7 +265,7 @@ public abstract class UnitBehaviour
 
     protected virtual IEnumerator AttackFinish()
     {
-        PlayAnim("battle_wait", true);
+        PlayAnimAndWait("battle_wait", true);
         yield return new WaitForSeconds(GetStatus(StatusType.ATK_DELAY) / GetStatus(StatusType.ATK_TIMESCALE));
     }
 
@@ -441,7 +441,7 @@ public abstract class UnitBehaviour
     {
         subject.StopAllCoroutines();
         state = BehaviourState.RETIRE;
-        PlayAnim("battle_retire");
+        PlayAnimAndWait("battle_retire");
         retireAction?.Invoke();
         hpBar.DestroyBar();
         hpBar = null;
@@ -453,10 +453,10 @@ public abstract class UnitBehaviour
         switch (state)
         {
             case BehaviourState.STANDBY:
-                PlayAnim("battle_wait", true);
+                PlayAnimAndWait("battle_wait", true);
                 break;
             case BehaviourState.RETREAT:
-                PlayAnim("battle_move", true);
+                PlayAnimAndWait("battle_move", true);
                 break;
         }
     }
@@ -476,9 +476,9 @@ public abstract class UnitBehaviour
         if (dir == -1)
             model.transform.rotation = Quaternion.Euler(0, 180, 0);
     }
-    protected WaitForSeconds PlayAnimAndWait(string key, bool loop = false, float duration = -1f)
+    public WaitForSeconds PlayAnimAndWait(string key, bool loop = false, float duration = -1f)
     {
-        PlayAnim(key, loop);
+        PlayAnimAndWait(key, loop);
         var animTime = GetAnimTime(key);
         if (duration <= 0f)
         {
@@ -496,7 +496,7 @@ public abstract class UnitBehaviour
     {
         return model.skeleton.Data.FindAnimation(key).Duration;
     }
-    public TrackEntry PlayAnim(string key, bool loop = false)
+    protected TrackEntry PlayAnim(string key, bool loop = false)
     {
         var track = model.state.SetAnimation(0, key, loop);
         return track;
