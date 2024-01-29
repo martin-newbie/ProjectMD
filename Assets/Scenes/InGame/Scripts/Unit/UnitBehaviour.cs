@@ -32,6 +32,8 @@ public abstract class UnitBehaviour
     public Dictionary<StatusType, float> statusData;
     public Dictionary<StatusType, float> buffList;
     public Dictionary<StatusType, float> debuffList;
+    public List<Timer> buffTimers;
+    public List<Timer> debuffTimers;
     #endregion
 
     public Vector3 targetPos = new Vector3();
@@ -58,6 +60,8 @@ public abstract class UnitBehaviour
 
         buffList = new Dictionary<StatusType, float>();
         debuffList = new Dictionary<StatusType, float>();
+        buffTimers = new List<Timer>();
+        debuffTimers = new List<Timer>();
 
         constData = StaticDataManager.GetConstUnitData(unitData.index);
 
@@ -69,10 +73,13 @@ public abstract class UnitBehaviour
         curAmmo = maxAmmo;
     }
 
-    public Coroutine StartCoroutine(IEnumerator function)
+    public Coroutine StartCoroutine(IEnumerator function, bool isAction = true)
     {
         var coroutine = subject.StartCoroutine(function);
-        activatingRoutines.Add(coroutine);
+        if (isAction)
+        {
+            activatingRoutines.Add(coroutine);
+        }
         return coroutine;
     }
     public void StopCoroutine(Coroutine routine)
@@ -296,23 +303,37 @@ public abstract class UnitBehaviour
     }
     public virtual void AddBuff(StatusType type, float value, float time)
     {
-        StartCoroutine(buff());
+        StartCoroutine(buff(), false);
         IEnumerator buff()
         {
             if (!buffList.ContainsKey(type)) buffList.Add(type, 0f);
-
             buffList[type] += value;
-            yield return new WaitForSeconds(time);
+            var timer = new Timer(time, "buff");
+            buffTimers.Add(timer);
+            while (timer.t < 1)
+            {
+                timer.t += Time.deltaTime / timer.time;
+                yield return null;
+            }
+            buffTimers.Remove(timer);
             buffList[type] -= value;
         }
     }
     public virtual void AddDebuff(StatusType type, float value, float time)
     {
-        StartCoroutine(debuff());
+        StartCoroutine(debuff(), false);
         IEnumerator debuff()
         {
+            if (!debuffList.ContainsKey(type)) debuffList.Add(type, 0f);
             debuffList[type] += value;
-            yield return new WaitForSeconds(time);
+            var timer = new Timer(time, "debuff");
+            debuffTimers.Add(timer);
+            while (timer.t < 1)
+            {
+                timer.t += Time.deltaTime / timer.time;
+                yield return null;
+            }
+            debuffTimers.Remove(timer);
             debuffList[type] -= value;
         }
     }
@@ -473,11 +494,11 @@ public abstract class UnitBehaviour
 
         if (buffList.ContainsKey(type) && buffList[type] > 0f)
         {
-            buff = buffList[type];
+            buff = buffList[type] / 100f;
         }
         if (debuffList.ContainsKey(type) && debuffList[type] > 0f)
         {
-            debuff = debuffList[type];
+            debuff = debuffList[type] / 100f;
             if (debuff > 0.8f) debuff = 0.8f; // maximum debuff value
         }
 
