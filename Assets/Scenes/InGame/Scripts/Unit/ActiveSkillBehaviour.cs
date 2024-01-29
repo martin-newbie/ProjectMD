@@ -6,6 +6,7 @@ public abstract class ActiveSkillBehaviour : UnitBehaviour
 {
     public AttributeType skillType;
     public UnitSkillStatus skillStatus;
+    public GamePlayer player;
     public int cost;
 
     protected ActiveSkillBehaviour(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
@@ -17,6 +18,11 @@ public abstract class ActiveSkillBehaviour : UnitBehaviour
         base.InitObject(_subject, barType);
         skillStatus = StaticDataManager.GetUnitSkillStatus(constData.keyIndex);
         cost = skillStatus.cost;
+    }
+
+    public virtual void InitPlayer(GamePlayer _player)
+    {
+        player = _player;
     }
 
     public virtual Coroutine UseActiveSkill(SkillData skillData)
@@ -44,7 +50,10 @@ public abstract class ActiveSkillBehaviour : UnitBehaviour
 
     public abstract void CollabseBuff(SkillData skillData, UnitBehaviour subjectUnit);
     public abstract IEnumerator ActiveSkill(SkillData skillData);
-    public abstract bool ActiveSkillCondition();
+    public virtual bool GetActiveSkillCondition()
+    {
+        return state != BehaviourState.ACTIVE_SKILL && state != BehaviourState.RETIRE && player.cost >= skillStatus.cost;
+    }
 }
 
 public class SkillData

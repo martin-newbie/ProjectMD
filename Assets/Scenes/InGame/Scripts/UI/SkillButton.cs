@@ -27,7 +27,7 @@ public class SkillButton : MonoBehaviour
     {
         if (linkedData == null) return;
 
-        disabledImg.SetActive(!linkedData.ActiveSkillCondition());
+        disabledImg.SetActive(!linkedData.GetActiveSkillCondition());
         costText.text = linkedData.cost.ToString();
     }
 
@@ -71,7 +71,7 @@ public class SkillButton : MonoBehaviour
 
     public void UseSkill()
     {
-        if (!linkedData.ActiveSkillCondition()) return;
+        if (!linkedData.GetActiveSkillCondition()) return;
         PlayableGamePlayer.Instance.UseSkill(buttonIdx);
     }
 }

@@ -30,7 +30,7 @@ public class Minel : ActiveSkillBehaviour, IEventPost
     {
     }
 
-    public override bool ActiveSkillCondition()
+    public override bool GetActiveSkillCondition()
     {
         return false;
     }

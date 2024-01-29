@@ -73,17 +73,9 @@ public class Asis : ActiveSkillBehaviour
         yield break;
     }
 
-    public override bool ActiveSkillCondition()
+    public override bool GetActiveSkillCondition()
     {
         var hostile = GetNearestOpponent();
-
-        if (hostile != null && IsInsideRange(hostile) && (state == BehaviourState.ACTING || state == BehaviourState.INCOMBAT))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return hostile != null && IsInsideRange(hostile) && base.GetActiveSkillCondition();
     }
 }

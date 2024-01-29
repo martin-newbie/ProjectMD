@@ -13,7 +13,7 @@ public class Picardy : ActiveSkillBehaviour
         throw new System.NotImplementedException();
     }
 
-    public override bool ActiveSkillCondition()
+    public override bool GetActiveSkillCondition()
     {
         return false;
     }

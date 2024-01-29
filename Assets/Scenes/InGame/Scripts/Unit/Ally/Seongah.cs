@@ -40,11 +40,9 @@ public class Seongah : ActiveSkillBehaviour
 
     }
 
-    public override bool ActiveSkillCondition()
+    public override bool GetActiveSkillCondition()
     {
-        bool isSkill = state == BehaviourState.ACTIVE_SKILL;
-        bool isAlive = state != BehaviourState.RETIRE;
         bool emenyExists = InGameManager.Instance.allUnits.FindAll((item) => item.group == GetOpponentGroup()).Count > 0;
-        return !isSkill && emenyExists && isAlive;
+        return emenyExists && base.GetActiveSkillCondition();
     }
 }

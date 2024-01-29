@@ -13,7 +13,7 @@ public class Luria : ActiveSkillBehaviour
         yield break;
     }
 
-    public override bool ActiveSkillCondition()
+    public override bool GetActiveSkillCondition()
     {
         return false;
     }
