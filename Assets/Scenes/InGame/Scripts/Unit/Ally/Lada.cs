@@ -28,7 +28,7 @@ public class Lada : ActiveSkillBehaviour
 
     protected override IEnumerator AttackLogic()
     {
-        var target = GetNearestOpponent();
+        var target = GetPreferTarget();
         Instantiate(muzzleEffect, GetBoneWorldPos("bullet_pos"), model.transform.rotation);
         yield return PlayAnimAndWait("battle_attack");
         for (int i = 0; i < 3; i++)

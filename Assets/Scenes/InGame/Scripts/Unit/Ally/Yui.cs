@@ -24,7 +24,7 @@ public class Yui : ActiveSkillBehaviour
 
     protected override IEnumerator AttackLogic()
     {
-        var target = GetNearestOpponent();
+        var target = GetPreferTarget();
         ShootBullet(target);
 
         yield return PlayAnimAndWait("battle_attack");

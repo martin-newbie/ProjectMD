@@ -26,7 +26,7 @@ public class Luria : ActiveSkillBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            var target = GetNearestOpponent();
+            var target = GetPreferTarget();
             PlayAnim("battle_attack");
 
             ShootBullet(target, "bullet_pos1");

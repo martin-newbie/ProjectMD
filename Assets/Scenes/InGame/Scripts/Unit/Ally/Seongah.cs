@@ -15,7 +15,7 @@ public class Seongah : ActiveSkillBehaviour
 
     protected override IEnumerator AttackLogic()
     {
-        var target = GetNearestOpponent();
+        var target = GetPreferTarget();
         ShootBullet(target);
 
         yield return PlayAnimAndWait("battle_attack");
@@ -25,7 +25,7 @@ public class Seongah : ActiveSkillBehaviour
 
     public override IEnumerator ActiveSkill(SkillData skillData)
     {
-        var target = GetNearestOpponent();
+        var target = GetPreferTarget();
         skillData.damageData.SetValue(StatusType.PENETRATE, skillData.collabseCount + 1);
         PlayAnim("battle_wait", true);
 

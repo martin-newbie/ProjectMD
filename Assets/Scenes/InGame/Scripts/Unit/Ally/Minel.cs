@@ -40,6 +40,7 @@ public class Minel : ActiveSkillBehaviour, IEventPost
         if (type == EventType.HIT_CRITICAL && from == this)
         {
             AddBuff(StatusType.ATK_DELAY, skillStatus.GetActiveSkillValue(unitData.skill_level[1]), 15);
+            to.GetTaunted(this, 15);
         }
     }
 }

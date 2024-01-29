@@ -113,7 +113,7 @@ public abstract class UnitBehaviour
     protected virtual void InCombatFunc()
     {
 
-        var target = GetNearestOpponent();
+        var target = GetPreferTarget();
 
         if (target == null)
         {
@@ -200,7 +200,7 @@ public abstract class UnitBehaviour
     {
         while (true)
         {
-            var target = GetNearestOpponent();
+            var target = GetPreferTarget();
             if (target == null)
             {
                 break;
@@ -255,7 +255,7 @@ public abstract class UnitBehaviour
 
     protected virtual IEnumerator AttackAim()
     {
-        var target = GetNearestOpponent();
+        var target = GetPreferTarget();
         SetModelRotByTarget(target);
         yield return PlayAnimAndWait("battle_aiming");
     }
@@ -270,7 +270,7 @@ public abstract class UnitBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            var target = GetNearestOpponent();
+            var target = GetPreferTarget();
             ShootBullet(target);
             float delay = GetStatus(StatusType.RPM);
             yield return PlayAnimAndWait("battle_attack", false, delay);
@@ -297,7 +297,18 @@ public abstract class UnitBehaviour
     {
         return Vector3.Distance(transform.position, target.transform.position) <= GetStatus(StatusType.RANGE);
     }
-    protected virtual UnitBehaviour GetNearestOpponent()
+    protected virtual UnitBehaviour GetPreferTarget()
+    {
+        if(isCC && tauntTarget != null)
+        {
+            return tauntTarget;
+        }
+        else
+        {
+            return FindNearestTarget();
+        }
+    }
+    protected virtual UnitBehaviour FindNearestTarget()
     {
         return InGameManager.Instance.FindNearestTarget(GetOpponentGroup(), transform.position);
     }

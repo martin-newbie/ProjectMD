@@ -22,7 +22,7 @@ public class Asis : ActiveSkillBehaviour
 
     protected override IEnumerator AttackLogic()
     {
-        var target = GetNearestOpponent();
+        var target = GetPreferTarget();
         ShootBullet(target);
         yield return PlayAnimAndWait("battle_attack");
     }
@@ -63,7 +63,7 @@ public class Asis : ActiveSkillBehaviour
 
     public override IEnumerator ActiveSkill(SkillData skillData)
     {
-        var target = GetNearestOpponent();
+        var target = GetPreferTarget();
         int atkDir = GetTargetDir(target);
         Instantiate(skillEffect, new Vector3(atkDir * 1f, 0.8f, 0) + transform.position, Quaternion.Euler(0, 0, 90 * atkDir * -1)).StartMuzzle(this, skillData.damageData, GetOpponentGroup());
         yield return PlayAnimAndWait("active_skill");
@@ -75,7 +75,7 @@ public class Asis : ActiveSkillBehaviour
 
     public override bool GetActiveSkillCondition()
     {
-        var hostile = GetNearestOpponent();
+        var hostile = GetPreferTarget();
         return hostile != null && IsInsideRange(hostile) && base.GetActiveSkillCondition();
     }
 }
