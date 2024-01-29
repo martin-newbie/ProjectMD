@@ -52,7 +52,7 @@ public abstract class ActiveSkillBehaviour : UnitBehaviour
     public abstract IEnumerator ActiveSkill(SkillData skillData);
     public virtual bool GetActiveSkillCondition()
     {
-        return state != BehaviourState.ACTIVE_SKILL && state != BehaviourState.RETIRE && player.cost >= skillStatus.cost;
+        return state != BehaviourState.ACTIVE_SKILL && state != BehaviourState.RETIRE && player.cost >= skillStatus.cost && !isCC;
     }
 }
 

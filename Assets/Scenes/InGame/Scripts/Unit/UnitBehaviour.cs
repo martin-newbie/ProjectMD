@@ -36,6 +36,12 @@ public abstract class UnitBehaviour
     public List<Timer> debuffTimers;
     #endregion
 
+    #region CC
+    public bool isCC;
+    public Coroutine ccRoutine;
+    public UnitBehaviour tauntTarget;
+    #endregion
+
     public Vector3 targetPos = new Vector3();
     protected List<Coroutine> activatingRoutines = new List<Coroutine>();
     public HpBarBase hpBar;
@@ -274,6 +280,19 @@ public abstract class UnitBehaviour
     protected abstract IEnumerator AttackLogic();
     #endregion
 
+    public virtual void GetTaunted(UnitBehaviour from, float time)
+    {
+        // after resist
+        ccRoutine = StartCoroutine(taunt(), false);
+        IEnumerator taunt()
+        {
+            isCC = true;
+            tauntTarget = from;
+            yield return new WaitForSeconds(time);
+            isCC = false;
+            tauntTarget = null;
+        }
+    }
     protected virtual bool IsInsideRange(UnitBehaviour target)
     {
         return Vector3.Distance(transform.position, target.transform.position) <= GetStatus(StatusType.RANGE);

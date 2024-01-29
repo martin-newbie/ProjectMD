@@ -73,11 +73,21 @@ public class UnitSkillStatus
 
     public float GetActiveSkillValue(int skillLevel)
     {
-        return ((active_max - active_min) / 5 * skillLevel + active_min);
+        return ((active_max - active_min) / 5 * skillLevel) + active_min;
     }
 
     public float GetPassiveSkillValue(int skillLevel)
     {
-        return ((passive_max - passive_min) / 5 * skillLevel + passive_min);
+        return ((passive_max - passive_min) / 5 * skillLevel) + passive_min;
+    }
+
+    public float GetEnforceSkillValue(int skillLevel)
+    {
+        return ((enforce_max - enforce_min) / 5 * skillLevel) + enforce_min;
+    }
+    
+    public float GetSubSKillValue(int skillLevel)
+    {
+        return ((sub_max - sub_min) / 5 * skillLevel) + sub_min;
     }
 }
