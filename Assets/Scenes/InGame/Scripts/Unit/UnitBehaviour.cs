@@ -249,7 +249,8 @@ public abstract class UnitBehaviour
     protected virtual IEnumerator Reload()
     {
         // add reload time
-        yield return PlayAnimAndWait("battle_reload", false);
+        float reloadTime = GetAnimTime("battle_reload");
+        yield return PlayAnimAndWait("battle_reload", false, reloadTime / GetStatus(StatusType.ATK_TIMESCALE));
         curAmmo = maxAmmo;
     }
 
@@ -257,13 +258,15 @@ public abstract class UnitBehaviour
     {
         var target = GetPreferTarget();
         SetModelRotByTarget(target);
-        yield return PlayAnimAndWait("battle_aiming");
+
+        float aimingTime = GetAnimTime("battle_aiming");
+        yield return PlayAnimAndWait("battle_aiming", false, aimingTime / GetStatus(StatusType.ATK_TIMESCALE));
     }
 
     protected virtual IEnumerator AttackFinish()
     {
         PlayAnim("battle_wait", true);
-        yield return new WaitForSeconds(GetStatus(StatusType.ATK_DELAY));
+        yield return new WaitForSeconds(GetStatus(StatusType.ATK_DELAY) / GetStatus(StatusType.ATK_TIMESCALE));
     }
 
     protected virtual IEnumerator CommonBurstFire(int count)
@@ -273,7 +276,7 @@ public abstract class UnitBehaviour
             var target = GetPreferTarget();
             ShootBullet(target);
             float delay = GetStatus(StatusType.RPM);
-            yield return PlayAnimAndWait("battle_attack", false, delay);
+            yield return PlayAnimAndWait("battle_attack", false, delay / GetStatus(StatusType.ATK_TIMESCALE));
         }
     }
 
@@ -299,7 +302,7 @@ public abstract class UnitBehaviour
     }
     protected virtual UnitBehaviour GetPreferTarget()
     {
-        if(isCC && tauntTarget != null)
+        if (isCC && tauntTarget != null)
         {
             return tauntTarget;
         }
@@ -476,19 +479,22 @@ public abstract class UnitBehaviour
     protected WaitForSeconds PlayAnimAndWait(string key, bool loop = false, float duration = -1f)
     {
         PlayAnim(key, loop);
-        var anim = model.Skeleton.Data.FindAnimation(key);
-
+        var animTime = GetAnimTime(key);
         if (duration <= 0f)
         {
             model.timeScale = 1f;
-            return new WaitForSeconds(anim.Duration);
+            return new WaitForSeconds(animTime);
         }
         else
         {
-            float timeScale = anim.Duration / duration;
+            float timeScale = animTime / duration;
             model.timeScale = timeScale;
             return new WaitForSeconds(duration);
         }
+    }
+    protected float GetAnimTime(string key)
+    {
+        return model.skeleton.Data.FindAnimation(key).Duration;
     }
     public TrackEntry PlayAnim(string key, bool loop = false)
     {

@@ -56,6 +56,7 @@ public class UnitStatus
         defaultValueList.Add(StatusType.CC_RESIST, float.Parse(data[idx++]));
         defaultValueList.Add(StatusType.COST_RECOVERY, float.Parse(data[idx++]));
         defaultValueList.Add(StatusType.SKILL_RECOVERY, float.Parse(data[idx++]));
+        defaultValueList.Add(StatusType.ATK_TIMESCALE, 1f);
     }
 
     public float GetTotalStatus(StatusType type, int level = 0)
@@ -112,4 +113,5 @@ public enum StatusType
     COST_RECOVERY,
     SKILL_RECOVERY,
     PENETRATE,
+    ATK_TIMESCALE, // 공격 관련 사용되는 모든 애니메이션의 타임스케일, 기본값은 1
 }

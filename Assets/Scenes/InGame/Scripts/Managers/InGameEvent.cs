@@ -10,6 +10,7 @@ public class InGameEvent : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        events = new Dictionary<EventType, List<IEventPost>>();
     }
 
     public static void Add(EventType type, IEventPost subject)
