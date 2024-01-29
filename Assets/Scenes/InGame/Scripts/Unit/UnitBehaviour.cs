@@ -370,9 +370,11 @@ public abstract class UnitBehaviour
         if (hitRate < randomRate())
         {
             resist = ResistType.MISS;
+            InGameEvent.Post(EventType.MISS_ATTACK, from, this);
         }
         else
         {
+            InGameEvent.Post(EventType.HIT_ATTACK, from, this);
 
             // defense
             float def = (1666f / (1666f + GetStatus(StatusType.DEF)));

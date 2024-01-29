@@ -52,5 +52,8 @@ public interface IEventPost
 
 public enum EventType
 {
+    HIT_ATTACK,
     HIT_CRITICAL,
+    MISS_ATTACK,
+    IMMUNE_ATTACK,
 }
