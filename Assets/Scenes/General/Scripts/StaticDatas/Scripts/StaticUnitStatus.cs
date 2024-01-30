@@ -58,7 +58,6 @@ public class UnitStatus
         defaultValueList.Add(StatusType.SKILL_RECOVERY, float.Parse(data[idx++]));
         defaultValueList.Add(StatusType.ATK_TIMESCALE, 1f);
         defaultValueList.Add(StatusType.HEAL_RAISE, 1f);
-        defaultValueList.Add(StatusType.HIT_RAISE, 1f);
     }
 
     public float GetTotalStatus(StatusType type, int level = 0)
@@ -117,5 +116,4 @@ public enum StatusType
     PENETRATE,
     ATK_TIMESCALE, // 공격 관련 사용되는 모든 애니메이션의 타임스케일, 기본값은 1
     HEAL_RAISE, // 받는 회복량 관련
-    HIT_RAISE, // 받는 데미지 관련 (얘도 버프는 감소, 디버프는 증가로 구현해야 함)
 }

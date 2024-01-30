@@ -109,7 +109,7 @@ public class Asis : ActiveSkillBehaviour
         float debuffTime = 3f;
         var target = GetPreferTarget();
         target.OnDamage(skillData.damageData, this);
-        target.AddDebuff(StatusType.HIT_RAISE, debuffAmount, debuffTime);
+        target.AddDebuff(StatusType.DMG, debuffAmount, debuffTime);
 
         int atkDir = GetTargetDir(target);
         Instantiate(skillEffect, new Vector3(atkDir * 1f, 0.8f, 0) + transform.position, Quaternion.Euler(0, 0, 90 * atkDir * -1)).StartMuzzle();
