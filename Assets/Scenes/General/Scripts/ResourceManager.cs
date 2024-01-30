@@ -37,4 +37,7 @@ public class ResourceManager : MonoBehaviour
             idx = 0;
         return Instance.characterProfiles[idx];
     }
+
+    public Sprite dieselRobotSmg;
+    public Sprite dieselRobotMelee;
 }

@@ -16,8 +16,14 @@ public abstract class ProjectileBehaviour
         transform = subject.transform;
     }
 
+    public virtual float CalculateDuration(Vector3 start, Vector3 end, float moveSpeed)
+    {
+        return Vector3.Distance(start, end) / moveSpeed;
+    }
+
     public virtual void OnEnd(Vector3 endPos)
     {
+        Object.Destroy(gameObject);
         InGamePrefabsManager.PlayCommonHit(endPos);
     }
 

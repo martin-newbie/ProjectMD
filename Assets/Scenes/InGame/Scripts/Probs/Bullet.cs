@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public ProjectileBehaviour behaviour;
+    public ProjectileBehaviour projectile;
 
     public Coroutine StartBulletEffect(Vector3 start, Vector3 end, float moveSpeed, Action onFinish = null, int bulletType = 0)
     {
@@ -15,19 +15,18 @@ public class Bullet : MonoBehaviour
 
     protected virtual IEnumerator bulletMove(Vector3 start, Vector3 end, float moveSpeed, Action onFinish = null)
     {
-        float dur = Vector3.Distance(start, end) / moveSpeed;
+        float dur = projectile.CalculateDuration(start, end, moveSpeed);
         float timer = 0f;
 
         while (timer < dur)
         {
-            behaviour.ProjectileAction(start, end, timer / dur);
+            projectile.ProjectileAction(start, end, timer / dur);
             timer += Time.deltaTime;
             yield return null;
         }
 
         onFinish?.Invoke();
-        behaviour.OnEnd(end);
-        Destroy(gameObject);
+        projectile.OnEnd(end);
         yield break;
     }
 
@@ -36,10 +35,13 @@ public class Bullet : MonoBehaviour
         switch (idx)
         {
             case 0:
-                behaviour = new ProjectileBullet(this);
+                projectile = new ProjectileBullet(this);
                 break;
             case 1:
-                behaviour = new ProjectileHowitzer(this);
+                projectile = new ProjectileHowitzer(this);
+                break;
+            case 2:
+                projectile = new ProjectileLaser(this);
                 break;
         }
     }

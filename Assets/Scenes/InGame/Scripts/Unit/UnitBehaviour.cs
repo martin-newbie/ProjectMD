@@ -478,16 +478,6 @@ public abstract class UnitBehaviour
     public virtual void SetBehaviourState(BehaviourState _state)
     {
         state = _state;
-
-        switch (state)
-        {
-            case BehaviourState.STANDBY:
-                PlayAnimAndWait("battle_wait", true);
-                break;
-            case BehaviourState.RETREAT:
-                PlayAnimAndWait("battle_move", true);
-                break;
-        }
     }
     protected void SetModelRotByTarget(UnitBehaviour target)
     {
@@ -505,9 +495,9 @@ public abstract class UnitBehaviour
         if (dir == -1)
             model.transform.rotation = Quaternion.Euler(0, 180, 0);
     }
-    public WaitForSeconds PlayAnimAndWait(string key, bool loop = false, float duration = -1f)
+    public virtual WaitForSeconds PlayAnimAndWait(string key, bool loop = false, float duration = -1f)
     {
-        PlayAnimAndWait(key, loop);
+        PlayAnim(key, loop);
         var animTime = GetAnimTime(key);
         if (duration <= 0f)
         {
@@ -521,11 +511,11 @@ public abstract class UnitBehaviour
             return new WaitForSeconds(duration);
         }
     }
-    protected float GetAnimTime(string key)
+    protected virtual float GetAnimTime(string key)
     {
         return model.skeleton.Data.FindAnimation(key).Duration;
     }
-    protected TrackEntry PlayAnim(string key, bool loop = false)
+    protected virtual TrackEntry PlayAnim(string key, bool loop = false)
     {
         var track = model.state.SetAnimation(0, key, loop);
         return track;
@@ -539,7 +529,7 @@ public abstract class UnitBehaviour
     {
         return (UnitGroupType)((int)group * -1);
     }
-    protected Vector3 GetBoneWorldPos(string key)
+    public virtual Vector3 GetBoneWorldPos(string key)
     {
         var bone = model.skeleton.FindSlot(key).Bone;
         Vector3 result = model.transform.TransformPoint(new Vector3(bone.WorldX, bone.WorldY, 0f));
