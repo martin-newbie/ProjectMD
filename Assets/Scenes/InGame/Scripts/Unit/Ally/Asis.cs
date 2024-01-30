@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Asis : ActiveSkillBehaviour
 {
+    float passiveCoolTime = 20f;
+    float passiveCoolCur = 0f;
+    float passiveDur = 3f;
+    float passiveCur = 0f;
 
     Explosion explosion;
     BigShotgunMuzzle skillEffect;
@@ -12,6 +16,42 @@ public class Asis : ActiveSkillBehaviour
     {
         explosion = InGamePrefabsManager.GetObject("AsisCommonAttackExplosion").GetComponent<Explosion>();
         skillEffect = InGamePrefabsManager.GetObject("AsisSkillEffect").GetComponent<BigShotgunMuzzle>();
+    }
+
+    public override void UnitActive()
+    {
+        base.UnitActive();
+        AddBuff(StatusType.DEF, skillStatus.GetEnforceSkillValue(unitData.skill_level[2]), 0f);
+    }
+
+    public override void Update()
+    {
+        if (!nowActive) return;
+
+        base.Update();
+
+        passiveCoolCur += Time.deltaTime;
+        passiveCur += Time.deltaTime;
+        if (passiveCoolCur >= passiveCoolTime && passiveCur >= passiveDur)
+        {
+            OnHeal(hp * 0.05f, this);
+            passiveCoolCur = 0f;
+            passiveCur = 0f;
+        }
+    }
+
+    public override void OnHeal(float value, UnitBehaviour from)
+    {
+        base.OnHeal(value, from);
+
+        if (Random.Range(0f, 1f) <= 0.25f)
+        {
+            string buffKey = "asis_sub_skill_buff";
+            if (!buffTimers.Exists(item => item.key == buffKey))
+            {
+                AddBuff(StatusType.DEF, 8f, 25, buffKey);
+            }
+        }
     }
 
     protected override IEnumerator MoveToTargetRange()
@@ -63,13 +103,20 @@ public class Asis : ActiveSkillBehaviour
 
     public override IEnumerator ActiveSkill(SkillData skillData)
     {
-        var target = GetPreferTarget();
-        int atkDir = GetTargetDir(target);
-        Instantiate(skillEffect, new Vector3(atkDir * 1f, 0.8f, 0) + transform.position, Quaternion.Euler(0, 0, 90 * atkDir * -1)).StartMuzzle(this, skillData.damageData, GetOpponentGroup());
-        yield return PlayAnimAndWait("active_skill");
         AddBuff(StatusType.DEF, 0, 20);
-        yield return PlayAnimAndWait("battle_reload");
+
+        float debuffAmount = skillData.collabseCount * 3f;
+        float debuffTime = 3f;
+        var target = GetPreferTarget();
+        target.OnDamage(skillData.damageData, this);
+        target.AddDebuff(StatusType.HIT_RAISE, debuffAmount, debuffTime);
+
+        int atkDir = GetTargetDir(target);
+        Instantiate(skillEffect, new Vector3(atkDir * 1f, 0.8f, 0) + transform.position, Quaternion.Euler(0, 0, 90 * atkDir * -1)).StartMuzzle();
+
+        yield return PlayAnimAndWait("active_skill");
         curAmmo = maxAmmo;
+        yield return PlayAnimAndWait("battle_reload");
         yield break;
     }
 
@@ -77,5 +124,11 @@ public class Asis : ActiveSkillBehaviour
     {
         var hostile = GetPreferTarget();
         return hostile != null && IsInsideRange(hostile) && base.GetActiveSkillCondition();
+    }
+
+    protected override void GetDamage(float damage)
+    {
+        base.GetDamage(damage);
+        passiveCur = 0f;
     }
 }

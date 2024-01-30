@@ -22,6 +22,8 @@ public abstract class UnitBehaviour
     public UnitStatus staticStatus;
     public ConstUnitData constData;
 
+    protected bool nowActive = false;
+
     #region runningValue
     public float hp;
     public int curAmmo;
@@ -77,6 +79,8 @@ public abstract class UnitBehaviour
     }
     public virtual void UnitActive()
     {
+        nowActive = true;
+
         SetActiveHpBar(true);
 
         maxAmmo = constData.ammoCount;
@@ -103,6 +107,8 @@ public abstract class UnitBehaviour
 
     public virtual void Update()
     {
+        if (!nowActive) return;
+
         switch (state)
         {
             case BehaviourState.INCOMBAT:
@@ -383,9 +389,15 @@ public abstract class UnitBehaviour
             debuffList[type] -= value;
         }
     }
+    public virtual void OnHeal(float value, UnitBehaviour from)
+    {
+        if (state == BehaviourState.STANDBY || state == BehaviourState.RETIRE) return;
+
+        hp += value * GetStatus(StatusType.HEAL_RAISE);
+    }
     public virtual void OnDamage(DamageStruct value, UnitBehaviour from)
     {
-        if (state == BehaviourState.STANDBY) return;
+        if (state == BehaviourState.STANDBY || state == BehaviourState.RETIRE) return;
 
         float damage = value.GetValue(StatusType.DMG);
         // check death
@@ -433,12 +445,7 @@ public abstract class UnitBehaviour
             damage *= affinityModify;
             damage *= isCri ? value.GetValue(StatusType.CRI_DAMAGE) * 0.01f : 1f;
 
-            hp -= damage;
-            hpBar?.UpdateFill(hp);
-            if (hp <= 0 && state != BehaviourState.RETIRE)
-            {
-                OnRetire();
-            }
+            GetDamage(damage);
         }
 
         int dir = transform.position.x < from.transform.position.x ? -1 : 1;
@@ -448,6 +455,15 @@ public abstract class UnitBehaviour
         float randomRate()
         {
             return Random.Range(0f, 1f);
+        }
+    }
+    protected virtual void GetDamage(float damage)
+    {
+        hp -= damage;
+        hpBar?.UpdateFill(hp);
+        if (hp <= 0)
+        {
+            OnRetire();
         }
     }
     protected virtual void OnRetire()

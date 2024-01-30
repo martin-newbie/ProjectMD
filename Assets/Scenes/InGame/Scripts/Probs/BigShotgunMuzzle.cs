@@ -8,21 +8,8 @@ public class BigShotgunMuzzle : MonoBehaviour
     [SerializeField] BoxCollider2D damageCollider;
     [SerializeField] ContactFilter2D filter;
 
-    public void StartMuzzle(UnitBehaviour owner, DamageStruct damageInfo, UnitGroupType targetGroup)
+    public void StartMuzzle()
     {
-
-        List<Collider2D> overlapResults = new List<Collider2D>();
-        Physics2D.OverlapCollider(damageCollider, filter, overlapResults);
-
-        foreach (var item in overlapResults)
-        {
-            var unit = item.GetComponent<UnitObject>().behaviour;
-            if (unit.group == targetGroup)
-            {
-                unit.OnDamage(damageInfo, owner);
-            }
-        }
-
         StartCoroutine(EffectRoutine(0.5f));
     }
 
