@@ -25,7 +25,7 @@ public abstract class GamePlayer
 
     public virtual void AddActiveUnit(UnitBehaviour unit)
     {
-        unit.SetActiveHpBar(true);
+        unit.UnitActive();
         curUnits.Add(unit);
         InGameManager.Instance.allUnits.Add(unit);
 

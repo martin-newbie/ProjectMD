@@ -74,11 +74,14 @@ public abstract class UnitBehaviour
         hp = GetStatus(StatusType.HP);
         hpBar = HpBarCanvas.Instance.GetHpBar(barType);
         hpBar.InitBar(GetStatus(StatusType.HP));
+    }
+    public virtual void UnitActive()
+    {
+        SetActiveHpBar(true);
 
         maxAmmo = constData.ammoCount;
         curAmmo = maxAmmo;
     }
-
     public Coroutine StartCoroutine(IEnumerator function, bool isAction = true)
     {
         var coroutine = subject.StartCoroutine(function);
@@ -334,14 +337,19 @@ public abstract class UnitBehaviour
     {
         retireAction = _retireAction;
     }
-    public virtual void AddBuff(StatusType type, float value, float time)
+    public virtual void AddBuff(StatusType type, float value, float time, string key = "buff")
     {
-        StartCoroutine(buff(), false);
+        if (!buffList.ContainsKey(type)) buffList.Add(type, 0f);
+        buffList[type] += value;
+
+        if (time > 0f)
+        {
+            StartCoroutine(buff(), false);
+        }
+
         IEnumerator buff()
         {
-            if (!buffList.ContainsKey(type)) buffList.Add(type, 0f);
-            buffList[type] += value;
-            var timer = new Timer(time, "buff");
+            var timer = new Timer(time, key);
             buffTimers.Add(timer);
             while (timer.t < 1)
             {
@@ -352,14 +360,19 @@ public abstract class UnitBehaviour
             buffList[type] -= value;
         }
     }
-    public virtual void AddDebuff(StatusType type, float value, float time)
+    public virtual void AddDebuff(StatusType type, float value, float time, string key = "debuff")
     {
-        StartCoroutine(debuff(), false);
+        if (!debuffList.ContainsKey(type)) debuffList.Add(type, 0f);
+        debuffList[type] += value;
+
+        if (time > 0f)
+        {
+            StartCoroutine(debuff(), false);
+        }
+
         IEnumerator debuff()
         {
-            if (!debuffList.ContainsKey(type)) debuffList.Add(type, 0f);
-            debuffList[type] += value;
-            var timer = new Timer(time, "debuff");
+            var timer = new Timer(time, key);
             debuffTimers.Add(timer);
             while (timer.t < 1)
             {

@@ -74,7 +74,7 @@ public struct DamageStruct
     {
         if (increaseValues.ContainsKey(type))
         {
-            return increaseValues[type];
+            return increaseValues[type] * 0.01f;
         }
         else
         {

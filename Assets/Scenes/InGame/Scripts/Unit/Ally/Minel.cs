@@ -8,6 +8,13 @@ public class Minel : ActiveSkillBehaviour, IEventPost
     public Minel(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
         InGameEvent.Add(EventType.HIT_CRITICAL, this);
+        InGameEvent.Add(EventType.MISS_ATTACK, this);
+    }
+
+    public override void UnitActive()
+    {
+        base.UnitActive();
+        AddBuff(StatusType.DEF, skillStatus.GetEnforceSkillValue(unitData.skill_level[2]), 0);
     }
 
     protected override void InCombatFunc()
@@ -23,13 +30,13 @@ public class Minel : ActiveSkillBehaviour, IEventPost
     public override IEnumerator ActiveSkill(SkillData skillData)
     {
         AddBuff(StatusType.ATK_TIMESCALE, skillStatus.GetActiveSkillValue(unitData.skill_level[0]), 15);
-        float time = GetAnimTime("battle_reload");
-        yield return PlayAnimAndWait("battle_reload", false, time / GetStatus(StatusType.ATK_TIMESCALE));
+        curAmmo = maxAmmo; // 즉시 재장전 연출 필요
         yield break;
     }
 
     public override void CollabseBuff(SkillData skillData, UnitBehaviour subjectUnit)
     {
+        skillData.damageData.AddIncreaseValue(StatusType.CRI_DAMAGE, 24f);
     }
 
     public override bool GetActiveSkillCondition()
@@ -41,8 +48,12 @@ public class Minel : ActiveSkillBehaviour, IEventPost
     {
         if (type == EventType.HIT_CRITICAL && from == this)
         {
-            AddBuff(StatusType.DMG, skillStatus.GetActiveSkillValue(unitData.skill_level[1]), 15);
+            AddBuff(StatusType.DMG, skillStatus.GetPassiveSkillValue(unitData.skill_level[1]), 15);
             to.GetTaunted(this, 15);
+        }
+        if(type == EventType.MISS_ATTACK && from == this)
+        {
+            // 공격력 상승인지 방어력 상승인지 확인되면 적용
         }
     }
 }
