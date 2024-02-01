@@ -13,7 +13,7 @@ public class ResourceManager : MonoBehaviour
         for (int i = 0; i < 100; i++)
         {
             var spine = Resources.Load<SkeletonDataAsset>("SkeletonDatas/Characters/" + i.ToString() + "/skeleton_SkeletonData");
-            if(spine != null)
+            if (spine != null)
             {
                 characters.Add(i, spine);
             }
@@ -28,7 +28,10 @@ public class ResourceManager : MonoBehaviour
 
     public static SkeletonDataAsset GetSkeleton(int idx)
     {
-        return Instance.characters[idx];
+        if (idx >= 0)
+            return Instance.characters[idx];
+        else
+            return null;
     }
 
     public static Sprite GetProfile(int idx)

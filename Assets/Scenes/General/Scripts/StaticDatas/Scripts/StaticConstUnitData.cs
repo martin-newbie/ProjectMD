@@ -7,7 +7,7 @@ public class StaticConstUnitData : SheetDataBase
 {
     protected override string gid => "930077113";
 
-    protected override string range => "C4:J29";
+    protected override string range => "C4:J33";
 
     public List<ConstUnitData> dataList;
 

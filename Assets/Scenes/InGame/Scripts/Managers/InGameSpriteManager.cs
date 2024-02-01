@@ -11,4 +11,5 @@ public class InGameSpriteManager : MonoBehaviour
     }
 
     public Sprite asisGrenadeSprite;
+    public Sprite lazerSprite;
 }

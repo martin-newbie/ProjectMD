@@ -178,3 +178,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5c4a3181ead5e4fb6c5f3b7f94e79c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dieselRobotSmg: {fileID: 21300000, guid: adf4d08de3cc6d5438854a01c0984b62, type: 3}
+  dieselRobotMelee: {fileID: 21300000, guid: adf4d08de3cc6d5438854a01c0984b62, type: 3}

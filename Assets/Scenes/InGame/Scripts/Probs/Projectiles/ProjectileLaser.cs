@@ -13,9 +13,11 @@ public class ProjectileLaser : ProjectileBehaviour
     public override float CalculateDuration(Vector3 start, Vector3 end, float moveSpeed)
     {
         sprite = subject.GetComponent<SpriteRenderer>();
-        sprite.size = new Vector2(0.4f, Vector3.Distance(start, end));
-        int dir = start.x > end.x ? -1 : 1;
-        sprite.transform.rotation = Quaternion.Euler(0, 0, dir * 90);
+        sprite.drawMode = SpriteDrawMode.Sliced;
+        sprite.size = new Vector2(0.8f, Vector3.Distance(start, end));
+        int dir = start.x > end.x ? 1 : -1;
+        transform.rotation = Quaternion.Euler(0, 0, dir * 90);
+        transform.position = start;
         return 0.5f;
     }
 

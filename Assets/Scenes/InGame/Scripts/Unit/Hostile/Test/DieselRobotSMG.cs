@@ -15,10 +15,10 @@ public class DieselRobotSMG : UnitBehaviour
     public override void InitObject(UnitObject _subject, int barType)
     {
         base.InitObject(_subject, barType);
-        spriteModel = model.GetComponent<SpriteRenderer>();
+        spriteModel = subject.spriteModel;
         spriteModel.sprite = ResourceManager.Instance.dieselRobotSmg;
         spriteModel.flipX = true;
-        model.enabled = false;
+        model.gameObject.SetActive(false);
     }
 
     protected override IEnumerator AttackLogic()
@@ -26,17 +26,11 @@ public class DieselRobotSMG : UnitBehaviour
         yield return CommonBurstFire(3);
     }
 
-    protected override void OnRetire()
-    {
-        base.OnRetire();
-
-    }
-
     public override Vector3 GetBoneWorldPos(string key)
     {
         if(key == "bullet_pos")
         {
-            int dir = model.transform.eulerAngles.x == 0 ? 1 : -1;
+            int dir = spriteModel.transform.eulerAngles.x == 0 ? 1 : -1;
             return transform.position + new Vector3(dir, 0.9f);
         }
         if(key == "body")
@@ -49,18 +43,25 @@ public class DieselRobotSMG : UnitBehaviour
 
     protected override void ShootBullet(UnitBehaviour target, string key = "bullet_pos")
     {
-
         if (target == null)
         {
             return;
         }
 
+        target.OnDamage(GetDamageStruct(), this);
+
         var randPos = new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.25f, 0.25f));
         var startPos = GetBoneWorldPos(key);
         var targetPos = target.GetBoneWorldPos("body") + randPos;
 
+        float randHeight = Random.Range(-0.2f, 0.2f);
+        startPos.y += randHeight;
+        float targetX = targetPos.x;
+        var resultPos = new Vector3(targetX, startPos.y);
+
         var bullet = Instantiate(probBullet, startPos, Quaternion.identity);
-        bullet.StartBulletEffect(startPos, targetPos, 25f, () => target?.OnDamage(GetDamageStruct(), this), 2);
+        bullet.GetComponent<SpriteRenderer>().sprite = InGameSpriteManager.Instance.lazerSprite;
+        bullet.StartBulletEffect(startPos, targetPos, 25f, null, 2);
         curAmmo--;
     }
 
@@ -73,5 +74,13 @@ public class DieselRobotSMG : UnitBehaviour
     protected override float GetAnimTime(string key)
     {
         return 0f;
+    }
+
+    public override void SetModelRotByDir(int dir)
+    {
+        if (dir == 1)
+            spriteModel.transform.rotation = Quaternion.Euler(0, 0, 0);
+        if (dir == -1)
+            spriteModel.transform.rotation = Quaternion.Euler(0, 180, 0);
     }
 }

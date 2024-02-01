@@ -46,7 +46,7 @@ public class TestGameMode : IGameModeBehaviour
                 for (int j = 0; j < 4; j++)
                 {
                     var unitData = new UnitData();
-                    unitData.index = 0;
+                    unitData.index = 26;
                     unitData.level = stageLevel;
                     enemyDatas[i][j] = unitData;
                 }
