@@ -19,8 +19,11 @@ public class LoadoutManager : MonoBehaviour
     int selectedDeck;
     int curDragIdx = -1;
 
+    [SerializeField] Button deckButtonPrefab;
+    [SerializeField] Transform deckButtonsParent;
+    List<Button> deckButtons;
+
     [SerializeField] List<LoadoutInfoUI> infoButtons;
-    [SerializeField] List<Button> deckSelectButtons;
     [SerializeField] LoadoutSelectPanel selectPanel;
     DeckData[] decks;
 
@@ -33,19 +36,24 @@ public class LoadoutManager : MonoBehaviour
             item.InitInfo(null);
         }
 
-        for (int i = 0; i < deckSelectButtons.Count; i++)
-        {
-            var item = deckSelectButtons[i];
-            int idx = i;
-            item.onClick.AddListener(() => SelectDeck(idx));
-        }
         selectPanel.InitPanel();
         deckIdxArr = new int[0];
 
-        WebRequest.Post(GetPostUrl("enter"), UserData.Instance.uuid, (data) =>
+        WebRequest.Post("loadout/deck-enter", UserData.Instance.uuid, (data) =>
         {
             var result = JsonUtility.FromJson<RecieveDeckData>(data);
             decks = result.decks;
+
+            deckButtons = new List<Button>();
+            for (int i = 0; i < result.decks.Length; i++)
+            {
+                var button = Instantiate(deckButtonPrefab, deckButtonsParent);
+                int idx = i;
+                button.GetComponentInChildren<Text>().text = "Deck + " + idx.ToString();
+                button.onClick.AddListener(() => SelectDeck(idx));
+                deckButtons.Add(button);
+            }
+
             isInit = true;
             UpdateDeck(0);
         });
@@ -124,7 +132,7 @@ public class LoadoutManager : MonoBehaviour
         sendData.unit4 = indexes[3];
         sendData.unit5 = indexes[4];
         var sendJson = JsonUtility.ToJson(sendData);
-        WebRequest.Post(GetPostUrl("save"), sendJson, (data) =>
+        WebRequest.Post("loadout/deck-save", sendJson, (data) =>
         {
             decks[deckIdx].unit_indexes = indexes;
             UpdateDeck(deckIdx);
@@ -168,11 +176,6 @@ public class LoadoutManager : MonoBehaviour
     public void OpenSelectPanel()
     {
         selectPanel.OpenPanel(deckIdxArr, selectedDeck);
-    }
-
-    string GetPostUrl(string postUrl)
-    {
-        return TempData.Instance.selectedGameMode.ToKey("loadout/deck-" + postUrl);
     }
 
     public void OnGameStart()
