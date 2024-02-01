@@ -14,7 +14,7 @@ public class ProjectileLaser : ProjectileBehaviour
     {
         sprite = subject.GetComponent<SpriteRenderer>();
         sprite.drawMode = SpriteDrawMode.Sliced;
-        sprite.size = new Vector2(0.8f, Vector3.Distance(start, end));
+        sprite.size = new Vector2(1.5f, Vector3.Distance(start, end) + 0.5f);
         int dir = start.x > end.x ? 1 : -1;
         transform.rotation = Quaternion.Euler(0, 0, dir * 90);
         transform.position = start;

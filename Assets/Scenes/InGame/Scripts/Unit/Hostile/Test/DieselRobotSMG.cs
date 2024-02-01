@@ -30,7 +30,7 @@ public class DieselRobotSMG : UnitBehaviour
     {
         if(key == "bullet_pos")
         {
-            int dir = spriteModel.transform.eulerAngles.x == 0 ? 1 : -1;
+            int dir = spriteModel.transform.eulerAngles.x == 0 ? -1 : 1;
             return transform.position + new Vector3(dir, 0.9f);
         }
         if(key == "body")
@@ -54,7 +54,7 @@ public class DieselRobotSMG : UnitBehaviour
         var startPos = GetBoneWorldPos(key);
         var targetPos = target.GetBoneWorldPos("body") + randPos;
 
-        float randHeight = Random.Range(-0.2f, 0.2f);
+        float randHeight = Random.Range(-0.05f, 0.05f);
         startPos.y += randHeight;
         float targetX = targetPos.x;
         var resultPos = new Vector3(targetX, startPos.y);
