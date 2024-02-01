@@ -25,7 +25,7 @@ public class LoadoutManager : MonoBehaviour
 
     [SerializeField] List<LoadoutInfoUI> infoButtons;
     [SerializeField] LoadoutSelectPanel selectPanel;
-    DeckData[] decks;
+    List<DeckData> decks;
 
     void Start()
     {
@@ -42,16 +42,12 @@ public class LoadoutManager : MonoBehaviour
         WebRequest.Post("loadout/deck-enter", UserData.Instance.uuid, (data) =>
         {
             var result = JsonUtility.FromJson<RecieveDeckData>(data);
-            decks = result.decks;
+            decks = result.decks.ToList();
 
             deckButtons = new List<Button>();
             for (int i = 0; i < result.decks.Length; i++)
             {
-                var button = Instantiate(deckButtonPrefab, deckButtonsParent);
-                int idx = i;
-                button.GetComponentInChildren<Text>().text = "Deck + " + idx.ToString();
-                button.onClick.AddListener(() => SelectDeck(idx));
-                deckButtons.Add(button);
+                AddDeckButton(i);
             }
 
             isInit = true;
@@ -120,6 +116,27 @@ public class LoadoutManager : MonoBehaviour
         UpdateDeck(selectedDeck);
     }
 
+    public void OnAddDeck()
+    {
+        WebRequest.Post("loadout/deck-add", UserData.Instance.uuid, (data) =>
+        {
+            var recieve = JsonUtility.FromJson<RecieveDeckAdd>(data);
+            var deck = recieve.deck;
+            decks.Add(deck);
+            AddDeckButton(deck.deck_index);
+        });
+    }
+
+    private Button AddDeckButton(int idx)
+    {
+        var button = Instantiate(deckButtonPrefab, deckButtonsParent);
+        button.transform.SetSiblingIndex(idx);
+        button.GetComponentInChildren<Text>().text = "Deck " + idx.ToString();
+        button.onClick.AddListener(() => SelectDeck(idx));
+        deckButtons.Add(button);
+        return button;
+    }
+
     public void SetDeck(int[] indexes, int deckIdx)
     {
         var sendData = new SendDeckData();
@@ -160,7 +177,7 @@ public class LoadoutManager : MonoBehaviour
     public bool AlreadySelected(int unitIndex, int deckIndex)
     {
         bool result = false;
-        for (int i = 0; i < decks.Length; i++)
+        for (int i = 0; i < decks.Count; i++)
         {
             if (deckIndex == i) continue;
 
@@ -206,4 +223,10 @@ public class SendDeckData : DeckData
 public class RecieveDeckData
 {
     public DeckData[] decks;
+}
+
+[System.Serializable]
+public class RecieveDeckAdd
+{
+    public DeckData deck;
 }
