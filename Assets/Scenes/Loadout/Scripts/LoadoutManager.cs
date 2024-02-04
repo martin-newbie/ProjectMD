@@ -13,8 +13,6 @@ public class LoadoutManager : MonoBehaviour
         Instance = this;
     }
 
-    public bool isInit = false;
-
     int[] deckIdxArr;
     int selectedDeck;
     int curDragIdx = -1;
@@ -50,7 +48,6 @@ public class LoadoutManager : MonoBehaviour
                 AddDeckButton(i);
             }
 
-            isInit = true;
             UpdateDeck(0);
         });
     }
@@ -197,10 +194,21 @@ public class LoadoutManager : MonoBehaviour
 
     public void OnGameStart()
     {
-        if (deckIdxArr.Length <= 0) return;
+        if (deckIdxArr.Length <= 0) return; // print error log
 
-        TempData.Instance.selectedDeck = selectedDeck;
-        SceneManager.LoadScene("InGame");
+        var sendDeck = new SendAllDeck();
+        sendDeck.decks = new DeckData[decks.Count];
+        for (int i = 0; i < decks.Count; i++)
+        {
+            sendDeck.decks[i] = decks[i];
+        }
+        var sendData = JsonUtility.ToJson(sendDeck);
+
+        WebRequest.Post("loadout/deck-save-all", sendData, (data) =>
+        {
+            TempData.Instance.selectedDeck = selectedDeck;
+            SceneManager.LoadScene("InGame");
+        });
     }
 
     public void Back()
@@ -217,6 +225,12 @@ public class SendDeckData : DeckData
     public int unit3;
     public int unit4;
     public int unit5;
+}
+
+[System.Serializable]
+public class SendAllDeck
+{
+    public DeckData[] decks;
 }
 
 [System.Serializable]
