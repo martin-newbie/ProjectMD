@@ -107,9 +107,11 @@ public class TestGameMode : IGameModeBehaviour
         yield break;
     }
 
-    class IndexAndUUID
-    {
-        public string uuid;
-        public int index;
-    }
+}
+
+[System.Serializable]
+public class IndexAndUUID
+{
+    public string uuid;
+    public int index;
 }

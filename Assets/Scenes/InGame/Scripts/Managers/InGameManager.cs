@@ -43,7 +43,7 @@ public class InGameManager : MonoBehaviour
         switch (gameModeIdx)
         {
             case 0:
-                gameMode = new TestGameMode(this);
+                gameMode = new TestBossGameMode(this);
                 break;
         }
     }

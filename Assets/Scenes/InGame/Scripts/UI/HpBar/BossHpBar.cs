@@ -12,8 +12,8 @@ public class BossHpBar : HpBarBase
 
     [SerializeField] Color[] barColors = new Color[5];
     float lineValue = 100;
+    int lineCount;
 
-    float maxHp;
     float curHp;
 
     float visualedHp;
@@ -31,6 +31,8 @@ public class BossHpBar : HpBarBase
     {
         maxHP = _maxHp;
         visualedHp = 0;
+        lineCount = Mathf.FloorToInt(Mathf.Sqrt(Mathf.Sqrt(maxHP)));
+        lineValue = maxHP / lineCount;
     }
 
     public override void UpdateFill(float _hp)
@@ -40,18 +42,14 @@ public class BossHpBar : HpBarBase
 
     void Update()
     {
-        visualedHp = Mathf.Lerp(visualedHp, curHp, 50 * Time.deltaTime);
+        visualedHp = Mathf.Lerp(visualedHp, curHp, Time.deltaTime * 20f);
 
-        float calcHp = visualedHp % lineValue;
-        filledHpBar.fillAmount = calcHp / lineValue;
+        int curLine = Mathf.FloorToInt(curHp / lineValue);
+        float visualFill = (visualedHp % curLine) / lineValue;
 
-        int curLine = (int)(visualedHp / lineValue);
-        int visualIdx = (curLine + barColors.Length) % barColors.Length;
-        int backIdx = (visualIdx - 1 + barColors.Length) % barColors.Length;
-
-        filledHpBar.color = barColors[visualIdx];
-        backHpBar.color = barColors[backIdx];
-
+        filledHpBar.fillAmount = visualFill;
+        filledHpBar.color = barColors[curLine % 5];
+        backHpBar.color = curLine == 0 ? Color.black : barColors[(curLine - 1) % 5];
         remainLineText.text = string.Format("x{0}", curLine);
     }
 }
