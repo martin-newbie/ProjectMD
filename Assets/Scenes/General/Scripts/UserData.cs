@@ -39,6 +39,7 @@ public class DeckData
 {
     public int id;
     public int deck_index;
+    public string title;
     public string user_uuid;
 
     public int[] unit_indexes;

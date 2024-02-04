@@ -23,7 +23,10 @@ public class LoadoutManager : MonoBehaviour
 
     [SerializeField] List<LoadoutInfoUI> infoButtons;
     [SerializeField] LoadoutSelectPanel selectPanel;
-    List<DeckData> decks;
+    [HideInInspector] public List<DeckData> decks;
+
+    [SerializeField] Text deckTitleTxt;
+    [SerializeField] LoadoutTitleEdit titleEdit;
 
     void Start()
     {
@@ -128,7 +131,7 @@ public class LoadoutManager : MonoBehaviour
     {
         var button = Instantiate(deckButtonPrefab, deckButtonsParent);
         button.transform.SetSiblingIndex(idx);
-        button.GetComponentInChildren<Text>().text = "Deck " + idx.ToString();
+        button.GetComponentInChildren<Text>().text = decks[idx].title;
         button.onClick.AddListener(() => SelectDeck(idx));
         deckButtons.Add(button);
         return button;
@@ -156,6 +159,9 @@ public class LoadoutManager : MonoBehaviour
     public void UpdateDeck(int deckIdx)
     {
         deckIdxArr = decks[deckIdx].unit_indexes;
+        deckTitleTxt.text = decks[deckIdx].title;
+        deckButtons[deckIdx].GetComponentInChildren<Text>().text = decks[deckIdx].title;
+
         for (int i = 0; i < infoButtons.Count; i++)
         {
             int id = deckIdxArr[i];
@@ -185,6 +191,11 @@ public class LoadoutManager : MonoBehaviour
         }
 
         return result;
+    }
+
+    public void OnTitleEditEnter()
+    {
+        titleEdit.OpenTitleEdit(selectedDeck, decks[selectedDeck]);
     }
 
     public void OpenSelectPanel()
