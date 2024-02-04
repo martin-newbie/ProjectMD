@@ -23,6 +23,7 @@ public class TestBossGamePlayer : GamePlayer
         statusData[StatusType.HP] *= 3;
         bossUnit = InGameManager.Instance.SpawnUnit(spawnPos, group, data, statusData, barType);
         AddActiveUnit(bossUnit);
+        bossUnit.InjectDeadEvent(() => RemoveActiveUnit(bossUnit));
     }
 
     public override void StartGame()

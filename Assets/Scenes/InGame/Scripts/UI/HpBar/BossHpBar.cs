@@ -43,13 +43,11 @@ public class BossHpBar : HpBarBase
     void Update()
     {
         visualedHp = Mathf.Lerp(visualedHp, curHp, Time.deltaTime * 20f);
-
         int curLine = Mathf.FloorToInt(curHp / lineValue);
-        float visualFill = (visualedHp % curLine) / lineValue;
 
-        filledHpBar.fillAmount = visualFill;
+        filledHpBar.fillAmount = (visualedHp - (lineValue * (curLine))) / lineValue;
         filledHpBar.color = barColors[curLine % 5];
-        backHpBar.color = curLine == 0 ? Color.black : barColors[(curLine - 1) % 5];
+        backHpBar.color = curLine > 0 ? barColors[(curLine - 1) % 5] : Color.black;
         remainLineText.text = string.Format("x{0}", curLine);
     }
 }
