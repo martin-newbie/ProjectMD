@@ -32,6 +32,8 @@ body4
 bounds:515,36,69,50
 offsets:12,17,90,115
 rotate:90
+bullet_pos
+bounds:69,2,1,1
 eye1
 bounds:203,2,93,36
 offsets:0,3,93,39
