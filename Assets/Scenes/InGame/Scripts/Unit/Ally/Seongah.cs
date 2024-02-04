@@ -30,6 +30,7 @@ public class Seongah : ActiveSkillBehaviour
         if(passiveCur >= passiveCool)
         {
             AddBuff(StatusType.DMG, skillStatus.GetPassiveSkillValue(unitData.skill_level[1]), 10f);
+            AddBuff(StatusType.CRI_DAMAGE, skillStatus.GetSubSKillValue(unitData.skill_level[3]), 10f);
             passiveCur = 0f;
         }
     }
@@ -47,6 +48,7 @@ public class Seongah : ActiveSkillBehaviour
     public override IEnumerator ActiveSkill(SkillData skillData)
     {
         var target = GetPreferTarget();
+        skillData.damageData.AddIncreaseValue(StatusType.DMG, skillStatus.GetActiveSkillValue(unitData.skill_level[0]));
         skillData.damageData.SetValue(StatusType.PENETRATE, skillData.collabseCount + 1);
         PlayAnimAndWait("battle_wait", true);
 
