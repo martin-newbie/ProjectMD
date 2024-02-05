@@ -18,7 +18,7 @@ ar2
 bounds:170,41,25,31
 offsets:0,3,25,35
 rotate:90
-body1
+body
 bounds:451,35,52,70
 offsets:20,44,90,115
 body2
