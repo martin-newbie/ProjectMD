@@ -25,9 +25,13 @@ public class Picardy : ActiveSkillBehaviour
 
     protected override IEnumerator AttackLogic()
     {
+        yield return new WaitForSeconds(0.5f);
         var target = GetPreferTarget();
         ShootBullet(target);
 
-        yield return PlayAnimAndWait("battle_attack");
+        float atkTime = GetAnimTime("battle_attack");
+        yield return PlayAnimAndWait("battle_attack", false, atkTime / GetStatus(StatusType.ATK_TIMESCALE));
+
+        yield return new WaitForSeconds(0.1f);
     }
 }
