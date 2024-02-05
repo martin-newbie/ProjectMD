@@ -30,7 +30,8 @@ public class BossHpBar : HpBarBase
     public override void InitBar(float _maxHp)
     {
         maxHP = _maxHp;
-        visualedHp = 0;
+        visualedHp = maxHP;
+        curHp = maxHP;
         lineCount = Mathf.FloorToInt(Mathf.Sqrt(Mathf.Sqrt(maxHP)));
         lineValue = maxHP / lineCount;
     }
