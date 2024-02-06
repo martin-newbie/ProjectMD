@@ -24,6 +24,7 @@ public abstract class UnitBehaviour
 
     protected bool nowActive = false;
 
+    public float hpAmount => hp / GetStatus(StatusType.HP);
     #region runningValue
     public float hp;
     public int curAmmo;

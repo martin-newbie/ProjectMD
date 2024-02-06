@@ -33,11 +33,6 @@ public class InGameManager : MonoBehaviour
         gameMode?.Update();
     }
 
-    public void InitSkill()
-    {
-        var playable = allUnits.FindAll((item) => item.group == UnitGroupType.ALLY).Select((item) => item as ActiveSkillBehaviour).ToArray();
-    }
-
     void InitGameMode()
     {
         switch (gameModeIdx)
