@@ -1413,7 +1413,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 100, y: 50}
-  m_SizeDelta: {x: 1246, y: 104}
+  m_SizeDelta: {x: 933, y: 76}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &882749129
 MonoBehaviour:
@@ -2548,8 +2548,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 69.3, y: 0.7799988}
-  m_SizeDelta: {x: 196.17, y: 141.46}
+  m_AnchoredPosition: {x: 69.30005, y: 0.7799988}
+  m_SizeDelta: {x: 147, y: 106}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1574277321
 MonoBehaviour:
@@ -2791,8 +2791,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -429, y: 238.28}
-  m_SizeDelta: {x: 649.54, y: 405.73}
+  m_AnchoredPosition: {x: -218, y: 152}
+  m_SizeDelta: {x: 357, y: 223}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1705259159
 MonoBehaviour:
@@ -3376,7 +3376,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 2560, y: 1440}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
