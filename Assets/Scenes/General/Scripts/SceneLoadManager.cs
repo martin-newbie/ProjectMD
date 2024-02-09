@@ -43,6 +43,11 @@ public class SceneLoadManager : MonoBehaviour
         {
             // scene progress
             float progress = loadData.progress;
+            Debug.Log(progress);
+            if(progress >= 0.9f)
+            {
+                break;
+            }
             yield return null;
         }
         loadData.allowSceneActivation = true;
