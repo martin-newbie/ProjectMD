@@ -13,4 +13,9 @@ public class MenuManager : MonoBehaviour
         int[] testArr = new int[5] { 0, 1, 2, 3, 4 };
         menuUnit.InitUnits(testArr);
     }
+
+    public void OnUnitListButton()
+    {
+        SceneLoadManager.Instance.LoadScene("List");
+    }
 }
