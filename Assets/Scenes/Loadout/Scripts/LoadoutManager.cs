@@ -218,13 +218,20 @@ public class LoadoutManager : MonoBehaviour
         WebRequest.Post("loadout/deck-save-all", sendData, (data) =>
         {
             TempData.Instance.selectedDeck = selectedDeck;
-            SceneManager.LoadScene("InGame");
+            switch (TempData.Instance.selectedGameMode)
+            {
+                case GameMode.NOTHING:
+                    break;
+                case GameMode.TEST:
+                case GameMode.STAGE:
+                case GameMode.DUNGEON:
+                case GameMode.RAID:
+                case GameMode.PVP:
+                default:
+                    SceneManager.LoadScene("InGame");
+                    break;
+            }
         });
-    }
-
-    public void Back()
-    {
-        SceneManager.LoadScene("GameMenu");
     }
 }
 

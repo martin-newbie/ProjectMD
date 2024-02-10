@@ -32,6 +32,7 @@ public static class TempDataUtil
 
 public enum GameMode
 {
+    NOTHING,
     TEST,
     STAGE,
     DUNGEON,

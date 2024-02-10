@@ -18,4 +18,10 @@ public class MenuManager : MonoBehaviour
     {
         SceneLoadManager.Instance.LoadScene("List");
     }
+
+    public void OnLoadoutButton()
+    {
+        TempData.Instance.selectedGameMode = GameMode.NOTHING;
+        SceneLoadManager.Instance.LoadScene("Loadout");
+    }
 }
