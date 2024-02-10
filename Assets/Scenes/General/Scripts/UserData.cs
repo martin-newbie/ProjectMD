@@ -20,6 +20,11 @@ public class UserData
     {
         Instance = this;
     }
+
+    public UnitData FindUnitWithId(int id)
+    {
+        return units.Find(item => item.id == id);
+    }
 }
 
 [System.Serializable]

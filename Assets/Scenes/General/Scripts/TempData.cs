@@ -13,6 +13,8 @@ public class TempData
 
     public int selectedDeck;
     public GameMode selectedGameMode;
+
+    public int selectedUnit;
 }
 
 public static class TempDataUtil
