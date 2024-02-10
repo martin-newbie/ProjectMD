@@ -228,7 +228,7 @@ public class LoadoutManager : MonoBehaviour
                 case GameMode.RAID:
                 case GameMode.PVP:
                 default:
-                    SceneManager.LoadScene("InGame");
+                    SceneLoadManager.Instance.LoadScene("InGame");
                     break;
             }
         });

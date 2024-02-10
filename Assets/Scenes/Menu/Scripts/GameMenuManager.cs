@@ -19,7 +19,7 @@ public class GameMenuManager : MonoBehaviour
         WebRequest.Post("game-menu/into-stage", "", (data) =>
         {
             TempData.Instance.selectedGameMode = GameMode.STAGE;
-            SceneManager.LoadScene("Loadout");
+            SceneLoadManager.Instance.LoadScene("Loadout");
         });
     }
 
@@ -36,7 +36,7 @@ public class GameMenuManager : MonoBehaviour
         WebRequest.Post("game-menu/into-raid", "", (data) =>
         {
             TempData.Instance.selectedGameMode = GameMode.RAID;
-            SceneManager.LoadScene("Loadout");
+            SceneLoadManager.Instance.LoadScene("Loadout");
         });
     }
 
@@ -45,7 +45,7 @@ public class GameMenuManager : MonoBehaviour
         WebRequest.Post("game-menu/into-pvp", "", (data) =>
         {
             TempData.Instance.selectedGameMode = GameMode.PVP;
-            SceneManager.LoadScene("Loadout");
+            SceneLoadManager.Instance.LoadScene("Loadout");
         });
     }
 
@@ -54,13 +54,13 @@ public class GameMenuManager : MonoBehaviour
         WebRequest.Post("game-menu/into-dungeon", "", (data) =>
         {
             TempData.Instance.selectedGameMode = GameMode.DUNGEON;
-            SceneManager.LoadScene("Loadout");
+            SceneLoadManager.Instance.LoadScene("Loadout");
         });
     }
 
     public void OnButtonTest()
     {
         TempData.Instance.selectedGameMode = GameMode.TEST;
-        SceneManager.LoadScene("Loadout");
+        SceneLoadManager.Instance.LoadScene("Loadout");
     }
 }
