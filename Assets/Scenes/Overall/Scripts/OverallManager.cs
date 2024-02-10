@@ -29,7 +29,7 @@ public class OverallManager : MonoBehaviour
         unitModel.Update(0f);
         unitModel.skeletonDataAsset = ResourceManager.GetSkeleton(unitData.index);
         unitModel.Initialize(true);
-        unitModel.AnimationState.SetAnimation(0, "battle_wait", false);
+        unitModel.AnimationState.SetAnimation(0, "battle_wait", true);
 
         statusPanel.InitCharacter(unitData);
     }
