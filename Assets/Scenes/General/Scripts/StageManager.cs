@@ -6,6 +6,12 @@ using UnityEngine;
 // includes in ingame manager
 public class StageManager : MonoBehaviour
 {
+    public static StageManager Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     string path = "Stages/";
     List<ChapterData> chapterStagesData;
 
