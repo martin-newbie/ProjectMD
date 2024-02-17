@@ -13,19 +13,19 @@ public class StaticDataManager : MonoBehaviour
     public StaticUnitStatus unitStatus;
     public static UnitStatus GetUnitStatus(int keyIndex)
     {
-        return Instance.unitStatus.dataList[keyIndex];
+        return Instance.unitStatus.dataList.Find(item => item.keyIndex == keyIndex);
     }
 
     public StaticConstUnitData constUnitStatus;
     public static ConstUnitData GetConstUnitData(int keyIndex)
     {
-        return Instance.constUnitStatus.dataList[keyIndex];
+        return Instance.constUnitStatus.dataList.Find(item => item.keyIndex == keyIndex);
     }
 
     public StaticUnitSkillStatus unitSkillStatus;
     public static UnitSkillStatus GetUnitSkillStatus(int keyIndex)
     {
-        return Instance.unitSkillStatus.dataList[keyIndex];
+        return Instance.unitSkillStatus.dataList.Find(item => item.unitIndex == keyIndex);
     }
 
     private void Start()
