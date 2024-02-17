@@ -26,7 +26,7 @@ public class TestGameMode : IGameModeBehaviour
 
         mainCam = Camera.main;
 
-        WebRequest.Post("test-ingame/game-enter", JsonUtility.ToJson(postData), (data) =>
+        WebRequest.Post("ingame/game-enter", JsonUtility.ToJson(postData), (data) =>
         {
             var deck = JsonUtility.FromJson<DeckData>(data);
             List<UnitData> unitDatas = new List<UnitData>();

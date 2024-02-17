@@ -15,6 +15,9 @@ public class TempData
     public GameMode selectedGameMode;
 
     public int selectedUnit;
+
+    public int selectedStage;
+    public int selectedChapter;
 }
 
 public static class TempDataUtil
