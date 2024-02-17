@@ -15,7 +15,7 @@ public class WebRequest : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public static string testUri = "http://ksmin.iptime.org:8081/rest/";
+    public static string portURL = "http://ksmin.iptime.org:8081/rest/";
 
     public static void Get(string url, string[] bodyParamKeys, string[] bodyParamValues, Action<string> endAction = null)
     {
@@ -87,7 +87,7 @@ public class WebRequest : MonoBehaviour
 
     string GetSendUri()
     {
-        return testUri;
+        return portURL;
     }
 }
 
