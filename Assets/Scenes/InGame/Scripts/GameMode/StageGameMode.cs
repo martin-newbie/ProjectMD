@@ -13,6 +13,11 @@ public class StageGameMode : IGameModeBehaviour
 
     bool isInit = false;
 
+    public StageGameMode(InGameManager _manager)
+    {
+        manager = _manager;
+    }
+
     public void Start()
     {
         var stageData = StageManager.Instance.GetStageData(TempData.Instance.selectedChapter, TempData.Instance.selectedStage);

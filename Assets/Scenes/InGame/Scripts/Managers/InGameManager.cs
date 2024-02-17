@@ -35,10 +35,23 @@ public class InGameManager : MonoBehaviour
 
     void InitGameMode()
     {
-        switch (gameModeIdx)
+        switch (TempData.Instance.selectedGameMode)
         {
-            case 0:
+            case GameMode.NOTHING:
+                break;
+            case GameMode.TEST:
                 gameMode = new TestGameMode(this);
+                break;
+            case GameMode.STAGE:
+                gameMode = new StageGameMode(this);
+                break;
+            case GameMode.DUNGEON:
+                break;
+            case GameMode.RAID:
+                break;
+            case GameMode.PVP:
+                break;
+            default:
                 break;
         }
     }
