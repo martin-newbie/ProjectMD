@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayableGamePlayer : GamePlayer
@@ -25,7 +26,7 @@ public class PlayableGamePlayer : GamePlayer
             unit.SetActiveHpBar(true);
             AddActiveUnit(unit);
         }
-        skillDelay = 1f;
+        skillDelay = 8f;
     }
 
     public void ActiveAllUnits()
@@ -101,6 +102,6 @@ public class PlayableGamePlayer : GamePlayer
     // test
     protected override float GetCostRecovery()
     {
-        return 100000f;
+        return curUnits.Sum((item) => item.GetStatus(StatusType.COST_RECOVERY));
     }
 }

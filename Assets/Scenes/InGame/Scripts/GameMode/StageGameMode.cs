@@ -75,7 +75,7 @@ public class StageGameMode : IGameModeBehaviour
 
         while (waveCount < 4)
         {
-            (enemy as TestEnemyGamePlayer).ActiveUnitAt(waveCount);
+            (enemy as StageEnemyPlayer).ActiveUnitAt(waveCount);
             while (enemy.GetCountOfUnits() > 0)
             {
                 if (player.GetCountOfUnits() <= 0)
