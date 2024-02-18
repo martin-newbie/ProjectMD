@@ -92,6 +92,9 @@ public class InGameManager : MonoBehaviour
             case 6:
                 behaviour = new Picardy(data, status);
                 break;
+            case 12:
+                behaviour = new Heilra(data, status);
+                break;
             case 17:
                 behaviour = new Fei(data, status);
                 break;
