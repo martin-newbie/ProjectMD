@@ -48,6 +48,11 @@ public class StageManager : MonoBehaviour
     {
         return chapterStagesData[chapter].stageDatas[stage];
     }
+
+    public ChapterData GetChapterData(int chapter)
+    {
+        return chapterStagesData[chapter];
+    }
 }
 
 [Serializable]
