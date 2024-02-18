@@ -17,7 +17,7 @@ public class SceneLoadManager : MonoBehaviour
 
     public void LoadHomeScene()
     {
-        moveSceneName = "MainMenu";
+        moveSceneName = "Main";
         previousScenes.Clear();
         StartCoroutine(LoadSceneAsync());
     }
