@@ -5,8 +5,9 @@ using UnityEngine;
 public class StageListUnit : MonoBehaviour
 {
     int index;
+    StageListManager manager;
 
-    public void InitUnit(int idx)
+    public void InitUnit(StageListManager _manager, int idx)
     {
         index = idx;
     }
@@ -14,5 +15,6 @@ public class StageListUnit : MonoBehaviour
     public void OnButtonClick()
     {
         // use index
+        manager.ShowStageInfo(index);
     }
 }

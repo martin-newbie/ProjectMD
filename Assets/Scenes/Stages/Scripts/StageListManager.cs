@@ -22,7 +22,7 @@ public class StageListManager : MonoBehaviour
         for (int i = 0; i < allocCount; i++)
         {
             var unit = Instantiate(stageUnitPrefab, stageContent);
-            unit.InitUnit(i);
+            unit.InitUnit(this, i);
             unitList.Add(unit);
         }
 
