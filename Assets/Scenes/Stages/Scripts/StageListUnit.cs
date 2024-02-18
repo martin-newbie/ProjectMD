@@ -9,6 +9,7 @@ public class StageListUnit : MonoBehaviour
 
     public void InitUnit(StageListManager _manager, int idx)
     {
+        manager = _manager;
         index = idx;
     }
 
