@@ -16,7 +16,7 @@ public class ProjectileHowitzer : ProjectileBehaviour
         transform.position = GetPositionT(start, end, t);
 
         var pos1 = GetPositionT(start, end, t);
-        var pos2 = GetPositionT(start, end, t + 0.000001f);
+        var pos2 = GetPositionT(start, end, t + Time.deltaTime);
 
         float eul = (pos2.y - pos1.y) / (pos2.x - pos1.x);
         transform.rotation = Quaternion.Euler(0, 0, eul * Mathf.Rad2Deg);
