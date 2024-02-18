@@ -40,6 +40,7 @@ public class StageGameMode : IGameModeBehaviour
             }
 
             player = new PlayableGamePlayer(unitDatas.ToArray(), UnitGroupType.ALLY, manager.skillCanvas);
+            enemy = new StageEnemyPlayer(UnitGroupType.HOSTILE, stageData);
             isInit = true;
 
             InGameManager.Instance.StartCoroutine(GameLogic());

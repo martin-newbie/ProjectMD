@@ -22,10 +22,11 @@ public class HpBarCanvas : MonoBehaviour
         switch (type)
         {
             case 0:
+            case 1:
                 hpBar = Instantiate(commonHpBar, transform);
                 (hpBar as CommonHPBar).InitCanvas(canvasRt);
                 break;
-            case 1:
+            case 2:
                 hpBar = Instantiate(bossHpBar, transform);
                 break;
             default:
