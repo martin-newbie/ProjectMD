@@ -13,6 +13,8 @@ public class StageGameMode : IGameModeBehaviour
 
     bool isInit = false;
 
+    StageData stageData;
+
     public StageGameMode(InGameManager _manager)
     {
         manager = _manager;
@@ -20,8 +22,7 @@ public class StageGameMode : IGameModeBehaviour
 
     public void Start()
     {
-        var stageData = StageManager.Instance.GetStageData(TempData.Instance.selectedChapter, TempData.Instance.selectedStage);
-
+        stageData = StageManager.Instance.GetStageData(TempData.Instance.selectedChapter, TempData.Instance.selectedStage);
 
         IndexAndUUID postData = new IndexAndUUID();
         postData.uuid = UserData.Instance.uuid;
@@ -73,7 +74,7 @@ public class StageGameMode : IGameModeBehaviour
         player.StartGame();
         enemy.StartGame();
 
-        while (waveCount < 4)
+        while (waveCount < stageData.waveDatas.Count)
         {
             (enemy as StageEnemyPlayer).ActiveUnitAt(waveCount);
             while (enemy.GetCountOfUnits() > 0)
