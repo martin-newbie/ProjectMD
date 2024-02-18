@@ -14,7 +14,9 @@ public class StageInfoWindow : MonoBehaviour
 
     public void OnStartButton()
     {
-
+        TempData.Instance.selectedChapter = linkedData.chapterIndex;
+        TempData.Instance.selectedStage = linkedData.stageIndex;
+        SceneLoadManager.Instance.LoadScene("Loadout");
     }
 
     public void CloseWindow()
