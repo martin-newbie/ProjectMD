@@ -37,6 +37,6 @@ public class MenuButtonManager : MonoBehaviour
 
     public void OnGameButton()
     {
-        SceneLoadManager.Instance.LoadScene("GameMenu");
+        SceneLoadManager.Instance.LoadScene("Lobby");
     }
 }
