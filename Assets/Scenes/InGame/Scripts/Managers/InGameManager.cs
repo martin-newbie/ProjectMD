@@ -113,6 +113,19 @@ public class InGameManager : MonoBehaviour
             case 26:
                 behaviour = new DieselRobotSMG(data, status);
                 break;
+
+            case 100000:
+                behaviour = new Biker_Assault(data, status);
+                break;
+            case 100001:
+                behaviour = new Biker_Tanker(data, status);
+                break;
+            case 100002:
+                behaviour = new Biker_Sniper(data, status);
+                break;
+            case 100003:
+                behaviour = new Biker_Boss(data, status);
+                break;
         }
 
         unitObj.SetBehaviour(behaviour, group, barType);
