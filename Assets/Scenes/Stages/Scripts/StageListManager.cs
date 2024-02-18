@@ -27,11 +27,23 @@ public class StageListManager : MonoBehaviour
         }
 
         chapterIndex = 0;
+        UpdateChapterList();
+    }
+
+    public void ShowStageInfo(int stageIdx)
+    {
+        var stageData = StageManager.Instance.GetStageData(chapterIndex, stageIdx);
+        stageInfo.OpenStageInfo(stageData);
+    }
+
+    void UpdateChapterList()
+    {
         var chapterData = StageManager.Instance.GetChapterData(chapterIndex);
         for (int i = 0; i < unitList.Count; i++)
         {
             if (i < chapterData.stageDatas.Count)
             {
+                unitList[i].UpdateUnit(chapterData.stageDatas[i]);
                 unitList[i].gameObject.SetActive(true);
             }
             else
@@ -39,12 +51,6 @@ public class StageListManager : MonoBehaviour
                 unitList[i].gameObject.SetActive(false);
             }
         }
-    }
-
-    public void ShowStageInfo(int stageIdx)
-    {
-        var stageData = StageManager.Instance.GetStageData(chapterIndex, stageIdx);
-        stageInfo.OpenStageInfo(stageData);
     }
 
 }

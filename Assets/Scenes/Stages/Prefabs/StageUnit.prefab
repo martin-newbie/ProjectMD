@@ -369,7 +369,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Stage-0
+  m_Text: Stage
 --- !u!1 &4237823203737724777
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,6 +462,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6fd4d94b175e8c49a2a4ee22897016d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageIndexText: {fileID: 2571248337008215000}
+  stageTitleText: {fileID: 4237823203558225435}
 --- !u!1 &8705833321074698554
 GameObject:
   m_ObjectHideFlags: 0
