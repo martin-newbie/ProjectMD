@@ -19,7 +19,7 @@ public class LobbyManager : MonoBehaviour
         WebRequest.Post("game-menu/into-stage", "", (data) =>
         {
             TempData.Instance.selectedGameMode = GameMode.STAGE;
-            SceneLoadManager.Instance.LoadScene("Loadout");
+            SceneLoadManager.Instance.LoadScene("Stages");
         });
     }
 

@@ -9,11 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Tests/FakeLogin/FakeLoginScene.unity
     guid: a6dfaa9a99b45de4dafb0112d1d89474
   - enabled: 1
-    path: Assets/Scenes/Main/MainMenu.unity
+    path: Assets/Scenes/Main/Main.unity
     guid: 807073c33bdd02d428d663d5ca666b70
   - enabled: 1
-    path: Assets/Scenes/Menu/GameMenu.unity
+    path: Assets/Scenes/Lobby/Lobby.unity
     guid: 14c555054ee4e5c4baa96495819bd083
+  - enabled: 1
+    path: Assets/Scenes/Stages/Stages.unity
+    guid: 4065a497d09cd5048b9e8971eb884ae6
   - enabled: 1
     path: Assets/Scenes/Loadout/Loadout.unity
     guid: ec36e99cd7d363446a44ad50615251c6
