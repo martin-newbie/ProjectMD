@@ -32,6 +32,7 @@ public class UnitData
 {
     public int id;
     public int index;
+    public int rank;
     public int level;
     public float exp;
     public string user_uuid;

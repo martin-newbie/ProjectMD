@@ -62,6 +62,16 @@ public class UnitStatus
         defaultValueList.Add(StatusType.HEAL_RAISE, 1f);
     }
 
+    public Dictionary<StatusType, float> GetCalculatedValueDictionary(int level = 0, int rank = 0)
+    {
+        var result = new Dictionary<StatusType, float>();
+        foreach (var key in defaultValueList.Keys)
+        {
+            result.Add(key, GetTotalStatus(key, level, rank));
+        }
+        return result;
+    }
+
     public float GetTotalStatus(StatusType type, int level = 0, int rank = 0)
     {
         float result = 0f;
@@ -81,16 +91,6 @@ public class UnitStatus
             result = GetLevelStatus(level, defaultValue, levelGrowthValueList[type]);
         }
 
-        return result;
-    }
-
-    public Dictionary<StatusType, float> GetCalculatedValueDictionary(int level = 0)
-    {
-        var result = new Dictionary<StatusType, float>();
-        foreach (var key in defaultValueList.Keys)
-        {
-            result.Add(key, GetTotalStatus(key, level));
-        }
         return result;
     }
 
