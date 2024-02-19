@@ -14,7 +14,7 @@ public abstract class UnitBehaviour
     public Transform transform;
     public GameObject gameObject;
     public SkeletonAnimation model;
-
+    public ParticleSystem hpEffect;
     public Bullet probBullet;
     #endregion
 
@@ -64,7 +64,7 @@ public abstract class UnitBehaviour
         transform = subject.transform;
         gameObject = subject.gameObject;
         model = subject.model;
-
+        hpEffect = subject.hpRecoveryEffect;
         probBullet = subject.probBullet;
 
         buffList = new Dictionary<StatusType, float>();
@@ -394,6 +394,7 @@ public abstract class UnitBehaviour
     {
         if (state == BehaviourState.STANDBY || state == BehaviourState.RETIRE) return;
 
+        hpEffect.Play();
         hp += value * GetStatus(StatusType.HEAL_RAISE);
     }
     public virtual void OnDamage(DamageStruct value, UnitBehaviour from)

@@ -8,6 +8,7 @@ public class UnitObject : MonoBehaviour
     public UnitBehaviour behaviour;
     public SkeletonAnimation model;
     public SpriteRenderer spriteModel;
+    public ParticleSystem hpRecoveryEffect;
 
     [Header("Prob")]
     public Bullet probBullet;
