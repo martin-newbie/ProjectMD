@@ -8,7 +8,7 @@ public class StaticUnitStatus : SheetDataBase
 {
     protected override string gid => "0";
 
-    protected override string range => "E4:W33";
+    protected override string range => "E4:Z33";
 
     public List<UnitStatus> dataList;
 
@@ -29,21 +29,23 @@ public class UnitStatus
 {
     public int keyIndex;
     [SerializeField] public Dictionary<StatusType, float> defaultValueList;
-    [SerializeField] public Dictionary<StatusType, float> growthValueList;
+    [SerializeField] public Dictionary<StatusType, float> levelGrowthValueList;
+    [SerializeField] public Dictionary<StatusType, float> rankGrowthValueList;
 
     public UnitStatus(string[] data)
     {
         defaultValueList = new Dictionary<StatusType, float>();
-        growthValueList = new Dictionary<StatusType, float>();
+        levelGrowthValueList = new Dictionary<StatusType, float>();
+        rankGrowthValueList = new Dictionary<StatusType, float>();
 
         int idx = 0;
         keyIndex = int.Parse(data[idx++]);
         defaultValueList.Add(StatusType.HP, float.Parse(data[idx++]));
-        growthValueList.Add(StatusType.HP, float.Parse(data[idx++]));
+        levelGrowthValueList.Add(StatusType.HP, float.Parse(data[idx++]));
         defaultValueList.Add(StatusType.DMG, float.Parse(data[idx++]));
-        growthValueList.Add(StatusType.DMG, float.Parse(data[idx++]));
+        levelGrowthValueList.Add(StatusType.DMG, float.Parse(data[idx++]));
         defaultValueList.Add(StatusType.DEF, float.Parse(data[idx++]));
-        growthValueList.Add(StatusType.DEF, float.Parse(data[idx++]));
+        levelGrowthValueList.Add(StatusType.DEF, float.Parse(data[idx++]));
         defaultValueList.Add(StatusType.DODGE, float.Parse(data[idx++]));
         defaultValueList.Add(StatusType.ACCURACY, float.Parse(data[idx++]));
         defaultValueList.Add(StatusType.CRI_RATE, float.Parse(data[idx++]));
@@ -60,21 +62,23 @@ public class UnitStatus
         defaultValueList.Add(StatusType.HEAL_RAISE, 1f);
     }
 
-    public float GetTotalStatus(StatusType type, int level = 0)
+    public float GetTotalStatus(StatusType type, int level = 0, int rank = 0)
     {
         float result = 0f;
         float defaultValue = 0f;
-        float increaseValue = 1f;
 
         if (defaultValueList.ContainsKey(type))
         {
             defaultValue = defaultValueList[type];
             result = defaultValue;
         }
-        if (growthValueList.ContainsKey(type))
+        if (rankGrowthValueList.ContainsKey(type))
         {
-            increaseValue = growthValueList[type];
-            result = GetLevelStatus(level, defaultValue, increaseValue);
+            defaultValue = GetRankStatus(rank, defaultValue, rankGrowthValueList[type]);
+        }
+        if (levelGrowthValueList.ContainsKey(type))
+        {
+            result = GetLevelStatus(level, defaultValue, levelGrowthValueList[type]);
         }
 
         return result;
@@ -93,6 +97,11 @@ public class UnitStatus
     float GetLevelStatus(int level, float defaultValue, float growthValue)
     {
         return defaultValue + growthValue * (1 - Mathf.Pow((float)System.Math.E, -0.03f * level));
+    }
+
+    float GetRankStatus(int rank, float defaultValue, float growthValue)
+    {
+        return defaultValue * (Mathf.Pow(growthValue, rank + 1));
     }
 }
 
