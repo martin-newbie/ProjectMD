@@ -5,8 +5,12 @@ using UnityEngine;
 
 public class Picardy : ActiveSkillBehaviour
 {
+
+    PicardySkillSyringe skillBulletPrefab;
+
     public Picardy(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
+        skillBulletPrefab = InGamePrefabsManager.GetObject("PicardySyringe").GetComponent<PicardySkillSyringe>();
     }
 
     public override void UnitActive()
@@ -24,7 +28,14 @@ public class Picardy : ActiveSkillBehaviour
         skillData.damageData.SetValue(StatusType.DEF, GetStatus(StatusType.DEF));
         skillData.damageData.AddIncreaseValue(StatusType.DEF, skillStatus.GetActiveSkillValue(unitData.skill_level[0]));
         float healAmount = skillData.damageData.GetValue(StatusType.DEF);
+
         // shoot hp bullet to target
+        var bulletPos = GetBoneWorldPos("bullet_pos");
+        var skillBullet = Instantiate(skillBulletPrefab, bulletPos, Quaternion.identity);
+        skillBullet.ObjectMove(bulletPos, target.GetBoneWorldPos("body"), () =>
+        {
+            target.OnHeal(healAmount, this);
+        });
         yield return PlayAnimAndWait("active_skill_attack");
         yield return PlayAnimAndWait("active_skill_disarm");
 
