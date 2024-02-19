@@ -42,10 +42,13 @@ public class UnitStatus
         keyIndex = int.Parse(data[idx++]);
         defaultValueList.Add(StatusType.HP, float.Parse(data[idx++]));
         levelGrowthValueList.Add(StatusType.HP, float.Parse(data[idx++]));
+        rankGrowthValueList.Add(StatusType.HP, float.Parse(data[idx++]));
         defaultValueList.Add(StatusType.DMG, float.Parse(data[idx++]));
         levelGrowthValueList.Add(StatusType.DMG, float.Parse(data[idx++]));
+        rankGrowthValueList.Add(StatusType.DMG, float.Parse(data[idx++]));
         defaultValueList.Add(StatusType.DEF, float.Parse(data[idx++]));
         levelGrowthValueList.Add(StatusType.DEF, float.Parse(data[idx++]));
+        rankGrowthValueList.Add(StatusType.DEF, float.Parse(data[idx++]));
         defaultValueList.Add(StatusType.DODGE, float.Parse(data[idx++]));
         defaultValueList.Add(StatusType.ACCURACY, float.Parse(data[idx++]));
         defaultValueList.Add(StatusType.CRI_RATE, float.Parse(data[idx++]));
