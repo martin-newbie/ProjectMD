@@ -15,6 +15,11 @@ public class StageGameMode : IGameModeBehaviour
 
     StageData stageData;
 
+
+    int startingAllyUnitCount;
+    float gameActivatingTime;
+    float perfactTime = 120f;
+
     public StageGameMode(InGameManager _manager)
     {
         manager = _manager;
@@ -38,6 +43,7 @@ public class StageGameMode : IGameModeBehaviour
             {
                 if (id < 0) continue;
                 unitDatas.Add(UserData.Instance.units.Find(unit => unit.id == id));
+                startingAllyUnitCount++;
             }
 
             player = new PlayableGamePlayer(unitDatas.ToArray(), UnitGroupType.ALLY, manager.skillCanvas);
@@ -61,6 +67,8 @@ public class StageGameMode : IGameModeBehaviour
             var frontPos = frontUnit.x;
             var camPos = new Vector3(frontPos + 3, 0f, -10f);
             mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, camPos, Time.deltaTime * 15f);
+
+            gameActivatingTime += Time.deltaTime;
         }
     }
 
@@ -82,7 +90,8 @@ public class StageGameMode : IGameModeBehaviour
                 if (player.GetCountOfUnits() <= 0)
                 {
                     player.isGameActive = false;
-                    // play lose event
+                    PostResultEvent(false); // lose
+                    goto StageEndPoint;
                 }
                 yield return null;
             }
@@ -90,11 +99,46 @@ public class StageGameMode : IGameModeBehaviour
             yield return new WaitUntil((player as PlayableGamePlayer).EveryUnitActionEnds);
             waveCount++;
         }
-        
-        // play win event
+
+        PostResultEvent(true); // wind
+        StageEndPoint:
         player.isGameActive = false;
         enemy.isGameActive = false;
         yield break;
     }
 
+    void PostResultEvent(bool isWin)
+    {
+        bool timeCondition = isWin && gameActivatingTime < perfactTime + 1f;
+        bool unitCondition = isWin && player.curUnits.Count == startingAllyUnitCount;
+        bool winCondition = isWin;
+
+        var sendData = JsonUtility.ToJson(new SendStageResultData(timeCondition, unitCondition, winCondition));
+        WebRequest.Post("ingame/game-result", sendData, (data) =>
+        {
+            var recieveData = JsonUtility.FromJson<RecieveStageResultData>(data);
+
+        });
+    }
+}
+
+[System.Serializable]
+class SendStageResultData
+{
+    public bool condition1;
+    public bool condition2;
+    public bool condition3;
+
+    public SendStageResultData(bool con1, bool con2, bool con3)
+    {
+        condition1 = con1;
+        condition2 = con2;
+        condition3 = con3;
+    }
+}
+
+[System.Serializable]
+class RecieveStageResultData
+{
+    public List<(int, int)> result_items;
 }
