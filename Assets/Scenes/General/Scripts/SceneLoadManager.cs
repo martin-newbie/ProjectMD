@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,27 +16,27 @@ public class SceneLoadManager : MonoBehaviour
         Instance = this;
     }
 
-    public void LoadHomeScene()
+    public void LoadHomeScene(Action onComplete = null)
     {
         moveSceneName = "Main";
         previousScenes.Clear();
-        StartCoroutine(LoadSceneAsync());
+        StartCoroutine(LoadSceneAsync(onComplete));
     }
 
-    public void LoadBackScene()
+    public void LoadBackScene(Action onComplete = null)
     {
         moveSceneName = previousScenes.Pop();
-        StartCoroutine(LoadSceneAsync());
+        StartCoroutine(LoadSceneAsync(onComplete));
     }
 
-    public void LoadScene(string sceneName)
+    public void LoadScene(string sceneName, Action onComplete = null)
     {
         moveSceneName = sceneName;
         previousScenes.Push(SceneManager.GetActiveScene().name);
-        StartCoroutine(LoadSceneAsync());
+        StartCoroutine(LoadSceneAsync(onComplete));
     }
 
-    IEnumerator LoadSceneAsync()
+    IEnumerator LoadSceneAsync(Action onComplete)
     {
         var loadData = SceneManager.LoadSceneAsync(moveSceneName);
         loadData.allowSceneActivation = false;
@@ -49,7 +50,11 @@ public class SceneLoadManager : MonoBehaviour
             }
             yield return null;
         }
+
         loadData.allowSceneActivation = true;
+        yield return null;
+        onComplete?.Invoke();
+
         yield break;
     }
 }
