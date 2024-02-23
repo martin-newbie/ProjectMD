@@ -20,12 +20,19 @@ public class StageGameMode : IGameModeBehaviour
     float gameActivatingTime;
     float perfactTime = 120f;
 
+    int stageIndex;
+    int chapterIndex;
+    int deckIndex;
+
     public StageGameMode(InGameManager _manager, RecieveGameEnter data)
     {
         manager = _manager;
         mainCam = Camera.main;
 
-        stageData = StageManager.Instance.GetStageData(data.selected_chapter, data.selected_stage);
+        stageIndex = data.selected_stage;
+        chapterIndex = data.selected_chapter;
+        deckIndex = TempData.Instance.selectedDeck;
+        stageData = StageManager.Instance.GetStageData(chapterIndex, stageIndex);
         
         List<UnitData> unitDatas = new List<UnitData>();
         foreach (var id in data.deck.unit_indexes)
@@ -106,8 +113,14 @@ public class StageGameMode : IGameModeBehaviour
         bool unitCondition = isWin && player.curUnits.Count == startingAllyUnitCount;
         bool winCondition = isWin;
 
-        var sendData = JsonUtility.ToJson(new SendStageResultData(timeCondition, unitCondition, winCondition));
-        WebRequest.Post("ingame/game-result", sendData, (data) =>
+        var sendResult = new SendStageResultData();
+        sendResult.uuid = UserData.Instance.uuid;
+        sendResult.stage_index = stageIndex;
+        sendResult.chapter_index = chapterIndex;
+        sendResult.deck_index = deckIndex;
+        sendResult.use_energy = 10;
+        sendResult.perfaction = new bool[] { timeCondition, unitCondition, winCondition };
+        WebRequest.Post("ingame/game-end", JsonUtility.ToJson(sendResult), (data) =>
         {
             var recieveData = JsonUtility.FromJson<RecieveStageResultData>(data);
 
@@ -118,16 +131,12 @@ public class StageGameMode : IGameModeBehaviour
 [System.Serializable]
 class SendStageResultData
 {
-    public bool condition1;
-    public bool condition2;
-    public bool condition3;
-
-    public SendStageResultData(bool con1, bool con2, bool con3)
-    {
-        condition1 = con1;
-        condition2 = con2;
-        condition3 = con3;
-    }
+    public string uuid;
+    public int stage_index;
+    public int chapter_index;
+    public int deck_index;
+    public int use_energy;
+    public bool[] perfaction;
 }
 
 [System.Serializable]
