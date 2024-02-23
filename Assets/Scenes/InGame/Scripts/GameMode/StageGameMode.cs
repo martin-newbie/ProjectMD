@@ -20,38 +20,31 @@ public class StageGameMode : IGameModeBehaviour
     float gameActivatingTime;
     float perfactTime = 120f;
 
-    public StageGameMode(InGameManager _manager)
+    public StageGameMode(InGameManager _manager, RecieveGameEnter data)
     {
         manager = _manager;
+        mainCam = Camera.main;
+
+        stageData = StageManager.Instance.GetStageData(data.selected_chapter, data.selected_stage);
+        
+        List<UnitData> unitDatas = new List<UnitData>();
+        foreach (var id in data.deck.unit_indexes)
+        {
+            if (id < 0) continue;
+
+            unitDatas.Add(UserData.Instance.units.Find(unit => unit.id == id));
+            startingAllyUnitCount++;
+        }
+
+        player = new PlayableGamePlayer(unitDatas.ToArray(), UnitGroupType.ALLY, manager.skillCanvas);
+        enemy = new StageEnemyPlayer(UnitGroupType.HOSTILE, stageData);
+        isInit = true;
+
+        InGameManager.Instance.StartCoroutine(GameLogic());
     }
 
     public void Start()
     {
-        stageData = StageManager.Instance.GetStageData(TempData.Instance.selectedChapter, TempData.Instance.selectedStage);
-
-        IndexAndUUID postData = new IndexAndUUID();
-        postData.uuid = UserData.Instance.uuid;
-        postData.index = TempData.Instance.selectedDeck;
-
-        mainCam = Camera.main;
-
-        WebRequest.Post("ingame/game-enter", JsonUtility.ToJson(postData), (data) =>
-        {
-            var deck = JsonUtility.FromJson<DeckData>(data);
-            List<UnitData> unitDatas = new List<UnitData>();
-            foreach (var id in deck.unit_indexes)
-            {
-                if (id < 0) continue;
-                unitDatas.Add(UserData.Instance.units.Find(unit => unit.id == id));
-                startingAllyUnitCount++;
-            }
-
-            player = new PlayableGamePlayer(unitDatas.ToArray(), UnitGroupType.ALLY, manager.skillCanvas);
-            enemy = new StageEnemyPlayer(UnitGroupType.HOSTILE, stageData);
-            isInit = true;
-
-            InGameManager.Instance.StartCoroutine(GameLogic());
-        });
     }
 
     public void Update()

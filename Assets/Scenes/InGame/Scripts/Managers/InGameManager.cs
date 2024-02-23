@@ -22,18 +22,12 @@ public class InGameManager : MonoBehaviour
     int gameModeIdx = 0;
     IGameModeBehaviour gameMode;
 
-    void Start()
-    {
-        InitGameMode();
-        gameMode?.Start();
-    }
-
     private void Update()
     {
         gameMode?.Update();
     }
 
-    void InitGameMode()
+    public void InitGameMode(RecieveGameEnter data)
     {
         switch (TempData.Instance.selectedGameMode)
         {
@@ -43,7 +37,7 @@ public class InGameManager : MonoBehaviour
                 gameMode = new TestGameMode(this);
                 break;
             case GameMode.STAGE:
-                gameMode = new StageGameMode(this);
+                gameMode = new StageGameMode(this, data);
                 break;
             case GameMode.DUNGEON:
                 break;
@@ -54,6 +48,8 @@ public class InGameManager : MonoBehaviour
             default:
                 break;
         }
+
+        gameMode?.Start();
     }
 
     public UnitBehaviour SpawnUnit(Vector3 spawnPos, UnitGroupType group, UnitData data, Dictionary<StatusType, float> status, int barType)

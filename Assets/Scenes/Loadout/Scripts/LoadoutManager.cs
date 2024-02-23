@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -218,24 +219,27 @@ public class LoadoutManager : MonoBehaviour
         WebRequest.Post("loadout/deck-save-all", sendData, (data) =>
         {
             TempData.Instance.selectedDeck = selectedDeck;
-            switch (TempData.Instance.selectedGameMode)
+        });
+
+        var sendGameEnter = new SendGameEnter();
+        sendGameEnter.uuid = UserData.Instance.uuid;
+        sendGameEnter.energy_use = 10;
+        sendGameEnter.deck_index = TempData.Instance.selectedDeck;
+        sendGameEnter.selected_chapter = TempData.Instance.selectedChapter;
+        sendGameEnter.selected_stage = TempData.Instance.selectedStage;
+
+        WebRequest.Post("ingame/game-enter", JsonUtility.ToJson(sendGameEnter), (data) =>
+        {
+            var recieveData = JsonUtility.FromJson<RecieveGameEnter>(data);
+            SceneLoadManager.Instance.LoadScene("InGame", () =>
             {
-                case GameMode.NOTHING:
-                    break;
-                case GameMode.TEST:
-                case GameMode.STAGE:
-                case GameMode.DUNGEON:
-                case GameMode.RAID:
-                case GameMode.PVP:
-                default:
-                    SceneLoadManager.Instance.LoadScene("InGame");
-                    break;
-            }
+                InGameManager.Instance.InitGameMode(recieveData);
+            });
         });
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class SendDeckData : DeckData
 {
     public int unit1;
@@ -245,20 +249,43 @@ public class SendDeckData : DeckData
     public int unit5;
 }
 
-[System.Serializable]
+[Serializable]
 public class SendAllDeck
 {
     public DeckData[] decks;
 }
 
-[System.Serializable]
+[Serializable]
 public class RecieveDeckData
 {
     public DeckData[] decks;
 }
 
-[System.Serializable]
+[Serializable]
 public class RecieveDeckAdd
 {
     public DeckData deck;
+}
+
+[Serializable]
+public class SendGameEnter
+{
+    public string uuid;
+    public int energy_use;
+    public int deck_index;
+    public int selected_stage;
+    public int selected_chapter;
+}
+
+[Serializable]
+public class RecieveGameEnter
+{
+    public bool success;
+    public int current_energy;
+    public DateTime energy_updated_at;
+    public DeckData deck;
+    public string stage_data;
+
+    public int selected_chapter;
+    public int selected_stage;
 }
