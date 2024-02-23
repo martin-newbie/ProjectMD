@@ -16,10 +16,13 @@ public class LobbyManager : MonoBehaviour
 
     public void OnButtonGameStage()
     {
-        WebRequest.Post("game-menu/into-stage", "", (data) =>
+        WebRequest.Post("game-menu/into-stage", UserData.Instance.uuid, (data) =>
         {
             TempData.Instance.selectedGameMode = GameMode.STAGE;
-            SceneLoadManager.Instance.LoadScene("Stages");
+            SceneLoadManager.Instance.LoadScene("Stages", ()=>
+            {
+
+            });
         });
     }
 

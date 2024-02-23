@@ -15,7 +15,10 @@ public class WebRequest : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public bool useAsLocalhost = false;
+
     public static string portURL = "http://ksmin.iptime.org:8081/rest/";
+    public static string testURL = "http://localhost:8083/rest/";
 
     public static void Get(string url, string[] bodyParamKeys, string[] bodyParamValues, Action<string> endAction = null)
     {
@@ -87,7 +90,7 @@ public class WebRequest : MonoBehaviour
 
     string GetSendUri()
     {
-        return portURL;
+        return useAsLocalhost ? testURL : portURL;
     }
 }
 

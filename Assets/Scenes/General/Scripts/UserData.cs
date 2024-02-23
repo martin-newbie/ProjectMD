@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-[System.Serializable]
+[Serializable]
 public class UserData
 {
     public static UserData Instance = null;
@@ -13,7 +14,7 @@ public class UserData
     public float exp;
     public int dia;
     public int coin;
-
+    public DateTime last_energy_updated;
     public List<UnitData> units;
 
     public UserData()
@@ -27,7 +28,7 @@ public class UserData
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class UnitData
 {
     public int id;
@@ -40,7 +41,7 @@ public class UnitData
     public int[] skill_level;
 }
 
-[System.Serializable]
+[Serializable]
 public class DeckData
 {
     public int id;
