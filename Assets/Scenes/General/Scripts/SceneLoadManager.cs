@@ -52,7 +52,7 @@ public class SceneLoadManager : MonoBehaviour
         }
 
         loadData.allowSceneActivation = true;
-        yield return new WaitUntil(() => SceneManager.GetActiveScene().name == moveSceneName);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName(moveSceneName).isLoaded);
         onComplete?.Invoke();
 
         yield break;
