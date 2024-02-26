@@ -29,7 +29,7 @@ public class LoadoutManager : MonoBehaviour
     [SerializeField] Text deckTitleTxt;
     [SerializeField] LoadoutTitleEdit titleEdit;
 
-    void Start()
+    public void InitLoadout(RecieveDeckData recieveData)
     {
         for (int i = 0; i < infoButtons.Count; i++)
         {
@@ -41,19 +41,15 @@ public class LoadoutManager : MonoBehaviour
         selectPanel.InitPanel();
         deckIdxArr = new int[0];
 
-        WebRequest.Post("loadout/deck-enter", UserData.Instance.uuid, (data) =>
+        decks = recieveData.decks.ToList();
+
+        deckButtons = new List<Button>();
+        for (int i = 0; i < decks.Count; i++)
         {
-            var result = JsonUtility.FromJson<RecieveDeckData>(data);
-            decks = result.decks.ToList();
+            AddDeckButton(i);
+        }
 
-            deckButtons = new List<Button>();
-            for (int i = 0; i < result.decks.Length; i++)
-            {
-                AddDeckButton(i);
-            }
-
-            UpdateDeck(0);
-        });
+        UpdateDeck(0);
     }
 
     private void Update()

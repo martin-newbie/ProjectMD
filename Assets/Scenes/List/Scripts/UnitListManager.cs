@@ -14,11 +14,11 @@ public class UnitListManager : MonoBehaviour
     [SerializeField] Transform buttonContent;
     List<UnitListButton> buttonList;
 
-    void Start()
+    public void InitList(UnitData[] units)
     {
         buttonList = new List<UnitListButton>();
-        var unitDatas = UserData.Instance.units;
-        foreach (var unit in unitDatas)
+
+        foreach (var unit in units)
         {
             var button = Instantiate(buttonPrefab, buttonContent);
             button.InitButton(unit);
