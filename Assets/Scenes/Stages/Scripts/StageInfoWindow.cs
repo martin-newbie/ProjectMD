@@ -14,9 +14,15 @@ public class StageInfoWindow : MonoBehaviour
 
     public void OnStartButton()
     {
-        TempData.Instance.selectedChapter = linkedData.chapterIndex;
-        TempData.Instance.selectedStage = linkedData.stageIndex;
-        SceneLoadManager.Instance.LoadScene("Loadout");
+        var sendData = new SendUserData();
+        sendData.uuid = UserData.Instance.uuid;
+        WebRequest.Post("main-menu/enter-loadout", JsonUtility.ToJson(sendData), (data) =>
+        {
+            var recieveData = JsonUtility.FromJson<RecieveDeckData>(data);
+            TempData.Instance.selectedChapter = linkedData.chapterIndex;
+            TempData.Instance.selectedStage = linkedData.stageIndex;
+            SceneLoadManager.Instance.LoadScene("Loadout", () => { LoadoutManager.Instance.InitLoadout(recieveData); });
+        });
     }
 
     public void CloseWindow()
