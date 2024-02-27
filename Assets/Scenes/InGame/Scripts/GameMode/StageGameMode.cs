@@ -32,7 +32,7 @@ public class StageGameMode : IGameModeBehaviour
         stageIndex = data.selected_stage;
         chapterIndex = data.selected_chapter;
         deckIndex = TempData.Instance.selectedDeck;
-        stageData = StageManager.Instance.GetStageData(chapterIndex, stageIndex);
+        stageData = data.stage_data;
         
         List<UnitData> unitDatas = new List<UnitData>();
         foreach (var id in data.deck.unit_indexes)
