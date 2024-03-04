@@ -81,6 +81,6 @@ public class SkillCanvas : MonoBehaviour
 
     Vector3 GetButtonPos(int idx)
     {
-        return new Vector3(162.5f + (40 + 225) * idx, -150);
+        return new Vector3((225f / 2f + 20f) + (20 + 225) * idx, -150);
     }
 }
