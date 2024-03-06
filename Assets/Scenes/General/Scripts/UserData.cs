@@ -26,6 +26,11 @@ public class UserData
     {
         return units.Find(item => item.id == id);
     }
+
+    public void UpdateExp(float extra)
+    {
+        exp += extra;
+    }
 }
 
 [Serializable]
@@ -39,6 +44,17 @@ public class UnitData
     public string user_uuid;
 
     public int[] skill_level;
+
+    public void UpdateExp(float extra)
+    {
+        exp += extra;
+    }
+
+    public Dictionary<StatusType, float> GetStatus()
+    {
+        var defaultStatus = StaticDataManager.GetUnitStatus(index).GetCalculatedValueDictionary(level, rank);
+        return defaultStatus;
+    }
 }
 
 [Serializable]
