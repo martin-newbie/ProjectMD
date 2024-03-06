@@ -16,7 +16,7 @@ public class TestBossGamePlayer : GamePlayer
 
     void InitUnit(UnitData data)
     {
-        var statusData = StaticDataManager.GetUnitStatus(data.index).GetCalculatedValueDictionary(data.level);
+        var statusData = data.GetStatus();
         var spawnPos = new Vector3(5, 0, 0);
         int barType = 1;
         statusData[StatusType.DMG] /= 3;

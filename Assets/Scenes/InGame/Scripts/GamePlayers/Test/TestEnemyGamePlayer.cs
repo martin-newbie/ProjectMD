@@ -27,7 +27,7 @@ public class TestEnemyGamePlayer : GamePlayer
             {
                 var data = waveData[j];
                 var spawnPos = new Vector3(i * 10 + 3 + range * j, 0, 0);
-                var statusData = StaticDataManager.GetUnitStatus(data.index).GetCalculatedValueDictionary();
+                var statusData = data.GetStatus();
 
                 int barType = 0;
                 if (i == unitDatas.Length - 1 && j == waveData.Length - 1)

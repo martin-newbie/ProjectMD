@@ -18,7 +18,7 @@ public class PlayableGamePlayer : GamePlayer
         for (int i = 0; i < unitDatas.Length; i++)
         {
             var data = unitDatas[i];
-            var unitStatus = StaticDataManager.GetUnitStatus(data.index).GetCalculatedValueDictionary(data.level, data.rank);
+            var unitStatus = data.GetStatus();
             var unit = InGameManager.Instance.SpawnUnit(new Vector3(-3 - (i * 1.5f), 0, 0), group, data, unitStatus, 0);
             unit.InjectDeadEvent(() => RemoveActiveUnit(unit));
             (unit as ActiveSkillBehaviour).InitPlayer(this);

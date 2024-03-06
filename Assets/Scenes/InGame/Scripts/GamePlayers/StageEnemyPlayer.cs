@@ -20,7 +20,7 @@ public class StageEnemyPlayer : GamePlayer
             float dist = 6f / waveData.unitDatas.Count;
             foreach (var unitData in waveData.unitDatas)
             {
-                var unitStatus = StaticDataManager.GetUnitStatus(unitData.index).GetCalculatedValueDictionary(stageLevel);
+                var unitStatus = unitData.GetStatus();
                 switch (unitData.unit_type)
                 {
                     case 0:
