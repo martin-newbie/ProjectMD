@@ -100,7 +100,7 @@ public class StageGameMode : IGameModeBehaviour
             waveCount++;
         }
 
-        PostResultEvent(true); // wind
+        PostResultEvent(true); // win
         StageEndPoint:
         player.isGameActive = false;
         enemy.isGameActive = false;
@@ -119,11 +119,17 @@ public class StageGameMode : IGameModeBehaviour
         sendResult.chapter_index = chapterIndex;
         sendResult.deck_index = deckIndex;
         sendResult.use_energy = 10;
+        sendResult.is_win = isWin;
         sendResult.perfaction = new bool[] { timeCondition, unitCondition, winCondition };
         WebRequest.Post("ingame/game-end", JsonUtility.ToJson(sendResult), (data) =>
         {
             var recieveData = JsonUtility.FromJson<RecieveStageResultData>(data);
-
+            UserData.Instance.UpdateExp(recieveData.exp);
+            foreach (var id in recieveData.units)
+            {
+                var unit = UserData.Instance.FindUnitWithId(id);
+                unit.UpdateExp(recieveData.exp);
+            }
         });
     }
 }
@@ -136,11 +142,23 @@ class SendStageResultData
     public int chapter_index;
     public int deck_index;
     public int use_energy;
+    public bool is_win;
     public bool[] perfaction;
 }
 
 [System.Serializable]
 class RecieveStageResultData
 {
-    public List<(int, int)> result_items;
+    public bool is_win;
+    public Reward[] reward;
+    public float exp;
+    public int[] units;
+}
+
+[System.Serializable]
+class Reward
+{
+    public int type;
+    public int index;
+    public int count;
 }
