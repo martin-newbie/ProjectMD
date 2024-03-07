@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 [Serializable]
 public class UserData
@@ -14,7 +15,8 @@ public class UserData
     public float exp;
     public int dia;
     public int coin;
-    public DateTime last_energy_updated;
+    public int energy;
+    public string str_last_energy_updated;
     public List<UnitData> units;
 
     public UserData()
@@ -30,30 +32,37 @@ public class UserData
     public void UpdateExp(float extra)
     {
         exp += extra;
-    }
-}
-
-[Serializable]
-public class UnitData
-{
-    public int id;
-    public int index;
-    public int rank;
-    public int level;
-    public float exp;
-    public string user_uuid;
-
-    public int[] skill_level;
-
-    public void UpdateExp(float extra)
-    {
-        exp += extra;
+        // TODO : update level also
     }
 
-    public Dictionary<StatusType, float> GetStatus()
+    public void UpdateEnergy(int extra)
     {
-        var defaultStatus = StaticDataManager.GetUnitStatus(index).GetCalculatedValueDictionary(level, rank);
-        return defaultStatus;
+        if (extra + energy < 0)
+        {
+            throw new Exception();
+        }
+
+        if (energy >= GetMaxEnergy() && energy + extra < GetMaxEnergy())
+        {
+            UpdateEnergyTime(DateTime.Now);
+        }
+
+        energy += extra;
+    }
+
+    public int GetMaxEnergy()
+    {
+        return 100 + level * 2;
+    }
+
+    public DateTime GetEnergyTime()
+    {
+        return JsonUtility.FromJson<DateTime>(str_last_energy_updated);
+    }
+
+    public void UpdateEnergyTime(DateTime date)
+    {
+        str_last_energy_updated = JsonUtility.ToJson(date);
     }
 }
 

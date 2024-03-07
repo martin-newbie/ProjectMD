@@ -33,7 +33,7 @@ public class StageGameMode : IGameModeBehaviour
         chapterIndex = data.selected_chapter;
         deckIndex = TempData.Instance.selectedDeck;
         stageData = data.stage_data;
-        
+
         List<UnitData> unitDatas = new List<UnitData>();
         foreach (var id in data.deck.unit_indexes)
         {
@@ -101,7 +101,7 @@ public class StageGameMode : IGameModeBehaviour
         }
 
         PostResultEvent(true); // win
-        StageEndPoint:
+    StageEndPoint:
         player.isGameActive = false;
         enemy.isGameActive = false;
         yield break;
@@ -125,6 +125,12 @@ public class StageGameMode : IGameModeBehaviour
         {
             var recieveData = JsonUtility.FromJson<RecieveStageResultData>(data);
             UserData.Instance.UpdateExp(recieveData.exp);
+
+            if (recieveData.is_win)
+            {
+                UserData.Instance.UpdateEnergy(-10);
+            }
+
             foreach (var id in recieveData.units)
             {
                 var unit = UserData.Instance.FindUnitWithId(id);
