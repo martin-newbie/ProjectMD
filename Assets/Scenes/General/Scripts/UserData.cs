@@ -62,7 +62,7 @@ public class UserData
 
     public DateTime GetEnergyTime()
     {
-        return DateTime.Parse(str_last_energy_updated);
+        return DateTime.Parse(str_last_energy_updated).ToUniversalTime();
     }
 
     public void UpdateEnergyTime(DateTime date)
