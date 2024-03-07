@@ -21,18 +21,19 @@ public class TopMenu : MonoBehaviour
     {
         var curTime = DateTime.UtcNow;
 
-        if ((curTime.Millisecond - lastEnergyTime.Millisecond) / 6000 > 360)
+        if ((lastEnergyTime + new TimeSpan(0, 0, 30) - curTime).TotalSeconds < 0 && !UserData.Instance.IsOverMaxEnergy())
         {
             UserData.Instance.UpdateEnergyTime(curTime);
             UserData.Instance.UpdateEnergy(1);
             SetActiveIfEnergyAvaliable();
+            lastEnergyTime = UserData.Instance.GetEnergyTime();
         }
 
         energyTxt.text = $"{UserData.Instance.energy} / {UserData.Instance.GetMaxEnergy()}";
 
         if (!UserData.Instance.IsOverMaxEnergy())
         {
-            remainEnergyChargeTxt.text = (lastEnergyTime + new TimeSpan(0, 6, 0) - curTime).ToString();
+            remainEnergyChargeTxt.text = (lastEnergyTime + new TimeSpan(0, 0, 30) - curTime).ToString();
         }
     }
 

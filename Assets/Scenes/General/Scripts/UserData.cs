@@ -19,9 +19,11 @@ public class UserData
     public string str_last_energy_updated;
     public List<UnitData> units;
 
-    public UserData()
+    public DateTime lastEnergyTime;
+
+    public void InitUserData()
     {
-        Instance = this;
+        lastEnergyTime = DateTime.Parse(str_last_energy_updated).ToUniversalTime();
     }
 
     public UnitData FindUnitWithId(int id)
@@ -62,12 +64,12 @@ public class UserData
 
     public DateTime GetEnergyTime()
     {
-        return DateTime.Parse(str_last_energy_updated).ToUniversalTime();
+        return lastEnergyTime;
     }
 
     public void UpdateEnergyTime(DateTime date)
     {
-        str_last_energy_updated = JsonUtility.ToJson(date);
+        lastEnergyTime = date;
     }
 }
 

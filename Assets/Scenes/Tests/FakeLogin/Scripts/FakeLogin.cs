@@ -27,6 +27,7 @@ public class FakeLogin : MonoBehaviour
             else
             {
                 UserData.Instance = login.userData;
+                UserData.Instance.InitUserData();
                 SceneManager.LoadScene("Main");
             }
         });
