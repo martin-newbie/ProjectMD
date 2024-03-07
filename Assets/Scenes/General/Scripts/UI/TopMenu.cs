@@ -21,7 +21,7 @@ public class TopMenu : MonoBehaviour
     {
         var curTime = DateTime.UtcNow;
 
-        if ((lastEnergyTime + new TimeSpan(0, 0, 30) - curTime).TotalSeconds < 0 && !UserData.Instance.IsOverMaxEnergy())
+        if ((lastEnergyTime + new TimeSpan(0, 6, 0) - curTime).TotalSeconds < 0 && !UserData.Instance.IsOverMaxEnergy())
         {
             UserData.Instance.UpdateEnergyTime(curTime);
             UserData.Instance.UpdateEnergy(1);
@@ -33,7 +33,7 @@ public class TopMenu : MonoBehaviour
 
         if (!UserData.Instance.IsOverMaxEnergy())
         {
-            remainEnergyChargeTxt.text = (lastEnergyTime + new TimeSpan(0, 0, 30) - curTime).ToString();
+            remainEnergyChargeTxt.text = (lastEnergyTime + new TimeSpan(0, 6, 0) - curTime).ToString();
         }
     }
 
