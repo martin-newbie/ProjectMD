@@ -50,6 +50,11 @@ public class UserData
         energy += extra;
     }
 
+    public bool IsOverMaxEnergy()
+    {
+        return energy >= GetMaxEnergy();
+    }
+
     public int GetMaxEnergy()
     {
         return 100 + level * 2;
@@ -57,7 +62,7 @@ public class UserData
 
     public DateTime GetEnergyTime()
     {
-        return JsonUtility.FromJson<DateTime>(str_last_energy_updated);
+        return DateTime.Parse(str_last_energy_updated);
     }
 
     public void UpdateEnergyTime(DateTime date)

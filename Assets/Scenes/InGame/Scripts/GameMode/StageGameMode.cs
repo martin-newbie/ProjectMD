@@ -47,6 +47,7 @@ public class StageGameMode : IGameModeBehaviour
         enemy = new StageEnemyPlayer(UnitGroupType.HOSTILE, stageData);
         isInit = true;
 
+        UserData.Instance.UpdateEnergy(-10);
         InGameManager.Instance.StartCoroutine(GameLogic());
     }
 
@@ -126,10 +127,6 @@ public class StageGameMode : IGameModeBehaviour
             var recieveData = JsonUtility.FromJson<RecieveStageResultData>(data);
             UserData.Instance.UpdateExp(recieveData.exp);
 
-            if (recieveData.is_win)
-            {
-                UserData.Instance.UpdateEnergy(-10);
-            }
 
             foreach (var id in recieveData.units)
             {
