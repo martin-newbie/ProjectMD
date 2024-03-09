@@ -29,10 +29,16 @@ public class SceneLoadManager : MonoBehaviour
         StartCoroutine(LoadSceneAsync(onComplete));
     }
 
-    public void LoadScene(string sceneName, Action onComplete = null)
+    public void PopSceneRecord()
+    {
+        previousScenes.Pop();
+    }
+
+    public void LoadScene(string sceneName, Action onComplete = null, bool saveRecord = true)
     {
         moveSceneName = sceneName;
-        previousScenes.Push(SceneManager.GetActiveScene().name);
+        if (saveRecord)
+            previousScenes.Push(SceneManager.GetActiveScene().name);
         StartCoroutine(LoadSceneAsync(onComplete));
     }
 
@@ -44,7 +50,7 @@ public class SceneLoadManager : MonoBehaviour
         {
             // scene progress
             float progress = loadData.progress;
-            if(progress >= 0.9f)
+            if (progress >= 0.9f)
             {
                 break;
             }

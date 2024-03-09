@@ -229,8 +229,9 @@ public class LoadoutManager : MonoBehaviour
             var recieveData = JsonUtility.FromJson<RecieveGameEnter>(data);
             SceneLoadManager.Instance.LoadScene("InGame", () =>
             {
+                SceneLoadManager.Instance.PopSceneRecord();
                 InGameManager.Instance.InitGameMode(recieveData);
-            });
+            }, false);
         });
     }
 }
