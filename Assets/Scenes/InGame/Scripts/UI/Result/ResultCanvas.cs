@@ -46,7 +46,7 @@ public class ResultCanvas : MonoBehaviour
 
     public void OnButtonToList()
     {
-        SceneLoadManager.Instance.LoadScene("Stages", null, false);
+        SceneLoadManager.Instance.LoadBackScene();
     }
 
     public void OnButtonToHome()
