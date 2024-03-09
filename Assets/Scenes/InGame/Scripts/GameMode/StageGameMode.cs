@@ -125,13 +125,8 @@ public class StageGameMode : IGameModeBehaviour
         WebRequest.Post("ingame/game-end", JsonUtility.ToJson(sendResult), (data) =>
         {
             var recieveData = JsonUtility.FromJson<RecieveStageResultData>(data);
+            // show result
             UserData.Instance.UpdateExp(recieveData.exp);
-
-            foreach (var id in recieveData.units)
-            {
-                var unit = UserData.Instance.FindUnitWithId(id);
-                unit.UpdateExp(recieveData.exp);
-            }
         });
     }
 }
