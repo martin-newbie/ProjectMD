@@ -127,7 +127,6 @@ public class StageGameMode : IGameModeBehaviour
             var recieveData = JsonUtility.FromJson<RecieveStageResultData>(data);
             UserData.Instance.UpdateExp(recieveData.exp);
 
-
             foreach (var id in recieveData.units)
             {
                 var unit = UserData.Instance.FindUnitWithId(id);
@@ -138,7 +137,7 @@ public class StageGameMode : IGameModeBehaviour
 }
 
 [System.Serializable]
-class SendStageResultData
+public class SendStageResultData
 {
     public string uuid;
     public int stage_index;
@@ -150,16 +149,16 @@ class SendStageResultData
 }
 
 [System.Serializable]
-class RecieveStageResultData
+public class RecieveStageResultData
 {
     public bool is_win;
     public Reward[] reward;
-    public float exp;
+    public int exp;
     public int[] units;
 }
 
 [System.Serializable]
-class Reward
+public class Reward
 {
     public int type;
     public int index;
