@@ -6,9 +6,12 @@ using UnityEngine.UI;
 public class ResultCanvas : MonoBehaviour
 {
     public ResultUnitInfo[] unitInfos;
+    public ResultRewardInfo rewardPrefab;
+    public Transform rewardContent;
 
     public void ShowResult(RecieveStageResultData resultData)
     {
+        gameObject.SetActive(true);
         InitUnitInfo(resultData);
         InitRewardInfo(resultData);
     }
@@ -36,7 +39,8 @@ public class ResultCanvas : MonoBehaviour
     {
         foreach (var reward in resultData.reward)
         {
-            
+            var icon = Instantiate(rewardPrefab, rewardContent);
+            icon.InitRewardInfo(reward);
         }
     }
 

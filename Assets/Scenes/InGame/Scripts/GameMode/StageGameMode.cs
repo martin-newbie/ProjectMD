@@ -125,7 +125,7 @@ public class StageGameMode : IGameModeBehaviour
         WebRequest.Post("ingame/game-end", JsonUtility.ToJson(sendResult), (data) =>
         {
             var recieveData = JsonUtility.FromJson<RecieveStageResultData>(data);
-            // show result
+            InGameManager.Instance.ShowResult(recieveData);
             UserData.Instance.UpdateExp(recieveData.exp);
         });
     }

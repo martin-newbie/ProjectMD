@@ -15,17 +15,14 @@ public class InGameManager : MonoBehaviour
 
     public UnitObject unitObjPrefab;
     public SkillCanvas skillCanvas;
+    public ResultCanvas resultCanvas;
 
     [HideInInspector] public List<UnitBehaviour> allUnits = new List<UnitBehaviour>();
     [HideInInspector] public List<GameObject> movingObjects = new List<GameObject>();
 
     int gameModeIdx = 0;
     IGameModeBehaviour gameMode;
-
-    private void Update()
-    {
-        gameMode?.Update();
-    }
+    bool isGameActive;
 
     public void InitGameMode(RecieveGameEnter data)
     {
@@ -50,6 +47,19 @@ public class InGameManager : MonoBehaviour
         }
 
         gameMode?.Start();
+        isGameActive = true;
+    }
+
+    private void Update()
+    {
+        if (!isGameActive) return;
+
+        gameMode?.Update();
+    }
+
+    public void ShowResult(RecieveStageResultData resultData)
+    {
+        resultCanvas.ShowResult(resultData);
     }
 
     public UnitBehaviour SpawnUnit(Vector3 spawnPos, UnitGroupType group, UnitData data, Dictionary<StatusType, float> status, int barType)
