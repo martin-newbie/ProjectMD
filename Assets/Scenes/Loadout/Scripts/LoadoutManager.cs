@@ -277,11 +277,6 @@ public class SendGameEnter
 public class RecieveGameEnter
 {
     public bool success;
-    public int current_energy;
-    public DateTime energy_updated_at;
     public DeckData deck;
     public StageData stage_data;
-
-    public int selected_chapter;
-    public int selected_stage;
 }

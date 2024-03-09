@@ -29,8 +29,8 @@ public class StageGameMode : IGameModeBehaviour
         manager = _manager;
         mainCam = Camera.main;
 
-        stageIndex = data.selected_stage;
-        chapterIndex = data.selected_chapter;
+        stageIndex = TempData.Instance.selectedStage;
+        chapterIndex = TempData.Instance.selectedChapter;
         deckIndex = TempData.Instance.selectedDeck;
         stageData = data.stage_data;
 

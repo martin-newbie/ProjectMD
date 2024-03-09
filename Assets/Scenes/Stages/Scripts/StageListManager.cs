@@ -32,8 +32,7 @@ public class StageListManager : MonoBehaviour
 
     public void ShowStageInfo(int stageIdx)
     {
-        var stageData = StageManager.Instance.GetStageData(chapterIndex, stageIdx);
-        stageInfo.OpenStageInfo(stageData);
+        stageInfo.OpenStageInfo(chapterIndex, stageIdx);
     }
 
     void UpdateChapterList()
