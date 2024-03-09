@@ -16,6 +16,8 @@ public class StageInfoWindow : MonoBehaviour
 
     public void OnStartButton()
     {
+        if (UserData.Instance.energy < 10) return;
+
         var sendData = new SendUserData();
         sendData.uuid = UserData.Instance.uuid;
         TempData.Instance.selectedChapter = chapter;
