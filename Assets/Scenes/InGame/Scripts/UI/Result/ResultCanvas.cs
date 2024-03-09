@@ -46,7 +46,7 @@ public class ResultCanvas : MonoBehaviour
 
     public void OnButtonToList()
     {
-        SceneLoadManager.Instance.LoadScene("List");
+        SceneLoadManager.Instance.LoadScene("List", () => { UnitListManager.Instance.InitList(UserData.Instance.units.ToArray()); });
     }
 
     public void OnButtonToHome()
