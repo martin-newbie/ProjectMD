@@ -8,15 +8,19 @@ public class UnitData
     public int index;
     public int rank;
     public int level;
-    public float exp;
+    public int exp;
     public string user_uuid;
 
     public int[] skill_level;
 
-    public void UpdateExp(float extra)
+    public void UpdateExp(int extra)
     {
         exp += extra;
-        // TODO : update level also
+        while (exp > ResourceManager.GetUnitLevelupExp(level))
+        {
+            exp -= ResourceManager.GetUnitLevelupExp(level);
+            level++;
+        }
     }
 
     public Dictionary<StatusType, float> GetStatus()
