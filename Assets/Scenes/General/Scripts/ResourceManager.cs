@@ -22,7 +22,7 @@ public class ResourceManager : MonoBehaviour
         var profiles = Resources.LoadAll<Sprite>("Sprites/Profiles");
         unitProfiles = profiles.OrderBy((item) => int.Parse(item.name.Split('-')[0])).ToArray();
 
-        var unitLevelTextAsset = Resources.Load<TextAsset>("Datas/unitLevelExp.txt");
+        var unitLevelTextAsset = Resources.Load<TextAsset>("Datas/unitLevelExp");
         var levelupExp = unitLevelTextAsset.text.Split('\n').Select(item => int.Parse(item));
         unitLevelupExp = new List<int>(levelupExp);
     }

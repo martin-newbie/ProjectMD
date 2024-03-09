@@ -19,8 +19,9 @@ public class ResultUnitInfo : MonoBehaviour
         var modelIndex = StaticDataManager.GetConstUnitData(unitData.index).modelIndex;
         var spineAsset = ResourceManager.GetSkeleton(modelIndex);
         model.UpdateSkeleton(spineAsset);
+        model.AnimationState.SetAnimation(0, "battle_wait", true);
 
-        if(prevLevel < unitData.level)
+        if (prevLevel < unitData.level)
         {
             prevExpGauge.fillAmount = 0f;
         }
@@ -32,7 +33,7 @@ public class ResultUnitInfo : MonoBehaviour
         prevLevelText.text = unitData.level.ToString();
         nextLevelText.text = (unitData.level + 1).ToString();
         nextExpGauge.fillAmount = (float)unitData.exp / (float)ResourceManager.GetUnitLevelupExp(unitData.level);
-        updatedExpText.text = updatedExp.ToString();
+        updatedExpText.text = "+" + updatedExp.ToString();
         updatedExpText.rectTransform.anchoredPosition = new Vector2(225f * nextExpGauge.fillAmount, 20.5f);
         flavorText.text = "";
     }
