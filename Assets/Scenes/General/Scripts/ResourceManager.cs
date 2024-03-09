@@ -20,7 +20,7 @@ public class ResourceManager : MonoBehaviour
         }
 
         var profiles = Resources.LoadAll<Sprite>("Sprites/Profiles");
-        characterProfiles = profiles.OrderBy((item) => int.Parse(item.name.Split('-')[0])).ToArray();
+        unitProfiles = profiles.OrderBy((item) => int.Parse(item.name.Split('-')[0])).ToArray();
 
         var unitLevelTextAsset = Resources.Load<TextAsset>("Datas/unitLevelExp.txt");
         var levelupExp = unitLevelTextAsset.text.Split('\n').Select(item => int.Parse(item));
@@ -28,7 +28,7 @@ public class ResourceManager : MonoBehaviour
     }
 
     Dictionary<int, SkeletonDataAsset> characters = new Dictionary<int, SkeletonDataAsset>();
-    Sprite[] characterProfiles;
+    Sprite[] unitProfiles;
     List<int> unitLevelupExp;
 
     public static SkeletonDataAsset GetSkeleton(int idx)
@@ -39,16 +39,25 @@ public class ResourceManager : MonoBehaviour
             return null;
     }
 
-    public static Sprite GetProfile(int idx)
+    public static Sprite GetUnitProfile(int idx)
     {
-        if (idx > Instance.characterProfiles.Length - 1)
+        if (idx > Instance.unitProfiles.Length - 1)
             idx = 0;
-        return Instance.characterProfiles[idx];
+        return Instance.unitProfiles[idx];
     }
 
     public static int GetUnitLevelupExp(int level)
     {
         return Instance.unitLevelupExp[level];
+    }
+
+    public static Sprite GetItemIcon(int index)
+    {
+        return null;
+    }
+    public static Sprite GetCurrencyIcon(int index)
+    {
+        return null;
     }
 
     public Sprite dieselRobotSmg;

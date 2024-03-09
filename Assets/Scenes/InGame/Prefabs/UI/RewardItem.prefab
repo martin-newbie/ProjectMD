@@ -348,6 +348,7 @@ GameObject:
   - component: {fileID: 9079358174465187726}
   - component: {fileID: 9079358174465187725}
   - component: {fileID: 9079358174465187727}
+  - component: {fileID: 6142104279127529154}
   m_Layer: 5
   m_Name: RewardItem
   m_TagString: Untagged
@@ -427,6 +428,22 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &6142104279127529154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9079358174465187723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21eb67347cdf1804dad91c06a7271d1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemIcon: {fileID: 9079358173680124851}
+  countText: {fileID: 9079358174114355296}
+  reasonBox: {fileID: 9079358174221570135}
+  reasonText: {fileID: 9079358175176751515}
 --- !u!1 &9079358175176751513
 GameObject:
   m_ObjectHideFlags: 0

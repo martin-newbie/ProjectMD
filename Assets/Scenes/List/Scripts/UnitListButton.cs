@@ -12,7 +12,7 @@ public class UnitListButton : MonoBehaviour
 
     public void InitButton(UnitData _linkedData)
     {
-        unitProfileImg.sprite = ResourceManager.GetProfile(_linkedData.index);
+        unitProfileImg.sprite = ResourceManager.GetUnitProfile(_linkedData.index);
         unitNameTxt.text = StaticDataManager.GetConstUnitData(_linkedData.index).name;
 
         linkedData = _linkedData;

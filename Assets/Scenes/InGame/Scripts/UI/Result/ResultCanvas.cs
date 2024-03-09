@@ -34,7 +34,10 @@ public class ResultCanvas : MonoBehaviour
 
     void InitRewardInfo(RecieveStageResultData resultData)
     {
-
+        foreach (var reward in resultData.reward)
+        {
+            
+        }
     }
 
     public void OnButtonToList()

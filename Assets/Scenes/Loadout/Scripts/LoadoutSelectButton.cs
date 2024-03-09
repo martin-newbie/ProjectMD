@@ -25,7 +25,7 @@ public class LoadoutSelectButton : MonoBehaviour
         LinkedData = _linkedData;
         selectedCurrent.SetActive(false);
 
-        profileImage.sprite = ResourceManager.GetProfile(LinkedData.index);
+        profileImage.sprite = ResourceManager.GetUnitProfile(LinkedData.index);
         nameText.text = StaticDataManager.GetConstUnitData(LinkedData.index).name;
 
         if (panel.curSelected.Contains(LinkedData.id))
