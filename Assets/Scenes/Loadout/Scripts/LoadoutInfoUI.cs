@@ -51,9 +51,7 @@ public class LoadoutInfoUI : MonoBehaviour
             return;
         }
 
-        skeleton.Update(0f);
-        skeleton.skeletonDataAsset = ResourceManager.GetSkeleton(linkedData.index);
-        skeleton.Initialize(true);
+        skeleton.UpdateSkeleton(ResourceManager.GetSkeleton(linkedData.index));
 
         if (LinkedData.index != linkedData.index)
         {

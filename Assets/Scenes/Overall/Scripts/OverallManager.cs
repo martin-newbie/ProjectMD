@@ -26,9 +26,7 @@ public class OverallManager : MonoBehaviour
 
         nameText.text = unitConstData.name;
 
-        unitModel.Update(0f);
-        unitModel.skeletonDataAsset = ResourceManager.GetSkeleton(unitData.index);
-        unitModel.Initialize(true);
+        unitModel.UpdateSkeleton(ResourceManager.GetSkeleton(unitData.index));
         unitModel.AnimationState.SetAnimation(0, "battle_wait", true);
 
         statusPanel.InitCharacter(unitData);

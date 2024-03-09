@@ -20,10 +20,7 @@ public class MenuUnit : MonoBehaviour
 
     public void UpdateUnitIdx(int idx)
     {
-        skeleton.Update(0f);
-        skeleton.skeletonDataAsset = ResourceManager.GetSkeleton(idx);
-        skeleton.Initialize(true);
-
+        skeleton.UpdateSkeleton(ResourceManager.GetSkeleton(idx));
         PlayAni("wait");
     }
 
