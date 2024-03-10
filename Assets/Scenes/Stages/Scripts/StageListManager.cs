@@ -25,7 +25,9 @@ public class StageListManager : MonoBehaviour
         for (int i = 0; i < allocCount; i++)
         {
             var unit = Instantiate(stageUnitPrefab, stageContent);
-            unit.InitUnit(this, stageDataList[chapterIndex * 20 + i]);
+            var dataIndex = chapterIndex * 20 + i;
+            var stagedata = stageDataList.Count - 1 < dataIndex ? null : stageDataList[dataIndex];
+            unit.InitUnit(this, chapterIndex, i, stagedata);
             unitList.Add(unit);
         }
 

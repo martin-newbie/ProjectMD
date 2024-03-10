@@ -15,17 +15,20 @@ public class StageListUnit : MonoBehaviour
     [SerializeField] GameObject deactiveObject;
     [SerializeField] GameObject[] stageResultStar;
 
-    public void InitUnit(StageListManager _manager, StageResult data)
+    public void InitUnit(StageListManager _manager, int chapter, int stage, StageResult data)
     {
         manager = _manager;
-        stage = data.stage_idx;
-        chapter = data.chapter_idx;
+        this.stage = stage;
+        this.chapter = chapter;
 
-        activate = UserData.Instance.stage_result.Count <= chapter * 20 + stage;
+        activate = UserData.Instance.stage_result.Count + 1 > chapter * 20 + stage;
         deactiveObject.SetActive(!activate);
+
         for (int i = 0; i < 3; i++)
         {
-            stageResultStar[i].SetActive(data.condition[i]);
+            if (data != null)
+                stageResultStar[i].SetActive(data.condition[i]);
+            else stageResultStar[i].SetActive(false);
         }
     }
 
