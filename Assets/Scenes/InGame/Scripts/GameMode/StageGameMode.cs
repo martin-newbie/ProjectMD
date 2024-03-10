@@ -127,6 +127,21 @@ public class StageGameMode : IGameModeBehaviour
             var recieveData = JsonUtility.FromJson<RecieveStageResultData>(data);
             InGameManager.Instance.ShowResult(recieveData);
             UserData.Instance.UpdateExp(recieveData.exp);
+
+            if (UserData.Instance.stage_result.Exists(item => item.stage_idx == stageIndex && item.chapter_idx == chapterIndex))
+            {
+                // update
+                UserData.Instance.stage_result[chapterIndex * 20 + stageIndex].condition = sendResult.perfaction;
+            }
+            else
+            {
+                // new
+                var newResult = new StageResult();
+                newResult.chapter_idx = chapterIndex;
+                newResult.stage_idx = stageIndex;
+                newResult.condition = sendResult.perfaction;
+                UserData.Instance.stage_result.Add(newResult);
+            }
         });
     }
 }
