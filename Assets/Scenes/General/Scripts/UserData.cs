@@ -18,6 +18,7 @@ public class UserData
     public int energy;
     public string str_last_energy_updated;
     public List<UnitData> units;
+    public List<StageResult> stage_result;
 
     public DateTime lastEnergyTime;
 
@@ -82,4 +83,12 @@ public class DeckData
     public string user_uuid;
 
     public int[] unit_indexes;
+}
+
+[Serializable]
+public class StageResult
+{
+    public int chapter_idx;
+    public int stage_idx;
+    public bool[] condition;
 }

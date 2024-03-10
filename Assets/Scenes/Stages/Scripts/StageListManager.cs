@@ -17,16 +17,18 @@ public class StageListManager : MonoBehaviour
 
     void Start()
     {
+        chapterIndex = 0;
+
         unitList = new List<StageListUnit>();
         int allocCount = 20;
+        var stageDataList = UserData.Instance.stage_result;
         for (int i = 0; i < allocCount; i++)
         {
             var unit = Instantiate(stageUnitPrefab, stageContent);
-            unit.InitUnit(this, i);
+            unit.InitUnit(this, stageDataList[chapterIndex * 20 + i]);
             unitList.Add(unit);
         }
 
-        chapterIndex = 0;
         UpdateChapterList();
     }
 
