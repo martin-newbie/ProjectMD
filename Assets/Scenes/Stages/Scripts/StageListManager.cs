@@ -17,18 +17,21 @@ public class StageListManager : MonoBehaviour
 
     void Start()
     {
-        chapterIndex = 0;
+        chapterIndex = PlayerPrefs.GetInt(DataManager.chapterKey);
 
         unitList = new List<StageListUnit>();
         int allocCount = 20;
         var stageDataList = UserData.Instance.stage_result;
-        for (int i = 0; i < allocCount; i++)
+        for (int c = 0; c < DataManager.Instance.chapters.Count; c++)
         {
-            var unit = Instantiate(stageUnitPrefab, stageContent);
-            var dataIndex = chapterIndex * 20 + i;
-            var stagedata = stageDataList.Count - 1 < dataIndex ? null : stageDataList[dataIndex];
-            unit.InitUnit(this, chapterIndex, i, stagedata);
-            unitList.Add(unit);
+            for (int i = 0; i < allocCount; i++)
+            {
+                var unit = Instantiate(stageUnitPrefab, stageContent);
+                var dataIndex = c * 20 + i;
+                var stagedata = stageDataList.Count - 1 < dataIndex ? null : stageDataList[dataIndex];
+                unit.InitUnit(this, c, i, stagedata);
+                unitList.Add(unit);
+            }
         }
 
         UpdateChapterList();
@@ -56,4 +59,21 @@ public class StageListManager : MonoBehaviour
         }
     }
 
+    public void OnLeftButton()
+    {
+        if (chapterIndex > 0)
+        {
+            chapterIndex--;
+            PlayerPrefs.SetInt(DataManager.chapterKey, chapterIndex);
+        }
+    }
+
+    public void OnRightButton()
+    {
+        if (chapterIndex < DataManager.Instance.chapters.Count - 1)
+        {
+            chapterIndex++;
+            PlayerPrefs.SetInt(DataManager.chapterKey, chapterIndex);
+        }
+    }
 }
