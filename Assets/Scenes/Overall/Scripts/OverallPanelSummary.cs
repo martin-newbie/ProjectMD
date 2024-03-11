@@ -35,7 +35,7 @@ public class OverallPanelSummary : MonoBehaviour, IOverallPanel
         var statusData = data.GetStatus();
 
         unitNameText.text = constData.name;
-        unitLevelText.text = "Lv." + data.level.ToString();
+        unitLevelText.text = "Lv." + (data.level + 1).ToString();
         for (int i = 0; i < tierObjects.Length; i++)
         {
             tierObjects[i].SetActive(i <= data.rank);

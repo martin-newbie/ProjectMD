@@ -57,7 +57,7 @@ public class OverallPanelLevel : MonoBehaviour, IOverallPanel
     {
         totalExp -= exp;
 
-        if(totalExp <= 0)
+        if (totalExp <= 0)
         {
             ClearModifyStatus();
         }
@@ -83,7 +83,7 @@ public class OverallPanelLevel : MonoBehaviour, IOverallPanel
 
         if (linkedData.level < calculatedLevel)
         {
-            levelText.text = "Lv." + linkedData.level.ToString() + ModifyUpgradedColorText($" → {calculatedLevel}");
+            levelText.text = "Lv." + (linkedData.level + 1).ToString() + ModifyUpgradedColorText($" → {calculatedLevel + 1}");
 
             var statusData = StaticDataManager.GetUnitStatus(linkedData.index);
             var prevStatus = statusData.GetCalculatedValueDictionary(linkedData.level);
@@ -101,7 +101,7 @@ public class OverallPanelLevel : MonoBehaviour, IOverallPanel
 
         curExpGauge.fillAmount = (float)linkedData.exp / (float)GetLevelExp(linkedData.level);
         newExpGauge.fillAmount = 0;
-        levelText.text = "Lv." + linkedData.level.ToString();
+        levelText.text = "Lv." + (linkedData.level + 1).ToString();
         var statusData = StaticDataManager.GetUnitStatus(linkedData.index).GetCalculatedValueDictionary(linkedData.level);
         atkText.text = $"ATTACK : {statusData[StatusType.DMG].ToString("N0")}";
         hpText.text = $"HP : {statusData[StatusType.HP].ToString("N0")}";
