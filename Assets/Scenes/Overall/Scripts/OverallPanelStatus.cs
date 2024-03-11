@@ -16,9 +16,9 @@ public class OverallPanelStatus : MonoBehaviour, IOverallPanel
     {
         var statusData = data.GetStatus();
 
-        atkText.text = statusData[StatusType.DMG].ToString();
-        hpText.text = statusData[StatusType.HP].ToString();
-        defText.text = statusData[StatusType.DEF].ToString();
+        atkText.text = $"ATTACK : {statusData[StatusType.DMG].ToString("N0")}";
+        hpText.text = $"HP : {statusData[StatusType.HP].ToString("N0")}";
+        defText.text = $"DEF : {statusData[StatusType.DEF].ToString("N0")}";
 
         for (int i = 0; i < equipmentButtons.Length; i++)
         {
