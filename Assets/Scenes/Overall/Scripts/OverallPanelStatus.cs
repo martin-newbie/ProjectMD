@@ -19,5 +19,16 @@ public class OverallPanelStatus : MonoBehaviour, OverallPanel
         atkText.text = statusData[StatusType.DMG].ToString();
         hpText.text = statusData[StatusType.HP].ToString();
         defText.text = statusData[StatusType.DEF].ToString();
+
+        for (int i = 0; i < equipmentButtons.Length; i++)
+        {
+            var equipment = i < data.equipments.Length ? data.equipments[i] : null;
+            equipmentButtons[i].Init(equipment, data.IsEquipmentUnlock(i), ShowEquipmentUpgrade);
+        }
+    }
+
+    void ShowEquipmentUpgrade(EquipmentData data)
+    {
+        throw new System.Exception();
     }
 }

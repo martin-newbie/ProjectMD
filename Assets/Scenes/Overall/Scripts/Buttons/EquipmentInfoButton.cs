@@ -21,7 +21,9 @@ public class EquipmentInfoButton : MonoBehaviour
 
         lockedObject.SetActive(locked);
         tierBox.SetActive(!locked);
-        tierText.text = "T" + linkedData.tier.ToString();
+
+        if (linkedData != null)
+            tierText.text = "T" + linkedData.tier.ToString();
     }
 
     public void OnInfoButtonClick()
