@@ -15,16 +15,21 @@ public class LevelItemUseButton : MonoBehaviour
 
     public void Init(int itemIndex)
     {
-        item = UserData.Instance.items.Find(i => i.idx == itemIndex);
         itemInfo.InitInfo(itemIndex);
-        selectedCountText.text = "0";
+        selectedCountText.text = "x0";
         selectedObject.SetActive(false);
         reduceButton.SetActive(false);
+
+        item = UserData.Instance.items.Find(i => i.idx == itemIndex);
+        if (item == null)
+        {
+            // set item icon blur
+        }
     }
 
     public void OnRaiseButton()
     {
-        if(selectCount >= item.count)
+        if (item == null || selectCount >= item.count)
         {
             // error message
             return;
@@ -33,19 +38,19 @@ public class LevelItemUseButton : MonoBehaviour
         selectCount++;
         selectedObject.SetActive(true);
         reduceButton.SetActive(true);
-        selectedCountText.text = selectCount.ToString();
+        selectedCountText.text = "x" + selectCount.ToString();
     }
 
     public void OnReduceButton()
     {
-        if(selectCount <= 0)
+        if (selectCount <= 0)
         {
             // it can't be
             return;
         }
 
         selectCount--;
-        selectedCountText.text = selectCount.ToString();
+        selectedCountText.text = "x" + selectCount.ToString();
         if (selectCount == 0)
         {
             selectedObject.SetActive(false);

@@ -34,6 +34,10 @@ public class OverallPanelLevel : MonoBehaviour, IOverallPanel
     public void Open(UnitData data)
     {
         linkedData = data;
+        for (int i = 0; i < levelItemButtons.Length; i++)
+        {
+            levelItemButtons[i].Init(i);
+        }
         ClearModifyStatus();
     }
 
@@ -75,6 +79,7 @@ public class OverallPanelLevel : MonoBehaviour, IOverallPanel
 
         curExpGauge.fillAmount = calculatedLevel > linkedData.level ? 0 : (float)linkedData.exp / (float)GetLevelExp(linkedData.level);
         newExpGauge.fillAmount = (float)calculatedExp / (float)GetLevelExp(calculatedLevel);
+        useCoinText.text = totalExp.ToString("N0");
 
         if (linkedData.level < calculatedLevel)
         {
@@ -101,6 +106,7 @@ public class OverallPanelLevel : MonoBehaviour, IOverallPanel
         atkText.text = $"ATTACK : {statusData[StatusType.DMG].ToString("N0")}";
         hpText.text = $"HP : {statusData[StatusType.HP].ToString("N0")}";
         defText.text = $"DEF : {statusData[StatusType.DEF].ToString("N0")}";
+        useCoinText.text = "0";
     }
 
     // use when upgrade item applied and level modified
