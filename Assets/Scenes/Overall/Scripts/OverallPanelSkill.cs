@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OverallPanelSkill : MonoBehaviour, OverallPanel
+public class OverallPanelSkill : MonoBehaviour, IOverallPanel
 {
 
     public SkillInfoButton[] skillButtons;

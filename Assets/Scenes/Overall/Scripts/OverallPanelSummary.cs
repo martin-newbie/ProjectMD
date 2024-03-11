@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OverallPanelSummary : MonoBehaviour, OverallPanel
+public class OverallPanelSummary : MonoBehaviour, IOverallPanel
 {
     [Header("Main")]
     public Text unitNameText;

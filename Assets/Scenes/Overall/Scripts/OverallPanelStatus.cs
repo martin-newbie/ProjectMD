@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OverallPanelStatus : MonoBehaviour, OverallPanel
+public class OverallPanelStatus : MonoBehaviour, IOverallPanel
 {
     [SerializeField] Text atkText;
     [SerializeField] Text hpText;

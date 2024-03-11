@@ -29,7 +29,7 @@ public class OverallStatusPanel : MonoBehaviour
             item.SetActive(false);
         }
         panelObjects[idx].SetActive(true);
-        panelObjects[idx].GetComponent<OverallPanel>()?.Open(data);
+        panelObjects[idx].GetComponent<IOverallPanel>()?.Open(data);
     }
 
     public void InitCharacter(UnitData data)
@@ -39,7 +39,7 @@ public class OverallStatusPanel : MonoBehaviour
 }
 
 
-public interface OverallPanel
+public interface IOverallPanel
 {
     void Open(UnitData data);
 }

@@ -19,6 +19,7 @@ public class UserData
     public string str_last_energy_updated;
     public List<UnitData> units;
     public List<StageResult> stage_result;
+    public List<ItemData> items;
 
     public DateTime lastEnergyTime;
 
@@ -72,6 +73,13 @@ public class UserData
     {
         lastEnergyTime = date;
     }
+}
+
+[Serializable]
+public class ItemData
+{
+    public int idx;
+    public int count;
 }
 
 [Serializable]
