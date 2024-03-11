@@ -29,9 +29,6 @@ public class OverallPanelSummary : MonoBehaviour, OverallPanel
     public EquipmentInfoButton[] equipmentButtons;
 
 
-    int[] skillUnlockRank = new int[4] { 0, 0, 1, 2 };
-    int[] equipmentUnlockLevel = new int[3] { 0, 5, 10 };
-
     public void Open(UnitData data)
     {
         var constData = StaticDataManager.GetConstUnitData(data.index);
@@ -50,14 +47,12 @@ public class OverallPanelSummary : MonoBehaviour, OverallPanel
 
         for (int i = 0; i < skillButtons.Length; i++)
         {
-            bool locked = skillUnlockRank[i] > data.rank;
-            skillButtons[i].Init(i, data.skill_level[i], locked, OpenSkillInfo);
+            skillButtons[i].Init(i, data.skill_level[i], data.IsSkillUnlock(i), OpenSkillInfo);
         }
 
         for (int i = 0; i < equipmentButtons.Length; i++)
         {
-            bool locked = equipmentUnlockLevel[i] > data.level;
-            equipmentButtons[i].Init(data.equipments[i], locked, OpenEquipmentInfo);
+            equipmentButtons[i].Init(data.equipments[i], data.IsEquipmentUnlock(i), OpenEquipmentInfo);
         }
     }
 

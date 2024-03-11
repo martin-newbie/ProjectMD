@@ -14,6 +14,9 @@ public class UnitData
     public int[] skill_level;
     public EquipmentData[] equipments;
 
+    int[] skillUnlockRank = new int[4] { 0, 0, 1, 2 };
+    int[] equipmentUnlockLevel = new int[3] { 0, 5, 10 };
+
     public void UpdateExp(int extra)
     {
         exp += extra;
@@ -28,6 +31,16 @@ public class UnitData
     {
         var defaultStatus = StaticDataManager.GetUnitStatus(index).GetCalculatedValueDictionary(level, rank);
         return defaultStatus;
+    }
+
+    public bool IsSkillUnlock(int idx)
+    {
+        return skillUnlockRank[idx] > rank;
+    }
+
+    public bool IsEquipmentUnlock(int idx)
+    {
+        return equipmentUnlockLevel[idx] > level;
     }
 }
 
