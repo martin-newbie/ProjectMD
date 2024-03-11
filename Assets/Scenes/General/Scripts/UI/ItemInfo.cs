@@ -12,6 +12,13 @@ public class ItemInfo : MonoBehaviour
     {
         var item = UserData.Instance.items.Find(item => item.idx == index);
 
-        count.text = item.count.ToString();
+        if (item == null)
+        {
+            count.text = "0";
+        }
+        else
+        {
+            count.text = item.count.ToString();
+        }
     }
 }
