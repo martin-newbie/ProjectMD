@@ -25,6 +25,13 @@ public class OverallPanelStatus : MonoBehaviour, OverallPanel
             var equipment = i < data.equipments.Length ? data.equipments[i] : null;
             equipmentButtons[i].Init(equipment, data.IsEquipmentUnlock(i), ShowEquipmentUpgrade);
         }
+
+        for (int i = 0; i < equipmentDescText.Length; i++)
+        {
+            // get description localize text
+            string localizeText = "";
+            equipmentDescText[i].text = localizeText;
+        }
     }
 
     void ShowEquipmentUpgrade(EquipmentData data)
