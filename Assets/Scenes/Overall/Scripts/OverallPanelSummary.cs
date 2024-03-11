@@ -47,13 +47,13 @@ public class OverallPanelSummary : MonoBehaviour, IOverallPanel
 
         for (int i = 0; i < skillButtons.Length; i++)
         {
-            skillButtons[i].Init(i, data.skill_level[i], data.IsSkillUnlock(i), OpenSkillInfo);
+            skillButtons[i].Init(i, data.skill_level[i], data.IsSkillLock(i), OpenSkillInfo);
         }
 
         for (int i = 0; i < equipmentButtons.Length; i++)
         {
             var equipment = i < data.equipments.Length ? data.equipments[i] : null;
-            equipmentButtons[i].Init(equipment, data.IsEquipmentUnlock(i), OpenEquipmentInfo);
+            equipmentButtons[i].Init(equipment, data.IsEquipmentLock(i), OpenEquipmentInfo);
         }
     }
 

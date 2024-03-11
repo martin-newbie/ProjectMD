@@ -13,7 +13,7 @@ public class OverallPanelSkill : MonoBehaviour, IOverallPanel
     {
         for (int i = 0; i < skillButtons.Length; i++)
         {
-            skillButtons[i].Init(i, data.skill_level[i], data.IsSkillUnlock(i), OpenSkillUpgrade);
+            skillButtons[i].Init(i, data.skill_level[i], data.IsSkillLock(i), OpenSkillUpgrade);
         }
 
         for (int i = 0; i < skillDescTexts.Length; i++)

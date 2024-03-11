@@ -23,7 +23,7 @@ public class OverallPanelStatus : MonoBehaviour, IOverallPanel
         for (int i = 0; i < equipmentButtons.Length; i++)
         {
             var equipment = i < data.equipments.Length ? data.equipments[i] : null;
-            equipmentButtons[i].Init(equipment, data.IsEquipmentUnlock(i), ShowEquipmentUpgrade);
+            equipmentButtons[i].Init(equipment, data.IsEquipmentLock(i), ShowEquipmentUpgrade);
         }
 
         for (int i = 0; i < equipmentDescText.Length; i++)

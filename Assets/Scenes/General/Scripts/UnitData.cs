@@ -33,12 +33,12 @@ public class UnitData
         return defaultStatus;
     }
 
-    public bool IsSkillUnlock(int idx)
+    public bool IsSkillLock(int idx)
     {
         return skillUnlockRank[idx] > rank;
     }
 
-    public bool IsEquipmentUnlock(int idx)
+    public bool IsEquipmentLock(int idx)
     {
         return equipmentUnlockLevel[idx] > level;
     }
