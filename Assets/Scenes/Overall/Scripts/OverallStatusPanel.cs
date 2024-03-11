@@ -12,7 +12,7 @@ public class OverallStatusPanel : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < panelButtons.Length; i++)
         {
             int idx = i;
             panelButtons[i].onClick.AddListener(() => OpenPanelObject(idx));

@@ -41,9 +41,9 @@ public class OverallPanelSummary : MonoBehaviour, IOverallPanel
             tierObjects[i].SetActive(i <= data.rank);
         }
 
-        atkStatusText.text = statusData[StatusType.DMG].ToString();
-        hpStatusText.text = statusData[StatusType.HP].ToString();
-        defStatusText.text = statusData[StatusType.DEF].ToString();
+        atkStatusText.text = $"ATTACK : {statusData[StatusType.DMG].ToString("N0")}";
+        hpStatusText.text = $"HP : {statusData[StatusType.HP].ToString("N0")}";
+        defStatusText.text = $"DEF : {statusData[StatusType.DEF].ToString("N0")}";
 
         for (int i = 0; i < skillButtons.Length; i++)
         {
