@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class EquipmentInfoButton : MonoBehaviour
 {
-    [SerializeField] GameObject lockedObject;
+    [SerializeField] Image EquipmentIcon;
     [SerializeField] GameObject tierBox;
     [SerializeField] Text tierText;
+    [SerializeField] GameObject lockedObject;
 
     Action<EquipmentData> onButtonAction;
     EquipmentData linkedData;
