@@ -19,6 +19,11 @@ public class OverallStatusPanel : MonoBehaviour
             panelObjects[i].SetActive(false);
         }
 
+    }
+
+    public void InitCharacter(UnitData data)
+    {
+        this.data = data;
         OpenPanelObject(0);
     }
 
@@ -30,11 +35,6 @@ public class OverallStatusPanel : MonoBehaviour
         }
         panelObjects[idx].SetActive(true);
         panelObjects[idx].GetComponent<IOverallPanel>()?.Open(data);
-    }
-
-    public void InitCharacter(UnitData data)
-    {
-        this.data = data;
     }
 }
 
