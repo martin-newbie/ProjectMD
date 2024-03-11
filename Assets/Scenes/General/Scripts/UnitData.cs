@@ -12,6 +12,7 @@ public class UnitData
     public string user_uuid;
 
     public int[] skill_level;
+    public EquipmentData[] equipments;
 
     public void UpdateExp(int extra)
     {
@@ -28,4 +29,14 @@ public class UnitData
         var defaultStatus = StaticDataManager.GetUnitStatus(index).GetCalculatedValueDictionary(level, rank);
         return defaultStatus;
     }
+}
+
+[Serializable]
+public class EquipmentData
+{
+    public int index;
+    public int place_index;
+    public int level;
+    public int tier;
+    public int exp;
 }

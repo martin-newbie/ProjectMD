@@ -8,6 +8,7 @@ public class OverallStatusPanel : MonoBehaviour
 
     [SerializeField] Button[] panelButtons;
     [SerializeField] GameObject[] panelObjects;
+    UnitData data;
 
     private void Start()
     {
@@ -28,10 +29,17 @@ public class OverallStatusPanel : MonoBehaviour
             item.SetActive(false);
         }
         panelObjects[idx].SetActive(true);
+        panelObjects[idx].GetComponent<OverallPanel>()?.Open(data);
     }
 
-    public void InitCharacter(UnitData _linkedData)
+    public void InitCharacter(UnitData data)
     {
-
+        this.data = data;
     }
+}
+
+
+public interface OverallPanel
+{
+    void Open(UnitData data);
 }
