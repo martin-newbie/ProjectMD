@@ -42,18 +42,27 @@ public class SkillUpgradePanel : MonoBehaviour
         selectIndex = index;
         selectLevel = level;
 
+        curSkillLevelText.text = $"Lv. {level + 1}";
+        string nextLevelStr = level < 9 ? (level + 1).ToString() : "max";
+        nextSkillLevelText.text = $"Lv. {nextLevelStr}";
+
         var requireItemInfo = ResourceManager.GetCommonSkillItemRequire(level);
         var unitItemInfo = StaticDataManager.GetSkillItemData(index);
         for (int i = 0; i < requireItems.Length; i++)
         {
-            if(i < requireItemInfo.items.Length)
+            if (i < requireItemInfo.items.Length)
             {
-                requireItems[i].InitItem(unitItemInfo.itemArray[requireItemInfo.items[i].idx], selectIndex, selectLevel);
+                requireItems[i].InitItem(unitItemInfo.itemArray[requireItemInfo.items[i].idx], i, selectLevel);
             }
             else
             {
                 requireItems[i].gameObject.SetActive(false);
             }
         }
+    }
+
+    public void ClosePanel()
+    {
+        gameObject.SetActive(false);
     }
 }
