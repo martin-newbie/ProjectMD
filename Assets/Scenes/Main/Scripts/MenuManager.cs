@@ -22,7 +22,7 @@ public class MenuManager : MonoBehaviour
         WebRequest.Post("main-menu/enter-list", JsonUtility.ToJson(sendData), (data) =>
         {
             var units = JsonUtility.FromJson<RecieveUnitList>(data);
-            SceneLoadManager.Instance.LoadScene("List", () => { UnitListManager.Instance.InitList(units.units); });
+            SceneLoadManager.Instance.LoadScene("List");
         });
     }
 

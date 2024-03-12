@@ -14,6 +14,11 @@ public class UnitListManager : MonoBehaviour
     [SerializeField] Transform buttonContent;
     List<UnitListButton> buttonList;
 
+    private void Start()
+    {
+        InitList(UserData.Instance.units.ToArray());
+    }
+
     public void InitList(UnitData[] units)
     {
         buttonList = new List<UnitListButton>();
