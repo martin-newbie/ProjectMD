@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Overall/Overall.unity
     guid: 13b96c1008df3ce4abe79a2e8caeaa16
+  - enabled: 1
+    path: Assets/Scenes/Tests/ItemTest/TestShop.unity
+    guid: c1bc2fbbbe451d2469f326d9bdf2bb65
   m_configObjects: {}
