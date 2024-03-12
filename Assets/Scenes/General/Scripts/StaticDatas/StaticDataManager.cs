@@ -41,6 +41,7 @@ public class StaticDataManager : MonoBehaviour
             unitStatus,
             constUnitStatus,
             unitSkillStatus,
+            itemValueData,
         };
 
         foreach (var item in staticDatas)

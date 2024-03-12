@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "StaticItemValueData", menuName = "MD/ScriptableData/StaticItemValueData", order = int.MinValue)]
 public class StaticItemValueData : SheetDataBase
 {
-    protected override string gid => "1901922725";
+    protected override string gid => "1901022725";
 
     protected override string range => "C3:F91";
 

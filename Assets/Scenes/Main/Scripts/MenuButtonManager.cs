@@ -39,4 +39,9 @@ public class MenuButtonManager : MonoBehaviour
     {
         SceneLoadManager.Instance.LoadScene("Lobby");
     }
+
+    public void OnTestShopButton()
+    {
+        SceneLoadManager.Instance.LoadScene("TestShop");
+    }
 }

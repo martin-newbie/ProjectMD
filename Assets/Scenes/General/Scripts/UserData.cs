@@ -28,6 +28,11 @@ public class UserData
         lastEnergyTime = DateTime.Parse(str_last_energy_updated).ToUniversalTime();
     }
 
+    public ItemData FindItem(int idx)
+    {
+        return items.Find(item => item.idx == idx);
+    }
+
     public UnitData FindUnitWithId(int id)
     {
         return units.Find(item => item.id == id);
