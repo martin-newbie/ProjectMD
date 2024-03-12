@@ -34,6 +34,12 @@ public class StaticDataManager : MonoBehaviour
         return Instance.itemValueData.dataList[index];
     }
 
+    public StaticSkillRequireItemData skillRequireData;
+    public static SkillRequireItemData GetSkillItemData(int index)
+    {
+        return Instance.skillRequireData.dataList.Find(item => item.index == index);
+    }
+
     private void Start()
     {
         var staticDatas = new SheetDataBase[]

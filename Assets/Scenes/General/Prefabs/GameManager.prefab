@@ -134,6 +134,7 @@ MonoBehaviour:
   constUnitStatus: {fileID: 11400000, guid: 55cd90e2c6c79604db644a9bc1e750dd, type: 2}
   unitSkillStatus: {fileID: 11400000, guid: bc841376608aaab44b11e63efcc4d6ca, type: 2}
   itemValueData: {fileID: 11400000, guid: e5e27df926b3dbe4aae51e2b20301998, type: 2}
+  skillRequireData: {fileID: 11400000, guid: ca6aefe9c7c89b44dafd7722c78deb1d, type: 2}
 --- !u!1 &7297942923472383156
 GameObject:
   m_ObjectHideFlags: 0
