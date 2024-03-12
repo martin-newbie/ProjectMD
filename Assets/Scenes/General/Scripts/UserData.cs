@@ -91,6 +91,14 @@ public class UserData
         }
     }
 
+    public void UseManyItem(ItemData[] items)
+    {
+        foreach (var item in items)
+        {
+            UseItem(item);
+        }
+    }
+
     public void UseItem(ItemData item)
     {
         items.Find(e => e.idx == item.idx).count -= item.count;

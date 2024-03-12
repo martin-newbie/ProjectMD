@@ -10,13 +10,14 @@ public class LevelItemUseButton : MonoBehaviour
     [SerializeField] GameObject selectedObject;
     [SerializeField] GameObject reduceButton;
 
-    ItemData item;
     OverallPanelLevel levelPanel;
     ItemValueData valueData;
-    int selectCount;
+    [HideInInspector] public ItemData item;
+    [HideInInspector] public int selectCount;
 
     public void Init(int itemIndex, OverallPanelLevel levelPanel)
     {
+        selectCount = 0;
         itemInfo.InitInfo(itemIndex);
         selectedCountText.text = "x0";
         selectedObject.SetActive(false);

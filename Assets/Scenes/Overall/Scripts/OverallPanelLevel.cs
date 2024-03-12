@@ -96,6 +96,7 @@ public class OverallPanelLevel : MonoBehaviour, IOverallPanel
 
     void ClearModifyStatus()
     {
+        totalExp = 0;
         calculatedExp = 0;
         calculatedLevel = 0;
 
@@ -114,4 +115,50 @@ public class OverallPanelLevel : MonoBehaviour, IOverallPanel
     {
         return "<color=#47E76D>" + text + "</color>";
     }
+
+    public void OnUpgradeButton()
+    {
+        int useCoin = totalExp;
+        if (UserData.Instance.coin < useCoin) return;
+
+        var sendData = new SendLevelupData();
+        sendData.uuid = UserData.Instance.uuid;
+        sendData.id = linkedData.id;
+        sendData.use_items = GetUseLevelItems();
+        sendData.use_coin = useCoin;
+        sendData.updated_exp = totalExp;
+
+        WebRequest.Post("unit/upgrade-level", JsonUtility.ToJson(sendData), (data) =>
+        {
+            linkedData.UpdateExp(sendData.updated_exp);
+            UserData.Instance.coin -= sendData.use_coin;
+            UserData.Instance.UseManyItem(sendData.use_items);
+            Open(linkedData);
+        });
+    }
+
+    ItemData[] GetUseLevelItems()
+    {
+        List<ItemData> datas = new List<ItemData>();
+        for (int i = 0; i < levelItemButtons.Length; i++)
+        {
+            if(levelItemButtons[i].selectCount > 0)
+            {
+                ItemData data = new ItemData();
+                data.idx = levelItemButtons[i].item.idx;
+                data.count = levelItemButtons[i].selectCount;
+                datas.Add(data);
+            }
+        }
+        return datas.ToArray();
+    }
+}
+
+public class SendLevelupData
+{
+    public string uuid;
+    public int id;
+    public ItemData[] use_items;
+    public int use_coin;
+    public int updated_exp;
 }
