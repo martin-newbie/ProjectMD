@@ -6,8 +6,16 @@ using UnityEngine.UI;
 
 public class OverallManager : MonoBehaviour
 {
+
+    public static OverallManager Instance = null;
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     [SerializeField] OverallStatusPanel statusPanel;
     [SerializeField] SkeletonGraphic unitModel;
+    [SerializeField] SkillUpgradePanel skillUpgradePanel;
 
     private void Start()
     {
@@ -18,5 +26,10 @@ public class OverallManager : MonoBehaviour
         unitModel.AnimationState.SetAnimation(0, "battle_wait", true);
 
         statusPanel.InitCharacter(unitData);
+    }
+
+    public void OpenSkillUpgradePanel(UnitData linkedData, int selectIndex)
+    {
+        skillUpgradePanel.OpenSkillUpgradePanel(linkedData, selectIndex);
     }
 }
