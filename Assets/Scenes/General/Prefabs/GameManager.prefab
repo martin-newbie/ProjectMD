@@ -86,6 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75ba06e2b76d0b44f818bdab987e611c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useAsLocalhost: 0
 --- !u!1 &7297942922949451122
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,6 +133,7 @@ MonoBehaviour:
   unitStatus: {fileID: 11400000, guid: 9b1d656d0a4dab44d9dbc92974368cf1, type: 2}
   constUnitStatus: {fileID: 11400000, guid: 55cd90e2c6c79604db644a9bc1e750dd, type: 2}
   unitSkillStatus: {fileID: 11400000, guid: bc841376608aaab44b11e63efcc4d6ca, type: 2}
+  itemValueData: {fileID: 11400000, guid: e5e27df926b3dbe4aae51e2b20301998, type: 2}
 --- !u!1 &7297942923472383156
 GameObject:
   m_ObjectHideFlags: 0

@@ -28,6 +28,12 @@ public class StaticDataManager : MonoBehaviour
         return Instance.unitSkillStatus.dataList.Find(item => item.unitIndex == keyIndex);
     }
 
+    public StaticItemValueData itemValueData;
+    public static ItemValueData GetItemValueData(int index)
+    {
+        return Instance.itemValueData.dataList[index];
+    }
+
     private void Start()
     {
         var staticDatas = new SheetDataBase[]
