@@ -8,7 +8,6 @@ public class SkillUpgradePanel : MonoBehaviour
 
     UnitData linkedData;
     int selectIndex;
-    int selectLevel;
 
     [SerializeField] SkillInfoButton[] skillButtons;
 
@@ -40,7 +39,6 @@ public class SkillUpgradePanel : MonoBehaviour
     void ChangeSkillInfoTo(int index, int level)
     {
         selectIndex = index;
-        selectLevel = level;
 
         curSkillLevelText.text = $"Lv. {level + 1}";
         string nextLevelStr = level < 9 ? (level + 1).ToString() : "max";
@@ -52,7 +50,7 @@ public class SkillUpgradePanel : MonoBehaviour
         {
             if (i < requireItemInfo.items.Length)
             {
-                requireItems[i].InitItem(unitItemInfo.itemArray[requireItemInfo.items[i].idx], i, selectLevel);
+                requireItems[i].InitItem(unitItemInfo.itemArray[requireItemInfo.items[i].idx], i, linkedData.skill_level[selectIndex]);
             }
             else
             {
@@ -61,8 +59,53 @@ public class SkillUpgradePanel : MonoBehaviour
         }
     }
 
+    public void OnUpgradeButton()
+    {
+        if (linkedData.skill_level[selectIndex] >= 9) return;
+        if (!CheckEnoughtItems(ResourceManager.GetCommonSkillItemRequire(linkedData.skill_level[selectIndex]).items)) return;
+
+        var sendData = new SendSkillLevelUp();
+        sendData.uuid = UserData.Instance.uuid;
+        sendData.id = linkedData.id;
+        sendData.skill_index = selectIndex;
+        sendData.use_items = ResourceManager.GetCommonSkillItemRequire(linkedData.skill_level[selectIndex]).items;
+        sendData.use_coin = 0; // TODO : it also should include in skillItemRequire
+        WebRequest.Post("unit/upgrade-skill", JsonUtility.ToJson(sendData), (data) =>
+        {
+            linkedData.skill_level[sendData.skill_index]++;
+            UserData.Instance.UseManyItem(sendData.use_items);
+            UserData.Instance.coin -= sendData.use_coin;
+            OpenSkillUpgradePanel(linkedData, selectIndex);
+            OverallManager.Instance.statusPanel.OpenPanelObject(2);
+        });
+    }
+
+    bool CheckEnoughtItems(ItemData[] items)
+    {
+        bool result = true;
+        foreach (var item in items)
+        {
+            var findItem = UserData.Instance.FindItem(item.idx);
+            if (findItem.count < item.count)
+            {
+                result = false;
+            }
+        }
+        return result;
+    }
+
     public void ClosePanel()
     {
         gameObject.SetActive(false);
     }
+}
+
+[System.Serializable]
+public class SendSkillLevelUp
+{
+    public string uuid;
+    public int id;
+    public int skill_index;
+    public ItemData[] use_items;
+    public int use_coin;
 }

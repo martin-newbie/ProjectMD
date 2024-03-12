@@ -27,7 +27,7 @@ public class OverallStatusPanel : MonoBehaviour
         OpenPanelObject(0);
     }
 
-    void OpenPanelObject(int idx)
+    public void OpenPanelObject(int idx)
     {
         foreach (var item in panelObjects)
         {

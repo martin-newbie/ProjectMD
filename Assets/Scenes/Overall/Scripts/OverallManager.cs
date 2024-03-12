@@ -13,9 +13,9 @@ public class OverallManager : MonoBehaviour
         Instance = this;
     }
 
-    [SerializeField] OverallStatusPanel statusPanel;
-    [SerializeField] SkeletonGraphic unitModel;
-    [SerializeField] SkillUpgradePanel skillUpgradePanel;
+    public OverallStatusPanel statusPanel;
+    public SkeletonGraphic unitModel;
+    public SkillUpgradePanel skillUpgradePanel;
 
     private void Start()
     {
