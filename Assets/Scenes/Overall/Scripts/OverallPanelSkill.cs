@@ -8,9 +8,12 @@ public class OverallPanelSkill : MonoBehaviour, IOverallPanel
 
     public SkillInfoButton[] skillButtons;
     public Text[] skillDescTexts;
+    UnitData linkedData;
 
     public void Open(UnitData data)
     {
+        linkedData = data;
+
         for (int i = 0; i < skillButtons.Length; i++)
         {
             skillButtons[i].Init(i, data.skill_level[i], data.IsSkillLock(i), OpenSkillUpgrade);
@@ -26,6 +29,6 @@ public class OverallPanelSkill : MonoBehaviour, IOverallPanel
 
     void OpenSkillUpgrade(int index, int level)
     {
-        throw new System.Exception();
+        OverallManager.Instance.OpenSkillUpgradePanel(linkedData, index);
     }
 }
