@@ -25,11 +25,15 @@ public class ResourceManager : MonoBehaviour
         var unitLevelTextAsset = Resources.Load<TextAsset>("Datas/unitLevelExp");
         var levelupExp = unitLevelTextAsset.text.Split('\n').Select(item => int.Parse(item));
         unitLevelupExp = new List<int>(levelupExp);
+
+        var skillItemRequire = Resources.Load<TextAsset>("Datas/commonSkillItemRequire");
+        commonSkillItemRequire = JsonUtility.FromJson<CommonSkillItemRequire>(skillItemRequire.text);
     }
 
     Dictionary<int, SkeletonDataAsset> characters = new Dictionary<int, SkeletonDataAsset>();
     Sprite[] unitProfiles;
     List<int> unitLevelupExp;
+    public CommonSkillItemRequire commonSkillItemRequire;
 
     public static SkeletonDataAsset GetSkeleton(int idx)
     {
@@ -51,6 +55,11 @@ public class ResourceManager : MonoBehaviour
         return Instance.unitLevelupExp[level];
     }
 
+    public static SkillItemRequire GetCommonSkillItemRequire(int skillLevel)
+    {
+        return Instance.commonSkillItemRequire.skillItemDatas[skillLevel];
+    }
+
     public static Sprite GetItemIcon(int index)
     {
         return null;
@@ -62,4 +71,16 @@ public class ResourceManager : MonoBehaviour
 
     public Sprite dieselRobotSmg;
     public Sprite dieselRobotMelee;
+}
+
+[System.Serializable]
+public class CommonSkillItemRequire
+{
+    public SkillItemRequire[] skillItemDatas;
+}
+
+[System.Serializable]
+public class SkillItemRequire
+{
+    public ItemData[] items;
 }
