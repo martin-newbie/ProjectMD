@@ -12,7 +12,7 @@ public class TestItemCanvas : MonoBehaviour
         WebRequest.Post("user/get-item", JsonUtility.ToJson(item), (data) =>
         {
             var recieve = JsonUtility.FromJson<RecieveGetItem>(data);
-
+            UserData.Instance.AddItem(item);
         });
     }
 }

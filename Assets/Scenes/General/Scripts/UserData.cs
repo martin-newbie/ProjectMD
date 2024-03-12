@@ -73,6 +73,23 @@ public class UserData
     {
         lastEnergyTime = date;
     }
+
+    public void AddItem(ItemData item)
+    {
+        if (items.Exists(e => e.idx == item.idx))
+        {
+            items.Find(e => e.idx == item.idx).count += item.count;
+        }
+        else
+        {
+            items.Add(item);
+        }
+    }
+
+    public void UseItem(ItemData item)
+    {
+        items.Find(e => e.idx == item.idx).count -= item.count;
+    }
 }
 
 [Serializable]
