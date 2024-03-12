@@ -11,16 +11,20 @@ public class LevelItemUseButton : MonoBehaviour
     [SerializeField] GameObject reduceButton;
 
     ItemData item;
+    OverallPanelLevel levelPanel;
+    ItemValueData valueData;
     int selectCount;
 
-    public void Init(int itemIndex)
+    public void Init(int itemIndex, OverallPanelLevel levelPanel)
     {
         itemInfo.InitInfo(itemIndex);
         selectedCountText.text = "x0";
         selectedObject.SetActive(false);
         reduceButton.SetActive(false);
 
+        this.levelPanel = levelPanel;
         item = UserData.Instance.items.Find(i => i.idx == itemIndex);
+        valueData = StaticDataManager.GetItemValueData(itemIndex);
         if (item == null)
         {
             // set item icon blur
@@ -39,6 +43,7 @@ public class LevelItemUseButton : MonoBehaviour
         selectedObject.SetActive(true);
         reduceButton.SetActive(true);
         selectedCountText.text = "x" + selectCount.ToString();
+        levelPanel.RaiseExp(valueData.value);
     }
 
     public void OnReduceButton()
@@ -56,5 +61,6 @@ public class LevelItemUseButton : MonoBehaviour
             selectedObject.SetActive(false);
             reduceButton.SetActive(false);
         }
+        levelPanel.ReduceExp(valueData.value);
     }
 }

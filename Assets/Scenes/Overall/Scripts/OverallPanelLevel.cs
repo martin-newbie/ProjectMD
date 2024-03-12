@@ -36,7 +36,7 @@ public class OverallPanelLevel : MonoBehaviour, IOverallPanel
         linkedData = data;
         for (int i = 0; i < levelItemButtons.Length; i++)
         {
-            levelItemButtons[i].Init(i);
+            levelItemButtons[i].Init(i, this);
         }
         ClearModifyStatus();
     }
@@ -71,7 +71,7 @@ public class OverallPanelLevel : MonoBehaviour, IOverallPanel
     {
         calculatedExp = totalExp;
         calculatedLevel = linkedData.level;
-        while (calculatedExp > GetLevelExp(calculatedLevel))
+        while (calculatedExp >= GetLevelExp(calculatedLevel))
         {
             calculatedExp -= GetLevelExp(calculatedLevel);
             calculatedLevel++;
