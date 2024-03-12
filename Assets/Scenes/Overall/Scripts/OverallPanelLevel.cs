@@ -69,7 +69,7 @@ public class OverallPanelLevel : MonoBehaviour, IOverallPanel
 
     void UpdateModifyStatus()
     {
-        calculatedExp = totalExp;
+        calculatedExp = linkedData.exp + totalExp;
         calculatedLevel = linkedData.level;
         while (calculatedExp >= GetLevelExp(calculatedLevel))
         {
