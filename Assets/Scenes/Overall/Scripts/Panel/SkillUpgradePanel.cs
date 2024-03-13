@@ -44,7 +44,7 @@ public class SkillUpgradePanel : MonoBehaviour
         string nextLevelStr = level < 9 ? (level + 1).ToString() : "max";
         nextSkillLevelText.text = $"Lv. {nextLevelStr}";
 
-        var requireItemInfo = ResourceManager.GetCommonSkillItemRequire(level);
+        var requireItemInfo = DataManager.GetCommonSkillItem(level);
         var unitItemInfo = StaticDataManager.GetSkillItemData(index);
         for (int i = 0; i < requireItems.Length; i++)
         {
@@ -62,13 +62,13 @@ public class SkillUpgradePanel : MonoBehaviour
     public void OnUpgradeButton()
     {
         if (linkedData.skill_level[selectIndex] >= 9) return;
-        if (!OverallManager.Instance.CheckEnoughtItems(ResourceManager.GetCommonSkillItemRequire(linkedData.skill_level[selectIndex]).items)) return;
+        if (!OverallManager.Instance.CheckEnoughtItems(DataManager.GetCommonSkillItem(linkedData.skill_level[selectIndex]).items)) return;
 
         var sendData = new SendSkillLevelUp();
         sendData.uuid = UserData.Instance.uuid;
         sendData.id = linkedData.id;
         sendData.skill_index = selectIndex;
-        sendData.use_items = ResourceManager.GetCommonSkillItemRequire(linkedData.skill_level[selectIndex]).items;
+        sendData.use_items = DataManager.GetCommonSkillItem(linkedData.skill_level[selectIndex]).items;
         sendData.use_coin = 0; // TODO : it also should include in skillItemRequire
         WebRequest.Post("unit/upgrade-skill", JsonUtility.ToJson(sendData), (data) =>
         {

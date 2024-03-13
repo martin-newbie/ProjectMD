@@ -15,7 +15,7 @@ public class SkillRequireItemInfo : MonoBehaviour
 
         var item = UserData.Instance.FindItem(itemIndex);
         int itemCount = item != null ? item.count : 0;
-        int requireItemCount = ResourceManager.GetCommonSkillItemRequire(skillLevel).items[slotIndex].count;
+        int requireItemCount = DataManager.GetCommonSkillItem(skillLevel).items[slotIndex].count;
         countText.text = $"{itemCount} / {requireItemCount}";
     }
 }

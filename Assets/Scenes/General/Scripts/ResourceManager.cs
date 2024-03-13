@@ -21,19 +21,10 @@ public class ResourceManager : MonoBehaviour
 
         var profiles = Resources.LoadAll<Sprite>("Sprites/Profiles");
         unitProfiles = profiles.OrderBy((item) => int.Parse(item.name.Split('-')[0])).ToArray();
-
-        var unitLevelTextAsset = Resources.Load<TextAsset>("Datas/unitLevelExp");
-        var levelupExp = unitLevelTextAsset.text.Split('\n').Select(item => int.Parse(item));
-        unitLevelupExp = new List<int>(levelupExp);
-
-        var skillItemRequire = Resources.Load<TextAsset>("Datas/commonSkillItemRequire");
-        commonSkillItemRequire = JsonUtility.FromJson<CommonSkillItemRequire>(skillItemRequire.text);
     }
 
     Dictionary<int, SkeletonDataAsset> characters = new Dictionary<int, SkeletonDataAsset>();
     Sprite[] unitProfiles;
-    List<int> unitLevelupExp;
-    public CommonSkillItemRequire commonSkillItemRequire;
 
     public static SkeletonDataAsset GetSkeleton(int idx)
     {
@@ -48,16 +39,6 @@ public class ResourceManager : MonoBehaviour
         if (idx > Instance.unitProfiles.Length - 1)
             idx = 0;
         return Instance.unitProfiles[idx];
-    }
-
-    public static int GetUnitLevelupExp(int level)
-    {
-        return Instance.unitLevelupExp[level];
-    }
-
-    public static SkillItemRequire GetCommonSkillItemRequire(int skillLevel)
-    {
-        return Instance.commonSkillItemRequire.skillItemDatas[skillLevel];
     }
 
     public static Sprite GetItemIcon(int index)

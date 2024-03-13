@@ -20,9 +20,9 @@ public class UnitData
     public void UpdateExp(int extra)
     {
         exp += extra;
-        while (exp > ResourceManager.GetUnitLevelupExp(level))
+        while (exp > DataManager.GetUnitLevelExp(level))
         {
-            exp -= ResourceManager.GetUnitLevelupExp(level);
+            exp -= DataManager.GetUnitLevelExp(level);
             level++;
         }
     }

@@ -27,12 +27,12 @@ public class ResultUnitInfo : MonoBehaviour
         }
         else
         {
-            prevExpGauge.fillAmount = (float)prevExp / (float)ResourceManager.GetUnitLevelupExp(prevLevel);
+            prevExpGauge.fillAmount = (float)prevExp / (float)DataManager.GetUnitLevelExp(prevLevel);
         }
 
         prevLevelText.text = unitData.level.ToString();
         nextLevelText.text = (unitData.level + 1).ToString();
-        nextExpGauge.fillAmount = (float)unitData.exp / (float)ResourceManager.GetUnitLevelupExp(unitData.level);
+        nextExpGauge.fillAmount = (float)unitData.exp / (float)DataManager.GetUnitLevelExp(unitData.level);
         updatedExpText.text = "+" + updatedExp.ToString();
         updatedExpText.rectTransform.anchoredPosition = new Vector2(225f * nextExpGauge.fillAmount, 20.5f);
         flavorText.text = "";

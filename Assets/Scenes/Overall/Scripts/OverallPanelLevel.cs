@@ -50,7 +50,7 @@ public class OverallPanelLevel : MonoBehaviour, IOverallPanel
 
     int GetLevelExp(int level)
     {
-        return ResourceManager.GetUnitLevelupExp(level);
+        return DataManager.GetUnitLevelExp(level);
     }
 
     public void ReduceExp(int exp)
