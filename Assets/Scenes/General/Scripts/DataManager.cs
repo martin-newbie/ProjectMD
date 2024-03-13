@@ -11,7 +11,7 @@ public class DataManager : MonoBehaviour
     public List<ChapterData> chapters = new List<ChapterData>();
     public GameData gameData;
 
-    private void Awake()
+    private void Start()
     {
         Instance = this;
         WebRequest.Post("data/game-data", "", (data) =>
