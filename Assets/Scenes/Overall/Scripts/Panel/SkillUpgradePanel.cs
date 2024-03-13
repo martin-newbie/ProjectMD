@@ -52,7 +52,8 @@ public class SkillUpgradePanel : MonoBehaviour
         {
             if (i < requireItemInfo.items.Length)
             {
-                requireItems[i].InitItem(unitItemInfo.itemArray[requireItemInfo.items[i].idx], i, linkedData.skill_level[selectIndex]);
+                var item = requireItemInfo.items[i];
+                requireItems[i].InitItem(unitItemInfo.itemArray[item.idx], i, linkedData.skill_level[selectIndex], item);
             }
             else
             {
