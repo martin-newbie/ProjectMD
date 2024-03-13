@@ -23,7 +23,7 @@ public class SkillInfoButton : MonoBehaviour
         lockedObject.SetActive(locked);
         levelText.gameObject.SetActive(!locked);
 
-        if ((index == 0 && level == 5) || level == 10)
+        if ((index == 0 && level == 4) || level == 9)
         {
             levelText.text = "max";
         }
