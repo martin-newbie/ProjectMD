@@ -9,27 +9,46 @@ public class DataManager : MonoBehaviour
     public static string chapterKey = "chapter";
 
     public List<ChapterData> chapters = new List<ChapterData>();
+    public GameData gameData;
 
     private void Awake()
     {
         Instance = this;
-        WebRequest.Post("data/game-data", ""/*version require*/, (data) =>
+        WebRequest.Post("data/game-data", "", (data) =>
         {
             var recieveData = JsonUtility.FromJson<GameData>(data);
+            gameData = recieveData;
         });
-        Load();
     }
 
-    void Load()
+    public SkillItemRequire GetCommonSkillItem(int level)
     {
-        chapters = new List<ChapterData>();
-        int chapterCount = 1;
-        for (int i = 0; i < chapterCount; i++)
-        {
-            var chapterTextAsset = Resources.Load<TextAsset>($"Stages/{i}");
-            var chapter = JsonUtility.FromJson<ChapterData>(chapterTextAsset.text);
-            chapters.Add(chapter);
-        }
+        return gameData.common_skill_data.skillItemDatas[level];
+    }
+
+    public SkillItemRequire GetActiveSkillItem(int level)
+    {
+        return gameData.active_skill_data.skillItemDatas[level];
+    }
+
+    public TierUpgrade GetTierItem(int level)
+    {
+        return gameData.tier_upgrade_data.upgrade_data[level];
+    }
+
+    public int GetUserLevelExp(int level)
+    {
+        return gameData.user_exp_data.exp[level];
+    }
+
+    public int GetUnitLevelExp(int level)
+    {
+        return gameData.unit_exp_data.exp[level];
+    }
+
+    public int GetEquipmentLevelExp(int level)
+    {
+        return gameData.equipment_exp_data.exp[level];
     }
 }
 
