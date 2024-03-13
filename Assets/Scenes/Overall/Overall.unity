@@ -8035,6 +8035,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f4385c61b647f140aeb4b47f268c635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tierStars:
+  - {fileID: 668898940}
+  - {fileID: 1986660583}
+  - {fileID: 163829527}
+  - {fileID: 1158718909}
+  - {fileID: 1109034634}
+  atkText: {fileID: 2065534189}
+  hpText: {fileID: 702829879}
+  defText: {fileID: 1080048196}
+  unlockText: {fileID: 988307144}
+  requireItemText: {fileID: 936451113}
+  requireCoinText: {fileID: 1096377196}
 --- !u!1 &1258873451
 GameObject:
   m_ObjectHideFlags: 0
