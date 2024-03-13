@@ -8,6 +8,7 @@ public class SkillUpgradePanel : MonoBehaviour
 
     UnitData linkedData;
     int selectIndex;
+    bool isExSkill => selectIndex == 0;
 
     [SerializeField] SkillInfoButton[] skillButtons;
 
@@ -38,13 +39,14 @@ public class SkillUpgradePanel : MonoBehaviour
 
     void ChangeSkillInfoTo(int index, int level)
     {
+        int maxLevel = isExSkill ? 4 : 9;
         selectIndex = index;
 
         curSkillLevelText.text = $"Lv. {level + 1}";
-        string nextLevelStr = level < 9 ? (level + 1).ToString() : "max";
+        string nextLevelStr = level < maxLevel ? (level + 1).ToString() : "max";
         nextSkillLevelText.text = $"Lv. {nextLevelStr}";
 
-        var requireItemInfo = DataManager.GetCommonSkillItem(level);
+        var requireItemInfo = isExSkill ? DataManager.GetActiveSkillItem(level) : DataManager.GetCommonSkillItem(level);
         var unitItemInfo = StaticDataManager.GetSkillItemData(index);
         for (int i = 0; i < requireItems.Length; i++)
         {
@@ -61,14 +63,16 @@ public class SkillUpgradePanel : MonoBehaviour
 
     public void OnUpgradeButton()
     {
-        if (linkedData.skill_level[selectIndex] >= 9) return;
-        if (!OverallManager.Instance.CheckEnoughtItems(DataManager.GetCommonSkillItem(linkedData.skill_level[selectIndex]).items)) return;
+        int maxLevel = isExSkill ? 4 : 9;
+        if (linkedData.skill_level[selectIndex] >= maxLevel) return;
+        var items = (isExSkill ? DataManager.GetActiveSkillItem(linkedData.skill_level[selectIndex]) : DataManager.GetCommonSkillItem(linkedData.skill_level[selectIndex])).items;
+        if (!OverallManager.Instance.CheckEnoughtItems(items)) return;
 
         var sendData = new SendSkillLevelUp();
         sendData.uuid = UserData.Instance.uuid;
         sendData.id = linkedData.id;
         sendData.skill_index = selectIndex;
-        sendData.use_items = DataManager.GetCommonSkillItem(linkedData.skill_level[selectIndex]).items;
+        sendData.use_items = items;
         sendData.use_coin = 0; // TODO : it also should include in skillItemRequire
         WebRequest.Post("unit/upgrade-skill", JsonUtility.ToJson(sendData), (data) =>
         {
