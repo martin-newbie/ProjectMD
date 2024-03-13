@@ -60,6 +60,8 @@ public class SkillUpgradePanel : MonoBehaviour
                 requireItems[i].gameObject.SetActive(false);
             }
         }
+
+        requireCoinText.text = requireItemInfo.coin.ToString("N0");
     }
 
     public void OnUpgradeButton()
