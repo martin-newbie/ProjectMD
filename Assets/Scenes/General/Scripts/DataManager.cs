@@ -21,34 +21,34 @@ public class DataManager : MonoBehaviour
         });
     }
 
-    public SkillItemRequire GetCommonSkillItem(int level)
+    public static SkillItemRequire GetCommonSkillItem(int level)
     {
-        return gameData.common_skill_data.skillItemDatas[level];
+        return Instance.gameData.common_skill_data.skillItemDatas[level];
     }
 
-    public SkillItemRequire GetActiveSkillItem(int level)
+    public static SkillItemRequire GetActiveSkillItem(int level)
     {
-        return gameData.active_skill_data.skillItemDatas[level];
+        return Instance.gameData.active_skill_data.skillItemDatas[level];
     }
 
-    public TierUpgrade GetTierItem(int level)
+    public static TierUpgrade GetTierItem(int level)
     {
-        return gameData.tier_upgrade_data.upgrade_data[level];
+        return Instance.gameData.tier_upgrade_data.upgrade_data[level];
     }
 
-    public int GetUserLevelExp(int level)
+    public static int GetUserLevelExp(int level)
     {
-        return gameData.user_exp_data.exp[level];
+        return Instance.gameData.user_exp_data.exp[level];
     }
 
-    public int GetUnitLevelExp(int level)
+    public static int GetUnitLevelExp(int level)
     {
-        return gameData.unit_exp_data.exp[level];
+        return Instance.gameData.unit_exp_data.exp[level];
     }
 
-    public int GetEquipmentLevelExp(int level)
+    public static int GetEquipmentLevelExp(int level)
     {
-        return gameData.equipment_exp_data.exp[level];
+        return Instance.gameData.equipment_exp_data.exp[level];
     }
 }
 
