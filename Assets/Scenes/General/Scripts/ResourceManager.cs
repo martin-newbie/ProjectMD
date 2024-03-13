@@ -72,15 +72,3 @@ public class ResourceManager : MonoBehaviour
     public Sprite dieselRobotSmg;
     public Sprite dieselRobotMelee;
 }
-
-[System.Serializable]
-public class CommonSkillItemRequire
-{
-    public SkillItemRequire[] skillItemDatas;
-}
-
-[System.Serializable]
-public class SkillItemRequire
-{
-    public ItemData[] items;
-}
