@@ -42,9 +42,16 @@ public class SkillUpgradePanel : MonoBehaviour
         int maxLevel = isExSkill ? 4 : 9;
         selectIndex = index;
 
-        curSkillLevelText.text = $"Lv. {level + 1}";
-        string nextLevelStr = level < maxLevel ? (level + 1).ToString() : "max";
-        nextSkillLevelText.text = $"Lv. {nextLevelStr}";
+        if (level == maxLevel) // need description text
+        {
+            curSkillLevelText.text = "max";
+            nextSkillLevelText.text = "";
+        }
+        else
+        {
+            curSkillLevelText.text = $"Lv. {level + 1}";
+            nextSkillLevelText.text = $"Lv. {level + 2}";
+        }
 
         var requireItemInfo = isExSkill ? DataManager.GetActiveSkillItem(level) : DataManager.GetCommonSkillItem(level);
         var unitItemInfo = StaticDataManager.GetSkillItemData(index);
