@@ -83,14 +83,14 @@ public class OverallPanelLevel : MonoBehaviour, IOverallPanel
 
         if (linkedData.level < calculatedLevel)
         {
-            levelText.text = "Lv." + (linkedData.level + 1).ToString() + ModifyUpgradedColorText($" → {calculatedLevel + 1}");
+            levelText.text = "Lv." + (linkedData.level + 1).ToString() + OverallManager.Instance.ModifyUpgradedColorText(calculatedLevel + 1);
 
             var statusData = StaticDataManager.GetUnitStatus(linkedData.index);
             var prevStatus = statusData.GetCalculatedValueDictionary(linkedData.level);
             var nextStatus = statusData.GetCalculatedValueDictionary(calculatedLevel);
-            atkText.text = $"ATTACK : {prevStatus[StatusType.DMG].ToString("N0")} {ModifyUpgradedColorText($"→ {nextStatus[StatusType.DMG].ToString("N0")}")}";
-            hpText.text = $"HP : {prevStatus[StatusType.HP].ToString("N0")} {ModifyUpgradedColorText($"→ {nextStatus[StatusType.HP].ToString("N0")}")}";
-            defText.text = $"DEF : {prevStatus[StatusType.DEF].ToString("N0")} {ModifyUpgradedColorText($"→ {nextStatus[StatusType.DEF].ToString("N0")}")}";
+            atkText.text = OverallManager.Instance.GetStatusText(StatusType.DMG, prevStatus) + OverallManager.Instance.ModifyUpgradedColorText(nextStatus[StatusType.DMG]);
+            hpText.text = OverallManager.Instance.GetStatusText(StatusType.DMG, prevStatus) + OverallManager.Instance.ModifyUpgradedColorText(nextStatus[StatusType.HP]);
+            defText.text = OverallManager.Instance.GetStatusText(StatusType.DMG, prevStatus) + OverallManager.Instance.ModifyUpgradedColorText(nextStatus[StatusType.DEF]);
         }
     }
 
@@ -104,16 +104,10 @@ public class OverallPanelLevel : MonoBehaviour, IOverallPanel
         newExpGauge.fillAmount = 0;
         levelText.text = "Lv." + (linkedData.level + 1).ToString();
         var statusData = StaticDataManager.GetUnitStatus(linkedData.index).GetCalculatedValueDictionary(linkedData.level);
-        atkText.text = $"ATTACK : {statusData[StatusType.DMG].ToString("N0")}";
-        hpText.text = $"HP : {statusData[StatusType.HP].ToString("N0")}";
-        defText.text = $"DEF : {statusData[StatusType.DEF].ToString("N0")}";
+        atkText.text = OverallManager.Instance.GetStatusText(StatusType.DMG, statusData);
+        hpText.text = OverallManager.Instance.GetStatusText(StatusType.HP, statusData);
+        defText.text = OverallManager.Instance.GetStatusText(StatusType.DEF, statusData);
         useCoinText.text = "0";
-    }
-
-    // use when upgrade item applied and level modified
-    string ModifyUpgradedColorText(string text)
-    {
-        return "<color=#47E76D>" + text + "</color>";
     }
 
     public void OnUpgradeButton()

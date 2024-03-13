@@ -62,7 +62,7 @@ public class SkillUpgradePanel : MonoBehaviour
     public void OnUpgradeButton()
     {
         if (linkedData.skill_level[selectIndex] >= 9) return;
-        if (!CheckEnoughtItems(ResourceManager.GetCommonSkillItemRequire(linkedData.skill_level[selectIndex]).items)) return;
+        if (!OverallManager.Instance.CheckEnoughtItems(ResourceManager.GetCommonSkillItemRequire(linkedData.skill_level[selectIndex]).items)) return;
 
         var sendData = new SendSkillLevelUp();
         sendData.uuid = UserData.Instance.uuid;
@@ -78,20 +78,6 @@ public class SkillUpgradePanel : MonoBehaviour
             OpenSkillUpgradePanel(linkedData, selectIndex);
             OverallManager.Instance.statusPanel.OpenPanelObject(2);
         });
-    }
-
-    bool CheckEnoughtItems(ItemData[] items)
-    {
-        bool result = true;
-        foreach (var item in items)
-        {
-            var findItem = UserData.Instance.FindItem(item.idx);
-            if (findItem.count < item.count)
-            {
-                result = false;
-            }
-        }
-        return result;
     }
 
     public void ClosePanel()

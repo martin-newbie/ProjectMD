@@ -32,4 +32,39 @@ public class OverallManager : MonoBehaviour
     {
         skillUpgradePanel.OpenSkillUpgradePanel(linkedData, selectIndex);
     }
+
+    public string ModifyUpgradedColorText(float text)
+    {
+        return "<color=#47E76D> → " + text.ToString("N0") + "</color>";
+    }
+
+    public string GetStatusText(StatusType type, Dictionary<StatusType, float> value)
+    {
+        switch (type)
+        {
+            case StatusType.DMG:
+                return $"ATTACK : {value[StatusType.DMG].ToString("N0")}";
+            case StatusType.HP:
+                return $"HP : {value[StatusType.HP].ToString("N0")}";
+            case StatusType.DEF:
+                return $"DEF : {value[StatusType.DEF].ToString("N0")}";
+            default:
+                return "";
+
+        }
+    }
+
+    public bool CheckEnoughtItems(ItemData[] items)
+    {
+        bool result = true;
+        foreach (var item in items)
+        {
+            var findItem = UserData.Instance.FindItem(item.idx);
+            if (findItem.count < item.count)
+            {
+                result = false;
+            }
+        }
+        return result;
+    }
 }
