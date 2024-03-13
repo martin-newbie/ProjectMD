@@ -41,6 +41,7 @@ public class GameData
     public TierUpgradeData tier_upgrade_data;
     public UserExpData user_exp_data;
     public UnitExpData unit_exp_data;
+    public EquipmentExpData equipment_exp_data;
 }
 
 [System.Serializable]
@@ -83,6 +84,12 @@ public class UnitExpData
 
 [System.Serializable]
 public class UserExpData
+{
+    public int[] exp;
+}
+
+[System.Serializable]
+public class EquipmentExpData
 {
     public int[] exp;
 }
