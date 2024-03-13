@@ -13,9 +13,9 @@ public class DataManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        WebRequest.Post("data/game-data", "", (data) =>
+        WebRequest.Post("data/game-data", ""/*version require*/, (data) =>
         {
-            var recieveData = JsonUtility.FromJson<RecieveInitData>(data);
+            var recieveData = JsonUtility.FromJson<GameData>(data);
         });
         Load();
     }
@@ -34,7 +34,7 @@ public class DataManager : MonoBehaviour
 }
 
 [System.Serializable]
-public class RecieveInitData
+public class GameData
 {
     public CommonSkillItemRequire common_skill_data;
     public ActiveSkillItemRequire active_skill_data;
