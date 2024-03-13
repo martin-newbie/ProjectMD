@@ -31,6 +31,9 @@ public class OverallPanelTier : MonoBehaviour, IOverallPanel
             // init unlock text
         }
 
+        var requireItem = DataManager.GetTierItem(data.rank);
+        requireCoinText.text = requireItem.coin_require.ToString("N0");
+        requireItemText.text = $"{requireItem.item_require} / {UserData.Instance.FindItem(88).count}";
         // init require item and coin text with data manager
     }
 
