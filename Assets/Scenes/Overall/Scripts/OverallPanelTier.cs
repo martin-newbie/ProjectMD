@@ -59,14 +59,14 @@ public class OverallPanelTier : MonoBehaviour, IOverallPanel
         var sendData = new SendRankLevelup();
         sendData.uuid = UserData.Instance.uuid;
         sendData.id = linkedData.id;
-        sendData.use_items = new ItemData[1] { new ItemData() { idx = 88, count = requireItem.item_require } };
-        sendData.coin = requireItem.coin_require;
+        sendData.use_item = new ItemData() { idx = 88, count = requireItem.item_require };
+        sendData.use_coin = requireItem.coin_require;
 
         WebRequest.Post("unit/upgrade-rank", JsonUtility.ToJson(sendData), (data) =>
         {
             linkedData.rank++;
-            UserData.Instance.UseItem(sendData.use_items[0]);
-            UserData.Instance.coin -= sendData.coin;
+            UserData.Instance.UseItem(sendData.use_item);
+            UserData.Instance.coin -= sendData.use_coin;
             Open(linkedData);
         });
     }
@@ -77,6 +77,6 @@ public class SendRankLevelup
 {
     public string uuid;
     public int id;
-    public ItemData[] use_items;
-    public int coin;
+    public ItemData use_item;
+    public int use_coin;
 }
