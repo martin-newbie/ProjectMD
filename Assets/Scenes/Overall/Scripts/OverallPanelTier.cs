@@ -14,8 +14,12 @@ public class OverallPanelTier : MonoBehaviour, IOverallPanel
     [SerializeField] Text requireItemText;
     [SerializeField] Text requireCoinText;
 
+    UnitData linkedData;
+
     public void Open(UnitData data)
     {
+        linkedData = data;
+
         var prevStatus = StaticDataManager.GetUnitStatus(data.index).GetCalculatedValueDictionary(0, data.rank);
         atkText.text = OverallManager.Instance.GetStatusText(StatusType.DMG, prevStatus);
         hpText.text = OverallManager.Instance.GetStatusText(StatusType.HP, prevStatus);
@@ -47,6 +51,32 @@ public class OverallPanelTier : MonoBehaviour, IOverallPanel
 
     public void Upgrade()
     {
+        if (linkedData.rank >= 4) return;
+        var requireItem = DataManager.GetTierItem(linkedData.rank);
+        if (requireItem.item_require > UserData.Instance.FindItem(88).count) return;
+        if (requireItem.coin_require > UserData.Instance.coin) return;
 
+        var sendData = new SendRankLevelup();
+        sendData.uuid = UserData.Instance.uuid;
+        sendData.id = linkedData.id;
+        sendData.use_items = new ItemData[1] { new ItemData() { idx = 88, count = requireItem.item_require } };
+        sendData.coin = requireItem.coin_require;
+
+        WebRequest.Post("unit/upgrade-rank", JsonUtility.ToJson(sendData), (data) =>
+        {
+            linkedData.rank++;
+            UserData.Instance.UseItem(sendData.use_items[0]);
+            UserData.Instance.coin -= sendData.coin;
+            Open(linkedData);
+        });
     }
+}
+
+[System.Serializable]
+public class SendRankLevelup
+{
+    public string uuid;
+    public int id;
+    public ItemData[] use_items;
+    public int coin;
 }
