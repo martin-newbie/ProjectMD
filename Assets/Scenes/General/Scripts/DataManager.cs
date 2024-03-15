@@ -18,6 +18,13 @@ public class DataManager : MonoBehaviour
         {
             var recieveData = JsonUtility.FromJson<GameData>(data);
             gameData = recieveData;
+
+            int chapterCount = 1;
+            for (int i = 0; i < chapterCount; i++)
+            {
+                var chapterDataText = Resources.Load<TextAsset>($"Stages/{i}");
+                chapters.Add(JsonUtility.FromJson<ChapterData>(chapterDataText.text));
+            }
         });
     }
 
