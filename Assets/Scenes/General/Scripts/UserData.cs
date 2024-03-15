@@ -28,6 +28,13 @@ public class UserData
         lastEnergyTime = DateTime.Parse(str_last_energy_updated).ToUniversalTime();
     }
 
+    public int FindItemCount(int idx)
+    {
+        var item = FindItem(idx);
+        if (item == null) return 0;
+        else return item.count;
+    }
+
     public ItemData FindItem(int idx)
     {
         return items.Find(item => item.idx == idx);

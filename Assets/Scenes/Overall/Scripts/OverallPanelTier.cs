@@ -37,7 +37,7 @@ public class OverallPanelTier : MonoBehaviour, IOverallPanel
 
         var requireItem = DataManager.GetTierItem(data.rank);
         requireCoinText.text = requireItem.coin_require.ToString("N0");
-        requireItemText.text = $"{requireItem.item_require} / {UserData.Instance.FindItem(88).count}";
+        requireItemText.text = $"{requireItem.item_require} / {UserData.Instance.FindItemCount(88)}";
         // init require item and coin text with data manager
     }
 
