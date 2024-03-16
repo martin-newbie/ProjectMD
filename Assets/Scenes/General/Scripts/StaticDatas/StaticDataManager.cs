@@ -40,6 +40,12 @@ public class StaticDataManager : MonoBehaviour
         return Instance.skillRequireData.dataList.Find(item => item.index == index);
     }
 
+    public StaticEquipmentValueData equipmentData;
+    public static EquipmentValueData GetEquipmentValueData(int index)
+    {
+        return Instance.equipmentData.dataList[index];
+    }
+
     private void Start()
     {
         var staticDatas = new SheetDataBase[]
@@ -49,6 +55,7 @@ public class StaticDataManager : MonoBehaviour
             unitSkillStatus,
             itemValueData,
             skillRequireData,
+            equipmentData,
         };
 
         foreach (var item in staticDatas)

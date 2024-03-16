@@ -7,7 +7,7 @@ public class StaticItemValueData : SheetDataBase
 {
     protected override string gid => "1901022725";
 
-    protected override string range => "C3:F91";
+    protected override string range => "C3:F163";
 
     public List<ItemValueData> dataList;
 

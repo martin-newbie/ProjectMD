@@ -22,7 +22,7 @@ public class StaticSkillRequireItemData : SheetDataBase
     }
 }
 
-
+[System.Serializable]
 public class SkillRequireItemData
 {
     public int index;
