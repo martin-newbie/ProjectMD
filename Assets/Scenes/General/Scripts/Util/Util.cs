@@ -9,4 +9,9 @@ public static class Util
     {
         return args.Split(',').Select(item => int.Parse(item)).ToArray();
     }
+
+    public static float[] GetSplitCommaFloat(this string args)
+    {
+        return args.Split(',').Select(item => float.Parse(item)).ToArray();
+    }
 }

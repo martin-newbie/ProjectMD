@@ -44,10 +44,10 @@ public class UnitSkillStatus
         cost = int.Parse(data[idx++]);
         skill_type = int.Parse(data[idx++]);
 
-        active = data[idx++].Split(',').Select(item => float.Parse(item)).ToArray();
-        passive = data[idx++].Split(',').Select(item => float.Parse(item)).ToArray();
-        enforce = data[idx++].Split(',').Select(item => float.Parse(item)).ToArray();
-        sub = data[idx++].Split(',').Select(item => float.Parse(item)).ToArray();
+        active = data[idx++].GetSplitCommaFloat();
+        passive = data[idx++].GetSplitCommaFloat();
+        enforce = data[idx++].GetSplitCommaFloat();
+        sub = data[idx++].GetSplitCommaFloat();
     }
 
     public float GetActiveSkillValue(int skillLevel)
