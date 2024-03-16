@@ -41,9 +41,9 @@ public class StaticDataManager : MonoBehaviour
     }
 
     public StaticEquipmentValueData equipmentData;
-    public static EquipmentValueData GetEquipmentValueData(int index)
+    public static EquipmentValueData GetEquipmentValueData(int index, int tier)
     {
-        return Instance.equipmentData.dataList[index];
+        return Instance.equipmentData.dataList.Find(item => item.index == index && item.tier == tier);
     }
 
     private void Start()

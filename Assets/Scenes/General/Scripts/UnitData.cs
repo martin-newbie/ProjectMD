@@ -30,6 +30,28 @@ public class UnitData
     public Dictionary<StatusType, float> GetStatus()
     {
         var defaultStatus = StaticDataManager.GetUnitStatus(index).GetCalculatedValueDictionary(level, rank);
+
+        // get equipment's values
+        for (int i = 0; i < equipments.Length; i++)
+        {
+            var e = equipments[i];
+            var valueData = StaticDataManager.GetEquipmentValueData(e.index, e.tier);
+            for (int j = 0; j < valueData.buff_type.Length; j++)
+            {
+                var buffType = valueData.buff_type[j];
+                var valueType = valueData.value_type[j];
+                var value = valueData.GetLevelBuffList(e.level, buffType);
+                if(valueType == 0)
+                {
+                    defaultStatus[(StatusType)buffType] += value;
+                }
+                else
+                {
+                    defaultStatus[(StatusType)buffType] *= 1 + value;
+                }
+            }
+        }
+
         return defaultStatus;
     }
 

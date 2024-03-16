@@ -9,7 +9,7 @@ public class StaticEquipmentValueData : SheetDataBase
 {
     protected override string gid => "634371692";
 
-    protected override string range => "D3:J26";
+    protected override string range => "D3:L26";
 
     public List<EquipmentValueData> dataList;
 
@@ -28,22 +28,26 @@ public class StaticEquipmentValueData : SheetDataBase
 [Serializable]
 public class EquipmentValueData
 {
+    public int index;
     public int slot;
     public int tier;
     public int min_level;
     public int max_level;
     public int[] buff_type;
+    public int[] value_type;
     public float[] max_value;
     public float[] min_value;
 
     public EquipmentValueData(string[] data)
     {
         int idx = 0;
+        index = int.Parse(data[idx++]);
         slot = int.Parse(data[idx++]);
         tier = int.Parse(data[idx++]);
         min_level = int.Parse(data[idx++]);
         max_level = int.Parse(data[idx++]);
         buff_type = data[idx++].GetSplitCommaInt();
+        value_type = data[idx++].GetSplitCommaInt();
         max_value = data[idx++].GetSplitCommaFloat();
         min_value = data[idx++].GetSplitCommaFloat();
     }
