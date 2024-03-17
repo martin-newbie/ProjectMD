@@ -40,6 +40,11 @@ public class UserData
         return items.Find(item => item.idx == idx);
     }
 
+    public ItemData[] FindSpeciesItems(int species)
+    {
+        return items.FindAll(item => StaticDataManager.GetItemValueData(item.count).species == species).ToArray();
+    }
+
     public UnitData FindUnitWithId(int id)
     {
         return units.Find(item => item.id == id);

@@ -14,6 +14,11 @@ public class EquipmentLevelUpgrade : MonoBehaviour
     [SerializeField] Image expGauge;
     [SerializeField] EquipmentAbilityUnit[] abilities;
 
+    [SerializeField] Transform inventory;
+    [SerializeField] EquipmentItem itemPrefab;
+    List<EquipmentItem> equipmentItems;
+    bool itemInit;
+
     EquipmentData linkedData;
     int totalExp;
     int calculateExp;
@@ -26,25 +31,50 @@ public class EquipmentLevelUpgrade : MonoBehaviour
 
         tierText.text = "T" + data.tier.ToString();
         updateExpGauge.fillAmount = 0f;
-        ClearExp();
-    }
-
-    public void ClearExp()
-    {
         totalExp = 0;
         calculateExp = 0;
-        calculateLevel = linkedData.level;
+        calculateLevel = 0;
+
+        if (!itemInit)
+        {
+            itemInit = true;
+            equipmentItems = new List<EquipmentItem>();
+            var datas = UserData.Instance.FindSpeciesItems(3);
+            for (int i = 0; i < datas.Length; i++)
+            {
+                var item = Instantiate(itemPrefab, inventory);
+                item.Init(this, datas[i]);
+                equipmentItems.Add(item);
+            }
+        }
 
         UpdateInterface();
     }
 
-    public void UpdateExp(int amount)
+    public void RaiseExp(int amount)
     {
         totalExp += amount;
         calculateExp = totalExp;
         calculateLevel = linkedData.level;
 
         UpdateInterface();
+    }
+
+    public void ReduceExp(int amount)
+    {
+        totalExp -= amount;
+        calculateExp = totalExp;
+        calculateLevel = linkedData.level;
+
+        UpdateInterface();
+    }
+
+    public void ClearSelectedData()
+    {
+        foreach (var item in equipmentItems)
+        {
+            item.ClearSelect();
+        }
     }
 
     void UpdateInterface()

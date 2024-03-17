@@ -19,7 +19,7 @@ public class EquipmentUpgradePanel : MonoBehaviour
     {
         if (data == null) return; // no equipment available
 
-        int maxLevel = DataManager.Instance.gameData.max_leve_data.equipment_max_level;
+        int maxLevel = 59;
         var staticData = StaticDataManager.GetEquipmentValueData(data.index, data.tier);
 
         if (data.level == maxLevel)
@@ -39,5 +39,6 @@ public class EquipmentUpgradePanel : MonoBehaviour
     public void ClosePanel()
     {
         gameObject.SetActive(false);
+        levelPanel.ClearSelectedData();
     }
 }
