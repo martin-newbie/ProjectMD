@@ -18,7 +18,7 @@ public class EquipmentItem : MonoBehaviour
 
     public void Init(EquipmentLevelUpgrade panel, ItemData data)
     {
-        if(data == null || data.count == 0)
+        if (data == null || data.count == 0)
         {
             gameObject.SetActive(false);
             return;
@@ -33,6 +33,7 @@ public class EquipmentItem : MonoBehaviour
     public void RaiseValue()
     {
         if (selectCount >= linkedData.count) return;
+        if (itemPanel.NoMoreItem()) return;
 
         var value = StaticDataManager.GetItemValueData(linkedData.idx);
         itemPanel.RaiseExp(value.value);
