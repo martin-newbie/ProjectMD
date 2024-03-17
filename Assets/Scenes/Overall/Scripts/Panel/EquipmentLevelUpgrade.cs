@@ -80,7 +80,7 @@ public class EquipmentLevelUpgrade : MonoBehaviour
 
     public bool NoMoreItem()
     {
-        return totalExp>= GetMaximizeExp();
+        return totalExp >= GetMaximizeExp();
     }
 
     public int GetMaximizeExp()
@@ -109,7 +109,7 @@ public class EquipmentLevelUpgrade : MonoBehaviour
         var valueData = StaticDataManager.GetEquipmentValueData(linkedData.index, linkedData.tier);
 
         expGauge.fillAmount = (float)linkedData.exp / (float)DataManager.GetEquipmentLevelExp(linkedData.level);
-        updateExpGauge.fillAmount = (float)calculateExp / (float)GetLevelExp(calculateLevel);
+        updateExpGauge.fillAmount = calculateLevel == valueData.max_level ? 1 : (float)calculateExp / (float)GetLevelExp(calculateLevel);
         levelText.text = "Lv." + (linkedData.level + 1).ToString();
 
         SetAbilityText(valueData);
