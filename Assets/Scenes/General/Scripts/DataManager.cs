@@ -68,6 +68,7 @@ public class GameData
     public UserExpData user_exp_data;
     public UnitExpData unit_exp_data;
     public EquipmentExpData equipment_exp_data;
+    public LevelData max_leve_data;
 }
 
 [System.Serializable]
@@ -118,4 +119,11 @@ public class UserExpData
 public class EquipmentExpData
 {
     public int[] exp;
+}
+
+[System.Serializable]
+public class LevelData
+{
+    public int user_max_level;
+    public int equipment_max_level;
 }

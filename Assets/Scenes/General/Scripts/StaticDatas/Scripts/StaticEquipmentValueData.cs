@@ -52,10 +52,10 @@ public class EquipmentValueData
         min_value = data[idx++].GetSplitCommaFloat();
     }
 
-    public float GetLevelBuffList(int level, int type)
+    public float GetLevelBuff(int level, int index)
     {
-        float minValue = min_value[Array.FindIndex(buff_type, item => item == type)];
-        float maxValue = max_value[Array.FindIndex(buff_type, item => item == type)];
+        float minValue = min_value[Array.FindIndex(buff_type, item => item == buff_type[index])];
+        float maxValue = max_value[Array.FindIndex(buff_type, item => item == buff_type[index])];
         float amount = (level - min_level) / (max_level - min_level);
         float value = (amount * (maxValue - minValue)) + minValue;
         return value;

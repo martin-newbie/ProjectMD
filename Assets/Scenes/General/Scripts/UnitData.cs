@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 [Serializable]
 public class UnitData
@@ -40,7 +41,7 @@ public class UnitData
             {
                 var buffType = valueData.buff_type[j];
                 var valueType = valueData.value_type[j];
-                var value = valueData.GetLevelBuffList(e.level, buffType);
+                var value = valueData.GetLevelBuff(e.level, j);
                 if(valueType == 0)
                 {
                     defaultStatus[(StatusType)buffType] += value;
@@ -53,6 +54,11 @@ public class UnitData
         }
 
         return defaultStatus;
+    }
+
+    public EquipmentData FindEquipmentAt(int idx)
+    {
+        return equipments.Single(item => item.place_index == idx);
     }
 
     public bool IsSkillLock(int idx)
