@@ -25,7 +25,7 @@ public class OverallPanelStatus : MonoBehaviour, IOverallPanel
         for (int i = 0; i < equipmentButtons.Length; i++)
         {
             var equipment = i < data.equipments.Count ? data.equipments[i] : null;
-            equipmentButtons[i].Init(equipment, data.IsEquipmentLock(i), ShowEquipmentUpgrade);
+            equipmentButtons[i].Init(i, equipment, data.IsEquipmentLock(i), ShowEquipmentUpgrade);
         }
 
         for (int i = 0; i < equipmentDescText.Length; i++)
@@ -36,12 +36,31 @@ public class OverallPanelStatus : MonoBehaviour, IOverallPanel
         }
     }
 
-    void ShowEquipmentUpgrade(EquipmentData data)
+    void ShowEquipmentUpgrade(EquipmentData data, int slot)
     {
-        if(data == null)
+        if (data == null)
         {
-
+            var sendData = new SendEquipmentUnlock();
+            sendData.id = unitData.id;
+            sendData.place = slot;
+            sendData.index = unitData.GetSlotEquipmentIndex(slot);
+            WebRequest.Post("unit/unlock-equipment", JsonUtility.ToJson(sendData), (data) =>
+            {
+                unitData.AddEquipmentAt(slot);
+                Open(unitData);
+            });
         }
-        OverallManager.Instance.OpenEquipmentUpgradePanel(data);
+        else
+        {
+            OverallManager.Instance.OpenEquipmentUpgradePanel(data);
+        }
     }
+}
+
+[System.Serializable]
+public class SendEquipmentUnlock
+{
+    public int id;
+    public int place;
+    public int index;
 }

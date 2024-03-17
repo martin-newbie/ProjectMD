@@ -53,7 +53,7 @@ public class OverallPanelSummary : MonoBehaviour, IOverallPanel
         for (int i = 0; i < equipmentButtons.Length; i++)
         {
             var equipment = i < data.equipments.Count ? data.equipments[i] : null;
-            equipmentButtons[i].Init(equipment, data.IsEquipmentLock(i), OpenEquipmentInfo);
+            equipmentButtons[i].Init(i, equipment, data.IsEquipmentLock(i), OpenEquipmentInfo);
         }
     }
 
@@ -62,7 +62,7 @@ public class OverallPanelSummary : MonoBehaviour, IOverallPanel
         throw new Exception();
     }
 
-    void OpenEquipmentInfo(EquipmentData data)
+    void OpenEquipmentInfo(EquipmentData data, int slot)
     {
         throw new Exception();
     }

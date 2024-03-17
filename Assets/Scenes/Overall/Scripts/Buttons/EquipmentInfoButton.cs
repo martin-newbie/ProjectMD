@@ -11,23 +11,25 @@ public class EquipmentInfoButton : MonoBehaviour
     [SerializeField] Text tierText;
     [SerializeField] GameObject lockedObject;
 
-    Action<EquipmentData> onButtonAction;
+    Action<EquipmentData, int> onButtonAction;
     EquipmentData linkedData;
+    int slotIndex;
 
-    public void Init(EquipmentData linkedData, bool locked, Action<EquipmentData> onAction)
+    public void Init(int slot,EquipmentData data, bool locked, Action<EquipmentData, int> onAction)
     {
-        this.linkedData = linkedData;
+        linkedData = data;
+        slotIndex = slot;
         onButtonAction = onAction;
 
         lockedObject.SetActive(locked);
-        tierBox.SetActive(!locked && linkedData != null);
+        tierBox.SetActive(!locked && data != null);
 
-        if (linkedData != null)
-            tierText.text = "T" + linkedData.tier.ToString();
+        if (data != null)
+            tierText.text = "T" + data.tier.ToString();
     }
 
     public void OnInfoButtonClick()
     {
-        onButtonAction?.Invoke(linkedData);
+        onButtonAction?.Invoke(linkedData, slotIndex);
     }
 }

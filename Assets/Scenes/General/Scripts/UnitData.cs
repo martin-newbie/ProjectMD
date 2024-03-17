@@ -56,6 +56,12 @@ public class UnitData
         return defaultStatus;
     }
 
+    public int GetSlotEquipmentIndex(int slot)
+    {
+        var unitData = StaticDataManager.GetConstUnitData(index);
+        return unitData.equipmentIndex[slot];
+    }
+
     public EquipmentData AddEquipmentAt(int slot)
     {
         var equipment = new EquipmentData();
