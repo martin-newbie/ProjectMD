@@ -12,17 +12,19 @@ public class OverallPanelStatus : MonoBehaviour, IOverallPanel
     [SerializeField] EquipmentInfoButton[] equipmentButtons;
     [SerializeField] Text[] equipmentDescText;
 
+    UnitData unitData;
+
     public void Open(UnitData data)
     {
+        unitData = data;
         var statusData = data.GetStatus();
-
         atkText.text = OverallManager.Instance.GetStatusText(StatusType.DMG, statusData);
         hpText.text = OverallManager.Instance.GetStatusText(StatusType.HP, statusData);
         defText.text = OverallManager.Instance.GetStatusText(StatusType.DEF, statusData);
 
         for (int i = 0; i < equipmentButtons.Length; i++)
         {
-            var equipment = i < data.equipments.Length ? data.equipments[i] : null;
+            var equipment = i < data.equipments.Count ? data.equipments[i] : null;
             equipmentButtons[i].Init(equipment, data.IsEquipmentLock(i), ShowEquipmentUpgrade);
         }
 
@@ -36,6 +38,10 @@ public class OverallPanelStatus : MonoBehaviour, IOverallPanel
 
     void ShowEquipmentUpgrade(EquipmentData data)
     {
-        throw new System.Exception();
+        if(data == null)
+        {
+
+        }
+        OverallManager.Instance.OpenEquipmentUpgradePanel(data);
     }
 }

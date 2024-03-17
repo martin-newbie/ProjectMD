@@ -52,7 +52,7 @@ public class OverallPanelSummary : MonoBehaviour, IOverallPanel
 
         for (int i = 0; i < equipmentButtons.Length; i++)
         {
-            var equipment = i < data.equipments.Length ? data.equipments[i] : null;
+            var equipment = i < data.equipments.Count ? data.equipments[i] : null;
             equipmentButtons[i].Init(equipment, data.IsEquipmentLock(i), OpenEquipmentInfo);
         }
     }

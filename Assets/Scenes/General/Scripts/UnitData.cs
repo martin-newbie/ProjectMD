@@ -13,7 +13,7 @@ public class UnitData
     public string user_uuid;
 
     public int[] skill_level;
-    public EquipmentData[] equipments;
+    public List<EquipmentData> equipments;
 
     int[] skillUnlockRank = new int[4] { 0, 0, 1, 2 };
     int[] equipmentUnlockLevel = new int[3] { 0, 5, 10 };
@@ -33,7 +33,7 @@ public class UnitData
         var defaultStatus = StaticDataManager.GetUnitStatus(index).GetCalculatedValueDictionary(level, rank);
 
         // get equipment's values
-        for (int i = 0; i < equipments.Length; i++)
+        for (int i = 0; i < equipments.Count; i++)
         {
             var e = equipments[i];
             var valueData = StaticDataManager.GetEquipmentValueData(e.index, e.tier);
@@ -42,7 +42,7 @@ public class UnitData
                 var buffType = valueData.buff_type[j];
                 var valueType = valueData.value_type[j];
                 var value = valueData.GetLevelBuff(e.level, j);
-                if(valueType == 0)
+                if (valueType == 0)
                 {
                     defaultStatus[(StatusType)buffType] += value;
                 }
@@ -56,9 +56,14 @@ public class UnitData
         return defaultStatus;
     }
 
-    public EquipmentData FindEquipmentAt(int idx)
+    public EquipmentData AddEquipmentAt(int slot)
     {
-        return equipments.Single(item => item.place_index == idx);
+        var equipment = new EquipmentData();
+        var unitData = StaticDataManager.GetConstUnitData(index);
+        equipment.place_index = slot;
+        equipment.index = unitData.equipmentIndex[slot];
+        equipments.Add(equipment);
+        return equipment;
     }
 
     public bool IsSkillLock(int idx)

@@ -6,21 +6,13 @@ using UnityEngine.UI;
 
 public class EquipmentUpgradePanel : MonoBehaviour
 {
-    [SerializeField] EquipmentInfoButton[] listButtons;
     [SerializeField] Text requireCoinText;
     [SerializeField] EquipmentLevelUpgrade levelPanel;
 
-    UnitData linkedUnit;
-
-    public void InitPanel(UnitData unitData, int openIdx)
+    public void InitPanel(EquipmentData data)
     {
-        linkedUnit = unitData;
-
-        for (int i = 0; i < listButtons.Length; i++)
-        {
-            listButtons[i].Init(unitData.FindEquipmentAt(i), unitData.IsEquipmentLock(i), ShowEquipment);
-        }
-
+        gameObject.SetActive(true);
+        ShowEquipment(data);
     }
 
     public void ShowEquipment(EquipmentData data)

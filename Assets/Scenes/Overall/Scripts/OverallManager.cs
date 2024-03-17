@@ -34,9 +34,9 @@ public class OverallManager : MonoBehaviour
         skillUpgradePanel.OpenSkillUpgradePanel(linkedData, selectIndex);
     }
 
-    public void OpenEquipmentUpgradePanel(UnitData linkedData, int openIndex)
+    public void OpenEquipmentUpgradePanel(EquipmentData linkedData)
     {
-        equipmentUpgradePanel.InitPanel(linkedData, openIndex);
+        equipmentUpgradePanel.InitPanel(linkedData);
     }
 
     public string ModifyUpgradedColorText(float text)
