@@ -42,7 +42,7 @@ public class UserData
 
     public ItemData[] FindSpeciesItems(int species)
     {
-        return items.FindAll(item => StaticDataManager.GetItemValueData(item.count).species == species).ToArray();
+        return items.FindAll(item => StaticDataManager.GetItemValueData(item.idx).species == species).ToArray();
     }
 
     public UnitData FindUnitWithId(int id)
