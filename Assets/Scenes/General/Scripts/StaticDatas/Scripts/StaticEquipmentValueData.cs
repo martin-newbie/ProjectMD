@@ -48,8 +48,8 @@ public class EquipmentValueData
         max_level = int.Parse(data[idx++]);
         buff_type = data[idx++].GetSplitCommaInt();
         value_type = data[idx++].GetSplitCommaInt();
-        max_value = data[idx++].GetSplitCommaFloat();
         min_value = data[idx++].GetSplitCommaFloat();
+        max_value = data[idx++].GetSplitCommaFloat();
     }
 
     public float GetLevelBuff(int level, int index)

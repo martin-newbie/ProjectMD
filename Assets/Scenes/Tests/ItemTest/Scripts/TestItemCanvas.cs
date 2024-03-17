@@ -9,7 +9,7 @@ public class TestItemCanvas : MonoBehaviour
         var item = new SendGetItem();
         item.uuid = UserData.Instance.uuid;
         item.item_idx = idx;
-        item.count = 1;
+        item.count = 100;
         WebRequest.Post("user/get-item", JsonUtility.ToJson(item), (data) =>
         {
             var recieve = JsonUtility.FromJson<RecieveGetItem>(data);
