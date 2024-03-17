@@ -73,4 +73,16 @@ public class OverallManager : MonoBehaviour
         }
         return result;
     }
+
+    public int[] GetAutoFillCount(int[] itemIndex, int total)
+    {
+        for (int i = 0; i < itemIndex.Length; i++)
+        {
+            var index = itemIndex[itemIndex.Length - i - 1];
+            var item = UserData.Instance.FindItemCount(index);
+            var value = StaticDataManager.GetItemValueData(index).value;
+
+        }
+        return null;
+    }
 }
