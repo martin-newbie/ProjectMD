@@ -56,7 +56,7 @@ public class EquipmentValueData
     {
         float minValue = min_value[Array.FindIndex(buff_type, item => item == buff_type[index])];
         float maxValue = max_value[Array.FindIndex(buff_type, item => item == buff_type[index])];
-        float amount = (level - min_level) / (max_level - min_level);
+        float amount = (float)(level - min_level) / (float)(max_level - min_level);
         float value = (amount * (maxValue - minValue)) + minValue;
         return value;
     }
