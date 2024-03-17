@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class EquipmentUpgradePanel : MonoBehaviour
 {
+    [SerializeField] RequireItemInfo[] requireItemInfos;
+
 
 }
