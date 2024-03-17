@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkillRequireItemInfo : MonoBehaviour
+public class RequireItemInfo : MonoBehaviour
 {
     [SerializeField] ItemInfo itemInfo;
     [SerializeField] Text countText;

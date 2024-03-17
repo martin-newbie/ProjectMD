@@ -20,7 +20,7 @@ public class SkillUpgradePanel : MonoBehaviour
     [SerializeField] Text nextSkillDescText;
 
     [Header("Item")]
-    [SerializeField] SkillRequireItemInfo[] requireItems;
+    [SerializeField] RequireItemInfo[] requireItems;
     [SerializeField] Text requireCoinText;
 
     public void OpenSkillUpgradePanel(UnitData linkedData, int selectIndex)
