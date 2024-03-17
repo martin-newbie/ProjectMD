@@ -35,4 +35,9 @@ public class EquipmentUpgradePanel : MonoBehaviour
             levelPanel.Open(data);
         }
     }
+
+    public void ClosePanel()
+    {
+        gameObject.SetActive(false);
+    }
 }

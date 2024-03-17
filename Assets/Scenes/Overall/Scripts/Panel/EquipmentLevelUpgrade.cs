@@ -21,6 +21,7 @@ public class EquipmentLevelUpgrade : MonoBehaviour
 
     public void Open(EquipmentData data)
     {
+        gameObject.SetActive(true);
         linkedData = data;
 
         tierText.text = "T" + data.tier.ToString();
