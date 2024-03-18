@@ -74,15 +74,41 @@ public class OverallManager : MonoBehaviour
         return result;
     }
 
-    public int[] GetAutoFillCount(int[] itemIndex, int total)
+    public int[] GetAutoFillCount(int[] itemIndex, int totalExp)
     {
+        int[] result = new int[itemIndex.Length];
         for (int i = 0; i < itemIndex.Length; i++)
         {
-            var index = itemIndex[itemIndex.Length - i - 1];
-            var item = UserData.Instance.FindItemCount(index);
-            var value = StaticDataManager.GetItemValueData(index).value;
+            int index = itemIndex[i];
+            int count = UserData.Instance.FindItemCount(index);
+            int value = StaticDataManager.GetItemValueData(index).value;
+            int totalCount = Mathf.Min(totalExp / value, count);
+            if (totalCount < 0) break;
 
+            if (count > totalCount && i != itemIndex.Length - 1)
+            {
+                int extraExp = 0;
+                for (int j = i + 1; j < itemIndex.Length; j++)
+                {
+                    int lowValue = StaticDataManager.GetItemValueData(index).value * UserData.Instance.FindItemCount(index);
+                    extraExp += lowValue;
+                }
+
+                if (extraExp < totalExp - totalCount * value)
+                {
+                    totalCount++;
+                }
+            }
+
+            if (i == itemIndex.Length - 1 && count > totalCount)
+            {
+                totalCount++;
+            }
+
+            totalExp -= totalCount * value;
+            result[i] = totalCount;
         }
-        return null;
+
+        return result;
     }
 }
