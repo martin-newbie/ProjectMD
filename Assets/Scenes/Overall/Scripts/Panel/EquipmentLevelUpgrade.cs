@@ -13,6 +13,7 @@ public class EquipmentLevelUpgrade : MonoBehaviour
     [SerializeField] Image updateExpGauge;
     [SerializeField] Image expGauge;
     [SerializeField] EquipmentAbilityUnit[] abilities;
+    [SerializeField] Text coinText;
 
     [SerializeField] Transform inventory;
     [SerializeField] EquipmentItem itemPrefab;
@@ -118,6 +119,8 @@ public class EquipmentLevelUpgrade : MonoBehaviour
             expGauge.fillAmount = 0f;
             levelText.text += OverallManager.Instance.ModifyUpgradedColorText(calculateLevel + 1);
         }
+
+        coinText.text = (totalExp * 250).ToString("N0");
     }
 
     void SetAbilityText(EquipmentValueData valueData)
@@ -147,4 +150,53 @@ public class EquipmentLevelUpgrade : MonoBehaviour
     {
         return DataManager.GetEquipmentLevelExp(level);
     }
+
+    public void OnUpgradeButton()
+    {
+        int requireCoin = totalExp * 250;
+        if (totalExp == 0) return;
+        if (requireCoin > UserData.Instance.coin) return;
+
+        var sendData = new SendEquipmentUpgrade();
+        sendData.uuid = UserData.Instance.uuid;
+        sendData.id = linkedData.unit_id;
+        sendData.place = linkedData.place_index;
+        sendData.use_items = GetRequireItems();
+        sendData.use_coin = requireCoin;
+        sendData.update_exp = totalExp;
+
+        WebRequest.Post("unit/upgrade-equipment", JsonUtility.ToJson(sendData), (data) =>
+        {
+            linkedData.UpdateExp(totalExp);
+            Open(linkedData);
+        });
+    }
+
+    ItemData[] GetRequireItems()
+    {
+        var result = new List<ItemData>();
+
+        foreach (var item in equipmentItems)
+        {
+            if (item.selectCount > 0)
+            {
+                var data = new ItemData();
+                data.idx = item.linkedData.idx;
+                data.count = item.selectCount;
+                result.Add(data);
+            }
+        }
+
+        return result.ToArray();
+    }
+}
+
+public class SendEquipmentUpgrade
+{
+    public string uuid;
+    public int id;
+    public int place;
+    public ItemData[] use_items;
+    public int use_coin;
+    public int update_exp;
 }

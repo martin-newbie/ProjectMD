@@ -12,9 +12,9 @@ public class EquipmentItem : MonoBehaviour
     [SerializeField] GameObject selectOutline;
 
     EquipmentLevelUpgrade itemPanel;
-    ItemData linkedData;
 
-    int selectCount;
+    [HideInInspector] public ItemData linkedData;
+    [HideInInspector] public int selectCount;
 
     public void Init(EquipmentLevelUpgrade panel, ItemData data)
     {

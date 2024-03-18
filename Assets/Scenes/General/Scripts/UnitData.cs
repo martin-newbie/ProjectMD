@@ -21,7 +21,7 @@ public class UnitData
     public void UpdateExp(int extra)
     {
         exp += extra;
-        while (exp > DataManager.GetUnitLevelExp(level))
+        while (exp >= DataManager.GetUnitLevelExp(level))
         {
             exp -= DataManager.GetUnitLevelExp(level);
             level++;
@@ -91,4 +91,22 @@ public class EquipmentData
     public int level;
     public int tier;
     public int exp;
+    public int unit_id;
+
+    public void UpdateExp(int extra)
+    {
+        exp += extra;
+        while (exp >= DataManager.GetEquipmentLevelExp(level))
+        {
+            exp -= DataManager.GetEquipmentLevelExp(level);
+            level++;
+        }
+    }
+
+    public void UpgradeTier()
+    {
+        tier++;
+        exp = 0;
+        level = 0;
+    }
 }

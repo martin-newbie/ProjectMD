@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class EquipmentUpgradePanel : MonoBehaviour
 {
-    [SerializeField] Text requireCoinText;
     [SerializeField] EquipmentLevelUpgrade levelPanel;
 
     public void InitPanel(EquipmentData data)
