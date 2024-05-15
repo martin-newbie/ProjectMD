@@ -21,7 +21,6 @@ public class Asis : ActiveSkillBehaviour
     public override void UnitActive()
     {
         base.UnitActive();
-        AddBuff(StatusType.DEF, skillStatus.GetEnforceSkillValue(unitData.skill_level[2]), 0f);
     }
 
     public override void Update()

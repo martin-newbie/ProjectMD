@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Seongah : ActiveSkillBehaviour
 {
-    float passiveCool = 20f;
-    float passiveCur = 0f;
-
     SeongahSkillBullet skillBullet;
 
     public Seongah(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
@@ -17,7 +14,6 @@ public class Seongah : ActiveSkillBehaviour
     public override void UnitActive()
     {
         base.UnitActive();
-        AddBuff(StatusType.CRI_DAMAGE, skillStatus.GetEnforceSkillValue(unitData.skill_level[2]), 0f);
     }
 
     public override void Update()
@@ -25,14 +21,6 @@ public class Seongah : ActiveSkillBehaviour
         if (!nowActive) return;
 
         base.Update();
-
-        passiveCur += Time.deltaTime;
-        if(passiveCur >= passiveCool)
-        {
-            AddBuff(StatusType.DMG, skillStatus.GetPassiveSkillValue(unitData.skill_level[1]), 10f);
-            AddBuff(StatusType.CRI_DAMAGE, skillStatus.GetSubSKillValue(unitData.skill_level[3]), 10f);
-            passiveCur = 0f;
-        }
     }
 
     protected override IEnumerator AttackLogic()
@@ -48,7 +36,6 @@ public class Seongah : ActiveSkillBehaviour
     public override IEnumerator ActiveSkill(SkillData skillData)
     {
         var target = GetPreferTarget();
-        skillData.damageData.AddIncreaseValue(StatusType.DMG, skillStatus.GetActiveSkillValue(unitData.skill_level[0]));
         skillData.damageData.SetValue(StatusType.PENETRATE, skillData.collabseCount + 1);
         PlayAnimAndWait("battle_wait", true);
 

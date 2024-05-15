@@ -14,7 +14,6 @@ public class Minel : ActiveSkillBehaviour, IEventPost
     public override void UnitActive()
     {
         base.UnitActive();
-        AddBuff(StatusType.DEF, skillStatus.GetEnforceSkillValue(unitData.skill_level[2]), 0);
     }
 
     protected override void InCombatFunc()
@@ -29,7 +28,6 @@ public class Minel : ActiveSkillBehaviour, IEventPost
 
     public override IEnumerator ActiveSkill(SkillData skillData)
     {
-        AddBuff(StatusType.ATK_TIMESCALE, skillStatus.GetActiveSkillValue(unitData.skill_level[0]), 15);
         curAmmo = maxAmmo; // 즉시 재장전 연출 필요
         yield break;
     }
@@ -48,7 +46,6 @@ public class Minel : ActiveSkillBehaviour, IEventPost
     {
         if (type == EventType.HIT_CRITICAL && from == this)
         {
-            AddBuff(StatusType.DMG, skillStatus.GetPassiveSkillValue(unitData.skill_level[1]), 15);
             to.GetTaunted(this, 15);
         }
         if(type == EventType.MISS_ATTACK && from == this)

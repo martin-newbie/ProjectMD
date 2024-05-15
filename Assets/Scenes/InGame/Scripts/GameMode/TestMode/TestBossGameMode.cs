@@ -36,7 +36,6 @@ public class TestBossGameMode : IGameModeBehaviour
 
             int stageLevel = 0;
             var bossData = new UnitData();
-            bossData.skill_level = new int[4];
 
             player = new PlayableGamePlayer(unitDatas.ToArray(), UnitGroupType.ALLY, manager.skillCanvas);
             enemyPlayer = new TestBossGamePlayer(bossData, UnitGroupType.HOSTILE, stageLevel);

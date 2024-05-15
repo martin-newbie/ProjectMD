@@ -16,7 +16,6 @@ public class Picardy : ActiveSkillBehaviour
     public override void UnitActive()
     {
         base.UnitActive();
-        AddBuff(StatusType.DEF, skillStatus.GetEnforceSkillValue(unitData.skill_level[2]), 0f);
     }
 
     public override IEnumerator ActiveSkill(SkillData skillData)
@@ -26,7 +25,6 @@ public class Picardy : ActiveSkillBehaviour
 
         yield return PlayAnimAndWait("active_skill_aiming");
         skillData.damageData.SetValue(StatusType.DEF, GetStatus(StatusType.DEF));
-        skillData.damageData.AddIncreaseValue(StatusType.DEF, skillStatus.GetActiveSkillValue(unitData.skill_level[0]));
         float healAmount = skillData.damageData.GetValue(StatusType.DEF);
 
         // shoot hp bullet to target

@@ -13,10 +13,7 @@ public class OverallManager : MonoBehaviour
         Instance = this;
     }
 
-    public OverallStatusPanel statusPanel;
     public SkeletonGraphic unitModel;
-    public SkillUpgradePanel skillUpgradePanel;
-    public EquipmentUpgradePanel equipmentUpgradePanel;
 
     private void Start()
     {
@@ -25,18 +22,6 @@ public class OverallManager : MonoBehaviour
 
         unitModel.UpdateSkeleton(ResourceManager.GetSkeleton(unitData.index));
         unitModel.AnimationState.SetAnimation(0, "battle_wait", true);
-
-        statusPanel.InitCharacter(unitData);
-    }
-
-    public void OpenSkillUpgradePanel(UnitData linkedData, int selectIndex)
-    {
-        skillUpgradePanel.OpenSkillUpgradePanel(linkedData, selectIndex);
-    }
-
-    public void OpenEquipmentUpgradePanel(EquipmentData linkedData)
-    {
-        equipmentUpgradePanel.InitPanel(linkedData);
     }
 
     public string ModifyUpgradedColorText(float text)
