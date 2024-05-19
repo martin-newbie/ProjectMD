@@ -8,7 +8,7 @@ public class StaticUnitSkillStatus : SheetDataBase
 {
     protected override string gid => "1734931170";
 
-    protected override string range => "D4:S29";
+    protected override string range => "D4:T29";
 
     public List<UnitSkillStatus> dataList;
 
