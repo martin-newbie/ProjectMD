@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ActiveSkillBehaviour : UnitBehaviour
+public abstract class SkillBehaviour : UnitBehaviour
 {
     public AttributeType skillType;
     public UnitSkillStatus skillStatus;
     public GamePlayer player;
     public int cost;
 
-    protected ActiveSkillBehaviour(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
+    protected SkillBehaviour(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
     }
 

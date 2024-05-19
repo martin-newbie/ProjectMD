@@ -10,8 +10,8 @@ public abstract class GamePlayer
     protected UnitGroupType group;
 
     // about skill
-    List<ActiveSkillBehaviour> skillUnits = new List<ActiveSkillBehaviour>();
-    List<ActiveSkillBehaviour> skillDeck = new List<ActiveSkillBehaviour>();
+    List<SkillBehaviour> skillUnits = new List<SkillBehaviour>();
+    List<SkillBehaviour> skillDeck = new List<SkillBehaviour>();
 
     public float cost;
 
@@ -29,9 +29,9 @@ public abstract class GamePlayer
         curUnits.Add(unit);
         InGameManager.Instance.allUnits.Add(unit);
 
-        if (unit is ActiveSkillBehaviour)
+        if (unit is SkillBehaviour)
         {
-            skillUnits.Add(unit as ActiveSkillBehaviour);
+            skillUnits.Add(unit as SkillBehaviour);
         }
     }
 
@@ -40,9 +40,9 @@ public abstract class GamePlayer
         curUnits.Remove(removedUnit);
         InGameManager.Instance.allUnits.Remove(removedUnit);
 
-        if (removedUnit is ActiveSkillBehaviour)
+        if (removedUnit is SkillBehaviour)
         {
-            skillUnits.Remove(removedUnit as ActiveSkillBehaviour);
+            skillUnits.Remove(removedUnit as SkillBehaviour);
             for (int i = 0; i < skillDeck.Count; i++)
             {
                 if (skillDeck[i] == removedUnit)
@@ -95,7 +95,7 @@ public abstract class GamePlayer
         }
     }
 
-    protected virtual ActiveSkillBehaviour AddSkillInDeck()
+    protected virtual SkillBehaviour AddSkillInDeck()
     {
         if (skillDeck.Count >= 10) return null;
         if (skillUnits.Count <= 0) return null;
@@ -114,58 +114,7 @@ public abstract class GamePlayer
             return;
         }
 
-        int collabseCount = 0;
-        int left = idx - 1;
-        int right = idx + 1;
-        List<ActiveSkillBehaviour> collabse = new List<ActiveSkillBehaviour>();
-        bool leftFinish = false, rightFinish = false;
-        int startIdx = idx;
-
-        while (!leftFinish || !rightFinish)
-        {
-            if (left >= 0 && collabseCount < 4 && skillDeck[left].skillType == skillDeck[idx].skillType)
-            {
-                collabse.Add(skillDeck[left]);
-                startIdx = left;
-                left = left - 1;
-                collabseCount++;
-            }
-            else
-            {
-                leftFinish = true;
-            }
-
-            if (right < skillDeck.Count && collabseCount < 4 && skillDeck[right].skillType == skillDeck[idx].skillType)
-            {
-                collabse.Add(skillDeck[right]);
-                right = right + 1;
-                collabseCount++;
-            }
-            else
-            {
-                rightFinish = true;
-            }
-        }
-
-        var skillData = skillDeck[idx].GetDefaultSkillValue();
-        skillData.collabseCount = collabseCount;
-        foreach (var skill in collabse)
-        {
-            skill.CollabseBuff(skillData, skillDeck[idx]);
-        }
-        skillDeck[idx].UseActiveSkill(skillData);
-        cost -= skillDeck[idx].cost;
-
-        // remove collabse skills
-        if (collabseCount > 0)
-        {
-            RemoveSkillsRange(startIdx, collabseCount);
-        }
-        else
-        {
-            RemoveSkillAt(idx);
-        }
-
+        RemoveSkillAt(idx);
     }
 
     protected virtual void CostRecoveryLogic()

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Minel : ActiveSkillBehaviour, IEventPost
+public class Minel : SkillBehaviour, IEventPost
 {
 
     public Minel(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lada : ActiveSkillBehaviour
+public class Lada : SkillBehaviour
 {
 
     GameObject muzzleEffect;

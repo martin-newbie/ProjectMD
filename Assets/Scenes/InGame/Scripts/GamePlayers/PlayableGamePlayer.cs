@@ -21,7 +21,7 @@ public class PlayableGamePlayer : GamePlayer
             var unitStatus = data.GetStatus();
             var unit = InGameManager.Instance.SpawnUnit(new Vector3(-3 - (i * 1.5f), 0, 0), group, data, unitStatus, 0);
             unit.InjectDeadEvent(() => RemoveActiveUnit(unit));
-            (unit as ActiveSkillBehaviour).InitPlayer(this);
+            (unit as SkillBehaviour).InitPlayer(this);
             unit.state = BehaviourState.STANDBY;
             unit.SetActiveHpBar(true);
             AddActiveUnit(unit);
@@ -77,7 +77,7 @@ public class PlayableGamePlayer : GamePlayer
         skillCanvas.RemoveButtonAt(idx);
     }
 
-    protected override ActiveSkillBehaviour AddSkillInDeck()
+    protected override SkillBehaviour AddSkillInDeck()
     {
         var data = base.AddSkillInDeck();
         if (data != null)
@@ -99,7 +99,6 @@ public class PlayableGamePlayer : GamePlayer
         skillCanvas.RemoveButtonAt(idx);
     }
 
-    // test
     protected override float GetCostRecovery()
     {
         return curUnits.Sum((item) => item.GetStatus(StatusType.COST_RECOVERY));

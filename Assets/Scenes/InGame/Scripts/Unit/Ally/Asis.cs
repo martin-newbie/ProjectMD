@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Asis : ActiveSkillBehaviour
+public class Asis : SkillBehaviour
 {
     float passiveCoolTime = 20f;
     float passiveCoolCur = 0f;

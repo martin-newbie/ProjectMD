@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SkillButton : MonoBehaviour
+public class SkillButton : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     [SerializeField] Image collabseImage;
     [SerializeField] Image profileImage;
     [SerializeField] Text costText;
-    [SerializeField] GameObject disabledImg;
     [HideInInspector] public RectTransform rect;
     
-    ActiveSkillBehaviour linkedData;
+    SkillBehaviour linkedData;
     int buttonIdx = -1;
 
     SkillCanvas manager;
@@ -26,8 +26,6 @@ public class SkillButton : MonoBehaviour
     void Update()
     {
         if (linkedData == null) return;
-
-        disabledImg.SetActive(!linkedData.GetActiveSkillCondition());
         costText.text = linkedData.cost.ToString();
     }
 
@@ -42,7 +40,7 @@ public class SkillButton : MonoBehaviour
         buttonIdx = idx;
     }
 
-    public void SetData(ActiveSkillBehaviour _linkedData)
+    public void SetData(SkillBehaviour _linkedData)
     {
         linkedData = _linkedData;
         profileImage.sprite = ResourceManager.GetUnitProfile(linkedData.unitData.index);
@@ -69,9 +67,28 @@ public class SkillButton : MonoBehaviour
         }
     }
 
-    public void UseSkill()
+    public void OnPointerUp(PointerEventData eventData)
     {
-        if (!linkedData.GetActiveSkillCondition()) return;
-        PlayableGamePlayer.Instance.UseSkill(buttonIdx);
+
     }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+
+    }
+
+    //public void UseSkill()
+    //{
+    //    if (!linkedData.GetActiveSkillCondition())
+    //    {
+    //        // 빨강 오류 마크 점등
+    //        return;
+    //    }
+    //    PlayableGamePlayer.Instance.UseSkill(buttonIdx);
+    //}
 }

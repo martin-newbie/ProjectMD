@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Seongah : ActiveSkillBehaviour
+public class Seongah : SkillBehaviour
 {
     SeongahSkillBullet skillBullet;
 
