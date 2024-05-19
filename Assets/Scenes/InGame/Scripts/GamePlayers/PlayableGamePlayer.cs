@@ -100,11 +100,6 @@ public class PlayableGamePlayer : GamePlayer
 
     public void UseSkill()
     {
-        if (cost < skillDeck[startIdx].cost)
-        {
-            ClearChain();
-            return;
-        }
         if (!skillDeck[startIdx].GetActiveSkillCondition())
         {
             ClearChain();
