@@ -10,6 +10,13 @@ public class PlayableGamePlayer : GamePlayer
     SkillCanvas skillCanvas;
     int prevCost = 0;
 
+    bool isHolding = false;
+    float holdProgress;
+    float holdDur = 2f;
+    int startIdx;
+    int leftLast, rightLast;
+    List<int> chainedList;
+
     public PlayableGamePlayer(UnitData[] unitDatas, UnitGroupType _group, SkillCanvas _skillCanvas) : base(_group)
     {
         Instance = this;
@@ -26,7 +33,68 @@ public class PlayableGamePlayer : GamePlayer
             unit.SetActiveHpBar(true);
             AddActiveUnit(unit);
         }
-        skillDelay = 8f;
+        skillDelay = 2f;
+        // skillDelay = 8f;
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        SkillChainProgress();
+    }
+
+    void SkillChainProgress()
+    {
+        if (!isHolding) return;
+
+        holdProgress += Time.deltaTime;
+
+        bool leftChainAble = leftLast > 0 && startIdx - leftLast < 2 && skillDeck[leftLast].skillType == skillDeck[leftLast - 1].skillType;
+        bool rightChainAble = rightLast < skillDeck.Count - 1 && rightLast - startIdx < 2 && skillDeck[rightLast].skillType == skillDeck[rightLast + 1].skillType;
+
+        if (leftChainAble)
+        {
+            skillCanvas.activatingBtn[leftLast - 1].SetProgress(holdProgress / holdDur);
+        }
+        if (rightChainAble)
+        {
+            skillCanvas.activatingBtn[rightLast + 1].SetProgress(holdProgress / holdDur);
+        }
+
+        if (holdDur <= holdProgress)
+        {
+            if (leftChainAble)
+            {
+                leftLast--;
+                skillCanvas.activatingBtn[leftLast].SetProgress(1f);
+                chainedList.Add(leftLast);
+            }
+            if (rightChainAble)
+            {
+                rightLast++;
+                skillCanvas.activatingBtn[rightLast].SetProgress(1f);
+                chainedList.Add(rightLast);
+            }
+            holdProgress = 0f;
+        }
+    }
+
+    public void StartSkill(int _startIdx)
+    {
+        isHolding = true;
+
+        startIdx = _startIdx;
+        leftLast = startIdx;
+        rightLast = startIdx;
+
+        chainedList = new List<int>();
+    }
+
+    public void UseSkill()
+    {
+        isHolding = false;
+        // skill remove all
     }
 
     public void ActiveAllUnits()
@@ -69,6 +137,34 @@ public class PlayableGamePlayer : GamePlayer
             prevCost = intCost;
             skillCanvas.skillCost.CostRecoverAction(prevCost);
         }
+    }
+
+    public override void RemoveActiveUnit(UnitBehaviour removedUnit)
+    {
+        var startSkill = skillDeck[startIdx];
+        if (chainedList.Select(item => skillDeck[item]).Contains(removedUnit))
+        {
+            // 유닛이 체인 스킬일 경우
+            chainedList.RemoveAll(item => skillDeck[item] == removedUnit);
+        }
+        if (startSkill == removedUnit)
+        {
+            // 유닛이 시작 스킬일 경우
+            isHolding = false;
+            ClearChain();
+        }
+
+        base.RemoveActiveUnit(removedUnit);
+    }
+
+    void ClearChain()
+    {
+        for (int i = 0; i < chainedList.Count; i++)
+        {
+            skillCanvas.activatingBtn[chainedList[i]].SetProgress(0);
+            // deselect
+        }
+        chainedList.Clear();
     }
 
     protected override void RemoveCharacterSkillAt(int idx)

@@ -34,18 +34,6 @@ public class StaticDataManager : MonoBehaviour
         return Instance.itemValueData.dataList[index];
     }
 
-    public StaticSkillRequireItemData skillRequireData;
-    public static SkillRequireItemData GetSkillItemData(int index)
-    {
-        return Instance.skillRequireData.dataList.Find(item => item.index == index);
-    }
-
-    public StaticEquipmentValueData equipmentData;
-    public static EquipmentValueData GetEquipmentValueData(int index, int tier)
-    {
-        return Instance.equipmentData.dataList.Find(item => item.index == index && item.tier == tier);
-    }
-
     private void Start()
     {
         var staticDatas = new SheetDataBase[]
@@ -54,8 +42,6 @@ public class StaticDataManager : MonoBehaviour
             constUnitStatus,
             unitSkillStatus,
             itemValueData,
-            skillRequireData,
-            equipmentData,
         };
 
         foreach (var item in staticDatas)

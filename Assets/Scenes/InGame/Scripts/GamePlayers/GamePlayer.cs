@@ -10,8 +10,8 @@ public abstract class GamePlayer
     protected UnitGroupType group;
 
     // about skill
-    List<SkillBehaviour> skillUnits = new List<SkillBehaviour>();
-    List<SkillBehaviour> skillDeck = new List<SkillBehaviour>();
+    protected List<SkillBehaviour> skillUnits = new List<SkillBehaviour>();
+    protected List<SkillBehaviour> skillDeck = new List<SkillBehaviour>();
 
     public float cost;
 

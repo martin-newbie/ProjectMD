@@ -451,6 +451,7 @@ MonoBehaviour:
   collabseImage: {fileID: 4715846205687628799}
   profileImage: {fileID: 3763419980100863682}
   costText: {fileID: 1790771482093192058}
+  outlineProgress: {fileID: 4865809079396367449}
   rect: {fileID: 0}
 --- !u!1 &2846096465858843152
 GameObject:

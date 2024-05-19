@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SkillButton : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
+public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] Image collabseImage;
     [SerializeField] Image profileImage;
     [SerializeField] Text costText;
+    [SerializeField] Image outlineProgress;
     [HideInInspector] public RectTransform rect;
     
     SkillBehaviour linkedData;
@@ -67,19 +68,19 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         }
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public void SetProgress(float amount)
     {
-
+        outlineProgress.fillAmount = amount;
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
-
+        PlayableGamePlayer.Instance.UseSkill();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-
+        PlayableGamePlayer.Instance.StartSkill(buttonIdx);
     }
 
     //public void UseSkill()
