@@ -95,8 +95,25 @@ public class PlayableGamePlayer : GamePlayer
 
     public void UseSkill()
     {
+        if (cost < skillDeck[startIdx].cost)
+        {
+            return;
+        }
+
         isHolding = false;
-        // skill remove all
+
+        var skillData = skillDeck[startIdx].GetDefaultSkillValue();
+        foreach (var item in chainedList)
+        {
+            skillDeck[item].CollabseBuff(skillData, skillDeck[startIdx]);
+        }
+        skillDeck[startIdx].UseActiveSkill(skillData);
+
+        int removeCount = rightLast - leftLast;
+        for (int i = 0; i < removeCount + 1; i++)
+        {
+            RemoveSkillAt(leftLast + i);
+        }
     }
 
     public void ActiveAllUnits()

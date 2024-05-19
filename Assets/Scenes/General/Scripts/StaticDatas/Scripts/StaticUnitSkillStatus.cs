@@ -30,11 +30,20 @@ public class UnitSkillStatus
     public int unitIndex;
     public int cost;
     public int skill_type;
-
-    public float[] active;
-    public float[] passive;
-    public float[] enforce;
-    public float[] sub;
+    public float active_min;
+    public float active_max;
+    public float active_time_min;
+    public float active_time_max;
+    public float passive_min;
+    public float passive_max;
+    public float passive_time_min;
+    public float passive_time_max;
+    public float used_min;
+    public float used_max;
+    public float used_sub;
+    public float use_min;
+    public float use_max;
+    public float use_sub;
 
     public UnitSkillStatus(string[] data)
     {
@@ -43,30 +52,24 @@ public class UnitSkillStatus
         unitIndex = int.Parse(data[idx++]);
         cost = int.Parse(data[idx++]);
         skill_type = int.Parse(data[idx++]);
-
-        active = data[idx++].GetSplitCommaFloat();
-        passive = data[idx++].GetSplitCommaFloat();
-        enforce = data[idx++].GetSplitCommaFloat();
-        sub = data[idx++].GetSplitCommaFloat();
+        active_min = float.Parse(data[idx++]);
+        active_max = float.Parse(data[idx++]);
+        active_time_min = float.Parse(data[idx++]);
+        active_time_max = float.Parse(data[idx++]);
+        passive_min = float.Parse(data[idx++]);
+        passive_max = float.Parse(data[idx++]);
+        passive_time_min = float.Parse(data[idx++]);
+        passive_time_max = float.Parse(data[idx++]);
+        used_min = float.Parse(data[idx++]);
+        used_max = float.Parse(data[idx++]);
+        used_sub = float.Parse(data[idx++]);
+        use_min = float.Parse(data[idx++]);
+        use_max = float.Parse(data[idx++]);
+        use_sub = float.Parse(data[idx++]);
     }
 
     public float GetActiveSkillValue(int skillLevel)
     {
-        return ((active[1] - active[0]) / 5 * skillLevel) + active[0];
-    }
-
-    public float GetPassiveSkillValue(int skillLevel)
-    {
-        return ((passive[1] - passive[0]) / 10 * skillLevel) + passive[0];
-    }
-
-    public float GetEnforceSkillValue(int skillLevel)
-    {
-        return ((enforce[1] - enforce[0]) / 10 * skillLevel) + enforce[0];
-    }
-    
-    public float GetSubSKillValue(int skillLevel)
-    {
-        return ((sub[1] - sub[0]) / 10 * skillLevel) + sub[0];   
+        return ((active_max - active_min) / 5 * skillLevel) + active_min;
     }
 }
