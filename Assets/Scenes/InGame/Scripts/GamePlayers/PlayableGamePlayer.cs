@@ -73,7 +73,7 @@ public class PlayableGamePlayer : GamePlayer
             if (rightChainAble)
             {
                 rightLast++;
-                skillCanvas.activatingBtn[rightLast].SelectButton(); ;
+                skillCanvas.activatingBtn[rightLast].SelectButton();
                 chainedList.Add(rightLast);
             }
             holdProgress = 0f;
@@ -96,6 +96,11 @@ public class PlayableGamePlayer : GamePlayer
     public void UseSkill()
     {
         if (cost < skillDeck[startIdx].cost)
+        {
+            ClearChain();
+            return;
+        }
+        if (!skillDeck[startIdx].GetActiveSkillCondition())
         {
             ClearChain();
             return;
