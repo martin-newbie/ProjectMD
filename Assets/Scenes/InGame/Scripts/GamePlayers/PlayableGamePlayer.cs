@@ -192,6 +192,7 @@ public class PlayableGamePlayer : GamePlayer
     void ClearChain()
     {
         isHolding = false;
+        holdProgress = 0f;
         DeSelectAllButtons();
         chainedList.Clear();
     }
