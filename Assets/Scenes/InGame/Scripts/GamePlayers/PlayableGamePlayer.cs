@@ -89,6 +89,8 @@ public class PlayableGamePlayer : GamePlayer
         rightLast = startIdx;
 
         chainedList = new List<int>();
+
+        skillCanvas.activatingBtn[startIdx].SetProgress(1f);
     }
 
     public void UseSkill()

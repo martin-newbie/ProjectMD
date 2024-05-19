@@ -11,7 +11,7 @@ public class SkillCanvas : MonoBehaviour
     Stack<SkillButton> skillBtnPool = new Stack<SkillButton>();
     [HideInInspector] public List<SkillButton> activatingBtn = new List<SkillButton>();
 
-    Vector3 btnStartPos = new Vector3(2812.5f, -150f);
+    Vector3 btnStartPos = new Vector3(1900f, -90f);
     int curSkillCount;
 
     [Header("Cost")]
@@ -34,6 +34,7 @@ public class SkillCanvas : MonoBehaviour
     public void AddSkillButton(SkillBehaviour _linkedData)
     {
         var btnTemp = skillBtnPool.Pop();
+        btnTemp.transform.SetAsLastSibling();
         btnTemp.gameObject.SetActive(true);
         btnTemp.MovePos(btnStartPos, GetButtonPos(curSkillCount));
         btnTemp.SetData(_linkedData);

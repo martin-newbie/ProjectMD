@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class SkillBehaviour : UnitBehaviour
 {
-    public AttributeType skillType;
+    public int skillType => skillStatus.skill_type;
     public UnitSkillStatus skillStatus;
     public GamePlayer player;
     public int cost;

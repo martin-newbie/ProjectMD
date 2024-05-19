@@ -54,12 +54,15 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         IEnumerator moveRoutine()
         {
-            float dur = Vector3.Distance(start, target) * 0.0003f;
+            float dur = 1f;
             float timer = 0f;
 
             while (timer < dur)
             {
-                rect.anchoredPosition = Vector3.Lerp(start, target, timer / dur);
+                float c1 = 1.70158f;
+                float c3 = c1 + 1;
+                float t = 1 + c3 * Mathf.Pow((timer / dur) - 1, 3) + c1 * Mathf.Pow((timer / dur) - 1, 2);
+                rect.anchoredPosition = Vector3.LerpUnclamped(start, target, t);
                 timer += Time.deltaTime;
                 yield return null;
             }
