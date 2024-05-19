@@ -97,7 +97,7 @@ public class PlayableGamePlayer : GamePlayer
     {
         if (cost < skillDeck[startIdx].cost)
         {
-            DeSelectAllButtons();
+            ClearChain();
             return;
         }
 
@@ -110,20 +110,12 @@ public class PlayableGamePlayer : GamePlayer
             skillDeck[item].CollabseBuff(skillData, skillDeck[startIdx]);
         }
         skillDeck[startIdx].UseActiveSkill(skillData);
-        DeSelectAllButtons();
+        ClearChain();
 
         int removeCount = rightLast - leftLast;
         for (int i = 0; i < removeCount + 1; i++)
         {
             RemoveSkillAt(leftLast);
-        }
-    }
-
-    void DeSelectAllButtons()
-    {
-        foreach (var item in skillCanvas.activatingBtn)
-        {
-            item.DeselectButton();
         }
     }
 
@@ -192,6 +184,14 @@ public class PlayableGamePlayer : GamePlayer
         isHolding = false;
         DeSelectAllButtons();
         chainedList.Clear();
+    }
+
+    void DeSelectAllButtons()
+    {
+        foreach (var item in skillCanvas.activatingBtn)
+        {
+            item.DeselectButton();
+        }
     }
 
     protected override void RemoveCharacterSkillAt(int idx)
