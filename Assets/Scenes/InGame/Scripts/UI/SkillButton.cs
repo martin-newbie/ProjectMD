@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IPointerEnterHandler
 {
     [SerializeField] Image collabseImage;
     [SerializeField] Image profileImage;
@@ -18,6 +18,7 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     int buttonIdx = -1;
 
     SkillCanvas manager;
+    bool pointerEnter;
 
     public void InitButton(SkillCanvas _manager)
     {
@@ -93,6 +94,12 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (!pointerEnter)
+        {
+            PlayableGamePlayer.Instance.CancelSkill();
+            return;
+        }
+        pointerEnter = false;
         PlayableGamePlayer.Instance.UseSkill();
     }
 
@@ -101,13 +108,13 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         PlayableGamePlayer.Instance.StartSkill(buttonIdx);
     }
 
-    //public void UseSkill()
-    //{
-    //    if (!linkedData.GetActiveSkillCondition())
-    //    {
-    //        // 빨강 오류 마크 점등
-    //        return;
-    //    }
-    //    PlayableGamePlayer.Instance.UseSkill(buttonIdx);
-    //}
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        pointerEnter = false;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        pointerEnter = true;
+    }
 }

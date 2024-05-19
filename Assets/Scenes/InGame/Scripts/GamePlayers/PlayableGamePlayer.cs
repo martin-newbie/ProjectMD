@@ -93,6 +93,11 @@ public class PlayableGamePlayer : GamePlayer
         skillCanvas.activatingBtn[startIdx].SelectButton();
     }
 
+    public void CancelSkill()
+    {
+        ClearChain();
+    }
+
     public void UseSkill()
     {
         if (cost < skillDeck[startIdx].cost)
