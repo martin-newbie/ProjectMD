@@ -10,18 +10,20 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField] Image profileImage;
     [SerializeField] Text costText;
     [SerializeField] Image outlineProgress;
+    [SerializeField] GameObject outlineSelected;
     [HideInInspector] public RectTransform rect;
     
     SkillBehaviour linkedData;
+    Animator anim;
     int buttonIdx = -1;
 
     SkillCanvas manager;
-
 
     public void InitButton(SkillCanvas _manager)
     {
         manager = _manager;
         rect = GetComponent<RectTransform>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -74,6 +76,19 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void SetProgress(float amount)
     {
         outlineProgress.fillAmount = amount;
+    }
+
+    public void SelectButton()
+    {
+        outlineSelected.SetActive(true);
+        anim.SetTrigger("hopping");
+        SetProgress(1f);
+    }
+
+    public void DeselectButton()
+    {
+        outlineSelected.SetActive(false);
+        SetProgress(0f);
     }
 
     public void OnPointerUp(PointerEventData eventData)

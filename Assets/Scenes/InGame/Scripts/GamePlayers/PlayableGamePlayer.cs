@@ -67,13 +67,13 @@ public class PlayableGamePlayer : GamePlayer
             if (leftChainAble)
             {
                 leftLast--;
-                skillCanvas.activatingBtn[leftLast].SetProgress(1f);
+                skillCanvas.activatingBtn[leftLast].SelectButton();
                 chainedList.Add(leftLast);
             }
             if (rightChainAble)
             {
                 rightLast++;
-                skillCanvas.activatingBtn[rightLast].SetProgress(1f);
+                skillCanvas.activatingBtn[rightLast].SelectButton(); ;
                 chainedList.Add(rightLast);
             }
             holdProgress = 0f;
@@ -90,16 +90,18 @@ public class PlayableGamePlayer : GamePlayer
 
         chainedList = new List<int>();
 
-        skillCanvas.activatingBtn[startIdx].SetProgress(1f);
+        skillCanvas.activatingBtn[startIdx].SelectButton();
     }
 
     public void UseSkill()
     {
         if (cost < skillDeck[startIdx].cost)
         {
+            DeSelectAllButtons();
             return;
         }
 
+        cost -= skillDeck[startIdx].cost;
         isHolding = false;
 
         var skillData = skillDeck[startIdx].GetDefaultSkillValue();
@@ -108,11 +110,20 @@ public class PlayableGamePlayer : GamePlayer
             skillDeck[item].CollabseBuff(skillData, skillDeck[startIdx]);
         }
         skillDeck[startIdx].UseActiveSkill(skillData);
+        DeSelectAllButtons();
 
         int removeCount = rightLast - leftLast;
         for (int i = 0; i < removeCount + 1; i++)
         {
-            RemoveSkillAt(leftLast + i);
+            RemoveSkillAt(leftLast);
+        }
+    }
+
+    void DeSelectAllButtons()
+    {
+        foreach (var item in skillCanvas.activatingBtn)
+        {
+            item.DeselectButton();
         }
     }
 
@@ -178,11 +189,8 @@ public class PlayableGamePlayer : GamePlayer
 
     void ClearChain()
     {
-        for (int i = 0; i < chainedList.Count; i++)
-        {
-            skillCanvas.activatingBtn[chainedList[i]].SetProgress(0);
-            // deselect
-        }
+        isHolding = false;
+        DeSelectAllButtons();
         chainedList.Clear();
     }
 
