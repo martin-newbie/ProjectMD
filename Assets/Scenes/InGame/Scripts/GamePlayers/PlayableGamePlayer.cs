@@ -48,7 +48,7 @@ public class PlayableGamePlayer : GamePlayer
     {
         if (!isHolding) return;
 
-        holdProgress += Time.deltaTime;
+        holdProgress += Time.unscaledDeltaTime;
 
         bool leftChainAble = leftLast > 0 && startIdx - leftLast < 2 && skillDeck[leftLast].skillType == skillDeck[leftLast - 1].skillType;
         bool rightChainAble = rightLast < skillDeck.Count - 1 && rightLast - startIdx < 2 && skillDeck[rightLast].skillType == skillDeck[rightLast + 1].skillType;
@@ -91,6 +91,8 @@ public class PlayableGamePlayer : GamePlayer
         chainedList = new List<int>();
 
         skillCanvas.activatingBtn[startIdx].SelectButton();
+        Time.timeScale = 0.1f;
+        skillCanvas.skillBlur.SetActive(true);
     }
 
     public void CancelSkill()
@@ -186,6 +188,8 @@ public class PlayableGamePlayer : GamePlayer
 
     void ClearChain()
     {
+        Time.timeScale = 1f;
+        skillCanvas.skillBlur.SetActive(false);
         isHolding = false;
         holdProgress = 0f;
         DeSelectAllButtons();

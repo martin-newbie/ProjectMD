@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class SkillCanvas : MonoBehaviour
 {
+
+    public GameObject skillBlur;
+
     [Header("Skill Button")]
     public SkillButton skillButtonPrefab;
     public Transform buttonParent;
