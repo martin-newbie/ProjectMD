@@ -33,12 +33,12 @@ public class TopMenu : MonoBehaviour
 
         if (!UserData.Instance.IsOverMaxEnergy())
         {
-            remainEnergyChargeTxt.text = (lastEnergyTime + new TimeSpan(0, 6, 0) - curTime).ToString();
+            // remainEnergyChargeTxt.text = (lastEnergyTime + new TimeSpan(0, 6, 0) - curTime).ToString();
         }
     }
 
     void SetActiveIfEnergyAvaliable()
     {
-        remainEnergyChargeTxt.gameObject.SetActive(!UserData.Instance.IsOverMaxEnergy());
+        // remainEnergyChargeTxt.gameObject.SetActive(!UserData.Instance.IsOverMaxEnergy());
     }
 }

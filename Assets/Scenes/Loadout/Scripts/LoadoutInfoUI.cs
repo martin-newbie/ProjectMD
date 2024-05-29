@@ -12,17 +12,10 @@ public class LoadoutInfoUI : MonoBehaviour
     [SerializeField] GameObject infoBox;
 
     [Header("Profile")]
-    [SerializeField] Image profileImage;
     [SerializeField] Text levelText;
-    [SerializeField] Text tearText;
-
-    [Header("Name")]
     [SerializeField] Image positionImage;
     [SerializeField] Text nameText;
-
-    [Header("Attribute")]
-    [SerializeField] Text atkAttText;
-    [SerializeField] Text defAttText;
+    [SerializeField] GameObject[] rankStar;
 
     [HideInInspector] public UnitData LinkedData;
     [HideInInspector] public int btnIdx;
@@ -42,6 +35,8 @@ public class LoadoutInfoUI : MonoBehaviour
 
     public void InitInfo(UnitData linkedData)
     {
+        LinkedData = linkedData;
+
         emptyBox.SetActive(linkedData == null);
         infoBox.SetActive(linkedData != null);
         skeleton.gameObject.SetActive(linkedData != null);
@@ -59,10 +54,18 @@ public class LoadoutInfoUI : MonoBehaviour
         }
         AddAnimation("wait", true);
 
-        profileImage.sprite = ResourceManager.GetUnitProfile(linkedData.index);
         nameText.text = StaticDataManager.GetConstUnitData(linkedData.index).name;
+        levelText.text = $"Lv.{LinkedData.level}";
+        InitRankStar();
+    }
 
-        LinkedData = linkedData;
+    void InitRankStar()
+    {
+        int rank = LinkedData.rank;
+        for (int i = 0; i < rankStar.Length; i++)
+        {
+            rankStar[i].SetActive(i < rank);
+        }
     }
 
     public void SetModelPos(Vector2 anchorPos)
