@@ -580,6 +580,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyTxt: {fileID: 7894789495357228690}
+  coinTxt: {fileID: 2004613118468923728}
+  diaTxt: {fileID: 6217604634212071601}
   remainEnergyChargeTxt: {fileID: 0}
 --- !u!1 &4929223262316733166
 GameObject:
@@ -1262,7 +1264,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 490, y: 0}
+  m_AnchoredPosition: {x: 450, y: 0}
   m_SizeDelta: {x: 670, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6990309959087861586

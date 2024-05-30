@@ -9,11 +9,15 @@ public class TopMenu : MonoBehaviour
     DateTime lastEnergyTime;
 
     public Text energyTxt;
+    public Text coinTxt;
+    public Text diaTxt;
     public Text remainEnergyChargeTxt;
 
     void Start()
     {
         lastEnergyTime = UserData.Instance.GetEnergyTime();
+        coinTxt.text = UserData.Instance.coin.ToString("N0");
+        diaTxt.text = UserData.Instance.dia.ToString("N0");
         SetActiveIfEnergyAvaliable();
     }
 
