@@ -20,8 +20,8 @@ public class UnitInfoButton : MonoBehaviour
         unitProfileImg.sprite = ResourceManager.GetUnitProfile(_linkedData.index);
         unitShadowImg.sprite = ResourceManager.GetUnitProfile(_linkedData.index);
         unitNameTxt.text = StaticDataManager.GetConstUnitData(_linkedData.index).name;
-        unitLevelTxt.text = "Lv." + _linkedData.level.ToString();
-        unitRankTxt.text = _linkedData.rank.ToString();
+        unitLevelTxt.text = "Lv." + (_linkedData.level + 1).ToString();
+        unitRankTxt.text = (_linkedData.rank + 1).ToString();
 
         linkedData = _linkedData;
         clickAction = _clickAction;
