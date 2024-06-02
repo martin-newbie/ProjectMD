@@ -10,9 +10,9 @@ public class UnitListManager : MonoBehaviour
         Instance = this;
     }
 
-    [SerializeField] UnitListButton buttonPrefab;
+    [SerializeField] UnitInfoButton buttonPrefab;
     [SerializeField] Transform buttonContent;
-    List<UnitListButton> buttonList;
+    List<UnitInfoButton> buttonList;
 
     private void Start()
     {
@@ -21,7 +21,7 @@ public class UnitListManager : MonoBehaviour
 
     public void InitList(UnitData[] units)
     {
-        buttonList = new List<UnitListButton>();
+        buttonList = new List<UnitInfoButton>();
 
         foreach (var unit in units)
         {

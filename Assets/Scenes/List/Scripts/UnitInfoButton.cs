@@ -1,26 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UnitListButton : MonoBehaviour
+public class UnitInfoButton : MonoBehaviour
 {
     [SerializeField] Image unitProfileImg;
     [SerializeField] Text unitNameTxt;
+    [SerializeField] Text unitLevelTxt;
 
     UnitData linkedData;
+    Action<UnitData> clickAction;
 
-    public void InitButton(UnitData _linkedData)
+    public void InitButton(UnitData _linkedData, Action<UnitData> _clickAction = null)
     {
         unitProfileImg.sprite = ResourceManager.GetUnitProfile(_linkedData.index);
         unitNameTxt.text = StaticDataManager.GetConstUnitData(_linkedData.index).name;
+        unitLevelTxt.text = "Lv." + _linkedData.level.ToString();
 
         linkedData = _linkedData;
+        clickAction = _clickAction;
     }
 
     public void OnbuttonClick()
     {
-        TempData.Instance.selectedUnit = linkedData.id;
-        SceneLoadManager.Instance.LoadScene("Overall");
+        clickAction?.Invoke(linkedData);
     }
 }
