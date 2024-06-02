@@ -35,7 +35,6 @@ public class LoadoutInfoUI : MonoBehaviour
 
     public void InitInfo(UnitData linkedData)
     {
-        LinkedData = linkedData;
 
         emptyBox.SetActive(linkedData == null);
         infoBox.SetActive(linkedData != null);
@@ -56,6 +55,10 @@ public class LoadoutInfoUI : MonoBehaviour
 
         nameText.text = StaticDataManager.GetConstUnitData(linkedData.index).name;
         levelText.text = $"Lv.{LinkedData.level}";
+
+        // check diffrence with previous
+        // never change order
+        LinkedData = linkedData;
         InitRankStar();
     }
 
