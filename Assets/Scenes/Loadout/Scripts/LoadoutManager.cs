@@ -76,11 +76,11 @@ public class LoadoutManager : MonoBehaviour
         {
             if (curDragIdx != i && infoButtons[i].isEnter)
             {
-                infoButtons[i].skeleton.transform.localScale = Vector3.one;
+                infoButtons[i].skeleton.transform.localScale = Vector3.one * 0.9f;
             }
             else
             {
-                infoButtons[i].skeleton.transform.localScale = Vector3.one * 1.25f;
+                infoButtons[i].skeleton.transform.localScale = Vector3.one;
             }
         }
     }
@@ -96,7 +96,7 @@ public class LoadoutManager : MonoBehaviour
         }
         else
         {
-            last.skeleton.transform.localScale = Vector3.one * 1.25f;
+            last.skeleton.transform.localScale = Vector3.one;
 
             var temp = deckIdxArr[curDragIdx];
             deckIdxArr[prev.btnIdx] = deckIdxArr[last.btnIdx];

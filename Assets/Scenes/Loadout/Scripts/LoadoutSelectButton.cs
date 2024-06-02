@@ -9,9 +9,7 @@ public class LoadoutSelectButton : MonoBehaviour
     [HideInInspector] public UnitData LinkedData;
     LoadoutSelectPanel panel;
 
-    [SerializeField] Image profileImage;
-    [SerializeField] Text nameText;
-    [SerializeField] Text levelText;
+    [SerializeField] UnitInfoButton info;
     [SerializeField] GameObject selectedCurrent;
 
     public void InitButton(LoadoutSelectPanel _panel)
@@ -25,8 +23,7 @@ public class LoadoutSelectButton : MonoBehaviour
         LinkedData = _linkedData;
         selectedCurrent.SetActive(false);
 
-        profileImage.sprite = ResourceManager.GetUnitProfile(LinkedData.index);
-        nameText.text = StaticDataManager.GetConstUnitData(LinkedData.index).name;
+        info.InitButton(LinkedData, OnSelect);
 
         if (panel.curSelected.Contains(LinkedData.id))
         {
@@ -34,7 +31,7 @@ public class LoadoutSelectButton : MonoBehaviour
         }
     }
 
-    public void OnSelect()
+    public void OnSelect(UnitData linkedData)
     {
         panel.SelectButton(LinkedData.id);
     }
