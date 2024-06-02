@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5419613978625139064}
   - component: {fileID: 7684263086437493569}
   m_Layer: 5
-  m_Name: TearText
+  m_Name: RankText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 6326903355709276064}
   - component: {fileID: 5008062709257529261}
   m_Layer: 5
-  m_Name: TearImage
+  m_Name: RankImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -867,6 +867,7 @@ MonoBehaviour:
   unitProfileImg: {fileID: 8691243620537287568}
   unitNameTxt: {fileID: 8691243619681935971}
   unitLevelTxt: {fileID: 5716246443503030}
+  unitRankTxt: {fileID: 5419613978625139064}
 --- !u!1 &8691243620537287570
 GameObject:
   m_ObjectHideFlags: 0
