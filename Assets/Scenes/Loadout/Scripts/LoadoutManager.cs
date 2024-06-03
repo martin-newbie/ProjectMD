@@ -18,9 +18,9 @@ public class LoadoutManager : MonoBehaviour
     int selectedDeck;
     int curDragIdx = -1;
 
-    [SerializeField] Button deckButtonPrefab;
+    [SerializeField] LoadoutDeckButton deckButtonPrefab;
     [SerializeField] Transform deckButtonsParent;
-    List<Button> deckButtons;
+    List<LoadoutDeckButton> deckButtons;
 
     [SerializeField] List<LoadoutInfoUI> infoButtons;
     [SerializeField] LoadoutSelectPanel selectPanel;
@@ -43,7 +43,7 @@ public class LoadoutManager : MonoBehaviour
 
         decks = recieveData.decks.ToList();
 
-        deckButtons = new List<Button>();
+        deckButtons = new List<LoadoutDeckButton>();
         for (int i = 0; i < decks.Count; i++)
         {
             AddDeckButton(i);
@@ -124,12 +124,12 @@ public class LoadoutManager : MonoBehaviour
         });
     }
 
-    private Button AddDeckButton(int idx)
+    private LoadoutDeckButton AddDeckButton(int idx)
     {
         var button = Instantiate(deckButtonPrefab, deckButtonsParent);
         button.transform.SetSiblingIndex(idx);
-        button.GetComponentInChildren<Text>().text = decks[idx].title;
-        button.onClick.AddListener(() => SelectDeck(idx));
+        button.UpdateTitle(decks[idx].title);
+        button.InitAction(() => SelectDeck(idx));
         deckButtons.Add(button);
         return button;
     }
@@ -157,7 +157,12 @@ public class LoadoutManager : MonoBehaviour
     {
         deckIdxArr = decks[deckIdx].unit_indexes;
         deckTitleTxt.text = decks[deckIdx].title;
-        deckButtons[deckIdx].GetComponentInChildren<Text>().text = decks[deckIdx].title;
+        deckButtons[deckIdx].UpdateTitle(decks[deckIdx].title);
+
+        for (int i = 0; i < deckButtons.Count; i++)
+        {
+            deckButtons[i].UpdateSelected(i == deckIdx);
+        }
 
         for (int i = 0; i < infoButtons.Count; i++)
         {
