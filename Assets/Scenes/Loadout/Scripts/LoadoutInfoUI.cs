@@ -54,7 +54,7 @@ public class LoadoutInfoUI : MonoBehaviour
         AddAnimation("wait", true);
 
         nameText.text = StaticDataManager.GetConstUnitData(linkedData.index).name;
-        levelText.text = $"Lv.{LinkedData.level}";
+        levelText.text = $"Lv.{LinkedData.level + 1}";
 
         // check diffrence with previous
         // never change order
@@ -64,7 +64,7 @@ public class LoadoutInfoUI : MonoBehaviour
 
     void InitRankStar()
     {
-        int rank = LinkedData.rank;
+        int rank = LinkedData.rank + 1;
         for (int i = 0; i < rankStar.Length; i++)
         {
             rankStar[i].SetActive(i < rank);
