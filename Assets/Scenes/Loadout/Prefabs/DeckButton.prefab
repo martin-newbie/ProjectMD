@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2870003918420426823}
   - component: {fileID: 2870003918420426820}
   - component: {fileID: 2870003918420426821}
+  - component: {fileID: 183121073}
   m_Layer: 5
   m_Name: DeckButton
   m_TagString: Untagged
@@ -121,6 +122,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &183121073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2870003918420427195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97bc2ebab6563400c95b036136d26ea6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Inverse: 0
+  m_MaskInteraction: 85
+  m_UseStencil: 1
+  m_RaycastFilter: 0
 --- !u!1 &2870003919227773638
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,6 +149,7 @@ GameObject:
   - component: {fileID: 2870003919227773633}
   - component: {fileID: 2870003919227773635}
   - component: {fileID: 2870003919227773632}
+  - component: {fileID: 7322277213993700131}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -201,3 +219,19 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "\uB371 \uC774\uB984 \uB4E4\uC5B4\uAC04\uB2E4 \uB371 \uC774\uB984\uC774
     \uB610 \uB4E4\uC5B4\uAC04\uB2E4"
+--- !u!114 &7322277213993700131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2870003919227773638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97bc2ebab6563400c95b036136d26ea6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Inverse: 0
+  m_MaskInteraction: 85
+  m_UseStencil: 1
+  m_RaycastFilter: 0
