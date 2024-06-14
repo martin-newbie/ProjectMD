@@ -404,26 +404,22 @@ public abstract class UnitBehaviour
         float damage = value.GetValue(StatusType.DMG);
         // check death
 
-        int atkType = from.constData.atkType;
-        int defType = constData.defType;
         float affinityModify;
         bool isCri = false;
 
         ResistType resist;
-        if (atkType == defType)
+        affinityModify = from.constData.damageToRace[constData.raceType];
+        if (affinityModify > 1f)
         {
             resist = ResistType.WEAK;
-            affinityModify = 1.5f;
         }
-        else if ((atkType == 0 && defType == 1) || (atkType == 1 && defType == 2) || (atkType == 2 && defType == 0))
+        else if (affinityModify == 1f)
         {
             resist = ResistType.NORMAL;
-            affinityModify = 1f;
         }
         else
         {
             resist = ResistType.RESIST;
-            affinityModify = 0.5f;
         }
 
         float hitRate = (700 / ((GetStatus(StatusType.DODGE) - value.GetValue(StatusType.ACCURACY)) + 700));
