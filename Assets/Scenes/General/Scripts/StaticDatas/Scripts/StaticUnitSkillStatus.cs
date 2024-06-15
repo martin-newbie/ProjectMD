@@ -38,12 +38,15 @@ public class UnitSkillStatus
     public float passive_max;
     public float passive_time_min;
     public float passive_time_max;
-    public float used_min;
-    public float used_max;
-    public float used_sub;
-    public float use_min;
-    public float use_max;
-    public float use_sub;
+    
+    // 다른 스킬에 의해 체인될 때
+    public float chain_use_min;
+    public float chain_use_max;
+    public float chain_use_sub;
+    
+    public float chain_enhance_min;
+    public float chain_enhance_max;
+    public float chaine_enhance_sub;
 
     public UnitSkillStatus(string[] data)
     {
@@ -60,16 +63,36 @@ public class UnitSkillStatus
         passive_max = float.Parse(data[idx++]);
         passive_time_min = float.Parse(data[idx++]);
         passive_time_max = float.Parse(data[idx++]);
-        used_min = float.Parse(data[idx++]);
-        used_max = float.Parse(data[idx++]);
-        used_sub = float.Parse(data[idx++]);
-        use_min = float.Parse(data[idx++]);
-        use_max = float.Parse(data[idx++]);
-        use_sub = float.Parse(data[idx++]);
+        chain_use_min = float.Parse(data[idx++]);
+        chain_use_max = float.Parse(data[idx++]);
+        chain_use_sub = float.Parse(data[idx++]);
+        chain_enhance_min = float.Parse(data[idx++]);
+        chain_enhance_max = float.Parse(data[idx++]);
+        chaine_enhance_sub = float.Parse(data[idx++]);
     }
 
-    public float GetActiveSkillValue(int skillLevel)
+    public float GetActiveValue(int rank)
     {
-        return ((active_max - active_min) / 5 * skillLevel) + active_min;
+        return ((active_max - active_min) / 4 * rank) + active_min;
+    }
+
+    public float GetActiveTime(int rank)
+    {
+        return active_time_min + (active_time_max - active_time_min) / 4 * rank;
+    }
+
+    public float GetPassiveValue(int rank)
+    {
+        return passive_min + (passive_max - passive_min) / 4 * rank;
+    }
+
+    public float GetPassiveTime(int rank)
+    {
+        return passive_time_min + (passive_time_max - passive_time_min) / 4 * rank;
+    }
+
+    public float GetChainUseValue(int rank)
+    {
+        return chain_use_min + (chain_use_max - chain_use_min) / 4 * rank;
     }
 }

@@ -96,7 +96,7 @@ public class Asis : SkillBehaviour
     public override SkillData GetDefaultSkillValue()
     {
         var value = base.GetDefaultSkillValue();
-        value.damageData.AddIncreaseValue(StatusType.DMG, skillStatus.GetActiveSkillValue(1));
+        value.damageData.AddIncreaseValue(StatusType.DMG, skillStatus.GetActiveValue(1));
         return value;
     }
 
