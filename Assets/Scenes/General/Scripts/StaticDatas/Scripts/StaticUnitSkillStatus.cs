@@ -95,4 +95,9 @@ public class UnitSkillStatus
     {
         return chain_use_min + (chain_use_max - chain_use_min) / 4 * rank;
     }
+
+    public float GetChainEnhanceValue(int rank)
+    {
+        return chain_enhance_min + (chain_enhance_max - chain_enhance_min) / 4 * rank;
+    }
 }

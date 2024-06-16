@@ -38,7 +38,7 @@ public class StageEnemyPlayer : GamePlayer
                         break;
                 }
 
-                var unit = InGameManager.Instance.SpawnUnit(new Vector3(spawnX, 0), _group, unitData, unitStatus, unitData.unit_type);
+                var unit = InGameManager.Instance.SpawnUnit(new Vector3(spawnX, -1), _group, unitData, unitStatus, unitData.unit_type);
                 unit.state = BehaviourState.STANDBY;
                 unit.InjectDeadEvent(() => RemoveActiveUnit(unit));
                 unit.SetActiveHpBar(false);

@@ -26,7 +26,7 @@ public class PlayableGamePlayer : GamePlayer
         {
             var data = unitDatas[i];
             var unitStatus = data.GetStatus();
-            var unit = InGameManager.Instance.SpawnUnit(new Vector3(-3 - (i * 1.5f), 0, 0), group, data, unitStatus, 0);
+            var unit = InGameManager.Instance.SpawnUnit(new Vector3(-3 - (i * 1.5f), -1, 0), group, data, unitStatus, 0);
             unit.InjectDeadEvent(() => RemoveActiveUnit(unit));
             (unit as SkillBehaviour).InitPlayer(this);
             unit.state = BehaviourState.STANDBY;
