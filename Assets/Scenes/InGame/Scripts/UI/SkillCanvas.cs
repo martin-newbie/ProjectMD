@@ -14,7 +14,7 @@ public class SkillCanvas : MonoBehaviour
     Stack<SkillButton> skillBtnPool = new Stack<SkillButton>();
     [HideInInspector] public List<SkillButton> activatingBtn = new List<SkillButton>();
 
-    Vector3 btnStartPos = new Vector3(1900f, -90f);
+    Vector3 btnStartPos = new Vector3(1900f, 0f);
     int curSkillCount;
 
     [Header("Cost")]
@@ -90,6 +90,6 @@ public class SkillCanvas : MonoBehaviour
 
     Vector3 GetButtonPos(int idx)
     {
-        return new Vector3((175f / 2f + 5) + (5 + 175) * idx, -90);
+        return new Vector3((175f / 2f + 5) + (5 + 175) * idx, 0);
     }
 }

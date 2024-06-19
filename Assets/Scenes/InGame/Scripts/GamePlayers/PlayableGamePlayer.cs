@@ -151,7 +151,7 @@ public class PlayableGamePlayer : GamePlayer
                 leftFinish = true;
             }
 
-            if (rightIdx + 1 < skillDeck.Count && skillDeck[originIdx].subject.skillType == skillDeck[rightIdx + 1].subject.skillType && !skillDeck[rightIdx + 1].locked)
+            if (rightIdx + 1 < skillDeck.Count && skillDeck[originIdx].subject.skillType == skillDeck[rightIdx + 1].subject.skillType && !skillDeck[rightIdx + 1].locked && totalCount < 3)
             {
                 rightIdx++;
                 rightSkills.Add(rightSkills[rightIdx]);
@@ -168,11 +168,13 @@ public class PlayableGamePlayer : GamePlayer
             }
         }
 
+        if (totalCount == 0) return;
+
         skillDeck[originIdx].locked = true;
-        skillDeck[originIdx].chainCount = leftSkills.Count + rightSkills.Count;
+        skillDeck[originIdx].chainCount = totalCount;
         skillDeck[originIdx].chained.AddRange(leftSkills.Select(item => item.subject));
         skillDeck[originIdx].chained.AddRange(rightSkills.Select(item => item.subject));
-        skillCanvas.SetSkillButtonChain(originIdx, skillDeck[originIdx].chainCount);
+        skillCanvas.SetSkillButtonChain(originIdx, totalCount);
 
         if (leftSkills.Count > 0)
         {
