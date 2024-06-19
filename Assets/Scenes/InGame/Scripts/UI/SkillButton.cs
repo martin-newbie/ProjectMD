@@ -91,12 +91,12 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             if(startPos.y < endPos.y)
             {
-                // use skill
+                PlayableGamePlayer.Instance.UseSkill(buttonIdx);
             }
         }
         else
         {
-            // collabse skill
+            PlayableGamePlayer.Instance.CollabseSkill(buttonIdx);
         }
 
         isTouch = false;

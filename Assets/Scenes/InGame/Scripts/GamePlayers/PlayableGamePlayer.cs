@@ -110,8 +110,19 @@ public class PlayableGamePlayer : GamePlayer
     
     public override void UseSkill(int idx)
     {
+        if (cost < skillDeck[idx].subject.cost)
+        {
+            return;
+        }
 
-        base.UseSkill(idx);
+        var skillData = skillDeck[idx].subject.GetDefaultSkillValue();
+        foreach (var item in skillDeck[idx].chained)
+        {
+            item.CollabseBuff(skillData, skillDeck[idx].subject);
+        }
+        skillDeck[idx].subject.ActiveSkill(skillData);
+        RemoveSkillAt(idx);
+        skillCanvas.RemoveButtonAt(idx);
     }
 
     public void CollabseSkill(int originIdx)
@@ -173,7 +184,5 @@ public class PlayableGamePlayer : GamePlayer
             skillCanvas.RemoveButtonRange(originIdx + 1, rightSkills.Count);
             skillDeck.RemoveRange(originIdx + 1, rightSkills.Count);
         }
-
-
     }
 }
