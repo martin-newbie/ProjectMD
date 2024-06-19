@@ -11,7 +11,7 @@ public abstract class GamePlayer
 
     // about skill
     protected List<SkillBehaviour> skillUnits = new List<SkillBehaviour>();
-    protected List<SkillBehaviour> skillDeck = new List<SkillBehaviour>();
+    protected List<DeckSkillData> skillDeck = new List<DeckSkillData>();
 
     public float cost;
 
@@ -45,7 +45,7 @@ public abstract class GamePlayer
             skillUnits.Remove(removedUnit as SkillBehaviour);
             for (int i = 0; i < skillDeck.Count; i++)
             {
-                if (skillDeck[i] == removedUnit)
+                if (skillDeck[i].subject == removedUnit)
                 {
                     RemoveCharacterSkillAt(i);
                     i--;
@@ -103,13 +103,13 @@ public abstract class GamePlayer
         int rand = Random.Range(0, skillUnits.Count);
         var skillData = skillUnits[rand];
 
-        skillDeck.Add(skillData);
+        skillDeck.Add(new DeckSkillData(skillData));
         return skillData;
     }
 
     public virtual void UseSkill(int idx)
     {
-        if(cost < skillDeck[idx].cost)
+        if (cost < skillDeck[idx].subject.cost)
         {
             return;
         }
@@ -156,5 +156,22 @@ public abstract class GamePlayer
     {
         isGameActive = false;
         curDelay = 0f;
+    }
+}
+
+
+public class DeckSkillData
+{
+    public SkillBehaviour subject;
+    public int chainCount;
+    public bool locked;
+    public List<SkillBehaviour> chained;
+
+    public DeckSkillData(SkillBehaviour _subject)
+    {
+        subject = _subject;
+        chainCount = 0;
+        locked = false;
+        chained = new List<SkillBehaviour>();
     }
 }

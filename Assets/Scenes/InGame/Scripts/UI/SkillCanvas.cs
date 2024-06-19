@@ -74,6 +74,11 @@ public class SkillCanvas : MonoBehaviour
         AlignSkillButton();
     }
 
+    public void SetSkillButtonChain(int idx, int chain)
+    {
+        activatingBtn[idx].SetChainedData(chain);
+    }
+
     void AlignSkillButton()
     {
         for (int i = 0; i < activatingBtn.Count; i++)

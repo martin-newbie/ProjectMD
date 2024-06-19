@@ -9,22 +9,23 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField] Image collabseImage;
     [SerializeField] Image profileImage;
     [SerializeField] Text costText;
-    [SerializeField] Image outlineProgress;
-    [SerializeField] GameObject outlineSelected;
+    [SerializeField] Text chainText;
+    [SerializeField] GameObject lockedObj;
     [HideInInspector] public RectTransform rect;
     
     SkillBehaviour linkedData;
-    Animator anim;
     int buttonIdx = -1;
 
     SkillCanvas manager;
     bool pointerEnter;
 
+    bool isTouch;
+    Vector3 startPos, endPos;
+
     public void InitButton(SkillCanvas _manager)
     {
         manager = _manager;
         rect = GetComponent<RectTransform>();
-        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -37,6 +38,7 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         buttonIdx = -1;
         linkedData = null;
+        lockedObj.SetActive(false);
     }
 
     public void SetIdx(int idx)
@@ -74,38 +76,36 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
     }
 
-    public void SetProgress(float amount)
+    public void SetChainedData(int chainCount)
     {
-        outlineProgress.fillAmount = amount;
-    }
-
-    public void SelectButton()
-    {
-        outlineSelected.SetActive(true);
-        anim.SetTrigger("hopping");
-        SetProgress(1f);
-    }
-
-    public void DeselectButton()
-    {
-        outlineSelected.SetActive(false);
-        SetProgress(0f);
+        lockedObj.SetActive(true);
+        chainText.text = chainCount.ToString();
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (!pointerEnter)
+        if (!isTouch) return;
+
+        endPos = eventData.position;
+        if (pointerEnter)
         {
-            PlayableGamePlayer.Instance.CancelSkill();
-            return;
+            if(startPos.y < endPos.y)
+            {
+                // use skill
+            }
         }
-        pointerEnter = false;
-        PlayableGamePlayer.Instance.UseSkill();
+        else
+        {
+            // collabse skill
+        }
+
+        isTouch = false;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        PlayableGamePlayer.Instance.StartSkill(buttonIdx);
+        startPos = eventData.position;
+        isTouch = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
