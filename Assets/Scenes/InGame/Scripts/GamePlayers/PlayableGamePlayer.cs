@@ -122,7 +122,6 @@ public class PlayableGamePlayer : GamePlayer
         }
         skillDeck[idx].subject.ActiveSkill(skillData);
         RemoveSkillAt(idx);
-        skillCanvas.RemoveButtonAt(idx);
     }
 
     public void CollabseSkill(int originIdx)
