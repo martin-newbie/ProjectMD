@@ -42,6 +42,7 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         buttonIdx = -1;
         linkedData = null;
         lockedObj.SetActive(false);
+        interactable = true;
     }
 
     public void SetIdx(int idx)
