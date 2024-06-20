@@ -178,16 +178,6 @@ public class PlayableGamePlayer : GamePlayer
         skillCanvas.CollabseEffect(originIdx, leftIdx, leftSkills.Count, originIdx + 1, rightSkills.Count, () =>
         {
             skillCanvas.SetSkillButtonChain(originIdx, totalCount);
-            if (rightSkills.Count > 0)
-            {
-                skillCanvas.RemoveButtonRange(originIdx + 1, rightSkills.Count);
-                skillDeck.RemoveRange(originIdx + 1, rightSkills.Count);
-            }
-            if (leftSkills.Count > 0)
-            {
-                skillCanvas.RemoveButtonRange(leftIdx, leftSkills.Count);
-                skillDeck.RemoveRange(leftIdx, leftSkills.Count);
-            }
         });
     }
 }
