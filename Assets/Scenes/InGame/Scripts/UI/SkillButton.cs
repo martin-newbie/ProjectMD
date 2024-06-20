@@ -87,6 +87,7 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (!isTouch) return;
         manager.skillBlur.SetActive(false);
+        Time.timeScale = 1f;
 
         endPos = eventData.position;
         if (pointerEnter)
@@ -109,6 +110,7 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         startPos = eventData.position;
         isTouch = true;
         manager.skillBlur.SetActive(true);
+        Time.timeScale = 0.1f;
     }
 
     public void OnPointerExit(PointerEventData eventData)

@@ -86,7 +86,6 @@ public class SkillCanvas : MonoBehaviour
 
         IEnumerator moveRoutine()
         {
-            Time.timeScale = 0f;
             skillBlur.SetActive(true);
             List<SkillButton> buttons = new List<SkillButton>();
             if (leftCount > 0)
@@ -102,7 +101,6 @@ public class SkillCanvas : MonoBehaviour
             yield return routine;
 
             actionComplete?.Invoke();
-            Time.timeScale = 1f;
             skillBlur.SetActive(false);
         }
     }
