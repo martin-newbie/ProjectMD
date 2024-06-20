@@ -12,7 +12,6 @@ public class WebRequest : MonoBehaviour
     {
         Instance = this;
         StartCoroutine(SendQueue());
-        DontDestroyOnLoad(gameObject);
     }
 
     public bool useAsLocalhost = false;

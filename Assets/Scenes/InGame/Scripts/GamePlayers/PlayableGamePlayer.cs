@@ -175,9 +175,15 @@ public class PlayableGamePlayer : GamePlayer
         skillDeck[originIdx].chained.AddRange(leftSkills.Select(item => item.subject));
         skillDeck[originIdx].chained.AddRange(rightSkills.Select(item => item.subject));
 
+        if (rightSkills.Count > 0)
+            skillDeck.RemoveRange(originIdx + 1, rightSkills.Count);
+        if (leftSkills.Count > 0)
+            skillDeck.RemoveRange(leftIdx, leftSkills.Count);
+
         skillCanvas.CollabseEffect(originIdx, leftIdx, leftSkills.Count, originIdx + 1, rightSkills.Count, () =>
         {
-            skillCanvas.SetSkillButtonChain(originIdx, totalCount);
+            // 체인된 요소를 전부 리스트에서 제외시키기 때문에 가장 왼쪽의 버튼에 아이템에 데이터를 입력한다
+            skillCanvas.SetSkillButtonChain(leftIdx, totalCount);
         });
     }
 }
