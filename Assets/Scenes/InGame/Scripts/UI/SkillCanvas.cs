@@ -26,12 +26,8 @@ public class SkillCanvas : MonoBehaviour
 
         for (int i = 0; i < 10; i++)
         {
-            AddNewButton();
-            var btnTemp = Instantiate(skillButtonPrefab, buttonParent);
-            btnTemp.InitButton(this);
-            btnTemp.rect.anchoredPosition = GetButtonPos(i);
-            btnTemp.gameObject.SetActive(false);
-            skillBtnPool.Push(btnTemp);
+            var btn = AddNewButton();
+            btn.rect.anchoredPosition = GetButtonPos(i);
         }
     }
 
@@ -54,7 +50,6 @@ public class SkillCanvas : MonoBehaviour
     {
         var button = Instantiate(skillButtonPrefab, buttonParent);
         button.InitButton(this);
-        button.rect.anchoredPosition = GetButtonPos(i);
         button.gameObject.SetActive(false);
         skillBtnPool.Push(button);
         return button;
