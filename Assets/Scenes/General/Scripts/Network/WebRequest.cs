@@ -67,7 +67,7 @@ public class WebRequest : MonoBehaviour
             {
                 Debug.Log(request.url);
                 yield return request.SendWebRequest();
-                if (request.isNetworkError || request.isHttpError)
+                if (!string.IsNullOrEmpty(request.error))
                 {
                     Debug.Log(request.error);
                     continue;

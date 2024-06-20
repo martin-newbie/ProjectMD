@@ -20,7 +20,6 @@ public class InGameManager : MonoBehaviour
     [HideInInspector] public List<UnitBehaviour> allUnits = new List<UnitBehaviour>();
     [HideInInspector] public List<GameObject> movingObjects = new List<GameObject>();
 
-    int gameModeIdx = 0;
     IGameModeBehaviour gameMode;
     bool isGameActive;
 
