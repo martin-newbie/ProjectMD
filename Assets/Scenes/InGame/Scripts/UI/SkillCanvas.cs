@@ -77,6 +77,8 @@ public class SkillCanvas : MonoBehaviour
     {
         skillBlur.SetActive(true);
         List<SkillButton> buttons = new List<SkillButton>();
+
+        var originButton = activatingBtn[originIdx];
         if (leftCount > 0)
             buttons.AddRange(activatingBtn.GetRange(leftIdx, leftCount));
         if (rightCount > 0)
@@ -91,7 +93,7 @@ public class SkillCanvas : MonoBehaviour
             foreach (var item in buttons)
             {
                 item.transform.SetAsFirstSibling();
-                routine = item.MovePos(item.rect.anchoredPosition, activatingBtn[originIdx].rect.anchoredPosition, () => Time.unscaledDeltaTime, EaseOutSin);
+                routine = item.MovePos(item.rect.anchoredPosition, originButton.rect.anchoredPosition, () => Time.unscaledDeltaTime, EaseOutSin);
             }
 
             yield return routine;
