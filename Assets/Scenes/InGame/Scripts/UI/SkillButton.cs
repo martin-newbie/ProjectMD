@@ -57,7 +57,7 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         // set sprite
     }
 
-    public Coroutine MovePos(Vector3 start, Vector3 target, float deltaTime, Func<float, float> ease)
+    public Coroutine MovePos(Vector3 start, Vector3 target, Func<float> deltaTime, Func<float, float> ease)
     {
         if (routine != null) StopCoroutine(routine);
         routine = StartCoroutine(moveRoutine());
@@ -72,7 +72,7 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             while (timer < dur)
             {
                 rect.anchoredPosition = Vector3.LerpUnclamped(start, target, ease.Invoke(timer / dur));
-                timer += deltaTime;
+                timer += deltaTime.Invoke();
                 yield return null;
             }
 

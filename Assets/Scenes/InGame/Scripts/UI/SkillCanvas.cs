@@ -96,9 +96,9 @@ public class SkillCanvas : MonoBehaviour
             foreach (var item in buttons)
             {
                 item.transform.SetAsFirstSibling();
-                routine = item.MovePos(item.rect.anchoredPosition, activatingBtn[originIdx].rect.anchoredPosition, Time.unscaledDeltaTime, EaseOutSin);
+                routine = item.MovePos(item.rect.anchoredPosition, activatingBtn[originIdx].rect.anchoredPosition, () => Time.unscaledDeltaTime, EaseOutSin);
             }
-            
+
             yield return routine;
 
             actionComplete?.Invoke();
@@ -111,7 +111,7 @@ public class SkillCanvas : MonoBehaviour
         for (int i = 0; i < activatingBtn.Count; i++)
         {
             activatingBtn[i].SetIdx(i);
-            activatingBtn[i].MovePos(activatingBtn[i].rect.anchoredPosition, GetButtonPos(i), Time.deltaTime, EaseOutBack);
+            activatingBtn[i].MovePos(activatingBtn[i].rect.anchoredPosition, GetButtonPos(i), () => Time.deltaTime, EaseOutBack);
         }
     }
 
