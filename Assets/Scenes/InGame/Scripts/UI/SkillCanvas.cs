@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,7 @@ public class SkillCanvas : MonoBehaviour
         var btnTemp = skillBtnPool.Pop();
         btnTemp.transform.SetAsLastSibling();
         btnTemp.gameObject.SetActive(true);
-        btnTemp.MovePos(btnStartPos, GetButtonPos(curSkillCount));
+        btnTemp.rect.anchoredPosition = btnStartPos;
         btnTemp.SetData(_linkedData);
         activatingBtn.Add(btnTemp);
 
@@ -79,17 +80,57 @@ public class SkillCanvas : MonoBehaviour
         activatingBtn[idx].SetChainedData(chain);
     }
 
+    public void CollabseEffect(int originIdx, int leftIdx, int leftCount, int rightIdx, int rightCount, Action actionComplete = null)
+    {
+        StartCoroutine(moveRoutine());
+
+        IEnumerator moveRoutine()
+        {
+            Time.timeScale = 0f;
+            skillBlur.SetActive(true);
+            List<SkillButton> buttons = new List<SkillButton>();
+            if (leftCount > 0)
+                buttons.AddRange(activatingBtn.GetRange(leftIdx, leftCount));
+            if (rightCount > 0)
+                buttons.AddRange(activatingBtn.GetRange(rightIdx, rightCount));
+            Coroutine routine = null;
+            foreach (var item in buttons)
+            {
+                routine = item.MovePos(item.rect.anchoredPosition, activatingBtn[originIdx].rect.anchoredPosition, Time.unscaledDeltaTime, EaseOutSin);
+            }
+            
+            yield return routine;
+
+            actionComplete?.Invoke();
+            Time.timeScale = 1f;
+            skillBlur.SetActive(false);
+        }
+    }
+
     void AlignSkillButton()
     {
         for (int i = 0; i < activatingBtn.Count; i++)
         {
             activatingBtn[i].SetIdx(i);
-            activatingBtn[i].MovePos(activatingBtn[i].rect.anchoredPosition, GetButtonPos(i));
+            activatingBtn[i].MovePos(activatingBtn[i].rect.anchoredPosition, GetButtonPos(i), Time.deltaTime, EaseOutBack);
         }
     }
 
     Vector3 GetButtonPos(int idx)
     {
         return new Vector3((175f / 2f + 5) + (5 + 175) * idx, 0);
+    }
+
+    float EaseOutBack(float x)
+    {
+        float c1 = 1.70158f;
+        float c3 = c1 + 1;
+        float t = 1 + c3 * Mathf.Pow(x - 1, 3) + c1 * Mathf.Pow(x - 1, 2);
+        return t;
+    }
+
+    float EaseOutSin(float x)
+    {
+        return Mathf.Sin((x * Mathf.PI) / 2);
     }
 }

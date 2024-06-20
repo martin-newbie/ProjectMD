@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,15 +13,16 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField] Text chainText;
     [SerializeField] GameObject lockedObj;
     [HideInInspector] public RectTransform rect;
-    
+
+    SkillCanvas manager;
     SkillBehaviour linkedData;
     int buttonIdx = -1;
 
-    SkillCanvas manager;
     bool pointerEnter;
 
     bool isTouch;
     Vector3 startPos, endPos;
+    Coroutine routine;
 
     public void InitButton(SkillCanvas _manager)
     {
@@ -53,22 +55,21 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         // set sprite
     }
 
-    public void MovePos(Vector3 start, Vector3 target)
+    public Coroutine MovePos(Vector3 start, Vector3 target, float deltaTime, Func<float, float> ease)
     {
-        StartCoroutine(moveRoutine());
+        if (routine != null) StopCoroutine(routine);
+        routine = StartCoroutine(moveRoutine());
+        return routine;
 
         IEnumerator moveRoutine()
         {
-            float dur = 1f;
+            float dur = 0.7f;
             float timer = 0f;
 
             while (timer < dur)
             {
-                float c1 = 1.70158f;
-                float c3 = c1 + 1;
-                float t = 1 + c3 * Mathf.Pow((timer / dur) - 1, 3) + c1 * Mathf.Pow((timer / dur) - 1, 2);
-                rect.anchoredPosition = Vector3.LerpUnclamped(start, target, t);
-                timer += Time.deltaTime;
+                rect.anchoredPosition = Vector3.LerpUnclamped(start, target, ease.Invoke(timer / dur));
+                timer += deltaTime;
                 yield return null;
             }
 
@@ -85,6 +86,7 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerUp(PointerEventData eventData)
     {
         if (!isTouch) return;
+        manager.skillBlur.SetActive(false);
 
         endPos = eventData.position;
         if (pointerEnter)
@@ -93,7 +95,7 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
         else
         {
-            if(startPos.y < endPos.y)
+            if (startPos.y < endPos.y)
             {
                 PlayableGamePlayer.Instance.UseSkill(buttonIdx);
             }
@@ -106,6 +108,7 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         startPos = eventData.position;
         isTouch = true;
+        manager.skillBlur.SetActive(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)

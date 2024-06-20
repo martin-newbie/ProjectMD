@@ -107,7 +107,7 @@ public class PlayableGamePlayer : GamePlayer
     {
         return curUnits.Sum((item) => item.GetStatus(StatusType.COST_RECOVERY));
     }
-    
+
     public override void UseSkill(int idx)
     {
         if (cost < skillDeck[idx].subject.cost)
@@ -115,6 +115,7 @@ public class PlayableGamePlayer : GamePlayer
             return;
         }
 
+        cost -= skillDeck[idx].subject.cost;
         var skillData = skillDeck[idx].subject.GetDefaultSkillValue();
         foreach (var item in skillDeck[idx].chained)
         {
@@ -134,7 +135,7 @@ public class PlayableGamePlayer : GamePlayer
         List<DeckSkillData> leftSkills = new List<DeckSkillData>();
         List<DeckSkillData> rightSkills = new List<DeckSkillData>();
 
-        while (totalCount < 4)
+        while (totalCount < 5)
         {
             bool leftFinish = false;
             bool rightFinish = false;
@@ -153,7 +154,7 @@ public class PlayableGamePlayer : GamePlayer
             if (rightIdx + 1 < skillDeck.Count && skillDeck[originIdx].subject.skillType == skillDeck[rightIdx + 1].subject.skillType && !skillDeck[rightIdx + 1].locked && totalCount < 3)
             {
                 rightIdx++;
-                rightSkills.Add(rightSkills[rightIdx]);
+                rightSkills.Add(skillDeck[rightIdx]);
                 totalCount++;
             }
             else
@@ -173,17 +174,20 @@ public class PlayableGamePlayer : GamePlayer
         skillDeck[originIdx].chainCount = totalCount;
         skillDeck[originIdx].chained.AddRange(leftSkills.Select(item => item.subject));
         skillDeck[originIdx].chained.AddRange(rightSkills.Select(item => item.subject));
-        skillCanvas.SetSkillButtonChain(originIdx, totalCount);
 
-        if (leftSkills.Count > 0)
+        skillCanvas.CollabseEffect(originIdx, leftIdx, leftSkills.Count, originIdx + 1, rightSkills.Count, () =>
         {
-            skillCanvas.RemoveButtonRange(leftIdx, leftSkills.Count);
-            skillDeck.RemoveRange(leftIdx, leftSkills.Count);
-        }
-        if (rightSkills.Count > 0)
-        {
-            skillCanvas.RemoveButtonRange(originIdx + 1, rightSkills.Count);
-            skillDeck.RemoveRange(originIdx + 1, rightSkills.Count);
-        }
+            skillCanvas.SetSkillButtonChain(originIdx, totalCount);
+            if (rightSkills.Count > 0)
+            {
+                skillCanvas.RemoveButtonRange(originIdx + 1, rightSkills.Count);
+                skillDeck.RemoveRange(originIdx + 1, rightSkills.Count);
+            }
+            if (leftSkills.Count > 0)
+            {
+                skillCanvas.RemoveButtonRange(leftIdx, leftSkills.Count);
+                skillDeck.RemoveRange(leftIdx, leftSkills.Count);
+            }
+        });
     }
 }
