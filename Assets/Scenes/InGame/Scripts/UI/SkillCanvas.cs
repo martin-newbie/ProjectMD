@@ -26,6 +26,7 @@ public class SkillCanvas : MonoBehaviour
 
         for (int i = 0; i < 10; i++)
         {
+            AddNewButton();
             var btnTemp = Instantiate(skillButtonPrefab, buttonParent);
             btnTemp.InitButton(this);
             btnTemp.rect.anchoredPosition = GetButtonPos(i);
@@ -36,14 +37,27 @@ public class SkillCanvas : MonoBehaviour
 
     public void AddSkillButton(SkillBehaviour _linkedData)
     {
-        var btnTemp = skillBtnPool.Pop();
-        btnTemp.transform.SetAsLastSibling();
-        btnTemp.gameObject.SetActive(true);
-        btnTemp.rect.anchoredPosition = btnStartPos;
-        btnTemp.SetData(_linkedData);
-        activatingBtn.Add(btnTemp);
+        SkillButton button;
+        if (skillBtnPool.Count <= 0) AddNewButton();
+        button = skillBtnPool.Pop();
+
+        button.transform.SetAsLastSibling();
+        button.gameObject.SetActive(true);
+        button.rect.anchoredPosition = btnStartPos;
+        button.SetData(_linkedData);
+        activatingBtn.Add(button);
 
         AlignSkillButton();
+    }
+
+    SkillButton AddNewButton()
+    {
+        var button = Instantiate(skillButtonPrefab, buttonParent);
+        button.InitButton(this);
+        button.rect.anchoredPosition = GetButtonPos(i);
+        button.gameObject.SetActive(false);
+        skillBtnPool.Push(button);
+        return button;
     }
 
     public void RemoveButtonRange(int idx, int count)
