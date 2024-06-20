@@ -95,6 +95,7 @@ public class SkillCanvas : MonoBehaviour
             Coroutine routine = null;
             foreach (var item in buttons)
             {
+                item.transform.SetAsFirstSibling();
                 routine = item.MovePos(item.rect.anchoredPosition, activatingBtn[originIdx].rect.anchoredPosition, Time.unscaledDeltaTime, EaseOutSin);
             }
             

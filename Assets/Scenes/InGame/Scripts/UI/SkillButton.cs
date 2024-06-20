@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -21,6 +22,7 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     bool pointerEnter;
 
     bool isTouch;
+    bool interactable = true;
     Vector3 startPos, endPos;
     Coroutine routine;
 
@@ -63,6 +65,7 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         IEnumerator moveRoutine()
         {
+            interactable = false;
             float dur = 0.7f;
             float timer = 0f;
 
@@ -73,6 +76,7 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 yield return null;
             }
 
+            interactable = true;
             rect.anchoredPosition = target;
         }
     }
@@ -107,6 +111,8 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (!interactable) return;
+
         startPos = eventData.position;
         isTouch = true;
         manager.skillBlur.SetActive(true);
