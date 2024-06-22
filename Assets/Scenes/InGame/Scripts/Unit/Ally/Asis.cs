@@ -11,11 +11,14 @@ public class Asis : SkillBehaviour
 
     Explosion explosion;
     BigShotgunMuzzle skillEffect;
+    Vector3 targetAimPos;
+    Grenade grenadeBullet;
 
     public Asis(UnitData _unitData, Dictionary<StatusType, float> _statusData) : base(_unitData, _statusData)
     {
         explosion = InGamePrefabsManager.GetObject("AsisCommonAttackExplosion").GetComponent<Explosion>();
         skillEffect = InGamePrefabsManager.GetObject("AsisSkillEffect").GetComponent<BigShotgunMuzzle>();
+        grenadeBullet = InGamePrefabsManager.GetObject("Grenade").GetComponent<Grenade>();
     }
 
     public override void UnitActive()
@@ -53,10 +56,19 @@ public class Asis : SkillBehaviour
         }
     }
 
-    protected override IEnumerator MoveToTargetRange()
+    protected override IEnumerator AttackAim()
     {
-        yield return PlayAnimAndWait("wp_turn");
-        yield return base.MoveToTargetRange();
+        var target = GetPreferTarget();
+        SetModelRotByTarget(target);
+        targetAimPos = target.transform.position;
+
+        float aimingTime = GetAnimTime("battle_aiming");
+        yield return PlayAnimAndWait("battle_aiming", false, aimingTime / GetStatus(StatusType.ATK_TIMESCALE));
+    }
+
+    protected override IEnumerator AttackToTarget()
+    {
+        return base.AttackToTarget();
     }
 
     protected override IEnumerator AttackLogic()
@@ -74,11 +86,12 @@ public class Asis : SkillBehaviour
         }
 
         var startPos = GetBoneWorldPos(key);
-        var targetPos = target.transform.position;
 
-        var bullet = Instantiate(probBullet, startPos, Quaternion.identity);
-        bullet.GetComponent<SpriteRenderer>().sprite = InGameSpriteManager.Instance.asisGrenadeSprite;
-        bullet.StartBulletEffect(startPos, targetPos, 5f, () => OnCompleteBulletMove(targetPos), 1);
+        var grenade = Instantiate(grenadeBullet, startPos, Quaternion.identity);
+        grenade.ShootGrenade(startPos, targetAimPos, () =>
+        {
+            OnCompleteBulletMove(targetAimPos);
+        });
         curAmmo--;
     }
 

@@ -337,7 +337,7 @@ public abstract class UnitBehaviour
         var targetPos = target.GetBoneWorldPos("body") + randPos;
 
         var bullet = Instantiate(probBullet, startPos, Quaternion.identity);
-        bullet.StartBulletEffect(startPos, targetPos, 25f, () => target?.OnDamage(GetDamageStruct(), this));
+        bullet.ShootBullet(startPos, targetPos, 25f, () => target?.OnDamage(GetDamageStruct(), this));
         curAmmo--;
     }
     public virtual void InjectDeadEvent(Action _retireAction)

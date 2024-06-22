@@ -61,7 +61,7 @@ public class DieselRobotSMG : UnitBehaviour
 
         var bullet = Instantiate(probBullet, startPos, Quaternion.identity);
         bullet.GetComponent<SpriteRenderer>().sprite = InGameSpriteManager.Instance.lazerSprite;
-        bullet.StartBulletEffect(startPos, targetPos, 25f, null, 2);
+        bullet.ShootBullet(startPos, targetPos, 25f, null);
         curAmmo--;
     }
 
