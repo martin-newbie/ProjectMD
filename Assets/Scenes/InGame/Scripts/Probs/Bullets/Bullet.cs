@@ -26,6 +26,7 @@ public class Bullet : MonoBehaviour
         }
 
         onFinish?.Invoke();
+        Destroy(gameObject);
         yield break;
     }
 }

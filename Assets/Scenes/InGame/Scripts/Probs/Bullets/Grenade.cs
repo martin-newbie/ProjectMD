@@ -25,6 +25,7 @@ public class Grenade : MonoBehaviour
         }
 
         onComplete?.Invoke();
+        Destroy(gameObject);
         yield break;
     }
 
