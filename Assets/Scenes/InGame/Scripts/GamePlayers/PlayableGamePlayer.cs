@@ -105,6 +105,7 @@ public class PlayableGamePlayer : GamePlayer
 
     protected override float GetCostRecovery()
     {
+        return 10000f; // DEBUG
         return curUnits.Sum((item) => item.GetStatus(StatusType.COST_RECOVERY));
     }
 
@@ -121,7 +122,7 @@ public class PlayableGamePlayer : GamePlayer
         {
             item.CollabseBuff(skillData, skillDeck[idx].subject);
         }
-        skillDeck[idx].subject.ActiveSkill(skillData);
+        skillDeck[idx].subject.UseActiveSkill(skillData);
         RemoveSkillAt(idx);
     }
 
