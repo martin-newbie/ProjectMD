@@ -16,6 +16,7 @@ public class SeongahSkillBullet : MonoBehaviour
     PenetrateEffect penetrateEffect;
 
     bool moveable = false;
+    int penetrateCount;
 
     public void InitBulletAndShoot(UnitBehaviour _owner, DamageStruct _damage, UnitGroupType _targetType, int _dir /* 1 | -1 */)
     {
@@ -23,6 +24,7 @@ public class SeongahSkillBullet : MonoBehaviour
         targetType = _targetType;
         damage = _damage;
         dir = _dir;
+        penetrateCount = (int)damage.GetValue(StatusType.PENETRATE);
 
         int rotY = dir == 1 ? 0 : -180;
         transform.rotation = Quaternion.Euler(0, rotY, 0);
@@ -51,9 +53,9 @@ public class SeongahSkillBullet : MonoBehaviour
         var effect = Instantiate(penetrateEffect, new Vector3(target.transform.position.x, transform.position.y, 0), transform.rotation);
         effect.StartEffect();
 
-        damage.SetValue(StatusType.PENETRATE, damage.GetValue(StatusType.PENETRATE) - 1);
+        penetrateCount--;
         
-        if(damage.GetValue(StatusType.PENETRATE) <= 0)
+        if(penetrateCount <= 0)
         {
             GetComponent<SpriteRenderer>().enabled = false;
             bulletTail.Stop();

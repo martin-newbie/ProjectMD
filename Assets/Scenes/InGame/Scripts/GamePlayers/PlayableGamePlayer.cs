@@ -118,6 +118,7 @@ public class PlayableGamePlayer : GamePlayer
 
         cost -= skillDeck[idx].subject.cost;
         var skillData = skillDeck[idx].subject.GetDefaultSkillValue();
+        skillData.collabseCount = skillDeck[idx].chainCount;
         foreach (var item in skillDeck[idx].chained)
         {
             item.CollabseBuff(skillData, skillDeck[idx].subject);
