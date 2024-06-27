@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
@@ -50,6 +51,7 @@ public abstract class UnitBehaviour
     public HpBarBase hpBar;
 
     Action retireAction;
+    protected List<IKeyword> activateKeywords = new List<IKeyword>();
 
     public UnitBehaviour(UnitData _unitData, Dictionary<StatusType, float> _statusData)
     {
@@ -390,6 +392,23 @@ public abstract class UnitBehaviour
             debuffList[type] -= value;
         }
     }
+    public virtual void AddKeyword(KeywordType type, int count)
+    {
+        IKeyword keyword = null;
+        switch (type)
+        {
+            case KeywordType.TREMOR:
+                keyword = new Tremor(count);
+                break;
+            case KeywordType.SHOCK:
+                break;
+            case KeywordType.BLEED:
+                break;
+            case KeywordType.BURN:
+                break;
+        }
+        activateKeywords.Add(keyword);
+    }
     public virtual void OnHeal(float value, UnitBehaviour from)
     {
         if (state == BehaviourState.STANDBY || state == BehaviourState.RETIRE) return;
@@ -454,6 +473,17 @@ public abstract class UnitBehaviour
         {
             return Random.Range(0f, 1f);
         }
+    }
+    public virtual void OnDamageForce(float damage, UnitBehaviour from)
+    {
+        if (state == BehaviourState.STANDBY || state == BehaviourState.RETIRE) return;
+
+        ResistType resist = ResistType.NORMAL;
+        float def = (1666f / (1666f + GetStatus(StatusType.DEF)));
+        damage *= def;
+        int dir = transform.position.x < from.transform.position.x ? -1 : 1;
+        DamageTextCanvas.Instance.PrintDamageText(damage, GetBoneWorldPos("body"), dir, resist, false);
+        GetDamage(damage);
     }
     protected virtual void GetDamage(float damage)
     {
@@ -568,12 +598,14 @@ public abstract class UnitBehaviour
     }
     public DamageStruct GetDamageStruct()
     {
-        Dictionary<StatusType, float> structValue = new Dictionary<StatusType, float>();
-        structValue.Add(StatusType.DMG, GetStatus(StatusType.DMG));
-        structValue.Add(StatusType.ACCURACY, GetStatus(StatusType.ACCURACY));
-        structValue.Add(StatusType.CRI_RATE, GetStatus(StatusType.CRI_RATE));
-        structValue.Add(StatusType.CRI_DAMAGE, GetStatus(StatusType.CRI_DAMAGE));
-        structValue.Add(StatusType.STABLE, GetStatus(StatusType.STABLE));
+        Dictionary<StatusType, float> structValue = new Dictionary<StatusType, float>
+        {
+            { StatusType.DMG, GetStatus(StatusType.DMG) },
+            { StatusType.ACCURACY, GetStatus(StatusType.ACCURACY) },
+            { StatusType.CRI_RATE, GetStatus(StatusType.CRI_RATE) },
+            { StatusType.CRI_DAMAGE, GetStatus(StatusType.CRI_DAMAGE) },
+            { StatusType.STABLE, GetStatus(StatusType.STABLE) }
+        };
 
         DamageStruct dmg = new DamageStruct(structValue);
         return dmg;
@@ -582,5 +614,9 @@ public abstract class UnitBehaviour
     public void SetActiveHpBar(bool active)
     {
         hpBar.gameObject.SetActive(active);
+    }
+    protected virtual void OnKeywordEvent()
+    {
+
     }
 }

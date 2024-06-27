@@ -2,7 +2,7 @@
 
 public interface IKeyword
 {
-    string id { get; }
+    KeywordType id { get; }
     int count { get; set; }
 }
 
@@ -19,4 +19,12 @@ public interface IKeywordOnSecond
 public interface IKeywordOnDamage
 {
     void OnDamage(DamageStruct damage, UnitBehaviour from, UnitBehaviour target);
+}
+
+public enum KeywordType
+{
+    TREMOR,
+    SHOCK, // 감전
+    BLEED,
+    BURN,
 }
