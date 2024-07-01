@@ -8,7 +8,7 @@ public class StaticUnitStatus : SheetDataBase
 {
     protected override string gid => "0";
 
-    protected override string range => "E4:Z33";
+    protected override string range => "E4:Z44";
 
     public List<UnitStatus> dataList;
 
