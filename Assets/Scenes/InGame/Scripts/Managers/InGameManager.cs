@@ -131,6 +131,18 @@ public class InGameManager : MonoBehaviour
             case 100003:
                 behaviour = new Biker_Boss(data, status);
                 break;
+            case 100004:
+                behaviour = new Zenkyoto_Shotgun(data, status);
+                break;
+            case 100008:
+                behaviour = new Enforcer_Tanker(data, status);
+                break;
+            case 100009:
+                behaviour = new Enforcer_Middle(data, status);
+                break;
+            case 100010:
+                behaviour = new Enforcer_Back(data, status);
+                break;
         }
 
         unitObj.SetBehaviour(behaviour, group, barType);
