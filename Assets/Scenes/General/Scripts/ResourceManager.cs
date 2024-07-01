@@ -10,7 +10,7 @@ public class ResourceManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 200000; i++)
         {
             var spine = Resources.Load<SkeletonDataAsset>("SkeletonDatas/Characters/" + i.ToString() + "/skeleton_SkeletonData");
             if (spine != null)

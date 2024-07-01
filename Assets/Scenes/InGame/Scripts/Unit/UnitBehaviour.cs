@@ -3,6 +3,7 @@ using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using Object = UnityEngine.Object;
@@ -51,7 +52,6 @@ public abstract class UnitBehaviour
     public HpBarBase hpBar;
 
     Action retireAction;
-    protected List<IKeyword> activateKeywords = new List<IKeyword>();
 
     public UnitBehaviour(UnitData _unitData, Dictionary<StatusType, float> _statusData)
     {
@@ -407,7 +407,6 @@ public abstract class UnitBehaviour
             case KeywordType.BURN:
                 break;
         }
-        activateKeywords.Add(keyword);
     }
     public virtual void OnHeal(float value, UnitBehaviour from)
     {
