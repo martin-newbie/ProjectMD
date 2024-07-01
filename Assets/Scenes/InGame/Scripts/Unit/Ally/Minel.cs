@@ -42,7 +42,7 @@ public class Minel : SkillBehaviour, IEventPost
         return base.GetActiveSkillCondition();
     }
 
-    public void PostEvent(EventType type, UnitBehaviour from, UnitBehaviour to)
+    public void PostEvent(EventType type, Entity from, Entity to)
     {
         if (type == EventType.HIT_CRITICAL && from == this)
         {

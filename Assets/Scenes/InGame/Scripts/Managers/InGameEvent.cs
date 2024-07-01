@@ -33,7 +33,7 @@ public class InGameEvent : MonoBehaviour
         Instance.events[type].Remove(subject);
     }
 
-    public static void Post(EventType type, UnitBehaviour from, UnitBehaviour to)
+    public static void Post(EventType type, Entity from, Entity to)
     {
         if (!Instance.events.ContainsKey(type))
             return;
@@ -48,7 +48,7 @@ public class InGameEvent : MonoBehaviour
 
 public interface IEventPost
 {
-    void PostEvent(EventType type, UnitBehaviour from, UnitBehaviour to);
+    void PostEvent(EventType type, Entity from, Entity to);
 }
 
 public enum EventType

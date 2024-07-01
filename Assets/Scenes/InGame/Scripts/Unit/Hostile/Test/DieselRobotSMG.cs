@@ -41,7 +41,7 @@ public class DieselRobotSMG : UnitBehaviour
         return Vector3.zero;
     }
 
-    protected override void ShootBullet(UnitBehaviour target, string key = "bullet_pos")
+    protected override void ShootBullet(Entity target, string key = "bullet_pos")
     {
         if (target == null)
         {

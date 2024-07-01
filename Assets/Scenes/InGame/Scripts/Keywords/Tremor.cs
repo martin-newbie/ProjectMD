@@ -13,7 +13,7 @@ public class Tremor : IKeyword, IKeywordOnSecond, IKeywordOnDamage
         this.count = count;
     }
 
-    public void OnDamage(DamageStruct damage, UnitBehaviour from, UnitBehaviour target)
+    public void OnDamage(DamageStruct damage, Entity from, Entity target)
     {
         if (count <= 0) return;
         var extraDmg = damage.GetValue(StatusType.DMG) * 0.2f;

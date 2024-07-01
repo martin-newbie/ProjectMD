@@ -42,7 +42,7 @@ public class Asis : SkillBehaviour
         }
     }
 
-    public override void OnHeal(float value, UnitBehaviour from)
+    public override void OnHeal(float value, Entity from)
     {
         base.OnHeal(value, from);
 
@@ -78,7 +78,7 @@ public class Asis : SkillBehaviour
         yield return PlayAnimAndWait("battle_attack");
     }
 
-    protected override void ShootBullet(UnitBehaviour target, string key = "bullet_pos")
+    protected override void ShootBullet(Entity target, string key = "bullet_pos")
     {
         if (target == null)
         {

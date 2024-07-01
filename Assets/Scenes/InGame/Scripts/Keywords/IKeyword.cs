@@ -18,7 +18,7 @@ public interface IKeywordOnSecond
 
 public interface IKeywordOnDamage
 {
-    void OnDamage(DamageStruct damage, UnitBehaviour from, UnitBehaviour target);
+    void OnDamage(DamageStruct damage, Entity from, Entity target);
 }
 
 public enum KeywordType
