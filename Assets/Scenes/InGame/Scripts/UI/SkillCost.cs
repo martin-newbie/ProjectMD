@@ -5,13 +5,28 @@ using UnityEngine.UI;
 
 public class SkillCost : MonoBehaviour
 {
-    public Image costImage;
+
     public Text costText;
-    public RectTransform costEffect;
+    public CostUnit[] costUnits;
+    bool isInit = false;
+
+    void Start()
+    {
+        for (int i = 0; i < costUnits.Length; i++)
+        {
+            costUnits[i].InitUnit(i);
+        }
+        isInit = true;
+    }
 
     public void SetCostValueUI(float value)
     {
-        costImage.fillAmount = value;
+        if (!isInit) return;
+
+        foreach (var unit in costUnits)
+        {
+            unit.SetCostFill(value);
+        }
     }
 
     public void CostRecoverAction(int cost)

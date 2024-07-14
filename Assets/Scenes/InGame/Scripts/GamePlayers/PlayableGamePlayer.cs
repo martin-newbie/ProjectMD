@@ -60,12 +60,12 @@ public class PlayableGamePlayer : GamePlayer
     protected override void CostRecoveryLogic()
     {
         base.CostRecoveryLogic();
-        SetCostUI(cost / 10);
+        SetCostUI();
     }
 
-    private void SetCostUI(float value)
+    private void SetCostUI()
     {
-        skillCanvas.skillCost.SetCostValueUI(value);
+        skillCanvas.skillCost.SetCostValueUI(cost);
 
         int intCost = Mathf.FloorToInt(cost);
         if (prevCost != intCost)
