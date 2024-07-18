@@ -10,7 +10,6 @@ public class StageListUnit : MonoBehaviour
     bool activate;
     StageListManager manager;
 
-    [SerializeField] Text stageIndexText;
     [SerializeField] Text stageTitleText;
     [SerializeField] GameObject deactiveObject;
     [SerializeField] GameObject[] stageResultStar;
@@ -34,7 +33,6 @@ public class StageListUnit : MonoBehaviour
 
     public void UpdateUnit(StageData stage)
     {
-        stageIndexText.text = stage.chapterIndex.ToString() + "-" + stage.stageIndex.ToString();
     }
 
     public void OnButtonClick()

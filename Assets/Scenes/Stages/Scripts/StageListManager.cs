@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StageListManager : MonoBehaviour
 {
@@ -8,33 +9,20 @@ public class StageListManager : MonoBehaviour
     [Header("Stage List")]
     public StageListUnit stageUnitPrefab;
     public Transform stageContent;
-    List<StageListUnit> unitList;
+    public ScrollRect scroll;
+    public List<StageListUnit> unitList;
 
     [Header("Stage Info")]
     public StageInfoWindow stageInfo;
 
     int chapterIndex;
 
+    int curStageIdx;
+    bool isDragging;
+    float targetValue;
+
     void Start()
     {
-        chapterIndex = PlayerPrefs.GetInt(DataManager.chapterKey);
-
-        unitList = new List<StageListUnit>();
-        int allocCount = 20;
-        var stageDataList = UserData.Instance.stage_result;
-        for (int c = 0; c < DataManager.Instance.chapters.Count; c++)
-        {
-            for (int i = 0; i < allocCount; i++)
-            {
-                var unit = Instantiate(stageUnitPrefab, stageContent);
-                var dataIndex = c * 20 + i;
-                var stagedata = stageDataList.Count - 1 < dataIndex ? null : stageDataList[dataIndex];
-                unit.InitUnit(this, c, i, stagedata);
-                unitList.Add(unit);
-            }
-        }
-
-        UpdateChapterList();
     }
 
     public void ShowStageInfo(int stageIdx)
@@ -42,38 +30,69 @@ public class StageListManager : MonoBehaviour
         stageInfo.OpenStageInfo(chapterIndex, stageIdx);
     }
 
-    void UpdateChapterList()
-    {
-        var chapterData = StageManager.Instance.GetChapterData(chapterIndex);
-        for (int i = 0; i < unitList.Count; i++)
-        {
-            if (i < chapterData.stageDatas.Count)
-            {
-                unitList[i].UpdateUnit(chapterData.stageDatas[i]);
-                unitList[i].gameObject.SetActive(true);
-            }
-            else
-            {
-                unitList[i].gameObject.SetActive(false);
-            }
-        }
-    }
-
     public void OnLeftButton()
     {
-        if (chapterIndex > 0)
+        if (curStageIdx > 0)
         {
-            chapterIndex--;
-            PlayerPrefs.SetInt(DataManager.chapterKey, chapterIndex);
+            curStageIdx--;
+            targetValue = curStageIdx * GetDistance();
         }
     }
 
     public void OnRightButton()
     {
-        if (chapterIndex < DataManager.Instance.chapters.Count - 1)
+        if (curStageIdx < unitList.Count - 1)
         {
-            chapterIndex++;
-            PlayerPrefs.SetInt(DataManager.chapterKey, chapterIndex);
+            curStageIdx++;
+            targetValue = curStageIdx * GetDistance();
         }
+    }
+
+    private void Update()
+    {
+        if (isDragging)
+        {
+
+        }
+        else
+        {
+            scroll.horizontalScrollbar.value = Mathf.Lerp(scroll.horizontalScrollbar.value, targetValue, Time.deltaTime * 15f);
+            for (int i = 0; i < unitList.Count; i++)
+            {
+                var targetScale = i == curStageIdx ? Vector3.one : Vector3.one * 0.9f;
+                unitList[i].transform.localScale = Vector3.Lerp(unitList[i].transform.localScale, targetScale, Time.deltaTime * 15f);
+            }
+        }
+
+    }
+
+    public void OnDragStart()
+    {
+        isDragging = true;
+    }
+
+    public void OnDragFinish()
+    {
+        isDragging = false;
+
+        int value = (int)(scroll.horizontalScrollbar.value * 100);
+        int distance = (int)(GetDistance() * 100);
+        int index = 0;
+        while (value > distance)
+        {
+            value -= distance;
+            index++;
+        }
+        int targetIdx = value < (float)distance / 2f ? index : index + 1;
+
+        if (targetIdx <= 0 || targetIdx >= unitList.Count) targetIdx = Mathf.Clamp(targetIdx, 0, unitList.Count - 1);
+
+        curStageIdx = targetIdx;
+        targetValue = curStageIdx * GetDistance();
+    }
+
+    float GetDistance()
+    {
+        return (1f / ((float)unitList.Count - 1));
     }
 }
