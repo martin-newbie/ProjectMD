@@ -16,18 +16,7 @@ public class StageInfoWindow : MonoBehaviour
 
     public void OnStartButton()
     {
-        if (UserData.Instance.energy < 10) return;
-
-        var sendData = new SendUserData();
-        sendData.uuid = UserData.Instance.uuid;
-        TempData.Instance.selectedChapter = chapter;
-        TempData.Instance.selectedStage = stage;
-
-        WebRequest.Post("main-menu/enter-loadout", JsonUtility.ToJson(sendData), (data) =>
-        {
-            var recieveData = JsonUtility.FromJson<RecieveDeckData>(data);
-            SceneLoadManager.Instance.LoadScene("Loadout", () => { LoadoutManager.Instance.InitLoadout(recieveData); });
-        });
+        StageListManager.Instance.GameStart(chapter, stage);
     }
 
     public void CloseWindow()

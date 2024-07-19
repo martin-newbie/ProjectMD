@@ -1,10 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StageListManager : MonoBehaviour
 {
+    public static StageListManager Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     [Header("Stage List")]
     public StageListUnit stageUnitPrefab;
@@ -16,6 +22,7 @@ public class StageListManager : MonoBehaviour
     public StageInfoWindow stageInfo;
 
     int chapterIndex;
+    int activeStageCount;
 
     int curStageIdx;
     bool isDragging;
@@ -23,11 +30,64 @@ public class StageListManager : MonoBehaviour
 
     void Start()
     {
+        foreach (StageListUnit unit in unitList)
+        {
+            unit.InitUnit(this);
+        }
+
+        UpdateStagesData(0);
+    }
+
+    public void UpdateStagesData(int chapter)
+    {
+        chapterIndex = chapter;
+        activeStageCount = 0;
+        var resultList = UserData.Instance.stage_result;
+        var chapterData = StageManager.Instance.GetChapterData(chapter);
+
+        for (int i = 0; i < unitList.Count; i++)
+        {
+            if (i < chapterData.stageDatas.Count)
+            {
+                activeStageCount++;
+                unitList[i].gameObject.SetActive(true);
+                unitList[i].UpdateStageInfo(chapter, i);
+                if(i < resultList.Count)
+                {
+                    unitList[i].UpdateStageResult(resultList[i]);
+                }
+            }
+            else
+            {
+                unitList[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void OnGameStart(int stageIdx)
+    {
+        GameStart(chapterIndex, stageIdx);
     }
 
     public void ShowStageInfo(int stageIdx)
     {
         stageInfo.OpenStageInfo(chapterIndex, stageIdx);
+    }
+
+    public void GameStart(int chapter, int stage)
+    {
+        if (UserData.Instance.energy < 10) return; // TODO : replace it to stage data related energy cost
+
+        var sendData = new SendUserData();
+        sendData.uuid = UserData.Instance.uuid;
+        TempData.Instance.selectedChapter = chapter;
+        TempData.Instance.selectedStage = stage;
+
+        WebRequest.Post("main-menu/enter-loadout", JsonUtility.ToJson(sendData), (data) =>
+        {
+            var recieveData = JsonUtility.FromJson<RecieveDeckData>(data);
+            SceneLoadManager.Instance.LoadScene("Loadout", () => { LoadoutManager.Instance.InitLoadout(recieveData); });
+        });
     }
 
     public void OnLeftButton()
@@ -85,7 +145,7 @@ public class StageListManager : MonoBehaviour
         }
         int targetIdx = value < (float)distance / 2f ? index : index + 1;
 
-        if (targetIdx <= 0 || targetIdx >= unitList.Count) targetIdx = Mathf.Clamp(targetIdx, 0, unitList.Count - 1);
+        if (targetIdx <= 0 || targetIdx >= activeStageCount) targetIdx = Mathf.Clamp(targetIdx, 0, activeStageCount - 1);
 
         curStageIdx = targetIdx;
         targetValue = curStageIdx * GetDistance();
@@ -93,6 +153,6 @@ public class StageListManager : MonoBehaviour
 
     float GetDistance()
     {
-        return (1f / ((float)unitList.Count - 1));
+        return (1f / ((float)activeStageCount - 1));
     }
 }

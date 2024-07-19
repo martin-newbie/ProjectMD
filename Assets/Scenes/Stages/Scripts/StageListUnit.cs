@@ -11,31 +11,49 @@ public class StageListUnit : MonoBehaviour
     StageListManager manager;
 
     [SerializeField] Text stageTitleText;
-    [SerializeField] GameObject deactiveObject;
     [SerializeField] GameObject[] stageResultStar;
 
-    public void InitUnit(StageListManager _manager, int chapter, int stage, StageResult data)
+    [SerializeField] Sprite[] chapterButtonSprites;
+    [SerializeField] Image buttonImage;
+    [SerializeField] Image buttonBlur;
+
+
+    public void InitUnit(StageListManager _manager)
     {
         manager = _manager;
+    }
+
+    public void UpdateStageInfo(int chapter, int stage)
+    {
         this.stage = stage;
         this.chapter = chapter;
 
         activate = UserData.Instance.stage_result.Count + 1 > chapter * 20 + stage;
-        deactiveObject.SetActive(!activate);
+        buttonImage.sprite = chapterButtonSprites[chapter];
+        buttonBlur.sprite = chapterButtonSprites[chapter];
+        buttonBlur.gameObject.SetActive(!activate);
 
-        for (int i = 0; i < 3; i++)
+        foreach (var star in stageResultStar)
         {
-            if (data != null)
-                stageResultStar[i].SetActive(data.condition[i]);
+            star.gameObject.SetActive(false);
+        }
+    }
+
+    public void UpdateStageResult(StageResult data)
+    {
+        for (int i = 0; i < data.condition.Length; i++)
+        {
+            if (data != null) stageResultStar[i].SetActive(data.condition[i]);
             else stageResultStar[i].SetActive(false);
         }
     }
 
-    public void UpdateUnit(StageData stage)
+    public void OnStartButton()
     {
+        StageListManager.Instance.OnGameStart(stage);
     }
 
-    public void OnButtonClick()
+    public void OnInfoButton()
     {
         if (!activate) return;
 
