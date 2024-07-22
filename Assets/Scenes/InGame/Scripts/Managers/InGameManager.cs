@@ -139,7 +139,7 @@ public class InGameManager : MonoBehaviour
             case 100010:
                 behaviour = new Enforcer_Back(data, status);
                 break;
-            case 10001:
+            case 100011:
                 behaviour = new Enforcer_Commander(data, status);
                 break;
         }
