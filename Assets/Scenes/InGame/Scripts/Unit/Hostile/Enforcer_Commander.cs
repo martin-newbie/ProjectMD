@@ -38,7 +38,7 @@ public class Enforcer_Commander : UnitBehaviour
         yield return PlayAnimAndWait("battle_attack1_start");
         // spawn enemy
         yield return PlayAnimAndWait("battle_attack1_speak");
-        yield return PlayAnimAndWait("battle_attak1_end");
+        yield return PlayAnimAndWait("battle_attack1_end");
         yield break;
     }
 
