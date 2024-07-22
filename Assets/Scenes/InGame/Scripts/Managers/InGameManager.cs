@@ -115,10 +115,6 @@ public class InGameManager : MonoBehaviour
             case 25:
                 behaviour = new Aiden(data, status);
                 break;
-            case 26:
-                behaviour = new DieselRobotSMG(data, status);
-                break;
-
             case 100000:
                 behaviour = new Biker_Assault(data, status);
                 break;

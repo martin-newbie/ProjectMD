@@ -104,28 +104,6 @@ public abstract class UnitBehaviour : Entity
             StartActionCoroutine(MoveToTargetRange());
         }
     }
-    public virtual IEnumerator CommonMoveToPosEndWait(Vector3 target)
-    {
-        if (target == transform.position)
-        {
-            yield break;
-        }
-
-        PlayAnimAndWait("battle_move", true);
-        if (target.x > transform.position.x)
-        {
-            SetModelRotByDir(1);
-        }
-        if (target.x < transform.position.x)
-        {
-            SetModelRotByDir(-1);
-        }
-
-        yield return StartActionCoroutine(MoveToEnd(target));
-
-        PlayAnimAndWait("battle_wait", true);
-        SetModelRotByDir((int)group);
-    }
     protected virtual IEnumerator MoveToTargetRange()
     {
         PlayAnimAndWait("battle_move", true);
@@ -275,9 +253,9 @@ public abstract class UnitBehaviour : Entity
         if (dir == -1)
             model.transform.rotation = Quaternion.Euler(0, 180, 0);
     }
-    public virtual WaitForSeconds PlayAnimAndWait(string key, bool loop = false, float duration = -1f)
+    public virtual WaitForSeconds PlayAnimAndWait(string key, bool loop = false, float duration = -1f, int layer = 0)
     {
-        PlayAnim(key, loop);
+        PlayAnim(key, loop, layer);
         var animTime = GetAnimTime(key);
         if (duration <= 0f)
         {
@@ -295,9 +273,9 @@ public abstract class UnitBehaviour : Entity
     {
         return model.skeleton.Data.FindAnimation(key).Duration;
     }
-    protected virtual TrackEntry PlayAnim(string key, bool loop = false)
+    protected virtual TrackEntry PlayAnim(string key, bool loop = false, int layer = 0)
     {
-        var track = model.state.SetAnimation(0, key, loop);
+        var track = model.state.SetAnimation(layer, key, loop);
         return track;
     }
     public TrackEntry AddAnim(string key, bool loop = false, float delay = 0f)
