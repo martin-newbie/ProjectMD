@@ -143,6 +143,9 @@ public class InGameManager : MonoBehaviour
             case 100010:
                 behaviour = new Enforcer_Back(data, status);
                 break;
+            case 10001:
+                behaviour = new Enforcer_Commander(data, status);
+                break;
         }
 
         unitObj.SetBehaviour(behaviour, group, barType);

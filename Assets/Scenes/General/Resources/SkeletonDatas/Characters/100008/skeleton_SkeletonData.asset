@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
   m_Name: skeleton_SkeletonData
   m_EditorClassIdentifier: 
-  atlasAssets: []
+  atlasAssets:
+  - {fileID: 11400000, guid: 3c630db7e45f0f444a0c5b3bfaee255d, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: 2581554b99ae65b4f96ea1c51618efbc, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: 32616032fc978234b82e43dd05be36e1, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
     requiresBlendModeMaterials: 0
