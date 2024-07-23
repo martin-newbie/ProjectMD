@@ -15,8 +15,9 @@ public class Bullet : MonoBehaviour
         float dur = Vector3.Distance(start, end) / moveSpeed;
         float timer = 0f;
 
-        float rotY = start.x < end.x ? 0 : 180;
-        transform.rotation = Quaternion.Euler(0, rotY, 0);
+        var dir = end - start;
+        float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, rot);
 
         while (timer < dur)
         {
